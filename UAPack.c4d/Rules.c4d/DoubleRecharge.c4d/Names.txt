@@ -1,0 +1,2 @@
+DE:Ladezeit
+US:Rate of Fire

@@ -1,0 +1,3 @@
+Standard=Spread shots
+Grenade=Grenade
+KillMsg=["pVictim was ripped to shreds by pKiller's sWeapon."]

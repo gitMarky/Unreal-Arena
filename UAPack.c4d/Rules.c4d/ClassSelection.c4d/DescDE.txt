@@ -1,0 +1,1 @@
+Am Anfang der Runde und beim Respawn kann der Spieler eine Klasse wählen. Ist die Option deaktiviert, so kann der Spieler nur einen Skin wählen.

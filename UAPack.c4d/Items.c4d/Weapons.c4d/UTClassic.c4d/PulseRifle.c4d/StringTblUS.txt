@@ -1,0 +1,3 @@
+Standard=Automatic fire
+Beam=Beam
+KillMsg=["pVictim ate pKiller's burning plasma death.","pKiller roasted pVictim with his sWeapon."]

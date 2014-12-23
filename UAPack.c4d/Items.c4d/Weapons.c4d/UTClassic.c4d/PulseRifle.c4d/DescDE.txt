@@ -1,0 +1,7 @@
+Klassifikation: Plasmagewehr
+
+Modus 1: Verschießt schnelle Plasmaprojektile bei hoher Feuerrate.
+
+Modus 2: Bildet eine Plasmalanze, welche die Gegner durchbohrt.
+
+Tips: Der Plasmastrahl tötet Gegner in Sekunden.

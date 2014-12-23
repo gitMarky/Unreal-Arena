@@ -1,0 +1,2 @@
+Standard=Single shots
+KillMsg=["pKiller riddled pVictim full of holes with the sWeapon.","pKiller gave pVictim a good taste of his sWeapon."]

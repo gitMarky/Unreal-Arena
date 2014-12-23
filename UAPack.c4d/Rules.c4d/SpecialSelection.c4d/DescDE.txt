@@ -1,0 +1,1 @@
+Gibt dem Spieler eine Auswahl an Sonderfähigkeiten, z.B. Jetpack, Drohnen, etc.

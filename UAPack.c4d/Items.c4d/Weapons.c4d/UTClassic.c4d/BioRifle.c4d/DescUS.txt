@@ -1,0 +1,7 @@
+Classification: Toxic Rifle
+
+Primary Fire: Wads of Tarydium byproduct are lobbed at a medium rate of fire.
+
+Secondary Fire: When trigger is held down, the BioRifle will create a much larger wad of byproduct. When this wad is launched, it will burst into smaller wads which will adhere to any surfaces.
+
+Techniques: Byproducts will adhere to walls, floors, or ceilings. Chain reactions can be caused by covering entryways with this lethal green waste.

@@ -1,0 +1,3 @@
+Standard=Streuschuss
+Grenade=Granate
+KillMsg=["pVictim wurde von pKillers sWeapon in Stücke gerissen."]

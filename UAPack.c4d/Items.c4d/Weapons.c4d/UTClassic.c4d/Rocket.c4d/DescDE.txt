@@ -1,0 +1,7 @@
+Klassifikation: Schwergerät
+
+Modus 1: Verschießt Raketen. Mit [Spezial 3] können bis zu 6 Raketen auf einmal geladen werden.
+
+Modus 2: Schleudert die Projektile als Granaten nach vorne. Kann ebenfalls aufgeladen werden.
+
+Tips: Das Laden kann abgebrochen werden. Sobald 6 Projektile geladen sind, feuert der Raketenwerfer automatisch.

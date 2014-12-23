@@ -1,0 +1,7 @@
+Classification: Gatling Gun
+
+Primary Fire: Bullets are sprayed forth at a medium to fast rate of fire and good accuracy.
+
+Secondary Fire: Minigun fires twice as fast and is half as accurate.
+
+Techniques: Secondary fire is much more useful at close range, but can eat up tons of ammunition.

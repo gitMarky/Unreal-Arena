@@ -1,0 +1,4 @@
+Standard=Rakete
+Grenade=Granate
+Charge=Laden
+KillMsg=["pVictim wurde von pKillers sWeapon zerfetzt.","pKiller hat pVictim mit dem sWeapon weggefegt."]

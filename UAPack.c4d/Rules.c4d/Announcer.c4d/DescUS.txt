@@ -1,0 +1,1 @@
+Special events, such as double kills, get announced.

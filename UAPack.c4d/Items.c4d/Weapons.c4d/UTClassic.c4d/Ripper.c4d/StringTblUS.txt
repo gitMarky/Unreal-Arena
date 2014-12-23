@@ -1,0 +1,3 @@
+Standard=Single shots
+Explosive=Blast shot
+KillMsg=["pKiller ripped a chunk of meat out of pVictim with the sWeapon."]

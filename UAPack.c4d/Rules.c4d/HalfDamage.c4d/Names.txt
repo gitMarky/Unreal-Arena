@@ -1,0 +1,2 @@
+DE:Halber Schaden
+US:Half Damage

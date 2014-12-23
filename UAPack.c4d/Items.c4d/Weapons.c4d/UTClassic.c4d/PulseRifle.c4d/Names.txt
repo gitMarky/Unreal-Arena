@@ -1,0 +1,2 @@
+DE:Pulse Gun
+US:Pulse Gun

@@ -1,0 +1,6 @@
+Missile=Missiles
+HMissile=Homing Missiles
+
+KLASUpgradeDesc=Equips the rockets with an automatic target-searching-system.
+
+KLASUpgraded=Rocket launcher is now equipped with an automatic target-searching-system.

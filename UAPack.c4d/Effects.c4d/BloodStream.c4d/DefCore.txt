@@ -1,0 +1,17 @@
+[DefCore]
+id=_EB0
+Name=Blutsträhne
+Category=4
+Width=1
+Height=1
+Offset=-1,-1
+Mass=0
+Picture=0,0,1,1
+Vertices=1
+VertexY=-1
+VertexX=-1
+VertexFriction=20
+VertexCNAT=8
+ContactCalls=1
+Rebuy=0
+Collectible=0

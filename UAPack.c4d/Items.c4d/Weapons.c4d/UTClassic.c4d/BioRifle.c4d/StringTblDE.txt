@@ -1,0 +1,3 @@
+Standard=Einzelschuss
+Blob=Aufladen
+KillMsg=["pVictim kriegt eine Ladung von pKillers Giftmüll ab.","pVictim fiel pKillers sWeapon zum Opfer."]

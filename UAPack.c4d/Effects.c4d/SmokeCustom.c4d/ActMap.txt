@@ -1,0 +1,17 @@
+[Action]
+Name=Smoke
+Directions=4
+Length=4
+Delay=0
+Facet=0,0,64,64
+Procedure=FLOAT
+NextAction=Hold
+
+[Action]
+Name=Smoke2
+Directions=4
+Length=4
+Delay=0
+Facet=0,0,64,64
+Procedure=FLOAT
+NextAction=Hold

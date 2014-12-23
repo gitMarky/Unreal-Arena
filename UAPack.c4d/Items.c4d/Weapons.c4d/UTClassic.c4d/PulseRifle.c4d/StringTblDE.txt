@@ -1,0 +1,3 @@
+Standard=Dauerfeuer
+Beam=Strahl
+KillMsg=["pVictim wurde pKillers Plasma zum Verhängnis","pKiller röstete pVictim mit seiner sWeapon."]

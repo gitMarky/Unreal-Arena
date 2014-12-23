@@ -1,0 +1,5 @@
+[DefCore]
+id=_LSS
+Name=Scenario Script
+Category=1
+Picture=0,0,64,64

@@ -1,0 +1,16 @@
+[Particle]
+Name=ColSpark
+MaxCount=9999
+InitFn=StdInit
+ExecFn=StdExec
+CollisionFn=BounceY
+DrawFn=Std
+Face=0,0,15,15,-7,-7
+Delay=1
+Repeats=30
+Reverse=1
+GravityAcc=80
+VertexCount=1
+VertexY=50
+AlphaFade=10
+Additive=1

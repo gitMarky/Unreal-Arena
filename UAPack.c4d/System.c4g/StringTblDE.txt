@@ -1,0 +1,95 @@
+
+// CTF
+
+
+// Chooser
+Chooser=Konfiguration
+ChoosingPlayer=%s wählt jetzt die Spielkonfiguration, bitte noch etwas Geduld...
+Choosing=%s sucht gerade die Regeln aus, noch ein wenig Geduld...
+Goal=Das Spielziel wurde gewählt: <c ffff33>%s</c>
+Rules=<c ff0000>Regelwahl</c>: 
+StdRules=<c ffcc00>Standardregeln</c>: 
+Effects=Effektstufe
+MoreEffects=Effektstufe erhöhen
+LessEffects=Effektstufe senken
+EffectInfo=Effektstufe setzen
+CreateRules=Spielregeln
+DarknessChose=Intensität der Dunkelheit
+GoalChose=Spielziel konfigurieren
+TeamArrangement=Teams
+TeamInfo=Teameinteilung konfigurieren
+AIMenu=Spieler einstellen
+RuleInfo=Spielregel einstellen
+AIInfo=Diverse Einstellungen für KIs. Die Spieleranzahl wird automatisch auf alle Teams fair verteilt.
+Finished=Fertig
+MoreWinScore=Punktzahl erhöhen
+LessWinScore=Punktzahl senken
+MoreDarkness=Dunkelheit erhöhen
+LessDarkness=Dunkelheit senken
+OneAIMore=Ein Spieler mehr
+OneAILess=Ein Spieler weniger
+NewTeam=Neues Team
+FairTeams=Faire Teams
+FairTeamsInfo=Alle Teams auffüllen, so dass überall die gleiche Anzahl Clonks vorhanden ist
+OnlyDeleteLastTeam=Das letzte Team muss als erstes entfernt werden!
+RandomGoal=Zufallsspielziel
+GoalRandomChoose=Spielziel auswürfeln
+Back=Zurück
+VoteGoal=Spielzielabstimmung
+BeginVote=Abstimmung starten?
+BeginVoteYes=Ja
+BeginVoteNo=Nein
+GoalVoteBegins=Der Host startet eine Spielzielwahl, du hast <c ffff33>%d</c> Sekunden um deine(n) Favorit(en) zu wählen!
+PlayerCount=Spielerzahl: %d
+WeaponMenu=Waffen einstellen
+WeaponInfo=Stellt die Spawnpunkte auf ein bestimmtes Waffenset ein, oder lässt den Spieler ein komplett eigenes Waffenset erstellen.
+Score=Punkte
+
+// Team
+
+Kills=Kills
+Death=Tode
+
+// Easteregg
+
+Emptiness=Die Leere
+YourBrain=Dein Gehirn
+Nothing=Nichts
+Freezer=Der Kühlschrank
+Space=Die unendliche Weite
+YourGun=Deine Waffe
+YourWallet=Dein Geldbeutel
+YourCookieJar=Deine Keksdose
+ThisWindow=Du wirst es kaum glauben aber die absolute, großartige Wahrheit von allem ist: Dieses Fenster
+YourStomach=Dein Magen
+EverythingEmpty=Dein EHP, MTP und Defibrillator
+Barrel=Das Phosphorfass
+Beer=Das Bier
+YourGlance=Dein Blick
+YourHarddrive=Deine Festplatte
+YourChat=Dein Chatfenster
+
+
+// Kill Messages
+KillMsg=["pKiller hat pVictim umgebracht, bam!"]
+MsgKillProjectile=["%s gibt %s Blei zu kauen.","%s hatte %s direkt im Visier.","%s hat jetzt ein leeres Magazin und %s einen vollen Bauch!"]
+MsgKillFire=["%s schmort sich einen %s.","%s mag %s am liebsten gut durch.","%s sollte Koch werden, denn er hat %s flambiert."]
+MsgKillExplosion=["%s hat %s kaputtgemacht.","%s spielt hier den Sprengmeister und jagt %s in die Luft!","%s hat Kilotonnen zu verschenken. Glückwunsch, %s!"]
+MsgKillEnergy=["%s schickt %s auf ein höheres Energieniveau.","%s hat %s elektrifiziert!","%s durchleuchtet %s erstmal gründlich."]
+MsgKillBio=["%s packt seine Biowaffen aus. %s packt ein.","%s zeigt %s seine Popelkanone.","Jetzt wird's klebrig. %s schleimt %s ein!"]
+MsgKill=["%s hat %s erwischt.","%s hat's %s gezeigt.","Ein Kill mehr für %s. Ein Tod mehr für %s"]
+
+MsgSelfKill=["%s hat sich selbst umgebracht, der Depp!","%s beging Selbstmord. Dafür sollte es Punktabzug geben!","Selbsteliminierung von %s!","Eine Runde Gelächter für %s."]
+
+MsgTeamKill={{GTDM}} %s ist ein Teamkiller! (%s / %s)
+
+MsgScore=%s hat einen Punkt für Team %s geholt!
+
+//Killing 5, 10, 15, 20 or 25 
+MsgKillingSpree=[ "Killing Spree", "Rampage", "Dominating", "Unstoppable", "Godlike", "matthes?!?" ]
+
+MsgSpreeEnd=%ss Killing Spree wurde beendet.
+
+MsgMultikill=["Doublekill","Multikill","Ultrakill","Megakill","Monsterkill"]
+
+// Double Kill (2), Multi kill (3), Ultra kill (4), Megakill (5), MONSTERKILL

@@ -1,0 +1,9 @@
+[DefCore]
+id=_ODF
+Version=4,9,8,2
+Name=ObjectDecoFlag
+Category=C4D_StaticBack
+MaxUserSelect=1
+Width=16
+Height=34
+Offset=-8,0

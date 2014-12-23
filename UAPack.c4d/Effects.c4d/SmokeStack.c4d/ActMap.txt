@@ -1,0 +1,9 @@
+[Action]
+Name=Travel
+Directions=1
+Length=1
+Delay=1
+FacetBase=1
+Procedure=NONE
+NextAction=Travel
+StartCall=Travel

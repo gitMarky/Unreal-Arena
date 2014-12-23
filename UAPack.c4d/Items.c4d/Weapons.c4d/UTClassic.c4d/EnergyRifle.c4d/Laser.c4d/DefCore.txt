@@ -1,0 +1,11 @@
+[DefCore]
+id=_LSR
+Version=4,9,5
+Name=Laser
+Category=4
+Width=2
+Height=2
+Offset=-1,-1
+Rotate=0
+IncompleteActivity=1
+BorderBound=7

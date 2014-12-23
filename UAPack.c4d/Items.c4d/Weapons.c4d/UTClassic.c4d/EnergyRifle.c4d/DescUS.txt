@@ -1,0 +1,7 @@
+Classification: Energy Rifle
+
+Primary Fire: Instant hit laser beam.
+
+Secondary Fire: Large, slow moving plasma balls.
+
+Techniques: Hitting the secondary fire plasma balls with the regular fire's laser beam will cause an immensely powerful explosion.

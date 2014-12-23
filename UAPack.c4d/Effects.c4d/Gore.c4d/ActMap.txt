@@ -1,0 +1,7 @@
+[Action]
+Name=Flying
+Directions=5
+Delay=1
+Facet=0,0,9,7
+NextAction=Flying
+StartCall=Splatter

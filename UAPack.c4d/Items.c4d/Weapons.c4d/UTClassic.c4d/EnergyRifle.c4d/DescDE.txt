@@ -1,0 +1,7 @@
+Klassifikation: Energiegewehr
+
+Modus 1: Ein sofort treffender Energiestrahl.
+
+Modus 2: Explodierende Plasmakugeln.
+
+Tips: Durch einen Treffer von einer Energiewaffe verursacht die Plasmakugel eine noch größere Explosion.

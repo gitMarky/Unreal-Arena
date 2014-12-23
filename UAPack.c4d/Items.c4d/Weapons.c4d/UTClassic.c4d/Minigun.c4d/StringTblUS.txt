@@ -1,0 +1,3 @@
+Standard=Precision fire
+Secondary=Spread fire
+KillMsg=["pKiller's sWeapon turned pVictim into a leaky piece of meat.","pVictim was annihilated by pKiller's sWeapon."]

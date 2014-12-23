@@ -1,0 +1,8 @@
+[DefCore]
+id=_HIT
+Name=HUD Info Tab
+Category=C4D_StaticBack
+Width=106
+Height=42
+Offset=0,0
+Picture=0,0,106,42

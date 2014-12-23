@@ -1,0 +1,9 @@
+FlameThrower=Flammenwerfer
+FlameBall=Flammenball
+SlimeThrower=Chemische Keule
+
+KSLMUpgradeDesc=Bringt eine Chemische Keule an
+KRFLUpgradeDesc=Erlaubt es, einen konzentrierten Feuerstoﬂ abzufeuern
+
+KSLMUpgraded=Chemische Keule angebracht!
+KRFLUpgraded=Flammenball-Aufsatz angebracht!

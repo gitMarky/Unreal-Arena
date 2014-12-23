@@ -1,0 +1,7 @@
+[Action]
+Name=Sparkle
+Delay=1
+FacetBase=1
+NextAction=Sparkle
+StartCall=Splatter
+ 

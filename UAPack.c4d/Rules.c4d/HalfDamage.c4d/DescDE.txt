@@ -1,0 +1,1 @@
+Waffen machen 50% Schaden - wirkt zusammen mit anderen Schadensmodifikatoren.
