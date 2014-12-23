@@ -1,0 +1,12 @@
+[DefCore]
+id=_OAH
+Name=Earth
+Category=4
+Width=512
+Height=512
+Offset=-256,-256
+Picture=0,0,512,512
+Vertices=1
+VertexY=1 
+NoStabilize=1
+Rotate=1

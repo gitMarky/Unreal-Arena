@@ -1,0 +1,11 @@
+[DefCore]
+id=_OAF
+Name=Sun
+Category=1
+Width=64
+Height=64
+Offset=-32,-32
+Picture=0,0,64,64
+Vertices=1
+VertexY=1 
+NoStabilize=1

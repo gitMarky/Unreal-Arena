@@ -1,0 +1,6 @@
+[Material]
+Name=BackWallDark
+Color=40,40,40,50,50,50,60,60,60
+Shape=0
+OverlayType=2
+Placement=5

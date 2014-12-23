@@ -1,0 +1,13 @@
+[Action]
+Name=Exist
+Procedure=FLOAT
+Length=1
+Directions=1
+Delay=0
+FacetBase=1
+NextAction=Hold
+
+
+
+
+

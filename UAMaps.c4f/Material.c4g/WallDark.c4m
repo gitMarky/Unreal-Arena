@@ -1,0 +1,10 @@
+[Material]
+Name=WallDark
+Color=75,75,75,80,80,80,85,85,85
+Shape=0
+Density=50
+Friction=100
+MaxAirSpeed=100
+MaxSlide=250
+OverlayType=2
+Placement=40

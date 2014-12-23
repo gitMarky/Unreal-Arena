@@ -1,0 +1,10 @@
+[Material]
+Name=WallRed
+Color=120,30,30,154,35,35,190,40,40
+Shape=0
+Density=50
+Friction=100
+MaxAirSpeed=100
+MaxSlide=250
+OverlayType=2
+Placement=30
