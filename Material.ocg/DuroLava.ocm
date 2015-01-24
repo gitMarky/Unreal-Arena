@@ -9,6 +9,5 @@ WindDrift=30
 Incindiary=1
 Placement=10
 TextureOverlay=Liquid
-Alpha=30,15,10,30,15,10,30,15,10,30,15,10,30,15,10,30,15,10
 PXSGfx=Lava
 PXSGfxRt=0,0,32,32,-16,-16

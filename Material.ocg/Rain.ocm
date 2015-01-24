@@ -1,6 +1,5 @@
 [Material]
 Name=Rain
-Alpha=0,0,0,0,0,0
 ColorAnimation=1
 Density=25
 Instable=1

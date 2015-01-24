@@ -1,6 +1,6 @@
 [Material]
 Name=Earth
-Shape=Smoother
+Shape=Smooth
 Density=50
 Friction=80
 MaxAirSpeed=100
