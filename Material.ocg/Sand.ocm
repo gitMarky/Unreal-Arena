@@ -1,6 +1,6 @@
 [Material]
 Name=Sand
-Shape=2
+Shape=Smoother
 Density=50
 Friction=80
 MaxAirSpeed=100

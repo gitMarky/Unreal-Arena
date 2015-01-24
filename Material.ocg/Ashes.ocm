@@ -1,6 +1,6 @@
 [Material]
 Name=Ashes
-Shape=2
+Shape=Smooth
 Density=50
 Friction=80
 MaxAirSpeed=25

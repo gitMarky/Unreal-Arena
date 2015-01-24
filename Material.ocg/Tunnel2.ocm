@@ -1,5 +1,5 @@
 [Material]
 Name=Tunnel2
-Shape=2
+Shape=Smoother
 Placement=5
 TextureOverlay=Smooth2

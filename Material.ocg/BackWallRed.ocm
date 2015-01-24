@@ -1,5 +1,5 @@
 [Material]
 Name=BackWallRed
-Shape=0
+Shape=Flat
 OverlayType=2
 Placement=5
