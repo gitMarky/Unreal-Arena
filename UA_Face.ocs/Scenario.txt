@@ -7,9 +7,6 @@ MinPlayer=1
 [Definitions]
 Definition1=Objects.ocd
 
-[Game]
-StructNeedEnergy=0
-
 [Player1]
 Crew=Clonk=1
 
@@ -26,7 +23,3 @@ Crew=Clonk=1
 [Landscape]
 Sky=Clouds1;Default
 MapZoom=2
-
-[Environment]
-Objects=DARK=1
- 
