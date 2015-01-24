@@ -1,3 +1,0 @@
-Railgun=Beam
-Balls=Energy ball
-KillMsg=["pKiller inflicted mortal damage upon pVictim with the sWeapon.","pKiller electrified pVictim with the sWeapon."]

@@ -1,1 +1,0 @@
-The hazardclonk can put ammo with double-dig in his ammunition belt. He will reload his weapons with this ammo autonomously.

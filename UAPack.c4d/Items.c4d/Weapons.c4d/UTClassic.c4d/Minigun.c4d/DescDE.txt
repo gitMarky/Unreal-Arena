@@ -1,7 +1,0 @@
-Klassifikation: Gatling Gun
-
-Modus 1: Mittlere Schussfrequenz und akzeptable Genauigkeit.
-
-Modus 2: Sehr hohe Schussfrequenz, mit hoher Streuung.
-
-Tips: Der zweite Feuermodus ist auf kurze Distanzen nützlich, verbraucht aber sehr viel Munition.

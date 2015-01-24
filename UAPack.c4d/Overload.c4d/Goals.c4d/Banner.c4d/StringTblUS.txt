@@ -1,6 +1,0 @@
-ReturnedTheFlag={{GCTF}} %s returned the flag
-CapturedTheFlag={{GCTF}} %s captured the flag
-HasTheFlag={{GCTF}} %s has got the flag of team %s
-FlagLost={{GCTF}} The flag of team %s was dropped
-FlagReturned={{GCTF}} The flag of team %s was returned
-Flag=flag

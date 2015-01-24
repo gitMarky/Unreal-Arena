@@ -1,1 +1,0 @@
-Gibt 5 HP zurück, bis zu maximal 200 HP.

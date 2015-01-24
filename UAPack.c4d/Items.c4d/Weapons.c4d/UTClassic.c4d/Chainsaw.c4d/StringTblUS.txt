@@ -1,3 +1,0 @@
-Saw=Slaughter
-Swipe=Swipe
-KillMsg=["pKiller ripped into pVictim with a blood soaked sWeapon.","pKiller made a bloody mess out of pVictim with the sWeapon."]

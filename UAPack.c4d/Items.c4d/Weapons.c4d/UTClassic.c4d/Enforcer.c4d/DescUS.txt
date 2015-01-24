@@ -1,7 +1,0 @@
-Classification: Light Pistol
-
-Primary Fire: Accurate but slow firing instant hit.
-
-Secondary Fire: Sideways, or 'Gangsta' firing mode, shoots twice as fast and half as accurate as the primary fire.
-
-Techniques: Collect two for twice the damage.

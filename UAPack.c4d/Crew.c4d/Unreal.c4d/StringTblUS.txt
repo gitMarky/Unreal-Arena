@@ -1,7 +1,0 @@
-# Control Descs
-CtrlInventoryDesc=Shift inventory
-AmmoBag=Ammobag
-CtxObjectInfo=Object info
-CtxHelpMessagesOn=Help messages on
-CtxHelpMessagesOff=Help messages off
-CtxGuard=Guard

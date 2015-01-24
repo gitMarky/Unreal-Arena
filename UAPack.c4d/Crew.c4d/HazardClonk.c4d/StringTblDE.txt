@@ -1,7 +1,0 @@
-# Control Descs
-CtrlInventoryDesc=Inventar auswählen
-AmmoBag=Munitionsgürtel
-CtxObjectInfo=Objektinfo
-CtxHelpMessagesOn=Hilfen an
-CtxHelpMessagesOff=Hilfen aus
-CtxGuard=Bewachen

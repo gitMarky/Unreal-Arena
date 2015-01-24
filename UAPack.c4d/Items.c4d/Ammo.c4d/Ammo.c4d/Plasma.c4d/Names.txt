@@ -1,2 +1,0 @@
-DE:Plasma
-US:Plasma

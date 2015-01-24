@@ -1,2 +1,0 @@
-DE:Verlust Flagge
-US:Capture The Flag

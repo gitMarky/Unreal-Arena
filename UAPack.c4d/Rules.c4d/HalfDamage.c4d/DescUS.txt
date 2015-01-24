@@ -1,1 +1,0 @@
-Weapons do 50% damage - includes other modifiers.

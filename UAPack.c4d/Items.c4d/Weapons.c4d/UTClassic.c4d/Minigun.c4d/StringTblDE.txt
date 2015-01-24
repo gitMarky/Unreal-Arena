@@ -1,3 +1,0 @@
-Standard=Präzisionsfeuer
-Secondary=Streufeuer
-KillMsg=["pKillers sWeapon lässt von pVictim nur noch Fetzen übrig.","pVictim wurde von pKillers sWeapon zerfetzt."]

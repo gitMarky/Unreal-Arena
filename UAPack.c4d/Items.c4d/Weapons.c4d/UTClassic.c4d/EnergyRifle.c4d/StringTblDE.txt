@@ -1,3 +1,0 @@
-Railgun=Strahl
-Balls=Energieball
-KillMsg=["pKiller hat pVictim mit dem sWeapon gebrutzelt.","pKiller elekrisierte pVictim mit dem sWeapon."]

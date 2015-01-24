@@ -1,3 +1,0 @@
-Standard=Einzelschuss
-Aim=Zielen
-KillMsg=["pKiller erwischte pVictim mit dem sWeapon."]

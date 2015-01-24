@@ -1,1 +1,0 @@
-Heals 5 HP, up to 200 HP.

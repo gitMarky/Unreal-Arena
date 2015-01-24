@@ -1,3 +1,0 @@
-Standard=Single shots
-Blob=Charge
-KillMsg=["pVictim drank a glass of pKiller's dripping green load.","pVictim fell victim to pKiller's sWeapon."]

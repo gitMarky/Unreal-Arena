@@ -1,4 +1,0 @@
-Standard=Missile
-Grenade=Grenade
-Charge=Charge
-KillMsg=["pVictim was smacked down by pKiller's sWeapon.","pKiller blasted pVictim away with his sWeapon."]

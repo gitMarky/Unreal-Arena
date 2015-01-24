@@ -1,2 +1,0 @@
-DE:Partikelkanone
-US:Particle cannon

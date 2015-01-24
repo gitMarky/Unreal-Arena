@@ -1,1 +1,0 @@
-Gibt 20 HP zurück.

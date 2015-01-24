@@ -1,9 +1,0 @@
-[Action]
-Name=Dead
-Procedure=NONE
-Directions=2
-Length=3
-Delay=0
-Facet=0,0,16,20
-NextAction=Hold
-FlipDir=1

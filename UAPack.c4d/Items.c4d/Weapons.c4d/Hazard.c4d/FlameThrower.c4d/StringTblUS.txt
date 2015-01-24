@@ -1,9 +1,0 @@
-FlameThrower=Flamethrower
-FlameBall=Flameball
-SlimeThrower=Chemical mace
-
-KSLMUpgradeDesc=Add a chemical mace
-KRFLUpgradeDesc=Allows you to shoot a concentrated fireshot
-
-KSLMUpgraded=Chemical mace attached.
-KRFLUpgraded=Flameball attachment mounted.

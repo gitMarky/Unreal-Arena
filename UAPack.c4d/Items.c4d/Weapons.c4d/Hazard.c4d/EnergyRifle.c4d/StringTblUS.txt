@@ -1,6 +1,0 @@
-Standard=Continuous fire
-Laser=Laser
-
-KLASUpgradeDesc=Replaces the fire mechanism with a high-performance laser.
-
-KLASUpgraded=Fire mechanism replaced with a high-performance laser.

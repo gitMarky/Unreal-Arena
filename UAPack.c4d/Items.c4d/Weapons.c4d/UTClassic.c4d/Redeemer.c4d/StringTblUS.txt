@@ -1,3 +1,0 @@
-Standard=Single shots
-Aim=Zielen
-KillMsg=["pKiller got pVictim with the sWeapon."]

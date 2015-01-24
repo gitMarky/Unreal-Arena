@@ -1,3 +1,0 @@
-Standard=Einzelschuss
-Explosive=Explosionsschuss
-KillMsg=["pKiller zerfleischte pVictim mit dem sWeapon."]

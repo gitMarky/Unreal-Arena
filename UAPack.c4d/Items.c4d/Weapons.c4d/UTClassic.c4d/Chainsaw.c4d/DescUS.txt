@@ -1,7 +1,0 @@
-Classification: Melee Blade
-
-Primary Fire: When the trigger is held down, the chain covered blade will rev up. Drive this blade into opponents to inflict massive damage
-
-Secondary Fire: The revved up blade can be swung horizontally and can cause instant decapitation of foes.
-
-Techniques: The chainsaw makes a loud and recognizable roar and can be avoided by listening for audio cues.

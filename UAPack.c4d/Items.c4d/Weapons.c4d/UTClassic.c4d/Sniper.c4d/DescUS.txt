@@ -1,7 +1,0 @@
-Classification: Long Range Ballistic
-
-Regular Fire: Fires a high powered bullet. Can kill instantly when applied to the cranium of opposing forces.
-
-Secondary Fire: Zooms the rifle in, up to eight times normal vision. Allows for extreme precision from hundreds of yards away.
-
-Techniques: Great for long distance headshots!

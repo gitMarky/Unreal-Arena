@@ -1,2 +1,0 @@
-DE:Unsichtbarkeit
-US:Invisibility

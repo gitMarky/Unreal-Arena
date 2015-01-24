@@ -1,6 +1,0 @@
-Standard=Streuschuss
-Cluster=Explosionsschuss
-
-KRFLUpgradeDesc=Ermöglicht den Abschuss von Granatenfragmenten
-
-KRFLUpgraded=Granatenfragment-Aufsatz montiert!

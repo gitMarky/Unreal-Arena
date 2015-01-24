@@ -1,2 +1,0 @@
-DE:Amplifier
-US:Amplifier

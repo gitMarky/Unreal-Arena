@@ -1,6 +1,0 @@
-ReturnedTheFlag={{GCTF}} %s hat die Flagge zurückgebracht
-CapturedTheFlag={{GCTF}} %s hat die Flagge erfolgreich geklaut
-HasTheFlag={{GCTF}} %s hat die Flagge von Team %s
-FlagLost={{GCTF}} Die Flagge von Team %s wurde fallen gelassen
-FlagReturned={{GCTF}} Die Flagge von Team %s ist zurück
-Flag=Flagge

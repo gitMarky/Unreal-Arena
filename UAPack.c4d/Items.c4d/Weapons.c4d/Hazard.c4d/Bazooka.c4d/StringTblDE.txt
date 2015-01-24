@@ -1,6 +1,0 @@
-Missile=Raketen
-HMissile=Lenkraketen
-
-KLASUpgradeDesc=Rüstet die Raketen mit einem automatischen Zielverfolgungssystem aus.
-
-KLASUpgraded=Raketenwerfer mit automatischen|Zielverfolgungssystem ausgerüstet.

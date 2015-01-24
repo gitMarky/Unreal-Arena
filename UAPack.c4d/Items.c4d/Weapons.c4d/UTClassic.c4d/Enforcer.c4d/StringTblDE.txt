@@ -1,2 +1,0 @@
-Standard=Einzelschuss
-KillMsg=["pKiller durchlöchert pVictim mit seinem sWeapon.", "pKiller hat pVictim mit dem sWeapon durchsiebt."]
