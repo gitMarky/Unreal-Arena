@@ -21,12 +21,12 @@ OverloadTextures
 12=Ice-Structure
 13=Earth-Smooth
 14=Earth-rough_earth
-15=Rock-Ridge
+15=Rock-Ridge_rock
 
 24=Water2-Liquid3
 25=BackWallDark-Bricks1_backwall
 26=BackWallDark-Bricks2
-27=BackWallDark-Column1
+27=BackWallDark-Column1_backwall
 28=BackWallDark-Concrete1
 29=BackWallDark-Concrete2
 30=BackWallDark-Concrete3
@@ -58,9 +58,9 @@ OverloadTextures
 55=WallDark-Concrete4
 56=WallDark-Concrete5
 57=WallDark-Industrial1
-58=WallDark-metal2_wall
-59=WallDark-metal3_wall
-60=WallDark-metal4_wall
+58=WallDark-Metal2_wall
+59=WallDark-Metal3_wall
+60=WallDark-Metal4_wall
 61=WallDark-Unknown1
 62=WallDark-Column7
 63=WallDark-Structure
