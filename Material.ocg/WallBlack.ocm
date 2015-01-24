@@ -1,0 +1,9 @@
+[Material]
+Name=WallBlack
+Shape=0
+Density=50
+Friction=100
+MaxAirSpeed=100
+MaxSlide=250
+Placement=60
+TextureOverlay=Rock
