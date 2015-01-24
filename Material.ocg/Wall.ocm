@@ -1,6 +1,6 @@
 [Material]
 Name=Wall
-Shape=Flat
+Shape=Octagon
 Density=50
 Friction=100
 MaxAirSpeed=100

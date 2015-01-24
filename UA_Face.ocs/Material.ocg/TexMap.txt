@@ -7,7 +7,7 @@
 OverloadMaterials
 OverloadTextures
 
-1=Tunnel-Smooth
+1=Tunnel-Tunnel_Smooth
 2=Tunnel-Rough
 3=Water-Liquid
 4=Acid-Liquid2
@@ -20,7 +20,7 @@ OverloadTextures
 11=Snow-Flare2
 12=Ice-Structure
 13=Earth-Smooth
-14=Earth-Rough
+14=Earth-Earth_Rough
 15=Rock-Ridge
 
 24=Water2-Liquid3
@@ -42,12 +42,12 @@ OverloadTextures
 40=BackWallDark-Metal1
 41=BackWallDark-Metal2
 42=BackWallDark-Metal3
-43=BackWallDark-Metal4
+43=BackWallDark-BackWallDark_Metal4
 44=BackWallDark-Column7
 45=BackWallDark-Tiles1
 46=BackWallDark-Tiles2
 47=BackWallDark-Tiles3
-48=BackWallDark-Unknown1
+48=BackWallDark-BackWallDark_Unknown1
 49=BackWallDark-Unknown2
 
 50=WallDark-Bricks1
@@ -59,7 +59,7 @@ OverloadTextures
 56=WallDark-Concrete5
 57=WallDark-Industrial1
 58=WallDark-Metal2
-59=WallDark-Metal3
+59=WallDark-WallDark_Metal3
 60=WallDark-Metal4
 61=WallDark-Unknown1
 62=WallDark-Column7
