@@ -7,7 +7,7 @@
 OverloadMaterials
 OverloadTextures
 
-1=Tunnel-smooth_tunnel
+1=Tunnel-Smooth
 2=Tunnel-Rough
 3=Water-Liquid
 4=Acid-Liquid2
@@ -20,7 +20,7 @@ OverloadTextures
 11=Snow-Flare2
 12=Ice-Structure
 13=Earth-Smooth
-14=Earth-rough_earth
+14=Earth-Rough
 15=Rock-Ridge
 
 24=Water2-Liquid3
