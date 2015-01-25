@@ -8,6 +8,5 @@ MaxSlide=10000
 WindDrift=30
 Incindiary=1
 Placement=10
-TextureOverlay=Liquid
 PXSGfx=Lava
 PXSGfxRt=0,0,32,32,-16,-16

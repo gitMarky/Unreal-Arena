@@ -9,7 +9,6 @@ WindDrift=30
 Corrode=100
 Extinguisher=1
 Placement=10
-TextureOverlay=Liquid
 
 [Reaction]
 Type=Convert
