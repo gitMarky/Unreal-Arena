@@ -1,8 +1,0 @@
-[Material]
-Name=WallBlack
-Shape=Flat
-Density=50
-Friction=100
-MaxAirSpeed=100
-MaxSlide=250
-Placement=60
