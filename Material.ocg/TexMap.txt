@@ -4,13 +4,13 @@
 OverloadMaterials
 OverloadTextures
 
-1=Tunnel-Smooth_tunnel
-8=Sand-Smooth_tunnel
-10=Ashes-Smooth_tunnel
+1=Tunnel-smooth_tunnel
+8=Sand-smooth_tunnel
+10=Ashes-smooth_tunnel
 12=Tunnel-brickback
 13=BrickSoft-brick1
-14=Earth-Rough_earth
-15=Rock-Ridge_rock
+14=Earth-rough_earth
+15=Rock-ridge_rock
 
 19=DuroLava-lava_red
 20=Water-water1-water2-water3-water1-water3-water2
@@ -18,8 +18,8 @@ OverloadTextures
 23=Lava-lava_red
 24=Water-water
 
-25=BackWallDark-Bricks1_backwall
-27=BackWallDark-Column1_backwall
+25=BackWallDark-bricks1_backwall
+27=BackWallDark-column1_backwall
 
 28=Earth-earth
 29=Earth-earth_dry
@@ -28,26 +28,27 @@ OverloadTextures
 32=Earth-earth_midsoil
 33=Ashes-ashes
 
-35=WallDark-Grid4_blue
-36=WallDark-Grid4_red
+35=WallDark-grid4_blue
+36=WallDark-grid4_red
 
 40=Granite-granite
 
-42=BackWallDark-Metal3_backwall
-43=BackWallDark-Metal4_backwall
-48=BackWallDark-Unknown1_backwall
+42=BackWallDark-metal3_backwall
+43=BackWallDark-metal4_backwall
+48=BackWallDark-unknown1_backwall
 
-51=WallDark-Bricks2_wall
-52=WallDark-Concrete1_wall
+51=WallDark-bricks2_wall
+52=WallDark-concrete1_wall
 
 
 55=Sand-sand_rough
 56=Sand-sand_smooth
 
 
-58=WallDark-Metal2_wall
-59=WallDark-Metal3_wall
-60=WallDark-Metal4_wall
-70=WallDark-Grid5_red
-72=WallDark-Grid5_blue
-73=WallBlack-Metal2_wall
+58=WallDark-metal2_wall
+59=WallDark-metal3_wall
+60=WallDark-metal4_wall
+70=WallDark-grid5_red
+72=WallDark-grid5_blue
+73=WallBlack-metal2_wall
+75=WallBlack-metal4_wall

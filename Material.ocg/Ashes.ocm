@@ -9,6 +9,5 @@ WindDrift=60
 Corrode=75
 Soil=1
 Placement=30
-TextureOverlay=Spots
-PXSGfx=Ashes
+PXSGfx=PxsAshes
 PXSGfxRt=0,0,32,32,-16,-16
