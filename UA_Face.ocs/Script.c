@@ -1,4 +1,8 @@
 
+protected func Initialize()
+{
+	CreateObject(Environment_ScenarioScript);
+}
 
 // Gamecall from LastManStanding goal, on respawning.
 protected func OnPlayerRelaunch(int plr)
