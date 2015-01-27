@@ -1,0 +1,3 @@
+Name=Fast Bullets
+Description=Bullets hit nearly instantly, except certain projectiles.
+

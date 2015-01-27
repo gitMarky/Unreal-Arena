@@ -1,0 +1,3 @@
+Name=Ansager
+Description=Besondere Ereignisse, wie Double-Kills werden von einem Kommentator angesagt.
+

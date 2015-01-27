@@ -1,0 +1,3 @@
+Name=Festes Equipment
+Description=Extras und Equipment sind an Klassen gebunden.
+

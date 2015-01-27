@@ -1,0 +1,3 @@
+Name=Low Gravity
+Description=Halbiert die Gravitation.
+

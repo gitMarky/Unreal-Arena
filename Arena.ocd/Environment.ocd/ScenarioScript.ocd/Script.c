@@ -10,6 +10,6 @@ local Description = "$Description$";
 func Initialize()
 {
 	CreateObject(Environment_RoundManager);
-	CreateObject(Environment_Configuration);
+	CreateObject(Environment_ConfigurationUA);
 	CreateObject(RoundTester);
 }

@@ -1,0 +1,3 @@
+Name=Team-Kennzeichnung
+Description=Jeder Spieler erhält ein Licht, welches in Teamfarbe leuchtet.
+

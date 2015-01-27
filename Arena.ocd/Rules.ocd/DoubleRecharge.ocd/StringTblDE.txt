@@ -1,0 +1,3 @@
+Name=Ladezeit
+Description=Bei allen Waffen halbiert sich die Feuerrate.
+

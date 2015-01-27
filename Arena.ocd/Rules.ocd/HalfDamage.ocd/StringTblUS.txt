@@ -1,0 +1,3 @@
+Name=Half Damage
+Description=Weapons do 50% damage - includes other modifiers.
+

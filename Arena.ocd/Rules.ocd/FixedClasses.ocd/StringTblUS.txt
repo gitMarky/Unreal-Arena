@@ -1,0 +1,3 @@
+Name=Fixed Equipment
+Description=Extras and equipment depends on the selected class.
+

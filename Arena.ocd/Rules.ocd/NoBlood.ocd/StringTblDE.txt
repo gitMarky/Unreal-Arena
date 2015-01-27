@@ -1,0 +1,3 @@
+Name=Kein Blut
+Description=Schaltet alle Blut- und Gewalteffekte ab.
+
