@@ -4,7 +4,7 @@
  @version 0.1
  */
  
- #appendto Environment_Configuration
+ #appendto player_index
 
 protected func GetDefaultRules()
 {
@@ -13,5 +13,5 @@ protected func GetDefaultRules()
 
 protected func GetAvailableGoals()
 {
-	return [Goal_CaptureTheFlag, Goal_DeathMatch];
+	return [Goal_CaptureTheFlagEx, Goal_DeathMatch];
 }
