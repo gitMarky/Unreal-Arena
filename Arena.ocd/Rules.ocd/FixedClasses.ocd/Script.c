@@ -2,9 +2,7 @@
 
 #include Library_ConfigurableRule
 
-global func MOD_FixedEquipment(){ return ObjectCount( Rule_FixedEquipment ); }
-
-public func RuleRequired() { return [ Rule_ClassSelection ]; }
+public func GameConfigRequiredRules() { return [Rule_ClassSelection];}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

@@ -1,12 +1,10 @@
-/*-- schnelle Projektile --*/
+/*-- Fast projectiles --*/
 
 #include Library_ConfigurableRule
 
-public func RuleForbid(){ return [ IGIB ];}
-
-global func MOD_FastBullets()
+public func GameConfigConflictingRules()
 {
-	return ObjectCount(Rule_FastBullets);
+	return [Rule_InstaGib];
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

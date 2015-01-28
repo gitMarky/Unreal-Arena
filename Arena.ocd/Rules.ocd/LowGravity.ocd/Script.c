@@ -1,8 +1,6 @@
-/*-- LowGravity --*/
+/*-- Low Gravity --*/
+
 #include Library_ConfigurableRule
-
-
-global func MOD_LowGravity(){ return ObjectCount( Rule_LowGravity ); }
 
 static g_iGravity;
 

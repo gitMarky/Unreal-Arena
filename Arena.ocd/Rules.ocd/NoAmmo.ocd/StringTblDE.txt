@@ -1,0 +1,3 @@
+Name=Keine Munition
+Description=Mit dieser Regel brauchen Waffen keine Munition.
+

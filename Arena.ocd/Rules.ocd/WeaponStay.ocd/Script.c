@@ -1,10 +1,10 @@
-/*-- No Blood --*/
+/*-- Weapon Stay --*/
 
 #include Library_ConfigurableRule
 
 public func GameConfigConflictingRules()
 {
-	return [Rule_MoreGore];
+	return [Rule_InstaGib];
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

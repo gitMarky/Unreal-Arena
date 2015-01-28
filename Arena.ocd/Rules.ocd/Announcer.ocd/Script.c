@@ -2,10 +2,15 @@
 
 #include Library_ConfigurableRule
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// properties
+
+local Name = "$Name$";
+local Description = "$Description$";
+
 
 static aAnnouncer;
-
-global func MOD_Announcer(){ return ObjectCount( Rule_Announcer ); }
 
 protected func Initialize()
 {
@@ -79,10 +84,3 @@ public func FxAnnouncerQueueTimer()
 {
 	DoAnnouncerQueue();
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// properties
-
-local Name = "$Name$";
-local Description = "$Description$";

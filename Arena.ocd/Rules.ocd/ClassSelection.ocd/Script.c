@@ -2,7 +2,18 @@
 
 #include Library_ConfigurableRule
 
-global func MOD_ClassSelection(){ return ObjectCount( Rule_ClassSelection ); }
+public func GameConfigConflictingRules()
+{
+	return [Rule_InstaGib];
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// properties
+
+local Name = "$Name$";
+local Description = "$Description$";
+
 
 private func InfoMenuItems(){ return 5; }
 
@@ -509,11 +520,3 @@ private func Class0Info(int iData, int iPlr) // Standardclonk, wenn keine Klasse
   if(iData == CData_Condition)  return false;
   return Default(iData);
 }
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// properties
-
-local Name = "$Name$";
-local Description = "$Description$";

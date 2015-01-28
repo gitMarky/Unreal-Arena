@@ -1,11 +1,6 @@
-/*-- No Blood --*/
+/*-- No Friendly Fire --*/
 
 #include Library_ConfigurableRule
-
-public func GameConfigConflictingRules()
-{
-	return [Rule_MoreGore];
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

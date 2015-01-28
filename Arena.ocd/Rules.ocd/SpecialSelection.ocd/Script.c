@@ -1,7 +1,11 @@
-/*-- No Blood --*/
+/*-- Special Configuration --*/
+
 #include Library_ConfigurableRule
 
-global func MOD_NoBlood(){ return ObjectCount( Rule_NoBlood ); }
+public func GameConfigConflictingRules()
+{
+	return [Rule_InstaGib];
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

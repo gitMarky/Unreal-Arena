@@ -1,0 +1,3 @@
+Name=Kein Friendly Fire
+Description=Falls aktiviert treffen Projektile Freunde nicht.
+

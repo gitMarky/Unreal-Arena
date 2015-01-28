@@ -1,6 +1,6 @@
-#include Library_ConfigurableRule
+/*-- Team Beacons --*/
 
-global func MOD_TeamBeacon(){ return ObjectCount( Rule_TeamBeacon ); }
+#include Library_ConfigurableRule
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
