@@ -6,15 +6,17 @@
 
 #include Environment_Configuration
 
+/*
 protected func CreateMainMenu(object player)
 {
-	CreateDefaultMenu(player, Icon_Configuration, "$MenuCaption$");
+	CreateConfigurationMenu(player, Icon_Configuration, "$MenuCaption$");
 
-	CreateMainMenuGoal(player, Goal_Random);
+	MainMenuAddItemGoal(player, Goal_Random);
+	MainMenuAddItemWinScore(player);
 
 	player->AddMenuItem("$Finished$", "ConfigurationFinished", Icon_Ok, 0, 0, "$Finished$");
 }
-
+*/
 /**
  Nice sound effect when closing the menu.
  */
