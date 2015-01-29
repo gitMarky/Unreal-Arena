@@ -4,7 +4,7 @@
  @version 0.1
  */
  
- #appendto player_index
+ #appendto Environment_ConfigurationUA
 
 protected func GetDefaultRules()
 {
