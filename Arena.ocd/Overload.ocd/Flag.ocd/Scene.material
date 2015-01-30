@@ -11,11 +11,21 @@ material Flag
 			specular 0.000000 0.000000 0.000000 1.000000 12.500000
 			emissive 0.000000 0.000000 0.000000 1.000000
 			scene_blend alpha_blend
-			texture_unit
+
+			texture_unit flag
 			{
 				texture flag.png
 				tex_address_mode wrap
 				filtering trilinear
+			}
+			texture_unit Overlay
+			{
+				texture overlay.png
+				tex_address_mode wrap
+				filtering trilinear
+				colour_op_ex modulate src_texture src_player_colour
+				// take alpha from texture only, ignore player alpha
+				alpha_op_ex source1 src_texture src_player_colour
 			}
 		}
 	}
