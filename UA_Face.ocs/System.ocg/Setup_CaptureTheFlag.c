@@ -11,8 +11,15 @@ public func DoSetup(int round)
 	var flag_team1 = FindObject(Find_ID(GetFlagID()), Find_Func("FindTeam", 1));
 	var flag_team2 = FindObject(Find_ID(GetFlagID()), Find_Func("FindTeam", 2));
 
-	flag_team1->SetClrModulation(team_color[1]);
-	flag_team2->SetClrModulation(team_color[2]);
+	//flag_team1->SetClrModulation(team_color[1]);
+	//flag_team2->SetClrModulation(team_color[2]);
+//	flag_team1->SetClrModulation(GetTeamColor(1));
+//	flag_team2->SetClrModulation(GetTeamColor(2));
+	flag_team1->SetColor(GetTeamColor(1));
+	flag_team2->SetColor(GetTeamColor(2));
+	
+	Log("Setup round %d", round);
+	
 }
 
 public func DoCleanup(int round)

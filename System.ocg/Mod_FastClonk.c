@@ -1,7 +1,7 @@
 local ActMap = {
 Walk = {
-	Accel = 100,
-	Decel = 120,
-	Speed = 500,
+	Accel = 1000,
+	Decel = 1200,
+	Speed = 5000,
 },
 };
