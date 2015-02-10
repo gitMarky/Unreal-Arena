@@ -3,8 +3,6 @@
 
 public func DoSetup(int round)
 {
-	var team_color = [nil, RGB(0, 0, 255), RGB(255, 0, 0)];
-
 	SetFlagBase(1, +347, 590);
 	SetFlagBase(2, -347 + LandscapeWidth(), 590);
 	

@@ -1,28 +1,18 @@
 
-static const SPAWN_Weapon_BaseFront = "a";
 static const SPAWN_Ammo_BaseFront = "b";
-static const SPAWN_Weapon_BaseBack = "c";
 static const SPAWN_Ammo_BaseBack = "d";
 
-static const SPAWN_Weapon_BaseFloor1 = "e";
 static const SPAWN_Ammo_BaseFloor1 = "f";
 
-static const SPAWN_Weapon_BaseFloor2 = "g";
 static const SPAWN_Ammo_BaseFloor2 = "h";
 
-static const SPAWN_Weapon_BaseRoof = "i";
 static const SPAWN_Ammo_BaseRoof = "j";
 static const SPAWN_Extra_BaseRoof = "k";
 
-static const SPAWN_Weapon_BaseTunnel = "l";
 static const SPAWN_Ammo_BaseTunnel = "m";
 
 static const SPAWN_Superweapon = "n";
 
-static const SPAWN_Health_Center = "o";
-static const SPAWN_Health_Base = "p";
-static const SPAWN_Vial_Base = "q";
-static const SPAWN_Superhealth = "r";
 
 protected func Initialize()
 {
@@ -46,86 +36,86 @@ protected func CreateSpawnPoints()
 	
 	
 	// spawn point templates
-	var weapon_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_BaseFront);
-	var ammo_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseFront);
+	var weapon_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_ASMD)->SetDescription("$WeaponBaseFront$");
+	//var ammo_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseFront);
 	
-	var weapon_linkgun = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_BaseBack);
-	var ammo_linkgun = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseBack);
+	var weapon_linkgun = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_PulseRifle)->SetDescription("$WeaponBaseBack$");
+	//var ammo_linkgun = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseBack);
 
-	var weapon_rocket = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_BaseFloor1);
-	var ammo_rocket = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseFloor1);
+	var weapon_rocket = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_RocketLauncher)->SetDescription("$WeaponBaseFloor1$");
+	//var ammo_rocket = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseFloor1);
 
-	var weapon_sniper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_BaseFloor2);
-	var ammo_sniper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseFloor2);
+	var weapon_sniper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_SniperRifle)->SetDescription("$WeaponBaseFloor2$");
+	//var ammo_sniper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseFloor2);
 
-	var weapon_sniper2 = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_BaseRoof);
-	var ammo_sniper2 = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseRoof);
+	var weapon_sniper2 = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_SniperRifle)->SetDescription("$WeaponBaseRoof$");
+	//var ammo_sniper2 = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseRoof);
 
-	var weapon_ripper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_BaseTunnel);
-	var ammo_ripper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseTunnel);
+	var weapon_ripper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_Ripper)->SetDescription("$WeaponBaseTunnel$");
+	//var ammo_ripper = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_BaseTunnel);
 
-	var weapon_redeemer = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Superweapon);
-	var armor = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Extra_BaseRoof);
+	var weapon_redeemer = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Superweapon)->SetDescription("$WeaponSuper$");
+	var armor = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Item_Armor)->SetDescription("$ExtraBaseRoof$");
 
-	var vial = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Vial_Base);
-	var health_base = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Health_Base);
-	var health_center = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Health_Center);
-	var keg_o_health = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Superhealth);
+	var vial = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Item_HealthVial)->SetDescription("$HealthSmall$");
+	var health_base = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Item_HealthPack)->SetDescription("$HealthBase$");
+	var health_center = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Item_HealthPack)->SetDescription("$HealthCenter$");
+	var keg_o_health = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Item_HealthKeg)->SetDescription("$HealthSuper$");
 
 
 	// ASMD
 	CopySpawnPoint(weapon_asmd, 411, 581);
-	CopySpawnPoint(ammo_asmd, 411-20, 581);
-	CopySpawnPoint(ammo_asmd, 411+20, 581);
+//	CopySpawnPoint(ammo_asmd, 411-20, 581);
+//	CopySpawnPoint(ammo_asmd, 411+20, 581);
 	
 	CopySpawnPoint(weapon_asmd, 411, 581, true);
-	CopySpawnPoint(ammo_asmd, 411-20, 581, true);
-	CopySpawnPoint(ammo_asmd, 411+20, 581, true);
+//	CopySpawnPoint(ammo_asmd, 411-20, 581, true);
+//	CopySpawnPoint(ammo_asmd, 411+20, 581, true);
 
 	// Linkgun
 	CopySpawnPoint(weapon_linkgun, 284, 581);
-	CopySpawnPoint(ammo_linkgun, 284+20, 581);
-	CopySpawnPoint(ammo_linkgun, 284-20, 581);
+//	CopySpawnPoint(ammo_linkgun, 284+20, 581);
+//	CopySpawnPoint(ammo_linkgun, 284-20, 581);
 
 	CopySpawnPoint(weapon_linkgun, 284, 581, true);
-	CopySpawnPoint(ammo_linkgun, 284+20, 581, true);
-	CopySpawnPoint(ammo_linkgun, 284-20, 581, true);
+//	CopySpawnPoint(ammo_linkgun, 284+20, 581, true);
+//	CopySpawnPoint(ammo_linkgun, 284-20, 581, true);
 	
 	// Rocket Launcher
 	CopySpawnPoint(weapon_rocket, 272, 490);
-	CopySpawnPoint(ammo_rocket, 272-20, 490);
-	CopySpawnPoint(ammo_rocket, 272+20, 490);
+//	CopySpawnPoint(ammo_rocket, 272-20, 490);
+//	CopySpawnPoint(ammo_rocket, 272+20, 490);
 
 	CopySpawnPoint(weapon_rocket, 272, 490, true);
-	CopySpawnPoint(ammo_rocket, 272-20, 490, true);
-	CopySpawnPoint(ammo_rocket, 272+20, 490, true);
+//	CopySpawnPoint(ammo_rocket, 272-20, 490, true);
+//	CopySpawnPoint(ammo_rocket, 272+20, 490, true);
 	
 	// Sniper
 	CopySpawnPoint(weapon_sniper, 400, 369);
-	CopySpawnPoint(ammo_sniper, 400-20, 369);
-	CopySpawnPoint(ammo_sniper, 400+20, 369);
+//	CopySpawnPoint(ammo_sniper, 400-20, 369);
+//	CopySpawnPoint(ammo_sniper, 400+20, 369);
 
 	CopySpawnPoint(weapon_sniper, 400, 369, true);
-	CopySpawnPoint(ammo_sniper, 400-20, 369, true);
-	CopySpawnPoint(ammo_sniper, 400+20, 369, true);
+//	CopySpawnPoint(ammo_sniper, 400-20, 369, true);
+//	CopySpawnPoint(ammo_sniper, 400+20, 369, true);
 
 	// base - roof
 	CopySpawnPoint(weapon_sniper2, 400, 195);
-	CopySpawnPoint(ammo_sniper2, 400-20, 195);
-	CopySpawnPoint(ammo_sniper2, 400-30, 195);
+//	CopySpawnPoint(ammo_sniper2, 400-20, 195);
+//	CopySpawnPoint(ammo_sniper2, 400-30, 195);
 
 	CopySpawnPoint(weapon_sniper2, 400, 195, true);
-	CopySpawnPoint(ammo_sniper2, 400-20, 195, true);
-	CopySpawnPoint(ammo_sniper2, 400-30, 195, true);
+//	CopySpawnPoint(ammo_sniper2, 400-20, 195, true);
+//	CopySpawnPoint(ammo_sniper2, 400-30, 195, true);
 
 	// Ripper
 	CopySpawnPoint(weapon_ripper, 550, 665);
-	CopySpawnPoint(ammo_ripper, 550-20, 665);
-	CopySpawnPoint(ammo_ripper, 550+20, 665);
+//	CopySpawnPoint(ammo_ripper, 550-20, 665);
+//	CopySpawnPoint(ammo_ripper, 550+20, 665);
 
 	CopySpawnPoint(weapon_ripper, 550, 665, true);
-	CopySpawnPoint(ammo_ripper, 550-20, 665, true);
-	CopySpawnPoint(ammo_ripper, 550+20, 665, true);
+//	CopySpawnPoint(ammo_ripper, 550-20, 665, true);
+//	CopySpawnPoint(ammo_ripper, 550+20, 665, true);
 	
 	// Redeemer
 	CopySpawnPoint(weapon_redeemer, 635, 415);
@@ -165,22 +155,22 @@ protected func CreateSpawnPoints()
 	// remove the templates again
 	
 	weapon_asmd->RemoveObject();
-	ammo_asmd->RemoveObject();
+//	ammo_asmd->RemoveObject();
 
 	weapon_linkgun->RemoveObject();
-	ammo_linkgun->RemoveObject();
+//	ammo_linkgun->RemoveObject();
 
 	weapon_rocket->RemoveObject();
-	ammo_rocket->RemoveObject();
+//	ammo_rocket->RemoveObject();
 
 	weapon_sniper->RemoveObject();
-	ammo_sniper->RemoveObject();
+//	ammo_sniper->RemoveObject();
 
 	weapon_sniper2->RemoveObject();
-	ammo_sniper2->RemoveObject();
+//	ammo_sniper2->RemoveObject();
 
 	weapon_ripper->RemoveObject();
-	ammo_ripper->RemoveObject();
+//	ammo_ripper->RemoveObject();
 
 	weapon_redeemer->RemoveObject();
 	armor->RemoveObject();

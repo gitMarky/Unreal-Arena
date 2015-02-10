@@ -1,2 +1,17 @@
 Red=Rot
 Blue=Blau
+
+WeaponBaseFront=Basis vorne
+WeaponBaseBack=Basis hinten
+WeaponBaseFloor1=Basis mitte
+WeaponBaseFloor2=Basis Sniper mitte
+WeaponBaseRoof=Basis Sniper oben
+WeaponBaseTunnel=Basis Tunnel
+WeaponSuper=Superwaffe
+
+ExtraBaseRoof=Extra Sniper oben
+
+HealthSmall=Health Vial
+HealthBase=Health Pack Basis
+HealthCenter=Health Pack Mitte
+HealthSuper=Super Health Pack
