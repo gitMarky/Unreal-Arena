@@ -3,17 +3,43 @@
 
 protected func GetDefaultItemConfigurations()
 {
-	return [GetWeaponSetUTClassic()];
+	return [GetWeaponSet(weapon_set_ut_classic)];
 }
 
-private func GetWeaponSetUTClassic()
+local weapon_set_ut_classic = {
+	key = "default",
+	name = "Unreal Classic",
+	icon = Environment_Configuration,
+	weapon_chainsaw = Firestone,
+	weapon_enforcer = Firestone,
+	weapon_biorifle = Firestone,
+	weapon_asmd = Firestone,
+	weapon_pulserifle = Firestone,
+	weapon_ripper = Firestone,
+	weapon_minigun = Firestone,
+	weapon_flakcannon = Firestone,
+	weapon_rocketlauncher = Firestone,
+	weapon_sniperrifle = Firestone,
+	item_healthvial = Bread,
+	item_healthpack = Bread,
+	item_healthkeg = Bread,
+	item_pads = Bread,
+	item_armor = Bread,
+	item_shield = Bread,
+	item_cloak = Bread,
+	item_damage = Bread,
+	item_boots = Bread,
+};
+
+private func GetWeaponSet(proplist info)
 {
-	// default
+	// basic information
 	var set = {};
-	SetProperty(GAMECONFIG_Property_Keys, "default", set);
-	SetProperty(GAMECONFIG_Property_Name, "Unreal Classic", set);
-	SetProperty(GAMECONFIG_Property_Icon, Environment_Configuration, set);
+	SetProperty(GAMECONFIG_Property_Keys, info.key, set);
+	SetProperty(GAMECONFIG_Property_Name, info.name, set);
+	SetProperty(GAMECONFIG_Property_Icon, info.icon, set);
 	
+	// empty item proplists
 	var items = {};
 	var weapon_chainsaw = {};
 	var weapon_enforcer = {};
@@ -35,28 +61,29 @@ private func GetWeaponSetUTClassic()
 	var item_damage = {};
 	var item_boots = {};
 
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_chainsaw);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_enforcer);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_biorifle);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_asmd);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_pulserifle);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_ripper);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_minigun);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_flakcannon);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_rocketlauncher);
-	SetProperty(GAMECONFIG_Proplist_Def, Firestone, weapon_sniperrifle);
+	// fill slot proplists
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_chainsaw, weapon_chainsaw);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_enforcer, weapon_enforcer);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_biorifle, weapon_biorifle);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_asmd, weapon_asmd);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_pulserifle, weapon_pulserifle);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_ripper, weapon_ripper);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_minigun, weapon_minigun);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_flakcannon, weapon_flakcannon);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_rocketlauncher, weapon_rocketlauncher);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_sniperrifle, weapon_sniperrifle);
 	
-	SetProperty(GAMECONFIG_Proplist_Def, Bread, item_healthvial);
-    SetProperty(GAMECONFIG_Proplist_Def, Bread, item_healthpack);
-    SetProperty(GAMECONFIG_Proplist_Def, Bread, item_healthkeg);
-    SetProperty(GAMECONFIG_Proplist_Def, Dynamite, item_pads);
-    SetProperty(GAMECONFIG_Proplist_Def, Dynamite, item_armor);
-    SetProperty(GAMECONFIG_Proplist_Def, Dynamite, item_shield);
-    SetProperty(GAMECONFIG_Proplist_Def, Dynamite, item_cloak);
-    SetProperty(GAMECONFIG_Proplist_Def, Dynamite, item_damage);
-    SetProperty(GAMECONFIG_Proplist_Def, Dynamite, item_boots);
+	SetProperty(GAMECONFIG_Proplist_Def, info.item_healthvial, item_healthvial);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_healthpack, item_healthpack);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_healthkeg, item_healthkeg);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_pads, item_pads);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_armor, item_armor);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_shield, item_shield);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_cloak, item_cloak);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_damage, item_damage);
+    SetProperty(GAMECONFIG_Proplist_Def, info.item_boots, item_boots);
 	
-	
+	// fill item proplist
     SetProperty(SPAWN_Weapon_Chainsaw, weapon_chainsaw, items);
     SetProperty(SPAWN_Weapon_Enforcer, weapon_enforcer, items);
     SetProperty(SPAWN_Weapon_BioRifle, weapon_biorifle, items);
