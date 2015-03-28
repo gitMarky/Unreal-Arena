@@ -20,6 +20,7 @@ local weapon_set_ut_classic = {
 	weapon_flakcannon = Firestone,
 	weapon_rocketlauncher = Firestone,
 	weapon_sniperrifle = Firestone,
+	weapon_superweapon = Firestone,
 	item_healthvial = Bread,
 	item_healthpack = Bread,
 	item_healthkeg = Bread,
@@ -51,6 +52,7 @@ private func GetWeaponSet(proplist info)
 	var weapon_flakcannon = {};
 	var weapon_rocketlauncher = {};
 	var weapon_sniperrifle = {};
+	var weapon_superweapon = {};
 	var item_healthvial = {};
 	var item_healthpack = {};
 	var item_healthkeg = {};
@@ -72,6 +74,7 @@ private func GetWeaponSet(proplist info)
 	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_flakcannon, weapon_flakcannon);
 	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_rocketlauncher, weapon_rocketlauncher);
 	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_sniperrifle, weapon_sniperrifle);
+	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_superweapon, weapon_superweapon);
 	
 	SetProperty(GAMECONFIG_Proplist_Def, info.item_healthvial, item_healthvial);
     SetProperty(GAMECONFIG_Proplist_Def, info.item_healthpack, item_healthpack);
@@ -94,6 +97,8 @@ private func GetWeaponSet(proplist info)
     SetProperty(SPAWN_Weapon_FlakCannon, weapon_flakcannon, items);
     SetProperty(SPAWN_Weapon_RocketLauncher, weapon_rocketlauncher, items);
     SetProperty(SPAWN_Weapon_SniperRifle, weapon_sniperrifle, items);
+    
+    SetProperty(SPAWN_Superweapon, weapon_superweapon, items);
 
     SetProperty(SPAWN_Item_HealthVial, item_healthvial, items);
     SetProperty(SPAWN_Item_HealthPack, item_healthpack, items);

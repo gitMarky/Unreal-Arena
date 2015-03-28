@@ -1,7 +1,13 @@
+#appendto Clonk
+
 local ActMap = {
 Walk = {
-	Accel = 1000,
-	Decel = 1200,
-	Speed = 5000,
+//	Accel = 16,
+//	Decel = 22,
+//	Speed = 200,
+	
+	Accel = 100,
+	Decel = 100,
+	Speed = 350,
 },
 };
