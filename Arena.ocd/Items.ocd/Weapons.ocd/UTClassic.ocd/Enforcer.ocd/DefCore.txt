@@ -2,12 +2,12 @@
 id=Weapon_UT99_Enforcer
 Version=6,0
 Category=C4D_Object
-Width=26
-Height=5
-Offset=-13,-2
+Width=7
+Height=4
+Offset=-4,-2
 Vertices=4
-VertexX=-8,3,6,0
-VertexY=0,0,2,0
+VertexX=-3,3,-3,3
+VertexY=-2,-2,2,2
 VertexFriction=50,50,70
 Value=50
 Mass=15

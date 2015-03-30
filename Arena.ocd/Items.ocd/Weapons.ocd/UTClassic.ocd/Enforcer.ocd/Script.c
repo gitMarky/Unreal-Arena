@@ -7,11 +7,10 @@ local Collectible = 1;
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
-public func GetCarryBone() { return "Bone"; }
+public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(-65, 1, 0, 0), Trans_Translate(13000, 8000, -2000));
-	return Trans_Scale(600, 600, 600); //;Trans_Rotate(-90, 0, 1, 0);
+	return Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(-65,1,0,0));
 }
 
 func Hit()
@@ -97,10 +96,26 @@ public func FireSound(object user, proplist firemode)
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	//("Fire", 50, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Remove), Anim_Const(1000));
+	// this does nothing at the moment, 
+	// because the attached mesh does not animate :(
+	
+	//PlayAnimation("Fire", 1, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Remove), Anim_Const(1000));
 	//SetAction("Fire");
-	user->CreateMuzzleFlash(0, 0, angle, 10);
-	CreateCartridgeEffect("Cartridge_Pistol", 6, Sin(-angle, 10), -RandomX(6, 12));
+	
+	// muzzle flash
+	
+	var x = +Sin(angle, firemode.projectile_distance);
+	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
+	 
+	
+	EffectMuzzleFlash(user, x, y, angle, 10);
+	
+	// casing
+	
+	x = +Sin(angle, firemode.projectile_distance / 2);
+	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
+
+	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, user->GetXDir() + Sin(-angle, 10), user->GetYDir() - RandomX(12, 15));
 }
 
 local ActMap = {
