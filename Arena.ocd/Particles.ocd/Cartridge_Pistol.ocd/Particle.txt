@@ -1,3 +1,0 @@
-[Particle]
-Name=Cartridge_Pistol
-Face=0,0,32,32,-16,-16

@@ -6,6 +6,6 @@ protected func Initialize()
 }
 
 public func OnLaunch()
-{
+{	
 	SetAction("TravelBallistic");
 }
