@@ -9,3 +9,8 @@ public func OnLaunch()
 {	
 	SetAction("TravelBallistic");
 }
+
+public func OnLaunched()
+{
+	CreateTrail(0, 0, 2, 100);	
+}
