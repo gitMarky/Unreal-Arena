@@ -5,7 +5,7 @@ protected func Initialize()
 	SetObjectBlitMode(GFX_BLIT_Additive);
 }
 
-public func OnLaunched()
+public func OnLaunch()
 {
-	SetAction("Travel");
+	SetAction("TravelBallistic");
 }
