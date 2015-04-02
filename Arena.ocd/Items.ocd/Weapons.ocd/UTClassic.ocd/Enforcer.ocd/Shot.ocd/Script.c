@@ -12,5 +12,5 @@ public func OnLaunch()
 
 public func OnLaunched()
 {
-	CreateTrail(0, 0, 2, 100);	
+	CreateTrail(0, 0, 2, 80);	
 }
