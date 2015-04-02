@@ -5,12 +5,29 @@ protected func Initialize()
 	SetObjectBlitMode(GFX_BLIT_Additive);
 }
 
-public func OnLaunch()
-{	
+private func OnLaunch()
+{
 	SetAction("TravelBallistic");
 }
 
-public func OnLaunched()
+private func OnLaunched()
 {
-	CreateTrail(0, 0, 2, 80);	
+	CreateTrail(0, 0, 2, 80);
+}
+
+
+private func ProjectileColor(int time)
+{
+	var progress = 100 * time / lifetime;
+	var value = Max(0, 255 - progress * 2);
+	
+	return RGBa(255, value, value, value);
+}
+
+private func TrailColor(int time)
+{
+	var progress = 100 * time / lifetime;
+	var value = Max(0, 255 - progress * 2);
+	
+	return RGBa(255, value, value, value);
 }
