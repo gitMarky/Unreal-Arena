@@ -13,6 +13,7 @@ private func OnLaunch()
 private func OnLaunched()
 {
 	CreateTrail(0, 0, 2, 80);
+	trail->SetGraphics("Red");
 }
 
 
