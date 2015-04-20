@@ -18,7 +18,7 @@ func Hit()
 	Sound("GeneralHit?");
 }
 
-public func GetAmmoSource()
+public func GetAmmoSource(id ammo)
 {
 	return AMMO_Source_Container;
 }

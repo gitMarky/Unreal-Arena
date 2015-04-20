@@ -33,30 +33,37 @@ local fire_modes =
 	default = 
 	{
 		name = 				"default",
-		icon = 				nil,
-		condition = 		nil,
+		icon = 				nil, // id - menu icon
+		condition = 		nil, // string - callback for a condition
 		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+		ammo_id = 			nil,
+		ammo_usage =		1, // int - this many units of ammo
+		ammo_rate =			1, // int - per this many shots fired
 	
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	15,
+		delay_charge  =     0, // int, frames - time that the button must be held before the shot is fired
+		delay_recover = 	26, // int, frames - time between consecutive shots
+		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
+		delay_reload =		6, // int, frames - time to reload
 	
 		mode = 			 WEAPON_FM_Single,
 	
-		damage = 			15, 
+		damage = 			8, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
+		projectile_id = 	Projectile_FlakShot,
+		projectile_speed = 	60,
+		projectile_speed_rnd = 70,
 		projectile_range = 600,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
+		projectile_number = 10,
+		projectile_spread = 0, // default inaccuracy of a single projectile
+		projectile_spread_factor = 100, // factor
 
-		spread = 1,
-		spread_factor = 100,
+		spread = 1,			   // inaccuracy from prolonged firing
+		spread_factor = 100,   // factor
+		
+		burst = 0, // number of projectiles fired in a burst
 	},
 	
 	secondary = 
@@ -91,7 +98,8 @@ local fire_modes =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("enforcer-fire", nil, nil, nil, nil, true);
+	Sound("flak-fire-reg", nil, nil, nil, nil, true);
+	Sound("flak-cock", nil, nil, nil, nil, true);
 }
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
@@ -118,12 +126,6 @@ public func FireEffect(object user, int angle, proplist firemode)
 	
 	EffectMuzzleFlash(user, x, y, angle, 10, false, true);
 		
-	// casing
-	
-	x = +Sin(angle, firemode.projectile_distance / 2);
-	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
-
-	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, user->GetXDir() + Sin(-angle, 10), user->GetYDir() - RandomX(12, 15));
 }
 
 local ActMap = {

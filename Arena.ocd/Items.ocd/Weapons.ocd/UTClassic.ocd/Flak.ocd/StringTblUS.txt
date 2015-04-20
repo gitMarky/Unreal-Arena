@@ -1,0 +1,13 @@
+Name=Flak Cannon
+Description=Classification: Heavy Shrapnel|
+
+Primary Fire: White hot chunks of scrap metal are sprayed forth, shotgun style.
+
+|Secondary Fire: A grenade full of shrapnel is lobbed at the enemy.|
+
+Techniques: The Flak Cannon is far more useful in close range combat situations.
+
+|Standard=Spread shots|
+Grenade=Grenade
+
+KillMsg=["pVictim was ripped to shreds by pKiller's sWeapon."]
