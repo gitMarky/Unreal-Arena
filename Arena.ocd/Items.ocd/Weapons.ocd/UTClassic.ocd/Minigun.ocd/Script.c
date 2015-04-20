@@ -41,10 +41,10 @@ local fire_modes =
 		ammo_usage =		1,	// this many units of ammo
 		ammo_rate =			1, // per this many shots fired
 	
-		delay_prior = 		0, // time before the first shot is fired
-		delay_reload =		260, // time to reload, in frames
+		delay_charge =      0,
 		delay_recover = 	4, // time between consecutive shots
-		delay_burst = 		0, // time between consecutive bursts
+		delay_cooldown = 	20,
+		delay_reload =		260, // time to reload, in frames
 	
 		mode = 			 WEAPON_FM_Auto,
 	
@@ -96,34 +96,40 @@ local fire_modes =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("enforcer-fire");
+	Sound("m1-fire-reg", nil, nil, nil, 1);
+}
+
+
+public func OnFireProjectile(object user, object projectile, proplist firemode)
+{
+	projectile->Trail(1, 60);
+}
+
+public func OnStartCooldown(object user, proplist firemode)
+{
+	
+	Sound("m1-fire-reg", nil, nil, nil, -1);
+	Sound("m1-cooldown");
 }
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	// this does nothing at the moment, 
-	// because the attached mesh does not animate :(
-	
-	//PlayAnimation("Fire", 1, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Remove), Anim_Const(1000));
-	PlayAnimation("Fire", 6, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Hold), Anim_Const(1000));
-	//PlayAnimation("Fire", 6, Anim_Linear(0, 0, GetAnimationLength("Fire"), animation_set["ShootTime"], ANIM_Hold), Anim_Const(1000));
-
-	//SetAction("Fire");
 	
 	// muzzle flash
 	
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
-	 
-	
-	EffectMuzzleFlash(user, x, y, angle, 10, false, true);
+
+	EffectMuzzleFlash(user, x, y, angle, RandomX(15, 25), false, true);
 		
 	// casing
 	
 	x = +Sin(angle, firemode.projectile_distance / 2);
 	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
 
-	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, user->GetXDir() + Sin(-angle, 10), user->GetYDir() - RandomX(12, 15));
+	var dir = (user->GetDir() * 2) - 1;
+
+	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
 }
 
 local ActMap = {
