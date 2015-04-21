@@ -51,9 +51,8 @@ local fire_modes =
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_FlakShot,
-		projectile_speed = 	60,
-		projectile_speed_rnd = 70,
-		projectile_range = 600,
+		projectile_speed = 	[60, 130, 10],
+		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		projectile_number = 10,

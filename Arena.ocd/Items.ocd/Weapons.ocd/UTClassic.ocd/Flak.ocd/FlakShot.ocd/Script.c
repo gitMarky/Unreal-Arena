@@ -16,6 +16,9 @@ protected func Hit()
 	
 	if(reflections)
 	{
+		if (!GetXDir()) SetXDir(RandomX(-10, 10));
+		if (!GetYDir()) SetYDir(RandomX(-10, 10));
+
 		SetXDir(-GetXDir()/2);
 		SetYDir(-GetYDir()/2);
 		reflections--;
@@ -29,9 +32,7 @@ protected func Hit()
 	}
 }
 
-/**
 public func ContactBottom()
 {
 	Hit();
 }
-*/
