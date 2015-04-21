@@ -51,16 +51,14 @@ local fire_modes =
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_FlakShot,
-		projectile_speed = 	[60, 130, 10],
+		projectile_speed = 	[60, 90, 10],
 		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		projectile_number = 10,
-		projectile_spread = 0, // default inaccuracy of a single projectile
-		projectile_spread_factor = 100, // factor
+		projectile_spread = [2, 1], // default inaccuracy of a single projectile
 
-		spread = 1,			   // inaccuracy from prolonged firing
-		spread_factor = 100,   // factor
+		spread = [0, 1],			   // inaccuracy from prolonged firing
 		
 		burst = 0, // number of projectiles fired in a burst
 	},

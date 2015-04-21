@@ -57,11 +57,9 @@ local fire_modes =
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		projectile_number = 1,
-		projectile_spread = 0, // default inaccuracy of a single projectile
-		projectile_spread_factor = 100, // factor
+		projectile_spread = [5, 2], // 2 - default inaccuracy of a single projectile
 
-		spread = 2,			   // inaccuracy from prolonged firing
-		spread_factor = 100,   // factor
+		spread = [0, 1],			   // inaccuracy from prolonged firing
 	},
 	
 	secondary = 

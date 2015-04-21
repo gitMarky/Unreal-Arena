@@ -22,6 +22,8 @@ protected func Hit()
 		SetXDir(-GetXDir()/2);
 		SetYDir(-GetYDir()/2);
 		reflections--;
+		
+		if (reflections <= 0) remove_on_hit = true;
 	}
 	
 	if(self)

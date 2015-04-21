@@ -54,9 +54,9 @@ local fire_modes =
 		projectile_range = 600,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
+		projectile_spread = [7, 4],
 
-		spread = 1,
-		spread_factor = 100,
+		spread = [0, 1],
 	},
 	
 	secondary = 
@@ -83,9 +83,10 @@ local fire_modes =
 		projectile_range = 600,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
+		
+		projectile_spread = [4, 1],
 
-		spread = 3,
-		spread_factor = 100,
+		spread = [0, 1], 
 	},
 };
 
