@@ -1,4 +1,7 @@
 #include Library_Weapon
+#include Plugin_Weapon_FiremodeByUse
+
+
 
 local Name = "$Name$";
 local Description = "$Description$";
@@ -30,9 +33,9 @@ public func GetAmmoContainer()
 
 local fire_modes =
 {
-	default = 
+	primary = 
 	{
-		name = 				"default",
+		name = 				"primary",
 		icon = 				nil, // id - menu icon
 		condition = 		nil, // string - callback for a condition
 		
@@ -43,7 +46,7 @@ local fire_modes =
 		delay_charge  =     0, // int, frames - time that the button must be held before the shot is fired
 		delay_recover = 	26, // int, frames - time between consecutive shots
 		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
-		delay_reload =		6, // int, frames - time to reload
+		delay_reload =		0, // int, frames - time to reload
 	
 		mode = 			 WEAPON_FM_Single,
 	
@@ -61,6 +64,8 @@ local fire_modes =
 		spread = [0, 1],			   // inaccuracy from prolonged firing
 		
 		burst = 0, // number of projectiles fired in a burst
+		
+		sound = "flak-fire-reg",
 	},
 	
 	secondary = 
@@ -69,33 +74,39 @@ local fire_modes =
 		icon = 				nil,
 		condition = 		nil,
 		
-		ammo_id = 			Ammo_Pistol,
+		ammo_id = 			nil,
 		ammo_usage =		1,
 		ammo_rate =			1,
 	
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	10,
+		delay_charge  =     0, // int, frames - time that the button must be held before the shot is fired
+		delay_recover = 	36, // int, frames - time between consecutive shots
+		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
+		delay_reload =		0, // int, frames - time to reload
 	
 		mode = 			 WEAPON_FM_Single,
 	
 		damage = 			15, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
-		projectile_range = 600,
+		projectile_id = 	Projectile_FlakGrenade,
+		projectile_speed = 	[70, 90],
+		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
+		projectile_number = 1,
+		projectile_spread = [5, 2],
 
-		spread = 3,
-		spread_factor = 100,
+		spread = [0, 1],
+		
+		burst = 0,
+		
+		sound = "flak-fire-alt",
 	},
 };
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("flak-fire-reg", nil, nil, nil, nil, true);
+	Sound(firemode.sound, nil, nil, nil, nil, true);
 	Sound("flak-cock", nil, nil, nil, nil, true);
 }
 

@@ -1,4 +1,5 @@
 #include Library_Weapon
+#include Plugin_Weapon_FiremodeByUse
 
 local Name = "$Name$";
 local Description = "$Description$";
@@ -31,9 +32,9 @@ public func GetAmmoContainer()
 
 local fire_modes =
 {
-	default = 
+	primary = 
 	{
-		name = 				"default", // string - menu caption
+		name = 				"primary", // string - menu caption
 		icon = 				nil, // id - menu icon
 		condition = 		nil, // string - callback for a condition
 		
@@ -65,18 +66,19 @@ local fire_modes =
 	secondary = 
 	{
 		name = 				"secondary",
-		icon = 				nil,
-		condition = 		nil,
+		icon = 				nil, // id - menu icon
+		condition = 		nil, // string - callback for a condition
 		
 		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+		ammo_usage =		1,	// this many units of ammo
+		ammo_rate =			1, // per this many shots fired
 	
-		delay_prior = 		0,
-		delay_reload =		260,
-		delay_recover = 	10,
+		delay_charge =      0,
+		delay_recover = 	2, // time between consecutive shots
+		delay_cooldown = 	20,
+		delay_reload =		260, // time to reload, in frames
 	
-		mode = 			 WEAPON_FM_Single,
+		mode = 			 WEAPON_FM_Auto,
 	
 		damage = 			6, 
 		damage_type = 		nil,	
@@ -86,15 +88,23 @@ local fire_modes =
 		projectile_range = 600,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
+		projectile_number = 1,
+		projectile_spread = [15, 2], // 6 - default inaccuracy of a single projectile
 
-		spread = 6,
-		spread_factor = 100,
+		spread = [0, 1],			   // inaccuracy from prolonged firing	},
 	},
 };
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("m1-fire-reg", nil, nil, nil, 1);
+	if (firemode.name == fire_modes.primary.name)
+	{
+		Sound("m1-fire-reg", nil, nil, nil, 1);
+	}
+	else
+	{
+		Sound("m1-fire-alt", nil, nil, nil, 1);
+	}
 }
 
 
@@ -107,6 +117,7 @@ public func OnStartCooldown(object user, proplist firemode)
 {
 	
 	Sound("m1-fire-reg", nil, nil, nil, -1);
+	Sound("m1-fire-alt", nil, nil, nil, -1);
 	Sound("m1-cooldown");
 }
 

@@ -30,9 +30,9 @@ public func GetAmmoContainer()
 
 local fire_modes =
 {
-	default = 
+	primary	= 
 	{
-		name = 				"default",
+		name = 				"primary",
 		icon = 				nil,
 		condition = 		nil,
 		
