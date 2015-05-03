@@ -11,7 +11,8 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(-65,1,0,0));
+	//return Trans_Mul(Trans_Rotate(-90, 1, 0, 0), Trans_Rotate(-5, 0, 1, 0), Trans_Rotate(-50,0,0,1), Trans_Translate(0, 0, 2200));
+	return Trans_Mul(Trans_Rotate(-90, 1, 0, 0), Trans_Rotate(-5, 0, 1, 0), Trans_Rotate(-50,0,0,1), Trans_Translate(0, 0, 200));
 }
 
 func Hit()
@@ -55,8 +56,8 @@ local fire_modes =
 		projectile_id = 	Projectile_Bullet,
 		projectile_speed = 	210,
 		projectile_range = 600,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_distance = 18,
+		projectile_offset_y = -2, // -4
 		projectile_number = 1,
 		projectile_spread = [5, 2], // 2 - default inaccuracy of a single projectile
 
@@ -86,14 +87,25 @@ local fire_modes =
 		projectile_id = 	Projectile_Bullet,
 		projectile_speed = 	210,
 		projectile_range = 600,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_distance = 18,
+		projectile_offset_y = -2, // -4
 		projectile_number = 1,
 		projectile_spread = [15, 2], // 6 - default inaccuracy of a single projectile
 
 		spread = [0, 1],			   // inaccuracy from prolonged firing	},
 	},
 };
+
+local weapon_properties = 
+{
+		gfx_distance = 16,
+		gfx_offset_y = -2,
+};
+
+local animation_set = {
+		AimMode        = AIM_Position, // The aiming animation is done by adjusting the animation position to fit the angle
+		AnimationAim   = "CrossbowAimArms",
+	};
 
 public func FireSound(object user, proplist firemode)
 {
