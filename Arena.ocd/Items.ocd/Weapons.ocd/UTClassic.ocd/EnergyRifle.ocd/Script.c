@@ -43,21 +43,23 @@ local fire_modes =
 	
 		delay_prior = 		0,
 		delay_reload =		0,
-		delay_recover = 	15,
+		delay_recover = 	26,
 	
 		mode = 			 WEAPON_FM_Single,
 	
-		damage = 			15, 
+		damage = 			40, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
-		projectile_range = 600,
+		projectile_id = 	Projectile_ShockBeam,
+		projectile_speed = 	400,
+		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
-		projectile_spread = [7, 4],
+		projectile_spread = [0, 1],
 
 		spread = [0, 1],
+		
+		sound = "shock-fire-reg",
 	},
 	
 	secondary = 
@@ -72,46 +74,41 @@ local fire_modes =
 	
 		delay_prior = 		0,
 		delay_reload =		0,
-		delay_recover = 	10,
+		delay_recover = 	24,
 	
 		mode = 			 WEAPON_FM_Single,
 	
-		damage = 			15, 
+		damage = 			40, 
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
-		projectile_range = 600,
+		projectile_speed = 	300,
+		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		
-		projectile_spread = [4, 1],
+		projectile_spread = [7, 2],
 
-		spread = [0, 1], 
+		spread = [0, 1],
+		
+		sound = "shock-fire-reg",
 	},
 };
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("enforcer-fire", nil, nil, nil, nil, true);
+	Sound(firemode.sound, nil, nil, nil, nil, true);
 }
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	projectile->Trail(2, 80);
+	var trail = projectile->Trail(5, 500);
+	          trail->SetGraphics("Beam");
+	          trail.fade_speed_factor = 20;
 }
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	// this does nothing at the moment, 
-	// probably because the animation is too small to be noticeable on the attached mesh :(
-	
-	//PlayAnimation("Fire", 1, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Remove), Anim_Const(1000));
-	//PlayAnimation("Fire", 6, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Hold), Anim_Const(1000));
-	//PlayAnimation("Fire", 6, Anim_Linear(0, 0, GetAnimationLength("Fire"), animation_set["ShootTime"], ANIM_Hold), Anim_Const(1000));
-
-	//SetAction("Fire");
-	
 	// muzzle flash
 	
 	var x = +Sin(angle, firemode.projectile_distance);
@@ -119,13 +116,6 @@ public func FireEffect(object user, int angle, proplist firemode)
 	 
 	
 	EffectMuzzleFlash(user, x, y, angle, 10, false, true);
-		
-	// casing
-	
-	x = +Sin(angle, firemode.projectile_distance / 2);
-	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
-
-	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, user->GetXDir() + Sin(-angle, 10), user->GetYDir() - RandomX(12, 15));
 }
 
 local ActMap = {
