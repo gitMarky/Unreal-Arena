@@ -13,6 +13,8 @@ private func OnLaunch()
 private func OnLaunched()
 {
 	CreateTrail(0, 0);
+	trail->SetGraphics("Beam");
+	trail->SetFadeSpeed(60);	
 }
 
 

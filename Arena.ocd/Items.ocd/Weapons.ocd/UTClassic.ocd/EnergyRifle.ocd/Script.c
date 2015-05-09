@@ -51,7 +51,7 @@ local fire_modes =
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_ShockBeam,
-		projectile_speed = 	400,
+		projectile_speed = 	500,
 		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
@@ -102,9 +102,7 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	var trail = projectile->Trail(5, 500);
-	          trail->SetGraphics("Beam");
-	          trail.fade_speed_factor = 20;
+	projectile->Trail(5, 350);
 }
 
 public func FireEffect(object user, int angle, proplist firemode)
