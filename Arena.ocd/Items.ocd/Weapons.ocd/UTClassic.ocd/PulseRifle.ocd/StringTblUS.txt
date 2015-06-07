@@ -1,0 +1,14 @@
+Name=Pulse Gun
+
+Description=Classification: Plasma Rifle
+|
+Primary Fire: Medium sized, fast moving plasma balls are fired at a fast rate of fire.|
+
+Secondary Fire: A bolt of green lightning will shock all opponents.
+
+|Techniques: Firing and keeping the secondary fire's lightning on an opponent will melt them in seconds.
+
+
+Standard=Automatic fire
+
+Beam=Beam
