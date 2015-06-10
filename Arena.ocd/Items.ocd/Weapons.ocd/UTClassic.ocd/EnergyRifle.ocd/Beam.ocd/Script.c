@@ -52,13 +52,15 @@ private func DrawTrail()
 
 	var dx = beam_x_old - beam_x;
 	var dy = beam_y_old - beam_y;
-	
-	var num = Max(1, Distance(0, 0, dx, dy));
-	
-	for (var i = 0; i < num; i++)
-	{
-		CreateParticle("Magic", i * dx / num, i * dy / num, 0, 0, 10, Particles_ShockBeam(), 1);
-	}
+//	
+//	var num = Max(1, Distance(0, 0, dx, dy));
+//	
+//	for (var i = 0; i < num; i++)
+//	{
+//		CreateParticle("Magic", i * dx / num, i * dy / num, 0, 0, 10, Particles_ShockBeam(), 1);
+//	}
+
+	DrawParticleLine("Magic", dx, dy, 0, 0, 1, 0, 0, 10, Particles_ShockBeam());
 }
 
 private func Particles_ShockBeam()

@@ -1,0 +1,16 @@
+[DefCore]
+id=Weapon_UT99_RocketLauncher
+Version=6,0
+Category=C4D_Object
+Width=7
+Height=4
+Offset=-4,-2
+Vertices=4
+VertexX=-3,3,-3,3
+VertexY=-2,-2,2,2
+VertexFriction=50,50,70
+Value=50
+Mass=15
+Components=Metal=2;Wood=1;
+Rotate=1
+Picture=0,0,64,64

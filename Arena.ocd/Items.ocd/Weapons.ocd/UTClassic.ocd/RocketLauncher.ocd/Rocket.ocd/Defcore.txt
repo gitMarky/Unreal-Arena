@@ -1,0 +1,17 @@
+[DefCore]
+id=Projectile_Rocket
+Version=6,0
+Category=C4D_Vehicle
+Width=4
+Height=8
+Offset=-2,-4
+Vertices=4
+VertexX=0,0,-2,2
+VertexY=-3,3,0,0
+VertexCNAT=8,8,8,8
+VertexFriction=20
+Rotate=1
+Float=100000
+StretchGrowth=1
+IncompleteActivity=1
+ContactCalls=1
