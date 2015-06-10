@@ -1,0 +1,2 @@
+Name=Ripper
+Description=Klassifikation: Ballistic Blade Launcher|Modus 1: Schleudert messerscharfe Titaniumscheiben bei mittlerer Feuerrate. Die Scheiben prallen an Wänden ab.|Modus 2: Verschießt explodierende Scheiben mit langsamer Schussfrequenz.|Tips: Immer schön auf den Kopf zielen.

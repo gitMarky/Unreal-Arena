@@ -1,0 +1,15 @@
+[DefCore]
+id=Projectile_Ripper
+Version=6,0
+Category=C4D_Vehicle
+Width=6
+Height=6
+Offset=-3,-3
+Vertices=1
+VertexFriction=0
+VertexCNAT=8
+Rotate=1
+Float=100000
+StretchGrowth=1
+IncompleteActivity=1
+ContactCalls=1
