@@ -1,2 +1,3 @@
+Name=Instagib
 Description=Everyone gets a weapon which kills instantly with only one hit.
 

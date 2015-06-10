@@ -1,2 +1,3 @@
+Name=Instagib
 Description=Jeder bekommt immer eine Waffe, die mit einem Treffer tötet.
 

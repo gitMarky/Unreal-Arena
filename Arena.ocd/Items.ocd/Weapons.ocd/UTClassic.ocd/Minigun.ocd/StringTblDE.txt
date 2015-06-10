@@ -1,14 +1,2 @@
 Name=Minigun
-
-Description=Klassifikation: Gatling Gun|
-
-Modus 1: Mittlere Schussfrequenz und akzeptable Genauigkeit.
-
-|Modus 2: Sehr hohe Schussfrequenz, mit hoher Streuung.|
-
-Tips: Der zweite Feuermodus ist auf kurze Distanzen nützlich, verbraucht aber sehr viel Munition.
-
-|Standard=Präzisionsfeuer|
-Secondary=Streufeuer
-
-KillMsg=["pKillers sWeapon lässt von pVictim nur noch Fetzen übrig.","pVictim wurde von pKillers sWeapon zerfetzt."]
+Description=Klassifikation: Gatling Gun|Modus 1: Mittlere Schussfrequenz und akzeptable Genauigkeit.|Modus 2: Sehr hohe Schussfrequenz, mit hoher Streuung.|Tips: Der zweite Feuermodus ist auf kurze Distanzen nützlich, verbraucht aber sehr viel Munition.
