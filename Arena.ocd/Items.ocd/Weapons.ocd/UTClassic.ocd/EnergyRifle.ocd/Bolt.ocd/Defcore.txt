@@ -1,0 +1,14 @@
+[DefCore]
+id=Projectile_ShockBolt
+Version=6,0
+Category=C4D_Vehicle
+Width=15
+Height=15
+Offset=-8,-8
+Vertices=1
+VertexFriction=0
+Rotate=1
+Float=100000
+StretchGrowth=1
+IncompleteActivity=1
+ColorByOwner=1

@@ -81,17 +81,17 @@ local fire_modes =
 		damage = 			40, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	300,
+		projectile_id = 	Projectile_ShockBolt,
+		projectile_speed = 	150,
 		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		
-		projectile_spread = [7, 2],
+		projectile_spread = [5, 2],
 
 		spread = [0, 1],
 		
-		sound = "shock-fire-reg",
+		sound = "shock-fire-alt",
 	},
 };
 
