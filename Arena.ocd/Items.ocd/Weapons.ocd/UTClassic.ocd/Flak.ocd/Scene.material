@@ -1,4 +1,4 @@
-material weapon_ut99_enforcer 
+material weapon_ut99_flak 
 {
     receive_shadows on 
 
@@ -16,7 +16,7 @@ material weapon_ut99_enforcer
 
             texture_unit 
             {
-                texture enforcer.png
+                texture flak.png
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate

@@ -1,4 +1,4 @@
-material weapon_ut99_minigun 
+material weapon_ut99_pulse
 {
     receive_shadows on 
 
@@ -16,7 +16,7 @@ material weapon_ut99_minigun
 
             texture_unit 
             {
-                texture minigun.png
+                texture pulse.png
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
