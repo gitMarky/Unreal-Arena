@@ -11,8 +11,13 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(-65,1,0,0));
+	return Trans_Mul(Trans_Rotate(-60,0,1,0), Trans_Translate(0, 1000, 0));
 }
+
+local animation_set = {
+		AimMode        = AIM_Position,
+		AnimationAim   = "CrossbowAimArms",
+};
 
 func Hit()
 {
@@ -53,8 +58,8 @@ local fire_modes =
 		projectile_id = 	Projectile_ShockBeam,
 		projectile_speed = 	500,
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_distance = 15,
+		projectile_offset_y = -3,
 		projectile_spread = [0, 1],
 
 		spread = [0, 1],
@@ -84,8 +89,8 @@ local fire_modes =
 		projectile_id = 	Projectile_ShockBolt,
 		projectile_speed = 	150,
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_distance = 15,
+		projectile_offset_y = -3,
 		
 		projectile_spread = [5, 2],
 

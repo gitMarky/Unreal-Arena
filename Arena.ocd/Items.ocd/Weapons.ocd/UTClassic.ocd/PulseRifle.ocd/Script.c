@@ -11,7 +11,7 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(-90, 1, 0, 0), Trans_Rotate(-5, 0, 1, 0), Trans_Rotate(-50,0,0,1), Trans_Translate(0, 0, 200));
+	return Trans_Rotate(120, 0, 1, 0);
 }
 
 func Hit()
@@ -55,8 +55,8 @@ local fire_modes =
 		projectile_id = 	Projectile_Plasma,
 		projectile_speed = 	140,
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 18,
-		projectile_offset_y = -2, // -4
+		projectile_distance = 12,
+		projectile_offset_y = -3,
 		projectile_number = 1,
 		projectile_spread = [7, 2], // 3 - default inaccuracy of a single projectile
 
@@ -86,8 +86,8 @@ local fire_modes =
 		projectile_id = 	Projectile_Bullet,
 		projectile_speed = 	210,
 		projectile_range = 600,
-		projectile_distance = 18,
-		projectile_offset_y = -2, // -4
+		projectile_distance = 12,
+		projectile_offset_y = -3
 		projectile_number = 1,
 		projectile_spread = [15, 2], // 6 - default inaccuracy of a single projectile
 
@@ -102,9 +102,9 @@ local weapon_properties =
 };
 
 local animation_set = {
-		AimMode        = AIM_Position, // The aiming animation is done by adjusting the animation position to fit the angle
+		AimMode        = AIM_Position,
 		AnimationAim   = "CrossbowAimArms",
-	};
+};
 
 public func FireSound(object user, proplist firemode)
 {
@@ -134,13 +134,12 @@ public func OnStartCooldown(object user, proplist firemode)
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	
 	// muzzle flash
 	
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
-	EffectMuzzleFlash(user, x, y, angle, RandomX(15, 25), false, true);
+	EffectMuzzleFlash(user, x, y, angle, RandomX(12, 16), false, true, RGB(0,255,0));
 }
 
 local ActMap = {

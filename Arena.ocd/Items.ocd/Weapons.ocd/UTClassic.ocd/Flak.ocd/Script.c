@@ -13,8 +13,13 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Grip"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(-65,1,0,0));
+	return Trans_Rotate(-60, 0, 1, 0);
 }
+
+local animation_set = {
+		AimMode        = AIM_Position,
+		AnimationAim   = "CrossbowAimArms",
+};
 
 func Hit()
 {
@@ -57,7 +62,7 @@ local fire_modes =
 		projectile_speed = 	[60, 90, 10],
 		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_offset_y = -3,
 		projectile_number = 10,
 		projectile_spread = [2, 1], // default inaccuracy of a single projectile
 
@@ -92,7 +97,7 @@ local fire_modes =
 		projectile_speed = 	[70, 90],
 		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_offset_y = -3,
 		projectile_number = 1,
 		projectile_spread = [5, 2],
 
