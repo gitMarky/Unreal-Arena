@@ -2,9 +2,9 @@
 id=Projectile_Rocket
 Version=6,0
 Category=C4D_Vehicle
-Width=4
-Height=8
-Offset=-2,-4
+Width=3
+Height=6
+Offset=-2,-3
 Vertices=4
 VertexX=0,0,-2,2
 VertexY=-3,3,0,0
