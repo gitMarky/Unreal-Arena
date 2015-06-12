@@ -87,7 +87,7 @@ local fire_modes =
 		projectile_speed = 	210,
 		projectile_range = 600,
 		projectile_distance = 12,
-		projectile_offset_y = -3
+		projectile_offset_y = -3,
 		projectile_number = 1,
 		projectile_spread = [15, 2], // 6 - default inaccuracy of a single projectile
 
