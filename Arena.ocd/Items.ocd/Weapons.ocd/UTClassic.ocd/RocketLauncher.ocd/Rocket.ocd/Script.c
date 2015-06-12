@@ -62,9 +62,17 @@ protected func Travelling()
 	
 	_inherited();
 	
-	if (self && !is_grenade)
+	if (self)
 	{
-		HandleTrail();
+		if (!is_grenade)
+		{
+			HandleTrail();
+			this.MeshTransformation = Trans_Rotate(GetActTime() % 360, 0, 1, 0);
+		}
+		else
+		{
+			this.MeshTransformation = Trans_Mul(Trans_Rotate(GetActTime() % 360, 1, 0, 0), Trans_Rotate(10, 0, 0, 1));
+		}
 	}
 }
 
@@ -78,28 +86,21 @@ protected func ControlSpeed()
 
 private func HandleTrail()
 {
-//	var x = -Sin(GetR(), 10);
-//	var y = +Cos(GetR(), 10);
-//
-//	var xdir = GetXDir() / 2;
-//	var ydir = GetYDir() / 2;
-//	CreateParticle("FireDense", x, y, PV_Random(xdir - 4, xdir + 4), PV_Random(ydir - 4, ydir + 4), PV_Random(16, 38), Particles_Thrust(), 5);
-
 	var distance = Distance(0, 0, GetXDir(), GetYDir());
-	var max_x = +Sin(GetR(),distance / 10);
-	var max_y = -Cos(GetR(),distance / 10);
+	var max_x = +Sin(GetR(), distance / 10);
+	var max_y = -Cos(GetR(), distance / 10);
 	var particle_distance = 50;
     
 	for(var i=0; i < distance; i += particle_distance)
 	{
 		var x = -max_x * i / distance;
 		var y = -max_y * i / distance;
-		
+
 		var rand = RandomX(-5, 5);
 		var xdir = +Sin(GetR() + rand, 20);
 		var ydir = -Cos(GetR() + rand, 20);
 		
-		CreateParticle("Thrust", x, y, GetXDir()/2,GetYDir()/2, PV_Random(40,60), Particles_Thrust());
-		CreateParticle("Smoke2", x, y, xdir, ydir, PV_Random(60,70), Particles_Thrust());
+		CreateParticle("Thrust", x, y, GetXDir()/2,GetYDir()/2, PV_Random(5, 10), {Prototype = Particles_Thrust(), Size = PV_Random(8, 12)});
+		CreateParticle("Smoke2", x, y, xdir, ydir, PV_Random(30, 40), {Prototype = Particles_Thrust(), Size = PV_Random(12, 14)});
 	}
 }

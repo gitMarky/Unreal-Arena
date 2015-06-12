@@ -61,8 +61,8 @@ local fire_modes =
 		projectile_id = 	Projectile_Rocket,
 		projectile_speed = 	120,
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_distance = 8,
+		projectile_offset_y = -4,
 		projectile_number = 1,
 		projectile_spread = [0, 1], // default inaccuracy of a single projectile
 
@@ -96,8 +96,8 @@ local fire_modes =
 		projectile_id = 	Projectile_Rocket,
 		projectile_speed = 	[60, 80, 5],
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
+		projectile_distance = 8,
+		projectile_offset_y = -4,
 		projectile_number = 1,
 		projectile_spread = [7, 2],
 
