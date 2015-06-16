@@ -60,8 +60,8 @@ local fire_modes =
 		projectile_id = 	Projectile_Ripper,
 		projectile_speed = 	180,
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 18,
-		projectile_offset_y = -2,
+		projectile_distance = 14,
+		projectile_offset_y = -3,
 		projectile_number = 1,
 		projectile_spread = [3, 2],
 
@@ -93,12 +93,14 @@ local fire_modes =
 		projectile_id = 	Projectile_Ripper,
 		projectile_speed = 	180,
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 18,
-		projectile_offset_y = -2,
+		projectile_distance = 14,
+		projectile_offset_y = -3,
 		projectile_number = 1,
 		projectile_spread = [3, 2],
 
 		spread = [0, 1],			   // inaccuracy from prolonged firing	},
+
+		sound = "ripper-fire-alt",
 	},
 };
 
@@ -115,7 +117,7 @@ local animation_set = {
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound(firemode.sound, nil, nil, nil, nil, true);
+	Sound(firemode.sound);
 }
 
 

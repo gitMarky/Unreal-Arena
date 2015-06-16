@@ -61,7 +61,7 @@ local fire_modes =
 		projectile_id = 	Projectile_FlakShot,
 		projectile_speed = 	[60, 90, 10],
 		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
+		projectile_distance = 12,
 		projectile_offset_y = -3,
 		projectile_number = 10,
 		projectile_spread = [2, 1], // default inaccuracy of a single projectile
@@ -111,8 +111,8 @@ local fire_modes =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound(firemode.sound, nil, nil, nil, nil, true);
-	Sound("flak-cock", nil, nil, nil, nil, true);
+	Sound(firemode.sound);
+	Sound("flak-cock");
 }
 
 public func FireEffect(object user, int angle, proplist firemode)

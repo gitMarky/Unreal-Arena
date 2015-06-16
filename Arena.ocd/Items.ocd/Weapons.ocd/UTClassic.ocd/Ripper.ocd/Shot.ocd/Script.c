@@ -1,10 +1,13 @@
 #include Library_Projectile
 
 local explodes = false;
+local reflections = 3;
 
 protected func Initialize()
 {
 	CreateTrail(30, 3);
+	var scale = 1500;
+	this.MeshTransformation = Trans_Scale(scale, scale, scale);
 }
 
 public func SetSecondary()
@@ -15,6 +18,7 @@ public func SetSecondary()
 private func OnLaunch()
 {
 	SetAction("Travel");
+	remove_on_hit = false;
 }
 
 public func OnHitObject(object target)
@@ -23,7 +27,6 @@ public func OnHitObject(object target)
 	{
 		Detonate();
 	}
-	//CreateImpactEffect(this.damage);
 }
 
 public func OnHitLandscape()
@@ -34,12 +37,30 @@ public func OnHitLandscape()
 	}
 	else
 	{
-		Sound("ripper-hit");
-		CreateImpactEffect(this.damage);
+		Reflect();
 	}
 }
 
 private func Detonate()
 {
 	Explode(10);
+}
+
+private func Reflect()
+{
+	Sound("ripper-hit");
+	CreateImpactEffect(5);
+	
+	if(reflections)
+	{
+		var distance = 3;
+		if (GBackSolid(-distance, 0) || GBackSolid(+distance, 0)) velocity_x = -velocity_x;
+		if (GBackSolid(0, -distance) || GBackSolid(0, +distance)) velocity_y = -velocity_y + RandomX(-160, 150);
+		
+		ControlSpeed();
+		//if (GetAction() != "TravelBallistic") SetAction("TravelBallistic");
+
+		reflections--;
+		if (reflections <= 0) remove_on_hit = true;
+	}
 }

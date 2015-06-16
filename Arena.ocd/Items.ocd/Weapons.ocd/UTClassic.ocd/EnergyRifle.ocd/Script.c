@@ -102,7 +102,7 @@ local fire_modes =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound(firemode.sound, nil, nil, nil, nil, true);
+	Sound(firemode.sound);
 }
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)

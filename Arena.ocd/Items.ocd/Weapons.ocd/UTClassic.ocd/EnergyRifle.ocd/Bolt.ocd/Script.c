@@ -20,7 +20,7 @@ public func OnHitObject(object target)
 
 public func OnHitLandscape()
 {
-		Sound("pulse-exp");
+		Sound("shock-exp");
 		CreateImpactEffect(this.damage, 0, 0, "Magic", Particles_Plasma());
 }
 

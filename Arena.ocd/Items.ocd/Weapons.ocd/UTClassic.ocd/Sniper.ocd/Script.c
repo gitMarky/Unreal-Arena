@@ -11,7 +11,7 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Rotate(-60, 0, 1, 0);
+	return Trans_Rotate(120, 0, 1, 0);
 }
 
 local animation_set = {
@@ -48,22 +48,22 @@ local fire_modes =
 		ammo_rate =			1, // per this many shots fired
 	
 		delay_charge =      0,
-		delay_recover = 	4, // time between consecutive shots
-		delay_cooldown = 	20,
+		delay_recover = 	21, // time between consecutive shots
+		delay_cooldown = 	0,
 		delay_reload =		260, // time to reload, in frames
 	
-		mode = 			 WEAPON_FM_Auto,
+		mode = 			 	WEAPON_FM_Single,
 	
-		damage = 			6, 
+		damage = 			45, 
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	210,
-		projectile_range = 600,
+		projectile_speed = 	2000,
+		projectile_range = 4000,
 		projectile_distance = 18,
 		projectile_offset_y = -2, // -4
 		projectile_number = 1,
-		projectile_spread = [5, 2], // 2 - default inaccuracy of a single projectile
+		projectile_spread = [3, 5],
 
 		spread = [0, 1],			   // inaccuracy from prolonged firing
 	},
@@ -108,30 +108,15 @@ local weapon_properties =
 
 public func FireSound(object user, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name)
-	{
-		Sound("m1-fire-reg", nil, nil, nil, 1);
-	}
-	else
-	{
-		Sound("m1-fire-alt", nil, nil, nil, 1);
-	}
+	Sound("sniper-fire");
 }
 
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	projectile->Trail(1, 60);
+	// no effect
 }
-
-public func OnStartCooldown(object user, proplist firemode)
-{
 	
-	Sound("m1-fire-reg", nil, nil, nil, -1);
-	Sound("m1-fire-alt", nil, nil, nil, -1);
-	Sound("m1-cooldown");
-}
-
 public func FireEffect(object user, int angle, proplist firemode)
 {
 	
@@ -140,26 +125,14 @@ public func FireEffect(object user, int angle, proplist firemode)
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
-	EffectMuzzleFlash(user, x, y, angle, RandomX(15, 25), false, true);
+	EffectMuzzleFlash(user, x, y, angle, 10, false, true);
 		
 	// casing
 	
-	x = +Sin(angle, firemode.projectile_distance / 2);
-	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
+	x = +Sin(angle, firemode.projectile_distance / 4);
+	y = -Cos(angle, firemode.projectile_distance / 4) + firemode.projectile_offset_y;
 
 	var dir = (user->GetDir() * 2) - 1;
 
 	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};
