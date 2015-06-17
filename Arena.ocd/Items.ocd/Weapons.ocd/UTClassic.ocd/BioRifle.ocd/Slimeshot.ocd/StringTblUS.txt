@@ -1,1 +1,1 @@
-Name=Slimebullet
+Name=Slime

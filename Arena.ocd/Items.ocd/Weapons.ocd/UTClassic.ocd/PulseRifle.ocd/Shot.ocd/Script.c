@@ -27,14 +27,7 @@ private func Particles_Plasma()
 {
 	return
 	{
-		Size = PV_Linear(2, 0),
-	    ForceY = GetGravity(),
-		DampingY = PV_Linear(1000,700),
-		DampingX = PV_Linear(1000,700),
-		Stretch = PV_Speed(1000, 500),
-		Rotation = PV_Direction(),
-		OnCollision = PC_Die(),
-		CollisionVertex = 500,
+		Prototype = Particles_Glimmer(),
 	    R = 0,
 	    G = PV_Linear(255,128),
 	    B = 0,

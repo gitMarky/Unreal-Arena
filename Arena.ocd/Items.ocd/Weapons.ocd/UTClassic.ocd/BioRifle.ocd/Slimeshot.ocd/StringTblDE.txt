@@ -1,1 +1,1 @@
-Name=Schleimprojektil
+Name=Schleim

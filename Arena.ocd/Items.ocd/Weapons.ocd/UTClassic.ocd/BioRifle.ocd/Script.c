@@ -56,8 +56,8 @@ local fire_modes =
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_SlimeShot,
-		projectile_speed = 	180,
-		projectile_range = 600,
+		projectile_speed = 	70,
+		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -4,
 		projectile_spread = [3, 2],
