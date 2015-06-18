@@ -2,6 +2,7 @@
 
 local glob_size;
 local glob_color;
+local glob_charge;
 
 static const SLIMEGLOB_Wobble_Speed = 15;
 static const SLIMEGLOB_Wobble_Strength = 100;
@@ -12,11 +13,21 @@ static const SLIMEGLOB_Sticking_Time = 144;
 
 static const SLIMEGLOB_Explosion_Size = 530;
 
+public func Charge(int percent)
+{
+	if (percent > 0)
+	{
+		glob_charge = BoundBy(percent, 0, 100);
+	}
+}
+
 private func OnLaunch()
 {
 	SetAction("TravelBallistic");
 	
 	if (damage == 0) damage = RandomX(5, 10);
+	
+	if (glob_charge) damage = glob_charge * damage / 10;
 	
 	//var size = 40 + 4 * damage / 5;
 	//size *= 5;
@@ -122,7 +133,7 @@ private func RemoveGlob()
 		SplashGlob();
 	}
 	
-	CreateImpactEffect(glob_size / 60, 0, 0, "Magic", Particles_SlimeGlob());
+	CreateImpactEffect(glob_size / 50, 0, 0, "Magic", Particles_SlimeGlob());
 
 	Remove();
 }
@@ -159,7 +170,7 @@ private func CastBlob(int dmg)
 			  ->Weapon(weapon_ID)
 			  ->Damage(dmg)
 			  ->DamageType(damage_type)
-			  ->Velocity(RandomX(glob_size/20, glob_size/10))
+			  ->Velocity(RandomX(glob_size/60, glob_size/30))
 			  ->Range(PROJECTILE_Range_Infinite)
 			  ->Launch(angle, nil);
 }
@@ -169,9 +180,9 @@ private func Particles_SlimeGlob()
 	return
 	{
 		Prototype = Particles_Glimmer(), 
-	    R = GetRGBaValue(glob_color, RGBA_RED),
-	    G = GetRGBaValue(glob_color, RGBA_GREEN),
-	    B = GetRGBaValue(glob_color, RGBA_BLUE),
+	    R = PV_Linear(GetRGBaValue(glob_color, RGBA_RED), GetRGBaValue(glob_color, RGBA_RED) / 2),
+	    G = PV_Linear(GetRGBaValue(glob_color, RGBA_GREEN), GetRGBaValue(glob_color, RGBA_GREEN) / 2),
+	    B = PV_Linear(GetRGBaValue(glob_color, RGBA_BLUE), GetRGBaValue(glob_color, RGBA_BLUE) / 2),
 	    Alpha = GetRGBaValue(glob_color, RGBA_ALPHA),
 	};
 }

@@ -5,6 +5,8 @@ local Name = "$Name$";
 local Description = "$Description$";
 local Collectible = 1;
 
+local slime_charged = 0;
+
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
@@ -46,11 +48,12 @@ local fire_modes =
 		ammo_usage =		1,
 		ammo_rate =			1,
 	
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	10,
+		delay_charge  =     0, // int, frames - time that the button must be held before the shot is fired
+		delay_recover = 	10, // int, frames - time between consecutive shots
+		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
+		delay_reload =		0, // int, frames - time to reload
 	
-		mode = 			 WEAPON_FM_Auto,
+		mode = 			 	WEAPON_FM_Auto,
 	
 		damage = 			40, 
 		damage_type = 		nil,	
@@ -70,29 +73,29 @@ local fire_modes =
 		name = 				"secondary",
 		icon = 				nil,
 		condition = 		nil,
-		
+
 		ammo_id = 			Ammo_Pistol,
 		ammo_usage =		1,
 		ammo_rate =			1,
-	
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	10,
-	
-		mode = 			 WEAPON_FM_Single,
-	
-		damage = 			15, 
+
+		delay_charge  =     160, // int, frames - time that the button must be held before the shot is fired
+		delay_recover = 	10, // int, frames - time between consecutive shots
+		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
+		delay_reload =		0, // int, frames - time to reload
+
+		mode = 			 	WEAPON_FM_Single,
+
+		damage = 			40, 
 		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
-		projectile_range = 600,
+
+		projectile_id = 	Projectile_SlimeShot,
+		projectile_speed = 	70,
+		projectile_range = 	PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -4,
-		
-		projectile_spread = [4, 1],
+		projectile_spread = [3, 2],
 
-		spread = [0, 1], 
+		spread = [0, 1],
 	},
 };
 
@@ -103,12 +106,68 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	// no effect
+	projectile->Charge(slime_charged);
+	slime_charged = 0;
 }
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
 	// no effect
+}
+
+/**
+ Condition when the weapon needs to be charged.
+ @par user The object that is using the weapon.
+ @par firemode A proplist containing the fire mode information.
+ @return {@c true} by default. Overload this function
+         for a custom condition.
+ */
+public func NeedsCharge(object user, proplist firemode)
+{
+	return slime_charged <= 0;
+}
+
+/**
+ Callback: the weapon starts charging. Does nothing by default.
+ @par user The object that is using the weapon.
+ @par firemode A proplist containing the fire mode information.
+ @version 0.1.0
+ */
+public func OnStartCharge(object user, int x, int y, proplist firemode)
+{
+	if (firemode.name == fire_modes.primary.name) return;
+}
+
+/**
+ Callback: the weapon has successfully charged. Does nothing by default.
+ @par user The object that is using the weapon.
+ @par firemode A proplist containing the fire mode information.
+ @version 0.1.0
+ */
+public func OnFinishCharge(object user, int x, int y, proplist firemode)
+{
+	if (firemode.name == fire_modes.primary.name) return;
+	ShootBigBlob(user, x, y);
+}
+
+/**
+ Callback: the weapon user cancelled charging. Does nothing by default.
+ @par user The object that is using the weapon.
+ @par firemode A proplist containing the fire mode information.
+ @version 0.1.0
+ */
+public func OnCancelCharge(object user, int x, int y, proplist firemode)
+{
+	if (firemode.name == fire_modes.primary.name) return;
+	ShootBigBlob(user, x, y, firemode);
+}
+
+private func ShootBigBlob(object user, int x, int y, proplist firemode)
+{
+	slime_charged = GetChargeProgress();
+	CancelCharge(user, x, y, firemode, false);
+
+	DoFireCycle(user, x, y, true);
 }
 
 local ActMap = {
