@@ -84,13 +84,17 @@ protected func ControlSpeed()
 	}
 }
 
+local logged_distance;
+
 private func HandleTrail()
 {
 	var distance = Distance(0, 0, GetXDir(), GetYDir());
 	var max_x = +Sin(GetR(), distance / 10);
 	var max_y = -Cos(GetR(), distance / 10);
-	var particle_distance = 50;
-    
+	var off_x = max_x / 2;
+	var off_y = max_y / 2;
+	var particle_distance = 25;
+
 	for(var i=0; i < distance; i += particle_distance)
 	{
 		var x = -max_x * i / distance;
@@ -100,7 +104,10 @@ private func HandleTrail()
 		var xdir = +Sin(GetR() + rand, 20);
 		var ydir = -Cos(GetR() + rand, 20);
 		
-		CreateParticle("Thrust", x, y, GetXDir()/2,GetYDir()/2, PV_Random(5, 10), {Prototype = Particles_Thrust(), Size = PV_Random(8, 12)});
-		CreateParticle("Smoke2", x, y, xdir, ydir, PV_Random(30, 40), {Prototype = Particles_Thrust(), Size = PV_Random(12, 14)});
+		var size_thrust = RandomX(6, 8);
+		var size_smoke = RandomX(8, 12);
+
+		CreateParticle("Thrust", x + off_x, y + off_y, GetXDir()/2, GetYDir()/2, PV_Random(5, 10), {Prototype = Particles_Thrust(), Size = PV_KeyFrames(0, 0, 4, 100, size_thrust, 1000, size_thrust)});
+		CreateParticle("Smoke2", 2 * x - off_x, 2 * y - off_y + 1, xdir, ydir, PV_Random(30, 40), {Prototype = Particles_Thrust(), Size = PV_Linear(size_thrust, size_smoke)});
 	}
 }
