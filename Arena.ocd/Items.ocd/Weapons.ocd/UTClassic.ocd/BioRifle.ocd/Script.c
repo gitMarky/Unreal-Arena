@@ -79,7 +79,7 @@ local fire_modes =
 		ammo_rate =			1,
 
 		delay_charge  =     160, // int, frames - time that the button must be held before the shot is fired
-		delay_recover = 	10, // int, frames - time between consecutive shots
+		delay_recover = 	40, // int, frames - time between consecutive shots
 		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
 		delay_reload =		0, // int, frames - time to reload
 
@@ -116,29 +116,6 @@ public func FireEffect(object user, int angle, proplist firemode)
 }
 
 /**
- Condition when the weapon needs to be charged.
- @par user The object that is using the weapon.
- @par firemode A proplist containing the fire mode information.
- @return {@c true} by default. Overload this function
-         for a custom condition.
- */
-public func NeedsCharge(object user, proplist firemode)
-{
-	return slime_charged <= 0;
-}
-
-/**
- Callback: the weapon starts charging. Does nothing by default.
- @par user The object that is using the weapon.
- @par firemode A proplist containing the fire mode information.
- @version 0.1.0
- */
-public func OnStartCharge(object user, int x, int y, proplist firemode)
-{
-	if (firemode.name == fire_modes.primary.name) return;
-}
-
-/**
  Callback: the weapon has successfully charged. Does nothing by default.
  @par user The object that is using the weapon.
  @par firemode A proplist containing the fire mode information.
@@ -165,9 +142,20 @@ public func OnCancelCharge(object user, int x, int y, proplist firemode)
 private func ShootBigBlob(object user, int x, int y, proplist firemode)
 {
 	slime_charged = GetChargeProgress();
+	Fire(user, x, y);
 	CancelCharge(user, x, y, firemode, false);
+}
 
-	DoFireCycle(user, x, y, true);
+private func Fire(object user, int x, int y)
+{
+	if (GetFiremode() == fire_modes.secondary)
+	{
+		if (slime_charged > 0) _inherited(user, x, y);
+	}
+	else
+	{
+		_inherited(user, x, y);
+	}
 }
 
 local ActMap = {
