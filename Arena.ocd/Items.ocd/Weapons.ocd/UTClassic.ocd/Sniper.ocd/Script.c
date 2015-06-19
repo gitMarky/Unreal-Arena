@@ -5,6 +5,7 @@ local Name = "$Name$";
 local Description = "$Description$";
 local Collectible = 1;
 
+static const PROJECTILE_Range_Sniper = 10000;
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
@@ -54,16 +55,16 @@ local fire_modes =
 	
 		mode = 			 	WEAPON_FM_Single,
 	
-		damage = 			45, 
-		damage_type = 		nil,	
+		damage = 			45,
+		damage_type = 		nil,
 	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	2000,
-		projectile_range = 4000,
-		projectile_distance = 18,
-		projectile_offset_y = -2, // -4
-		projectile_number = 1,
-		projectile_spread = [3, 5],
+		projectile_id = 		Projectile_Sniper,
+		projectile_speed = 		200,
+		projectile_range = 		PROJECTILE_Range_Sniper,
+		projectile_distance = 	17,
+		projectile_offset_y = 	-3, // -4
+		projectile_number = 	1,
+		projectile_spread = 	[3, 5],
 
 		spread = [0, 1],			   // inaccuracy from prolonged firing
 	},
@@ -80,21 +81,21 @@ local fire_modes =
 	
 		delay_charge =      0,
 		delay_recover = 	2, // time between consecutive shots
-		delay_cooldown = 	20,
+		delay_cooldown = 	0,
 		delay_reload =		260, // time to reload, in frames
 	
-		mode = 			 WEAPON_FM_Auto,
+		mode = 			 	WEAPON_FM_Single,
 	
 		damage = 			6, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	210,
-		projectile_range = 600,
-		projectile_distance = 18,
-		projectile_offset_y = -2, // -4
-		projectile_number = 1,
-		projectile_spread = [15, 2], // 6 - default inaccuracy of a single projectile
+		projectile_id = 		Projectile_Sniper,
+		projectile_speed = 		210,
+		projectile_range = 		PROJECTILE_Range_Sniper,
+		projectile_distance = 	17,
+		projectile_offset_y = 	-3, // -4
+		projectile_number = 	1,
+		projectile_spread = 	[15, 2], // 6 - default inaccuracy of a single projectile
 
 		spread = [0, 1],			   // inaccuracy from prolonged firing	},
 	},
@@ -114,18 +115,17 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	// no effect
+	projectile->HitScan();
 }
 	
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	
 	// muzzle flash
 	
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
-	EffectMuzzleFlash(user, x, y, angle, 10, false, true);
+	EffectMuzzleFlash(user, x, y, angle, 7, false, true, -1, "MuzzleFlash2");
 		
 	// casing
 	
@@ -134,5 +134,5 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	var dir = (user->GetDir() * 2) - 1;
 
-	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
+	CreateCartridgeEffect("Cartridge_Pistol", 3, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
 }
