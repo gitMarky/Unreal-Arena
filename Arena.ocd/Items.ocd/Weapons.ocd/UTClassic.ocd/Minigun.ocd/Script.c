@@ -150,7 +150,7 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	var dir = (user->GetDir() * 2) - 1;
 
-	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
+	CreateCartridgeEffect("Cartridge_Pistol", 4, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
 }
 
 local ActMap = {
