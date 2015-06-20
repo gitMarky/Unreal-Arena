@@ -35,7 +35,7 @@ public func Detonate()
 	
 		projectile->Shooter(user)
 				  ->Weapon(weapon_ID)
-				  ->Damage(firemode.damage)
+				  ->DamageAmount(firemode.damage)
 		          ->DamageType(firemode.damage_type)
 		          ->Velocity(RandomX(30, 40))
 				  ->Range(firemode.projectile_range)

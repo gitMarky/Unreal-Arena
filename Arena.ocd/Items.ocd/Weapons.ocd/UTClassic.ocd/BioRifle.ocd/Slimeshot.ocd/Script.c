@@ -168,7 +168,7 @@ private func CastBlob(int dmg)
 
 	projectile->Shooter(user)
 			  ->Weapon(weapon_ID)
-			  ->Damage(dmg)
+			  ->DamageAmount(dmg)
 			  ->DamageType(damage_type)
 			  ->Velocity(RandomX(glob_size/60, glob_size/30))
 			  ->Range(PROJECTILE_Range_Infinite)
