@@ -13,6 +13,16 @@ private func OnLaunch()
 	SetPhase(Random(4));
 }
 
+public func IsProjectileTarget(object projectile, object shooter)
+{
+	return projectile->GetID() == Projectile_ShockBeam;
+}
+
+public func OnHit(int damage, int damage_type, object projectile, id weapon)
+{
+	Hit();
+}
+
 public func OnHitObject(object target)
 {
 	CreateImpactEffect(this.damage, 0, 0, "Magic", Particles_Plasma());
