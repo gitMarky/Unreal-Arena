@@ -7,76 +7,37 @@ protected func Initialize()
 	SetObjectBlitMode(GFX_BLIT_Additive);
 }
 
-private func OnLaunch()
+public func OnHitObject(object target)
 {
-	beam_x_old = GetX();
-	beam_y_old = GetY();
-	beam_x = beam_x_old;
-	beam_y = beam_y_old;
-	SetAction("Travel");
+	CreateImpactEffect(this.damage / 3, 0, 0, "Magic", Particles_Plasma());
 }
 
-private func OnLaunched()
+public func OnHitLandscape()
 {
-//	CreateTrail(0, 0);
-//	trail->SetGraphics("Beam");
-//	trail->SetFadeSpeed(60);
-//
-//	SetLightRange(50, 30);
-//	SetLightColor(ProjectileColor());
+		Sound("shock-exp");
+		CreateImpactEffect(this.damage / 3, 0, 0, "Magic", Particles_Plasma());
 }
 
-
-private func ProjectileColor(int time)
-{
-	return RGBa(80, 0, 255, 255);
-}
-
-private func TrailColor(int time)
-{
-	return ProjectileColor(time);
-}
-
-private func Travelling()
-{
-	_inherited();
-	DrawTrail();
-}
-
-private func DrawTrail()
-{
-	beam_x_old = beam_x;
-	beam_y_old = beam_y;
-	beam_x = GetX();
-	beam_y = GetY();
-
-	var dx = beam_x_old - beam_x;
-	var dy = beam_y_old - beam_y;
-//	
-//	var num = Max(1, Distance(0, 0, dx, dy));
-//	
-//	for (var i = 0; i < num; i++)
-//	{
-//		CreateParticle("Magic", i * dx / num, i * dy / num, 0, 0, 10, Particles_ShockBeam(), 1);
-//	}
-
-	DrawParticleLine("Magic", dx, dy, 0, 0, 1, 0, 0, 10, Particles_ShockBeam());
-}
-
-private func Particles_ShockBeam()
+private func Particles_Plasma()
 {
 	return
 	{
-		Size = PV_Linear(4, 0),
-	    ForceY = 0,
-		DampingY = 0,
-		DampingX = 0,
-		OnCollision = PC_Die(),
-		CollisionVertex = 500,
+		Prototype = Particles_Glimmer(),
 	    R = 80,
 	    G = 0,
 	    B = 255,
-	    Alpha = PV_Linear(255,0),
+	    Alpha = PV_Random(255, 0, 3),
 		BlitMode = GFX_BLIT_Additive,
 	};
+}
+
+public func OnHitScan(int x_start, int y_start, int x_end, int y_end)
+{
+	var laser = CreateObject(LaserEffect, x_start - GetX(), y_start - GetY(), NO_OWNER);
+	
+	laser->Line(x_start, y_start, x_end, y_end)
+		 ->SetWidth(6)
+		 ->SetLifetime(20)
+		 ->Color(RGB(80, 0, 255))
+		 ->Activate();
 }

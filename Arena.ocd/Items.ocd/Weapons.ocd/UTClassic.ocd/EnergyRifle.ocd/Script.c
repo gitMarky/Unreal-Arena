@@ -11,7 +11,7 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(-60,0,1,0), Trans_Translate(0, 1000, 0));
+	return Trans_Mul(Trans_Rotate(-60, 0, 1, 0), Trans_Translate(0, 1000, 0));
 }
 
 local animation_set = {
@@ -50,17 +50,17 @@ local fire_modes =
 		delay_reload =		0,
 		delay_recover = 	26,
 	
-		mode = 			 WEAPON_FM_Single,
+		mode = 			 	WEAPON_FM_Single,
 	
 		damage = 			40, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_ShockBeam,
-		projectile_speed = 	500,
-		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 15,
-		projectile_offset_y = -3,
-		projectile_spread = [0, 1],
+		projectile_id = 		Projectile_ShockBeam,
+		projectile_speed = 		500,
+		projectile_range = 		PROJECTILE_Range_Sniper,
+		projectile_distance = 	16,
+		projectile_offset_y = 	-3,
+		projectile_spread = 	[0, 1],
 
 		spread = [0, 1],
 		
@@ -81,16 +81,16 @@ local fire_modes =
 		delay_reload =		0,
 		delay_recover = 	24,
 	
-		mode = 			 WEAPON_FM_Single,
+		mode = 			 	WEAPON_FM_Single,
 	
 		damage = 			40, 
 		damage_type = 		nil,	
 	
-		projectile_id = 	Projectile_ShockBolt,
-		projectile_speed = 	150,
-		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 15,
-		projectile_offset_y = -3,
+		projectile_id = 		Projectile_ShockBolt,
+		projectile_speed = 		150,
+		projectile_range = 		PROJECTILE_Range_Infinite,
+		projectile_distance = 	16,
+		projectile_offset_y = 	-3,
 		
 		projectile_spread = [5, 2],
 
@@ -107,18 +107,10 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	projectile->Trail(5, 350);
-}
-
-public func FireEffect(object user, int angle, proplist firemode)
-{
-	// muzzle flash
-	
-	var x = +Sin(angle, firemode.projectile_distance);
-	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
-	 
-	
-	EffectMuzzleFlash(user, x, y, angle, 10, false, true);
+	if (firemode.name == fire_modes.primary.name)
+	{
+		projectile->HitScan();
+	}
 }
 
 local ActMap = {

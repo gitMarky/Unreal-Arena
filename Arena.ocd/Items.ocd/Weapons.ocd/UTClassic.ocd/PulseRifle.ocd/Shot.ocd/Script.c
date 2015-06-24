@@ -29,9 +29,9 @@ private func Particles_Plasma()
 	{
 		Prototype = Particles_Glimmer(),
 	    R = 0,
-	    G = PV_Linear(255,128),
+	    G = PV_Linear(255, 128),
 	    B = 0,
-	    Alpha = PV_Random(255,0,3),
+	    Alpha = PV_Random(255, 0, 3),
 		BlitMode = GFX_BLIT_Additive,
 	};
 }
