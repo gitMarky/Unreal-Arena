@@ -5,6 +5,8 @@ local Name = "$Name$";
 local Description = "$Description$";
 local Collectible = 1;
 
+static const PROJECTILE_Range_EnergyRifle = 10000;
+static const PROJECTILE_Color_EnergyRifle = -11534081; // RGB(80, 0, 255);
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
@@ -100,6 +102,16 @@ local fire_modes =
 	},
 };
 
+public func Initialize()
+{
+	_inherited();
+	
+	if (IsInstaGibConfigured())
+	{
+		SetMeshMaterial("weapon_ut99_instagib", 0);
+	}
+}
+
 public func FireSound(object user, proplist firemode)
 {
 	Sound(firemode.sound);
@@ -110,6 +122,24 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 	if (firemode.name == fire_modes.primary.name)
 	{
 		projectile->HitScan();
+	}
+
+	if (IsInstaGibConfigured())
+	{
+		projectile->DamageAmount(PROJECTILE_Damage_InstaGib);
+	}
+}
+
+public func ChangeFiremode(string firemode)
+{
+	// InstaGib supports only the primary firemode
+	if (IsInstaGibConfigured())
+	{
+		selected_firemode = WEAPON_Firemode_Primary;
+	}
+	else
+	{
+		_inherited(firemode);
 	}
 }
 

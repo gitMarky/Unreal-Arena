@@ -3,8 +3,20 @@
 protected func Initialize()
 {
 	SetLightRange(10, 20);
-	SetLightColor(RGB(80,0,255));
-	SetColor(RGB(80,0,255));
+	SetLightColor(GetProjectileColor());
+	SetColor(GetProjectileColor());
+}
+
+private func GetProjectileColor()
+{
+	if (IsInstaGibConfigured())
+	{
+		return PROJECTILE_Color_InstaGib;
+	}
+	else
+	{
+		return PROJECTILE_Color_EnergyRifle;
+	}
 }
 
 private func OnLaunch()
@@ -39,9 +51,9 @@ private func Particles_Plasma()
 	return
 	{
 		Prototype = Particles_Glimmer(),
-	    R = 80,
-	    G = 0,
-	    B = 255,
+	    R = GetRGBaValue(GetProjectileColor(), RGBA_RED),
+	    G = GetRGBaValue(GetProjectileColor(), RGBA_GREEN),
+	    B = GetRGBaValue(GetProjectileColor(), RGBA_BLUE),
 	    Alpha = PV_Random(255, 0, 3),
 		BlitMode = GFX_BLIT_Additive,
 	};
