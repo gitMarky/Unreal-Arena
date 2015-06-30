@@ -1,0 +1,1 @@
+needed for cancelling out gravity... setting speed to 0 wont do? Oh it will actually, I am stupid

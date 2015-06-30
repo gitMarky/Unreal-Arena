@@ -1,0 +1,20 @@
+[DefCore]
+id=Corpse
+Version=6,0
+Category=C4D_Vehicle
+ContactCalls=1
+Width=8
+Height=20
+Offset=-4,-10
+Mass=50
+Vertices=3
+VertexX=0, -2,  2
+VertexY=2, -3, -3
+VertexCNAT=0, 1, 2
+VertexFriction=300, 300, 300
+Rotate=1
+ColorByOwner=1
+BorderBound=1
+StretchGrowth=1
+IncompleteActivity=1
+Oversize=1
