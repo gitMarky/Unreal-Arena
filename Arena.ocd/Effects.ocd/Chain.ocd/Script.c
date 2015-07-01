@@ -12,42 +12,17 @@ local length; // int - length of the segment
 local particles; // proplist - see Verlet_Info below
 local fixed;	 // bool - object has no external forces
 
+local particle_objects;
+
 static const CHAIN_Max_Segments = 15;
 static const CHAIN_Precision = 100;
 static const CHAIN_Constraint_Iterations = 5;
-
-static const Verlet_Info = {
-	x_cur = 0,
-	y_cur = 0,
-	x_old = 0,
-	y_old = 0,
-	x_acc = 0,
-	y_acc = 0,
-	mass = 1,
-	friction = false,
-};
-
-global func VerletInfo(int x, int y, int x_acc, int y_acc, int mass, int precision)
-{
-	if (!precision) precision = 1;
-	
-	precision = CHAIN_Precision / precision;
-
-	var verlet = { Prototype = Verlet_Info };
-	if (x) verlet.x_cur = verlet.x_old = x * precision;
-	if (y) verlet.y_cur = verlet.y_old = y * precision;
-	if (x_acc) verlet.x_acc = x_acc * precision;
-	if (y_acc) verlet.y_acc = y_acc * precision;
-	if (mass) verlet.mass = mass;
-	
-	return verlet;
-}
 
 public func AttachTo(object previous)
 {
 	if (prev)
 	{
-		FatalError("Object is already attached to %v", prev);
+		FatalError(Format("Object is already attached to %v", prev));
 	}
 	if (previous == nil)
 	{
@@ -63,8 +38,9 @@ public func AttachTo(object previous)
 	}
 
 	prev = previous;
+	prev->SetNext(this);
 	prev->UpdateSegments();
-	
+
 	if (fixed && !IsLast()) SetFixed(false);
 }
 
@@ -93,6 +69,11 @@ public func GetNext()
 	return next;
 }
 
+public func SetNext(object obj)
+{
+	next = obj;
+}
+
 public func UpdateSegments()
 {
 	segments = [];
@@ -113,10 +94,10 @@ public func SetParticle(int index, proplist verlet)
 {
 	particles[index] = verlet;
 	
-	var last = GetLength(particles) - 1;
+	var last = GetLength(GetParticles()) - 1;
 	if (index == last)
 	{
-		length = Distance(GetParticle(0).x_cur, GetParticle(0).y_cur, GetParticle(last).x_cur, GetParticle(last).y_cur);		
+		length = Vec_Length(Vec_Sub(GetParticle(last).pos_cur, GetParticle(0).pos_cur));
 	}
 }
 
@@ -133,15 +114,20 @@ public func GetParticle(int index)
 protected func Initialize()
 {
 	particles = [];
-	SetParticle(0, VerletInfo(0, -1));
-	SetParticle(1, VerletInfo(0, +1));
+	particle_objects = [];
+	segments = [];
+	SetParticle(0, VerletInfo(GetX()-3, GetY()-3));
+	SetParticle(1, VerletInfo(GetX(), GetY() + 5));
 	SetFixed(true);
+	UpdateSegments();
 	AddEffect("IntHang", this, 1, 1, this);
 }
 
 protected func SetFixed(bool state)
 {
 	fixed = state;
+	
+	UpdateGravity();
 }
 
 private func FxIntHangTimer(object target, proplist effect, int time)
@@ -151,10 +137,10 @@ private func FxIntHangTimer(object target, proplist effect, int time)
 
 private func TimeStep()
 {
-	for (var segment in segments) segment->Verlet();
-	for (var segment in segments) segment->SatisfyConstraints();
-	for (var segment in segments) segment->ForcesOnObjects();
-	for (var segment in segments) segment->UpdateLines();
+	for (var segment in segments) segment->~Verlet();
+	for (var segment in segments) segment->~SatisfyConstraints();
+	for (var segment in segments) segment->~ForcesOnObjects();
+	for (var segment in segments) segment->~UpdateLines();
 }
 
 /**
@@ -167,15 +153,23 @@ private func Verlet()
 	for(var i = 0; i < GetLength(GetParticles()); i++)
 	{
 		var particle = GetParticle(i);
-		var x_temp = particle.x_cur;
-		var y_temp = particle.y_cur;
+		var temp = particle.pos_cur;
 
-		// Verlet step, get speed out of distance moved relativ to the last position
-		particle.x_cur += particle.x_cur - particle.x_old + particle.x_acc;
-		particle.y_cur += particle.y_cur - particle.y_old + particle.y_acc;
-		particle.x_old = x_temp;
-		particle.y_old = y_temp;
+		// Verlet step, get speed out of distance moved relative to the last position
+		particle.pos_cur = Vec_Add(particle.pos_cur, Vec_Sub(particle.pos_cur, particle.pos_old));
+
+		if (!fixed || i > 0)
+		{
+			particle.pos_cur = Vec_Add(particle.pos_cur, particle.acc);
+		}
+
+		particle.pos_old = temp;
 		particle.friction = false;
+	}
+	
+	for (var i = 0; i < GetLength(GetParticles()); i++)
+	{
+		DrawParticleObject(i);
 	}
 }
 
@@ -209,11 +203,9 @@ private func ApplyFriction()
 		var particle = GetParticle(i);
 		if(!particle.friction) continue;
 
-		var newvel_x = particle.x_cur - particle.x_old;
-		var newvel_y = particle.y_cur - particle.y_old;
+		var newvel = Vec_Sub(particle.pos_cur, particle.pos_old);
 		
-		particle.x_old = particle.x_cur - newvel_x / 2;
-		particle.y_old = particle.y_cur - newvel_y / 2;
+		particle.pos_old = Vec_Sub(particle.pos_cur, Vec_Div(newvel, 2));
 	}
 }
 
@@ -224,56 +216,68 @@ public func ConstraintObjects()
 	{
 		var last = GetLength(prev->GetParticles()) - 1;
 		
-		var x_diff = prev->GetParticleX(last) - GetParticleX(0);
-		var y_diff = prev->GetParticleY(last) - GetParticleY(0);
+		var diff = Vec_Sub(prev->GetParticlePos(last), GetParticlePos(0));
 		
 		for (var i = 0; i < GetLength(GetParticles()); i++)
 		{
-			SetParticleX(GetParticleX(i) + x_diff, i, CHAIN_Precision);
-			SetParticleX(GetParticleY(i) + y_diff, i, CHAIN_Precision);
+			SetParticlePos(Vec_Add(GetParticlePos(i), diff), i, CHAIN_Precision);
 		}
 	}
 }
 
 public func ConstraintLength()
 {
-	var last = GetLength(particles) - 1;
+	var last = GetLength(GetParticles()) - 1;
 
-	var x_diff = GetParticle(last).x_cur - GetParticle(0).x_cur;
-	var y_diff = GetParticle(last).y_cur - GetParticle(0).y_cur;
+	var diff = Vec_Sub(GetParticlePos(last), GetParticlePos(0));
 	
-	var current_length = Distance(0, 0, x_diff, y_diff);
+	var current_length = Vec_Length(diff);
 	
-	GetParticle(last).x_cur = GetParticle(0).x_cur + x_diff * length / current_length;
-	GetParticle(last).y_cur = GetParticle(0).y_cur + y_diff * length / current_length;
+	SetParticlePos(Vec_Add(GetParticlePos(0), Vec_Div(Vec_Mul(diff, length), current_length)), last, CHAIN_Precision);
 }
 
 public func ConstraintLandscape()
 {
 }
 
-public func GetParticleX(int index)
+public func GetParticlePos(int index)
 {
-	return GetX(CHAIN_Precision) + GetParticle(index).x_cur;
+	return GetParticle(index).pos_cur;
 }
 
-public func GetParticleY(int index)
-{
-	return GetY(CHAIN_Precision) + GetParticle(index).y_cur;
-}
-
-public func SetParticleX(int value, int index, int precision)
+public func SetParticlePos(array value, int index, int precision)
 {
 	if (!precision) precision = 1;
 	precision = CHAIN_Precision / precision;
 
-	GetParticle(index).x_cur = value * precision - GetX(CHAIN_Precision);
+	GetParticle(index).pos_cur = Vec_Mul(value, precision);
 }
 
-public func SetParticleY(int value, int index, int precision)
+private func DrawParticleObject(int index)
 {
-	if (!precision) precision = 1;
-	precision = CHAIN_Precision / precision;
+	var obj = particle_objects[index];
+	
+	if (!obj)
+	{
+		obj = CreateObject(Rock);
+		obj->SetCategory(C4D_StaticBack);
+		obj->SetObjDrawTransform(300, 0, 0, 0, 300);
+		obj->SetClrModulation(RGB(255, 0, 0));
+		
+		particle_objects[index] = obj;
+	}
+	
+	obj->SetPosition(GetParticlePos(index)[0] / CHAIN_Precision, GetParticlePos(index)[1] / CHAIN_Precision);
+	obj->SetYDir();
+	obj->SetXDir();
+}
 
-	GetParticle(index).y_cur = value * precision - GetY(CHAIN_Precision);
+private func UpdateGravity()
+{
+	var gravity = GetGravity() * CHAIN_Precision / 100;
+	
+	for (var particle in GetParticles())
+	{
+		if (particle.acc[1] < gravity) particle.acc[1] += gravity;
+	}
 }
