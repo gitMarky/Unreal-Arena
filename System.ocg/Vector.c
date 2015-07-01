@@ -122,7 +122,7 @@ global func Vec_Angle(array a, array b)
 	
 	if (GetLength(a) != 2)
 	{
-		FatalError("The function expects a vector of length 2, got length %d", GetLength(a));
+		FatalError(Format("The function expects a vector of length 2, got length %d", GetLength(a)));
 	}
 	
 	return Angle(a[0], a[1], b[0], b[1]);
