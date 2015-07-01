@@ -1,0 +1,16 @@
+[DefCore]
+id=Particle
+Version=6,0
+Category=C4D_Vehicle
+ContactCalls=1
+Width=1
+Height=1
+Offset=0,0
+Mass=1
+Vertices=1
+VertexX=0
+VertexY=0
+VertexCNAT=0
+VertexFriction=300
+Rotate=1
+BorderBound=1

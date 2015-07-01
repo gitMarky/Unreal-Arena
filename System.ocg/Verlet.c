@@ -10,7 +10,7 @@ global func VerletInfo(int x, int y, int x_acc, int y_acc, int mass, int precisi
 		pos_old = [0, 0],
 		acc = [0, 0],
 		mass = 1,
-		friction = false,
+		collision = false,
 	};
 
 	if (x) verlet.pos_cur[0] = verlet.pos_old[0] = x * precision;

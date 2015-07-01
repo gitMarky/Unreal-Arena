@@ -3,6 +3,8 @@
  @author Marky
  @version 0.1.0
  */
+ 
+ #include Particle
 
 local prev; // object - the top of the chain. This is the object that does all the calculations
 local next;	// object - hangs below the head
@@ -137,7 +139,7 @@ private func FxIntHangTimer(object target, proplist effect, int time)
 
 private func TimeStep()
 {
-	for (var segment in segments) segment->~Verlet();
+	for (var segment in segments) segment->~VerletIntegration();
 	for (var segment in segments) segment->~SatisfyConstraints();
 	for (var segment in segments) segment->~ForcesOnObjects();
 	for (var segment in segments) segment->~UpdateLines();
@@ -148,23 +150,11 @@ private func TimeStep()
  Moves the particles according to their old position and thus speed.
  @author Randrian
 */
-private func Verlet()
+private func VerletIntegration()
 {
 	for(var i = 0; i < GetLength(GetParticles()); i++)
 	{
-		var particle = GetParticle(i);
-		var temp = particle.pos_cur;
-
-		// Verlet step, get speed out of distance moved relative to the last position
-		particle.pos_cur = Vec_Add(particle.pos_cur, Vec_Sub(particle.pos_cur, particle.pos_old));
-
-		if (!fixed || i > 0)
-		{
-			particle.pos_cur = Vec_Add(particle.pos_cur, particle.acc);
-		}
-
-		particle.pos_old = temp;
-		particle.friction = false;
+		VerletStep(GetParticle(i), !fixed || i > 0);
 	}
 }
 
@@ -185,22 +175,17 @@ private func SatisfyConstraints()
 		ConstraintLength();
 		ConstraintLandscape();
 	}
-	
-	ApplyFriction();
+
+	HandleCollision();
 }
 
-private func ApplyFriction()
+private func HandleCollision()
 {
 	// Apply friction for those how have the notifier for it.
 	// Friction just means that the velocity is divided by 2 to simulatie a friction force
-	for(var i = 0; i < GetLength(GetParticles()); i++)
+	for(var particle in GetParticles())
 	{
-		var particle = GetParticle(i);
-		if(!particle.friction) continue;
-
-		var newvel = Vec_Sub(particle.pos_cur, particle.pos_old);
-		
-		particle.pos_old = Vec_Sub(particle.pos_cur, Vec_Div(newvel, 2));
+		ParticleFriction(particle);
 	}
 }
 
@@ -233,60 +218,9 @@ public func ConstraintLength()
 
 public func ConstraintLandscape()
 {
-	for(var i = 0; i < GetLength(GetParticles()); i++)
+	for(var particle in GetParticles())
 	{
-		var pos_cur = GetParticle(i).pos_cur;
-		var pos_old = GetParticle(i).pos_old;
-		
-		var particle_x = pos_cur[0] / CHAIN_Precision;
-		var particle_y = pos_cur[1] / CHAIN_Precision;
-
-		// Don't touch ground
-		if (GBackSolid(particle_x - GetX(), particle_y - GetY()))
-		{
-			// Moving left?
-			var xdir = -1;
-			if(pos_cur[0] < pos_old[0])
-				xdir = 1;
-
-			var ydir = -1;
-			// Moving up?
-			if(pos_cur[1] < pos_old[1])
-				ydir = 1;
-
-			var found = 0;
-			// Look for all possible places where the particle could move (from nearest to farest)
-			for(var pos in LandscapeTestArray())
-			{
-				if (pos == nil) continue;
-
-				var search_x = particle_x + xdir * pos[0];
-				var search_y = particle_y + ydir * pos[1];
-
-				if(!GBackSolid(search_x - GetX(), search_y - GetY()))
-				{
-					// Calculate the new position (if we don't move in a direction don't overwrite the old value)
-					var new = [0,0];
-					if(pos[0])
-						new[0] = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir;
-					else
-						new[0] = pos_cur[0];
-
-					if(pos[1])
-						new[1] = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir;
-					else
-						new[1] = pos_cur[1];
-					// Notifier for applying friction after the constraints
-					GetParticle(i).friction = true;
-					GetParticle(i).pos_cur = new;
-					found = true;
-					break;
-				}
-			}
-
-			// No possibility to move the particle out? Then reset it. The old position should be valid
-			if(!found) GetParticle(i).pos_cur = GetParticle(i).pos_old;
-		}
+		ParticleLandscape(particle);
 	}
 }
 
@@ -325,11 +259,9 @@ private func DrawParticleObject(int index)
 
 private func UpdateGravity()
 {
-	var gravity = GetGravity() * CHAIN_Precision / 100;
-	
 	for (var particle in GetParticles())
 	{
-		if (particle.acc[1] < gravity) particle.acc[1] += gravity;
+		ParticleGravity(particle);
 	}
 }
 
