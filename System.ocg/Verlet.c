@@ -1,23 +1,25 @@
 
-global func VerletInfo(int x, int y, int x_acc, int y_acc, int mass, int precision)
+global func Verlet_Particle(int x, int y, int precision)
 {
 	if (!precision) precision = 1;
-	
 	precision = CHAIN_Precision / precision;
 
 	var verlet = {
-		pos_cur = [0, 0],
-		pos_old = [0, 0],
-		acc = [0, 0],
+		pos_cur = Vector2D(0, 0),
+		pos_old = Vector2D(0, 0),
+		acc = Vector2D(0, 0),
 		mass = 1,
 		collision = false,
+		// same as normal particles
+		ForceX = 0,
+		ForceY = 0,
+		DampingX = 1000,
+		DampingY = 1000,
+		OnCollision = PC_Stop(),
 	};
 
-	if (x) verlet.pos_cur[0] = verlet.pos_old[0] = x * precision;
-	if (y) verlet.pos_cur[1] = verlet.pos_old[1] = y * precision;
-	if (x_acc) verlet.acc[0] = x_acc * precision;
-	if (y_acc) verlet.acc[1] = y_acc * precision;
-	if (mass) verlet.mass = mass;
-	
+	if (x) verlet.pos_cur.x = verlet.pos_old.x = x * precision;
+	if (y) verlet.pos_cur.y = verlet.pos_old.y = y * precision;
+
 	return verlet;
 }

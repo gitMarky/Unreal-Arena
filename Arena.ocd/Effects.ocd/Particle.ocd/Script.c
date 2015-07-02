@@ -3,6 +3,30 @@
  @author Marky
  @version 0.1.0
  */
+ 
+/*
+ From the particle documentation:
+ 	Name 	Values 	Description
+	R 					0 to 255 	Red part of the color modulation.
+	G 					0 to 255 	Green part of the color modulation.
+	B 					0 to 255 	Blue part of the color modulation.
+	Alpha 				0 to 255 	Alpha part of the color modulation.
+	Size 				pixels 		Size of the particle in pixels.
+	Stretch 			factor 		The vertical stretch of the particle. 1000 equals no stretch.
+	Phase 				phase 		The displayed phase of the particle from the Graphics.png. The index starts at 0 and will be wrapped.
+	Rotation 			0 to 360 	Rotation of the particle.
+x	ForceX 				Integer 	Force in x-direction that is constantly applied to the particle's speed. Can f.e. simulate wind.
+x	ForceY 				Integer 	Force in y-direction that is constantly applied to the particle's speed. Ca f.e. simulate gravity.
+x	DampingX 			0 to 1000 	Damping of the particle's speed in x-direction. 1000 means no damping, 0 means instant stop.
+x	DampingY 			0 to 1000 	Damping of the particle's speed in y-direction. 1000 means no damping, 0 means instant stop.
+	BlitMode 			0 or 
+				GFX_BLIT_Additive 	The particle's blit mode. Currently only additive blitting is supported.
+	CollisionVertex 	0 to 1000 	The offset of the particle's hit point relative to its width. When set, the particle will collide with the landscape. 0 means the particle will collide with its center.
+x	OnCollision 		PC_Die,
+						PC_Bounce,
+						PC_Stop 	Defines what happens when the particle collides with the landscape.
+	Attach 				bit mask 	Defines the attachment of the particles to the calling object. Can be a combination of ATTACH_Front, ATTACH_Back, and ATTACH_MoveRelative. For example ATTACH_Front | ATTACH_MoveRelative
+*/
 
 /**
  Verlet integration step
@@ -25,11 +49,11 @@ private func VerletStep(proplist particle, bool gravity)
 		particle.collision = false;
 }
 
-private func ParticleFriction(proplist particle)
+private func ParticleCollision(proplist particle)
 {
-		var newvel = Vec_Sub(particle.pos_cur, particle.pos_old);
-		
-		particle.pos_old = Vec_Sub(particle.pos_cur, Vec_Div(newvel, 2));
+	// friction
+	var newvel = Vec_Sub(particle.pos_cur, particle.pos_old);	
+	particle.pos_old = Vec_Sub(particle.pos_cur, Vec_Div(newvel, 2));
 }
 
 private func ParticleLandscape(proplist particle)
@@ -37,20 +61,20 @@ private func ParticleLandscape(proplist particle)
 		var pos_cur = particle.pos_cur;
 		var pos_old = particle.pos_old;
 		
-		var particle_x = pos_cur[0] / CHAIN_Precision;
-		var particle_y = pos_cur[1] / CHAIN_Precision;
+		var particle_x = pos_cur.x / CHAIN_Precision;
+		var particle_y = pos_cur.y / CHAIN_Precision;
 
 		// Don't touch ground
 		if (GBackSolid(particle_x - GetX(), particle_y - GetY()))
 		{
 			// Moving left?
 			var xdir = -1;
-			if(pos_cur[0] < pos_old[0])
+			if(pos_cur.x < pos_old.x)
 				xdir = 1;
 
 			var ydir = -1;
 			// Moving up?
-			if(pos_cur[1] < pos_old[1])
+			if(pos_cur.y < pos_old.y)
 				ydir = 1;
 
 			var found = 0;
@@ -65,19 +89,19 @@ private func ParticleLandscape(proplist particle)
 				if(!GBackSolid(search_x - GetX(), search_y - GetY()))
 				{
 					// Calculate the new position (if we don't move in a direction don't overwrite the old value)
-					var new = [0, 0];
+					var pos_new = Vector2D(0, 0);
 					if(pos[0])
-						new[0] = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir;
+						pos_new.x = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir;
 					else
-						new[0] = pos_cur[0];
+						pos_new.x = pos_cur.x;
 
 					if(pos[1])
-						new[1] = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir;
+						pos_new.y = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir;
 					else
-						new[1] = pos_cur[1];
+						pos_new.y = pos_cur.y;
 					// Notifier for applying friction after the constraints
 					particle.collision = true;
-					particle.pos_cur = new;
+					particle.pos_cur = pos_new;
 					found = true;
 					break;
 				}
@@ -90,8 +114,8 @@ private func ParticleLandscape(proplist particle)
 
 private func ParticleGravity(proplist particle)
 {
-	var gravity = GetGravity() * CHAIN_Precision / 100;
-	if (particle.acc[1] < gravity) particle.acc[1] += gravity;
+	var gravity = 2 * GetGravity() * CHAIN_Precision / 100;
+	if (particle.acc.y < gravity) particle.acc.y += gravity;
 }
 
 private func LandscapeTestArray()
