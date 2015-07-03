@@ -35,18 +35,18 @@ x	OnCollision 		PC_Die,
 */
 private func VerletStep(proplist particle, bool gravity)
 {
-		var temp = particle.pos_cur;
+	var temp = particle.pos_cur;
 
-		// Verlet step, get speed out of distance moved relative to the last position
-		particle.pos_cur = Vec_Add(particle.pos_cur, Vec_Sub(particle.pos_cur, particle.pos_old));
+	// Verlet step, get speed out of distance moved relative to the last position
+	particle.pos_cur = Vec_Add(particle.pos_cur, Vec_Sub(particle.pos_cur, particle.pos_old));
 
-		if (gravity)
-		{
-			particle.pos_cur = Vec_Add(particle.pos_cur, particle.acc);
-		}
+	if (gravity)
+	{
+		particle.pos_cur = Vec_Add(particle.pos_cur, particle.acc);
+	}
 
-		particle.pos_old = temp;
-		particle.collision = false;
+	particle.pos_old = temp;
+	particle.collision = false;
 }
 
 private func ParticleCollision(proplist particle)
@@ -58,58 +58,58 @@ private func ParticleCollision(proplist particle)
 
 private func ParticleLandscape(proplist particle)
 {
-		var pos_cur = particle.pos_cur;
-		var pos_old = particle.pos_old;
-		
-		var particle_x = pos_cur.x / CHAIN_Precision;
-		var particle_y = pos_cur.y / CHAIN_Precision;
+	var pos_cur = particle.pos_cur;
+	var pos_old = particle.pos_old;
+	
+	var particle_x = pos_cur.x / CHAIN_Precision;
+	var particle_y = pos_cur.y / CHAIN_Precision;
 
-		// Don't touch ground
-		if (GBackSolid(particle_x - GetX(), particle_y - GetY()))
+	// Don't touch ground
+	if (GBackSolid(particle_x - GetX(), particle_y - GetY()))
+	{
+		// Moving left?
+		var xdir = -1;
+		if(pos_cur.x < pos_old.x)
+			xdir = 1;
+
+		var ydir = -1;
+		// Moving up?
+		if(pos_cur.y < pos_old.y)
+			ydir = 1;
+
+		var found = 0;
+		// Look for all possible places where the particle could move (from nearest to farest)
+		for(var pos in LandscapeTestArray())
 		{
-			// Moving left?
-			var xdir = -1;
-			if(pos_cur.x < pos_old.x)
-				xdir = 1;
+			if (pos == nil) continue;
 
-			var ydir = -1;
-			// Moving up?
-			if(pos_cur.y < pos_old.y)
-				ydir = 1;
+			var search_x = particle_x + xdir * pos[0];
+			var search_y = particle_y + ydir * pos[1];
 
-			var found = 0;
-			// Look for all possible places where the particle could move (from nearest to farest)
-			for(var pos in LandscapeTestArray())
+			if(!GBackSolid(search_x - GetX(), search_y - GetY()))
 			{
-				if (pos == nil) continue;
+				// Calculate the new position (if we don't move in a direction don't overwrite the old value)
+				var pos_new = Vector2D(0, 0);
+				if(pos[0])
+					pos_new.x = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir;
+				else
+					pos_new.x = pos_cur.x;
 
-				var search_x = particle_x + xdir * pos[0];
-				var search_y = particle_y + ydir * pos[1];
-
-				if(!GBackSolid(search_x - GetX(), search_y - GetY()))
-				{
-					// Calculate the new position (if we don't move in a direction don't overwrite the old value)
-					var pos_new = Vector2D(0, 0);
-					if(pos[0])
-						pos_new.x = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir;
-					else
-						pos_new.x = pos_cur.x;
-
-					if(pos[1])
-						pos_new.y = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir;
-					else
-						pos_new.y = pos_cur.y;
-					// Notifier for applying friction after the constraints
-					particle.collision = true;
-					particle.pos_cur = pos_new;
-					found = true;
-					break;
-				}
+				if(pos[1])
+					pos_new.y = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir;
+				else
+					pos_new.y = pos_cur.y;
+				// Notifier for applying friction after the constraints
+				particle.collision = true;
+				particle.pos_cur = pos_new;
+				found = true;
+				break;
 			}
-
-			// No possibility to move the particle out? Then reset it. The old position should be valid
-			if(!found) particle.pos_cur = particle.pos_old;
 		}
+
+		// No possibility to move the particle out? Then reset it. The old position should be valid
+		if(!found) particle.pos_cur = particle.pos_old;
+	}
 }
 
 private func ParticleGravity(proplist particle)
