@@ -99,7 +99,7 @@ public func SetParticle(int index, proplist verlet)
 	var last = GetLength(GetParticles()) - 1;
 	if (index == last)
 	{
-		length = Vec_Length(Vec_Sub(GetParticle(last).pos_cur, GetParticle(0).pos_cur));
+		length = Vec_Length(Vec_Sub(GetParticle(last).Position, GetParticle(0).Position));
 	}
 }
 
@@ -143,6 +143,7 @@ private func TimeStep()
 	for (var segment in segments) segment->~SatisfyConstraints();
 	for (var segment in segments) segment->~ForcesOnObjects();
 	for (var segment in segments) segment->~UpdateLines();
+	for (var segment in segments) segment->~UpdateParticles();
 }
 
 /**
@@ -154,6 +155,7 @@ private func VerletIntegration()
 {
 	for(var i = 0; i < GetLength(GetParticles()); i++)
 	{
+		ParticleOriginBackup(GetParticle(i));
 		VerletStep(GetParticle(i), !fixed || i > 0);
 	}
 }
@@ -189,7 +191,7 @@ private func HandleCollision()
 	}
 }
 
-public func ConstraintObjects()
+private func ConstraintObjects()
 {
 	// move all particles to where the first particle has moved
 	if (prev)
@@ -198,25 +200,41 @@ public func ConstraintObjects()
 		
 		var diff = Vec_Sub(prev->GetParticlePos(last), GetParticlePos(0));
 		
-		for (var i = 0; i < GetLength(GetParticles()); i++)
+		for (var i = 0; i < 1 /*GetLength(GetParticles())*/; i++)
 		{
 			SetParticlePos(Vec_Add(GetParticlePos(i), diff), i, CHAIN_Precision);
 		}
 	}
 }
 
-public func ConstraintLength()
+private func ConstraintLength()
 {
 	var last = GetLength(GetParticles()) - 1;
-
 	var diff = Vec_Sub(GetParticlePos(last), GetParticlePos(0));
 	
 	var current_length = Vec_Length(diff);
-	
-	SetParticlePos(Vec_Add(GetParticlePos(0), Vec_Div(Vec_Mul(diff, length), current_length)), last, CHAIN_Precision);
+	var scaled_diff = Vec_Div(Vec_Mul(diff, length), current_length);
+
+	if (GetParticle(0).Collision && GetParticle(last).collision)
+	{
+		// both collided... expand in both directions
+		var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
+		GetParticle(0).Position = Vec_Sub(center, Vec_Div(scaled_diff, 2));
+		GetParticle(last).Position = Vec_Add(GetParticle(0).Position, scaled_diff);
+	}
+	else if (GetParticle(last).Collision)
+	{
+		// last collided... expand in direction of first
+		GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, scaled_diff);
+	}
+	else // if (GetParticle(0).Collision)
+	{
+		// first collided.. (or none collided) expand in direction of last
+		GetParticle(last).Position = Vec_Add(GetParticle(0).Position, scaled_diff);
+	}
 }
 
-public func ConstraintLandscape()
+private func ConstraintLandscape()
 {
 	for(var particle in GetParticles())
 	{
@@ -227,7 +245,7 @@ public func ConstraintLandscape()
 
 public func GetParticlePos(int index)
 {
-	return GetParticle(index).pos_cur;
+	return GetParticle(index).Position;
 }
 
 public func SetParticlePos(proplist value, int index, int precision)
@@ -235,7 +253,7 @@ public func SetParticlePos(proplist value, int index, int precision)
 	if (!precision) precision = 1;
 	precision = CHAIN_Precision / precision;
 
-	GetParticle(index).pos_cur = Vec_Mul(value, precision);
+	GetParticle(index).Position = Vec_Mul(value, precision);
 }
 
 private func DrawParticleObject(int index)
@@ -270,5 +288,13 @@ private func UpdateLines()
 	for (var i = 0; i < GetLength(GetParticles()); i++)
 	{
 		DrawParticleObject(i);
+	}
+}
+
+private func UpdateParticles()
+{
+	for (var particle in GetParticles())
+	{
+		ParticleOriginUpdate(particle);
 	}
 }

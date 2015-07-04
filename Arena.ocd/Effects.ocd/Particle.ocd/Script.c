@@ -35,31 +35,46 @@ x	OnCollision 		PC_Die,
 */
 private func VerletStep(proplist particle, bool gravity)
 {
-	var temp = particle.pos_cur;
-
 	// Verlet step, get speed out of distance moved relative to the last position
-	particle.pos_cur = Vec_Add(particle.pos_cur, Vec_Sub(particle.pos_cur, particle.pos_old));
+	var damping = Vector2D(particle.DampingX,
+						   particle.DampingY);
 
+	// scale velocity up to the original value and calculate difference						   
+	var velocity = Vec_Sub(particle.Position, particle.Origin);
+	    velocity = Vector2D(1000 * velocity.x / Max(1, damping.x),
+	                        1000 * velocity.y / Max(1, damping.y));
+ 
+	var vel_diff = Vec_Sub(velocity, particle.Velocity);
+	
+	// apply gravity
 	if (gravity)
 	{
-		particle.pos_cur = Vec_Add(particle.pos_cur, particle.acc);
+		particle.Velocity = Vec_Add(particle.Velocity, particle.Acceleration);
 	}
+	
+	// damping of current velocity
+	var vel_damped = Vector2D(damping.x * particle.Velocity.x / 1000,
+							  damping.y * particle.Velocity.y / 1000);
 
-	particle.pos_old = temp;
-	particle.collision = false;
+	// update velocity
+	particle.Velocity  = Vec_Add(particle.Velocity, vel_diff);
+
+	// update position
+	particle.Position = Vec_Add(particle.Position, vel_damped);
+
+	particle.Collision = false;
 }
 
 private func ParticleCollision(proplist particle)
 {
 	// friction
-	var newvel = Vec_Sub(particle.pos_cur, particle.pos_old);	
-	particle.pos_old = Vec_Sub(particle.pos_cur, Vec_Div(newvel, 2));
+	var velocity = Vec_Div(Vec_Mul(particle.Velocity, 1000 - particle.Friction), 1000);
+	particle.Velocity = velocity;
 }
 
 private func ParticleLandscape(proplist particle)
 {
-	var pos_cur = particle.pos_cur;
-	var pos_old = particle.pos_old;
+	var pos_cur = particle.Position;
 	
 	var particle_x = pos_cur.x / CHAIN_Precision;
 	var particle_y = pos_cur.y / CHAIN_Precision;
@@ -69,12 +84,12 @@ private func ParticleLandscape(proplist particle)
 	{
 		// Moving left?
 		var xdir = -1;
-		if(pos_cur.x < pos_old.x)
+		if(particle.Velocity.x < 0)
 			xdir = 1;
 
 		var ydir = -1;
 		// Moving up?
-		if(pos_cur.y < pos_old.y)
+		if(particle.Velocity.y < 0)
 			ydir = 1;
 
 		var found = 0;
@@ -91,31 +106,41 @@ private func ParticleLandscape(proplist particle)
 				// Calculate the new position (if we don't move in a direction don't overwrite the old value)
 				var pos_new = Vector2D(0, 0);
 				if(pos[0])
-					pos_new.x = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir;
+					pos_new.x = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir * CHAIN_Precision;
 				else
 					pos_new.x = pos_cur.x;
 
 				if(pos[1])
-					pos_new.y = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir;
+					pos_new.y = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir * CHAIN_Precision;
 				else
 					pos_new.y = pos_cur.y;
 				// Notifier for applying friction after the constraints
-				particle.collision = true;
-				particle.pos_cur = pos_new;
+				particle.Collision = true;
+				particle.Position = pos_new;
 				found = true;
 				break;
 			}
 		}
 
 		// No possibility to move the particle out? Then reset it. The old position should be valid
-		if(!found) particle.pos_cur = particle.pos_old;
+		if(!found) particle.Position = particle.Origin;
 	}
 }
 
 private func ParticleGravity(proplist particle)
 {
 	var gravity = 2 * GetGravity() * CHAIN_Precision / 100;
-	if (particle.acc.y < gravity) particle.acc.y += gravity;
+	if (particle.Acceleration.y < gravity) particle.Acceleration.y += gravity;
+}
+
+private func ParticleOriginBackup(proplist particle)
+{
+	particle.Temp = particle.Position;
+}
+
+private func ParticleOriginUpdate(proplist particle)
+{
+	if (particle.Temp != nil) particle.Origin = particle.Temp;
 }
 
 private func LandscapeTestArray()
