@@ -198,7 +198,7 @@ private func ConstraintObjects()
 	{
 		var last = GetLength(prev->GetParticles()) - 1;
 		
-		var diff = Vec_Sub(prev->GetParticlePos(last), GetParticle(0).Position);
+		var diff = Vec_Sub(prev->GetParticle(last).Position, GetParticle(0).Position);
 		
 		for (var i = 0; i < 1 /*GetLength(GetParticles())*/; i++)
 		{
@@ -257,7 +257,6 @@ private func DrawParticleObject(int index)
 		particle_objects[index] = obj;
 	}
 	
-	//obj->SetPosition(GetParticlePos(index).x / CHAIN_Precision, GetParticlePos(index).y / CHAIN_Precision);
 	obj->SetPosition(GetParticle(index).Position.x, GetParticle(index).Position.y, false, CHAIN_Precision);
 	obj->SetYDir();
 	obj->SetXDir();

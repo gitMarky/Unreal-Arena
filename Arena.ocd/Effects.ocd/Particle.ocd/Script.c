@@ -44,20 +44,18 @@ private func VerletStep(proplist particle, bool gravity)
 	    velocity = Vector2D(1000 * velocity.x / Max(1, damping.x),
 	                        1000 * velocity.y / Max(1, damping.y));
  
-	var vel_diff = Vec_Sub(velocity, particle.Velocity);
-	
 	// apply gravity
 	if (gravity)
 	{
-		particle.Velocity = Vec_Add(particle.Velocity, particle.Acceleration);
+		velocity = Vec_Add(velocity, particle.Acceleration);
 	}
 	
 	// damping of current velocity
-	var vel_damped = Vector2D(damping.x * particle.Velocity.x / 1000,
-							  damping.y * particle.Velocity.y / 1000);
+	var vel_damped = Vector2D(damping.x * velocity.x / 1000,
+							  damping.y * velocity.y / 1000);
 
 	// update velocity
-	particle.Velocity  = Vec_Add(particle.Velocity, vel_diff);
+	particle.Velocity  = velocity;
 
 	// update position
 	particle.Position = Vec_Add(particle.Position, vel_damped);
