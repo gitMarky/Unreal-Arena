@@ -11,7 +11,7 @@ global func Verlet_Particle(int x, int y, int precision)
 		Acceleration = Vector2D(0, 0),
 		Mass = 1,
 		Collision = false,
-		Friction = 500,
+		Friction = 1000,
 		// same as normal particles
 		ForceX = 0,
 		ForceY = 0,

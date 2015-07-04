@@ -74,22 +74,22 @@ private func ParticleCollision(proplist particle)
 
 private func ParticleLandscape(proplist particle)
 {
-	var pos_cur = particle.Position;
-	
-	var particle_x = pos_cur.x / CHAIN_Precision;
-	var particle_y = pos_cur.y / CHAIN_Precision;
+	var particle_x = particle.Position.x;
+	var particle_y = particle.Position.y;
 
 	// Don't touch ground
-	if (GBackSolid(particle_x - GetX(), particle_y - GetY()))
+	if (GBackSolid(particle_x / CHAIN_Precision - GetX(), particle_y / CHAIN_Precision - GetY()))
 	{
+		particle.Collision = true;
+
 		// Moving left?
 		var xdir = -1;
-		if(particle.Velocity.x < 0)
+		if(particle_x < particle.Origin.x)
 			xdir = 1;
 
 		var ydir = -1;
 		// Moving up?
-		if(particle.Velocity.y < 0)
+		if(particle_y < particle.Origin.y)
 			ydir = 1;
 
 		var found = 0;
@@ -97,29 +97,23 @@ private func ParticleLandscape(proplist particle)
 		for(var pos in LandscapeTestArray())
 		{
 			if (pos == nil) continue;
-
-			var search_x = particle_x + xdir * pos[0];
-			var search_y = particle_y + ydir * pos[1];
-
-			if(!GBackSolid(search_x - GetX(), search_y - GetY()))
+			
+			for (var factor = CHAIN_Precision / 10; factor < CHAIN_Precision; factor += CHAIN_Precision / 10)
 			{
-				// Calculate the new position (if we don't move in a direction don't overwrite the old value)
-				var pos_new = Vector2D(0, 0);
-				if(pos[0])
-					pos_new.x = search_x * CHAIN_Precision - xdir * CHAIN_Precision / 2 + xdir * CHAIN_Precision;
-				else
-					pos_new.x = pos_cur.x;
+				var search_x = particle_x + factor * xdir * pos[0];
+				var search_y = particle_y + factor * ydir * pos[1];
+	
+				if(!GBackSolid(search_x / CHAIN_Precision - GetX(), search_y / CHAIN_Precision - GetY()))
+				{
+					found = true;
 
-				if(pos[1])
-					pos_new.y = search_y * CHAIN_Precision - ydir * CHAIN_Precision / 2 + ydir * CHAIN_Precision;
-				else
-					pos_new.y = pos_cur.y;
-				// Notifier for applying friction after the constraints
-				particle.Collision = true;
-				particle.Position = pos_new;
-				found = true;
-				break;
+					// Notifier for applying friction after the constraints
+					particle.Position = Vector2D(search_x, search_y);
+					break;
+				}
 			}
+			
+			if (found) break;
 		}
 
 		// No possibility to move the particle out? Then reset it. The old position should be valid

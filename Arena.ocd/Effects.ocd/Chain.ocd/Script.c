@@ -184,7 +184,7 @@ private func SatisfyConstraints()
 private func HandleCollision()
 {
 	// Apply friction for those how have the notifier for it.
-	// Friction just means that the velocity is divided by 2 to simulatie a friction force
+	// Friction just means that the velocity is divided by 2 to simulate a friction force
 	for(var particle in GetParticles())
 	{
 		ParticleCollision(particle);
@@ -198,11 +198,11 @@ private func ConstraintObjects()
 	{
 		var last = GetLength(prev->GetParticles()) - 1;
 		
-		var diff = Vec_Sub(prev->GetParticlePos(last), GetParticlePos(0));
+		var diff = Vec_Sub(prev->GetParticlePos(last), GetParticle(0).Position);
 		
 		for (var i = 0; i < 1 /*GetLength(GetParticles())*/; i++)
 		{
-			SetParticlePos(Vec_Add(GetParticlePos(i), diff), i, CHAIN_Precision);
+			GetParticle(i).Position = Vec_Add(GetParticle(i).Position, diff);
 		}
 	}
 }
@@ -210,19 +210,19 @@ private func ConstraintObjects()
 private func ConstraintLength()
 {
 	var last = GetLength(GetParticles()) - 1;
-	var diff = Vec_Sub(GetParticlePos(last), GetParticlePos(0));
+	var diff = Vec_Sub(GetParticle(last).Position, GetParticle(0).Position);
 	
 	var current_length = Vec_Length(diff);
 	var scaled_diff = Vec_Div(Vec_Mul(diff, length), current_length);
 
-	if (GetParticle(0).Collision && GetParticle(last).collision)
+	if (GetParticle(0).Collision && GetParticle(last).collision && !fixed)
 	{
 		// both collided... expand in both directions
 		var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
 		GetParticle(0).Position = Vec_Sub(center, Vec_Div(scaled_diff, 2));
 		GetParticle(last).Position = Vec_Add(GetParticle(0).Position, scaled_diff);
 	}
-	else if (GetParticle(last).Collision)
+	else if (GetParticle(last).Collision && !fixed)
 	{
 		// last collided... expand in direction of first
 		GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, scaled_diff);
@@ -243,19 +243,6 @@ private func ConstraintLandscape()
 }
 
 
-public func GetParticlePos(int index)
-{
-	return GetParticle(index).Position;
-}
-
-public func SetParticlePos(proplist value, int index, int precision)
-{
-	if (!precision) precision = 1;
-	precision = CHAIN_Precision / precision;
-
-	GetParticle(index).Position = Vec_Mul(value, precision);
-}
-
 private func DrawParticleObject(int index)
 {
 	var obj = particle_objects[index];
@@ -270,7 +257,8 @@ private func DrawParticleObject(int index)
 		particle_objects[index] = obj;
 	}
 	
-	obj->SetPosition(GetParticlePos(index).x / CHAIN_Precision, GetParticlePos(index).y / CHAIN_Precision);
+	//obj->SetPosition(GetParticlePos(index).x / CHAIN_Precision, GetParticlePos(index).y / CHAIN_Precision);
+	obj->SetPosition(GetParticle(index).Position.x, GetParticle(index).Position.y, false, CHAIN_Precision);
 	obj->SetYDir();
 	obj->SetXDir();
 }
