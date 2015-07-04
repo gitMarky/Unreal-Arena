@@ -40,9 +40,19 @@ private func VerletStep(proplist particle, bool gravity)
 						   particle.DampingY);
 
 	// scale velocity up to the original value and calculate difference						   
-	var velocity = Vec_Sub(particle.Position, particle.Origin);
+	var velocity;
+	
+	if (particle.VelocityOverride)
+	{
+		particle.VelocityOverride = false;
+		velocity = particle.Velocity;
+	}
+	else
+	{
+		velocity = Vec_Sub(particle.Position, particle.Origin);
 	    velocity = Vector2D(1000 * velocity.x / Max(1, damping.x),
 	                        1000 * velocity.y / Max(1, damping.y));
+	}
  
 	// apply gravity
 	if (gravity)
