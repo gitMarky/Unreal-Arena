@@ -12,7 +12,6 @@ local segments; // array list of objects
 local length; // int - length of the segment
 
 local particles; // proplist - see Verlet_Info below
-local fixed;	 // bool - object has no external forces
 
 local particle_objects;
 
@@ -43,7 +42,7 @@ public func AttachTo(object previous)
 	prev->SetNext(this);
 	prev->UpdateSegments();
 
-	if (fixed && !IsLast()) SetFixed(false);
+	if (!IsLast()) SetFixed(false);
 }
 
 public func IsChain()
@@ -129,7 +128,7 @@ protected func Initialize()
 
 protected func SetFixed(bool state)
 {
-	fixed = state;
+	GetParticle(0).Fixed = state;
 	
 	UpdateGravity();
 }
@@ -158,7 +157,7 @@ private func VerletIntegration()
 	for(var i = 0; i < GetLength(GetParticles()); i++)
 	{
 		ParticleOriginBackup(GetParticle(i));
-		VerletStep(GetParticle(i), !fixed || i > 0);
+		VerletStep(GetParticle(i));
 	}
 }
 
@@ -213,6 +212,9 @@ private func ConstraintLength()
 {
 	var last = GetLength(GetParticles()) - 1;
 
+	// length constraints make no sense when both particles are fixed
+	if (GetParticle(0).Fixed && GetParticle(last).Fixed) return;
+
 	// determine constraint and cancel if it does not apply
 	var constraint_function = GetParticle(last).ConstraintLength;
 	if (constraint_function == nil) return;
@@ -245,14 +247,21 @@ private func ConstraintLength()
 	{
 		var desired_vector = Vec_Div(Vec_Mul(vector, desired_length), current_length);
 	
-		if (GetParticle(0).Collision && GetParticle(last).collision && !fixed)
+		if (GetParticle(0).Collision && GetParticle(last).Collision && !GetParticle(0).Fixed)
 		{
 			// both collided... expand in both directions
 			var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
 			GetParticle(0).Position = Vec_Sub(center, Vec_Div(desired_vector, 2));
 			GetParticle(last).Position = Vec_Add(GetParticle(0).Position, desired_vector);
 		}
-		else if (GetParticle(last).Collision && !fixed)
+		else if (GetParticle(0).Collision && GetParticle(last).Collision && !GetParticle(last).Fixed)
+		{
+			// both collided... expand in both directions
+			var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
+			GetParticle(last).Position = Vec_Add(center, Vec_Div(desired_vector, 2));
+			GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, desired_vector);
+		}
+		else if ((GetParticle(last).Collision || GetParticle(last).Fixed) && !GetParticle(0).Fixed)
 		{
 			// last collided... expand in direction of first
 			GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, desired_vector);

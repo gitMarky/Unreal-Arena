@@ -33,8 +33,12 @@ x	OnCollision 		PC_Die,
  Moves the particles according to their old position and thus speed.
  @author Randrian
 */
-private func VerletStep(proplist particle, bool gravity)
+private func VerletStep(proplist particle)
 {
+	particle.Collision = false;
+
+	if (particle.Fixed) return;
+	
 	// Verlet step, get speed out of distance moved relative to the last position
 	var damping = Vector2D(particle.DampingX,
 						   particle.DampingY);
@@ -55,10 +59,7 @@ private func VerletStep(proplist particle, bool gravity)
 	}
  
 	// apply gravity
-	if (gravity)
-	{
-		velocity = Vec_Add(velocity, particle.Acceleration);
-	}
+	velocity = Vec_Add(velocity, particle.Acceleration);
 	
 	// update velocity
 	particle.Velocity = velocity;
@@ -69,8 +70,6 @@ private func VerletStep(proplist particle, bool gravity)
 
 	// update position
 	particle.Position = Vec_Add(particle.Position, vel_damped);
-
-	particle.Collision = false;
 }
 
 private func ParticleCollision(proplist particle)

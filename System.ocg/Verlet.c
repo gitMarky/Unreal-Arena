@@ -12,6 +12,7 @@ global func Verlet_Particle(int x, int y, int precision)
 		Mass = 1,
 		Collision = false,
 		Friction = 1000,
+		Fixed = true,
 		ConstraintLength = CF_BoundBy(1000, 1000), // stay the same length
 		ConstraintAngle = nil, // take any angle
 		// same as normal particles
