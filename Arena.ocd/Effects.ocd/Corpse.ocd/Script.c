@@ -11,6 +11,8 @@ static const CORPSE_Joint_Hips = 5;
 static const CORPSE_Joint_LegL = 6;
 static const CORPSE_Joint_LegR = 7;
 
+static const CORPSE_Sibling = nil;
+
 private func SetupSegments()
 {
 	var x = GetX(CHAIN_Precision);
@@ -45,6 +47,18 @@ private func SetupSegments()
 		particle.Fixed = true;
 		UpdateLength(particle);
 	}
+}
+
+
+public func SetLArmAngle(int angle)
+{
+	TransformBone("skeleton_arm_upper.L", Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(60, 1, 0, 0), Trans_Rotate(-60, 0, 0, 1)), 5, Anim_Const(1000), CORPSE_Sibling);
+}
+
+
+public func SetRArmAngle(int angle)
+{
+	TransformBone("skeleton_arm_upper.R", Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(60, 1, 0, 0), Trans_Rotate(-60, 0, 0, 1)), 5, Anim_Const(1000), CORPSE_Sibling);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
