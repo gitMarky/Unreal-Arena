@@ -29,6 +29,15 @@ x	OnCollision 		PC_Die,
 */
 
 /**
+ Interface for getting a particle. Override this in your implementation!
+ @return proplist nil. This should return the particle in question.
+ */
+public func GetParticle(int index)
+{
+	return nil;
+}
+
+/**
  Verlet integration step
  Moves the particles according to their old position and thus speed.
  @author Randrian
@@ -99,6 +108,76 @@ private func ParticleCollision(proplist particle)
 		particle.VelocityOverride = true;
 	}
 }
+
+private func ParticleLength(proplist particle)
+{
+	if (particle.Parent == nil) return;
+
+	var parent = GetParticle(particle.Parent);
+	if (parent == nil) return;
+
+	// length constraints make no sense when both particles are fixed
+	if (parent.Fixed && particle.Fixed) return;
+
+	// determine constraint and cancel if it does not apply
+	var constraint_function = particle.ConstraintLength;
+	if (constraint_function == nil) return;
+	if (constraint_function[0] != CONSTRAINT_BoundBy) return;
+
+	// determine length
+	var min_ratio = constraint_function[1];
+	var max_ratio = constraint_function[2];
+
+	var vector = Vec_Sub(particle.Position, parent.Position);
+
+	var current_length = Vec_Length(vector);
+	var desired_length = current_length;
+
+	// determine whether a constraint has to be applied
+	if (min_ratio != nil)
+	{
+		var min_length = min_ratio * particle.Length / 1000;
+		if (current_length < min_length) desired_length = min_length;
+	}
+	
+	if (max_ratio != nil)
+	{
+		var max_length = max_ratio * particle.Length / 1000;
+		if (current_length > max_length) desired_length = max_length;
+	}
+	
+	// if constraint is necessary, then apply
+	if (desired_length != current_length)
+	{
+		var desired_vector = Vec_Div(Vec_Mul(vector, desired_length), current_length);
+	
+		if (parent.Collision && particle.Collision && !parent.Fixed)
+		{
+			// both collided... expand in both directions
+			var center = Vec_Div(Vec_Add(parent.Position, particle.Position), 2);
+			parent.Position = Vec_Sub(center, Vec_Div(desired_vector, 2));
+			particle.Position = Vec_Add(parent.Position, desired_vector);
+		}
+		else if (parent.Collision && particle.Collision && !particle.Fixed)
+		{
+			// both collided... expand in both directions
+			var center = Vec_Div(Vec_Add(parent.Position, particle.Position), 2);
+			particle.Position = Vec_Add(center, Vec_Div(desired_vector, 2));
+			parent.Position = Vec_Sub(particle.Position, desired_vector);
+		}
+		else if ((particle.Collision || particle.Fixed) && !parent.Fixed)
+		{
+			// last collided... expand in direction of first
+			parent.Position = Vec_Sub(particle.Position, desired_vector);
+		}
+		else // if (parent.Collision)
+		{
+			// first collided.. (or none collided) expand in direction of last
+			particle.Position = Vec_Add(parent.Position, desired_vector);
+		}
+	}
+}
+
 
 private func ParticleLandscape(proplist particle)
 {

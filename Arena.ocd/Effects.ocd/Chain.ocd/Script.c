@@ -9,7 +9,6 @@
 local prev; // object - the top of the chain. This is the object that does all the calculations
 local next;	// object - hangs below the head
 local segments; // array list of objects
-local length; // int - length of the segment
 
 local particles; // proplist - see Verlet_Info below
 
@@ -93,14 +92,15 @@ public func UpdateSegments()
 	if (prev) prev->UpdateSegments();
 }
 
-public func SetParticle(int index, proplist verlet)
+public func SetParticle(int index, proplist verlet, int parent_index)
 {
 	particles[index] = verlet;
-	
-	var last = GetLength(GetParticles()) - 1;
-	if (index == last)
+	particles[index].Parent = parent_index;
+
+	if (parent_index != nil)
 	{
-		length = Vec_Length(Vec_Sub(GetParticle(last).Position, GetParticle(0).Position));
+		var length = Vec_Length(Vec_Sub(GetParticle(index).Position, GetParticle(parent_index).Position));
+		particles[index].Length = length;
 	}
 }
 
@@ -119,8 +119,8 @@ protected func Initialize()
 	particles = [];
 	particle_objects = [];
 	segments = [];
-	SetParticle(0, Verlet_Particle(GetX()-3, GetY()-3));
-	SetParticle(1, Verlet_Particle(GetX(), GetY() + 5));
+	SetParticle(0, Verlet_Particle(GetX()-3, GetY()-3), nil);
+	SetParticle(1, Verlet_Particle(GetX(), GetY() + 5), 0);
 	SetFixed(true);
 	UpdateSegments();
 	AddEffect("IntHang", this, 1, 1, this);
@@ -210,67 +210,9 @@ private func ConstraintObjects()
 
 private func ConstraintLength()
 {
-	var last = GetLength(GetParticles()) - 1;
-
-	// length constraints make no sense when both particles are fixed
-	if (GetParticle(0).Fixed && GetParticle(last).Fixed) return;
-
-	// determine constraint and cancel if it does not apply
-	var constraint_function = GetParticle(last).ConstraintLength;
-	if (constraint_function == nil) return;
-	if (constraint_function[0] != CONSTRAINT_BoundBy) return;
-
-	// determine length
-	var min_ratio = constraint_function[1];
-	var max_ratio = constraint_function[2];
-
-	var vector = Vec_Sub(GetParticle(last).Position, GetParticle(0).Position);
-
-	var current_length = Vec_Length(vector);
-	var desired_length = current_length;
-
-	// determine whether a constraint has to be applied
-	if (min_ratio != nil)
+	for (var particle in GetParticles())
 	{
-		var min_length = min_ratio * length / 1000;
-		if (current_length < min_length) desired_length = min_length;
-	}
-	
-	if (max_ratio != nil)
-	{
-		var max_length = max_ratio * length / 1000;
-		if (current_length > max_length) desired_length = max_length;
-	}
-	
-	// if constraint is necessary, then apply
-	if (desired_length != current_length)
-	{
-		var desired_vector = Vec_Div(Vec_Mul(vector, desired_length), current_length);
-	
-		if (GetParticle(0).Collision && GetParticle(last).Collision && !GetParticle(0).Fixed)
-		{
-			// both collided... expand in both directions
-			var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
-			GetParticle(0).Position = Vec_Sub(center, Vec_Div(desired_vector, 2));
-			GetParticle(last).Position = Vec_Add(GetParticle(0).Position, desired_vector);
-		}
-		else if (GetParticle(0).Collision && GetParticle(last).Collision && !GetParticle(last).Fixed)
-		{
-			// both collided... expand in both directions
-			var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
-			GetParticle(last).Position = Vec_Add(center, Vec_Div(desired_vector, 2));
-			GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, desired_vector);
-		}
-		else if ((GetParticle(last).Collision || GetParticle(last).Fixed) && !GetParticle(0).Fixed)
-		{
-			// last collided... expand in direction of first
-			GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, desired_vector);
-		}
-		else // if (GetParticle(0).Collision)
-		{
-			// first collided.. (or none collided) expand in direction of last
-			GetParticle(last).Position = Vec_Add(GetParticle(0).Position, desired_vector);
-		}
+		ParticleLength(particle);
 	}
 }
 
