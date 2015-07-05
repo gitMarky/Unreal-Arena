@@ -90,6 +90,8 @@ public func UpdateSegments()
 		PushBack(segments, segment);
 		segment = segment->GetNext();
 	}
+	
+	if (prev) prev->UpdateSegments();
 }
 
 public func SetParticle(int index, proplist verlet)
