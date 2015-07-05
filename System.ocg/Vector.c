@@ -169,14 +169,32 @@ global func Vec_Dim(proplist a)
  Angle between two vectors.
  @par a A two-dimensional vector.
  @par b A two-dimensional vector.
- @return int The angle between a and b.
+ @return int The angle between a and b. If you rotate a by this angle,
+             then it will point in the same direction as b.
 */
-global func Vec_Angle(proplist a, proplist b)
+global func Vec_Angle(proplist a, proplist b, int precision)
 {
 	AssertVectorOperation(a, b);
-	AssertVectorDimension(a, 2);
+	if (!precision) precision = 1;
 
-	return Angle(a.x, a.y, b.x, b.y);
+	var rot_a = Vec_Rotation(a, precision);
+	var rot_b = Vec_Rotation(b, precision);
+	return rot_b - rot_a;
+}
+
+
+/**
+ Angle of a vector.
+ @par a A two-dimensional vector.
+ @par precision [opt] Multiplied with the angle, for higher precision. A precision of 10 will produce values from 0 to 3600.
+ @return int The angle of a, relative to the coordinate system.
+*/
+global func Vec_Rotation(proplist a, int precision)
+{
+	AssertVectorDimension(a, 2);
+	if (!precision) precision = 1;
+
+	return Angle(0, 0, a.x, a.y, precision);
 }
 
 
@@ -190,6 +208,28 @@ global func Vec_Normalize(proplist a, int precision)
 {
 	if (!precision) precision = 1;
 	return Vec_Div(Vec_Mul(a, precision), Vec_Length(a));
+}
+
+
+/**
+ Rotates a vector by an angle.
+ @par a The vector.
+ @par angle The angle that the vector is rotated by, clockwise.
+ @return proplist The rotated vector.
+ */
+global func Vec_Rotate(proplist a, int angle, int precision)
+{
+	AssertVectorDimension(a, 2);
+	if (!precision) precision = 1;
+	var length_precision = 1000;
+
+	var cos = Cos(angle, length_precision, precision);
+	var sin = Sin(angle, length_precision, precision);
+
+	var rotated_x = cos * a.x - sin * a.y;
+	var rotated_y = sin * a.x + cos * a.y;
+
+	return Vector2D(rotated_x / length_precision, rotated_y / length_precision);
 }
 
 
