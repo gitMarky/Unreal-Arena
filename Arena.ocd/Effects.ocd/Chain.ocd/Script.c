@@ -210,27 +210,56 @@ private func ConstraintObjects()
 private func ConstraintLength()
 {
 	var last = GetLength(GetParticles()) - 1;
-	var diff = Vec_Sub(GetParticle(last).Position, GetParticle(0).Position);
-	
-	var current_length = Vec_Length(diff);
-	var scaled_diff = Vec_Div(Vec_Mul(diff, length), current_length);
 
-	if (GetParticle(0).Collision && GetParticle(last).collision && !fixed)
+	// determine constraint and cancel if it does not apply
+	var constraint_function = GetParticle(last).ConstraintLength;
+	if (constraint_function == nil) return;
+	if (constraint_function[0] != CONSTRAINT_BoundBy) return;
+
+	// determine length
+	var min_ratio = constraint_function[1];
+	var max_ratio = constraint_function[2];
+
+	var vector = Vec_Sub(GetParticle(last).Position, GetParticle(0).Position);
+
+	var current_length = Vec_Length(vector);
+	var desired_length = current_length;
+
+	// determine whether a constraint has to be applied
+	if (min_ratio != nil)
 	{
-		// both collided... expand in both directions
-		var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
-		GetParticle(0).Position = Vec_Sub(center, Vec_Div(scaled_diff, 2));
-		GetParticle(last).Position = Vec_Add(GetParticle(0).Position, scaled_diff);
+		var min_length = min_ratio * length / 1000;
+		if (current_length < min_length) desired_length = min_length;
 	}
-	else if (GetParticle(last).Collision && !fixed)
+	
+	if (max_ratio != nil)
 	{
-		// last collided... expand in direction of first
-		GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, scaled_diff);
+		var max_length = max_ratio * length / 1000;
+		if (current_length > max_length) desired_length = max_length;
 	}
-	else // if (GetParticle(0).Collision)
+	
+	// if constraint is necessary, then apply
+	if (desired_length != current_length)
 	{
-		// first collided.. (or none collided) expand in direction of last
-		GetParticle(last).Position = Vec_Add(GetParticle(0).Position, scaled_diff);
+		var desired_vector = Vec_Div(Vec_Mul(vector, desired_length), current_length);
+	
+		if (GetParticle(0).Collision && GetParticle(last).collision && !fixed)
+		{
+			// both collided... expand in both directions
+			var center = Vec_Div(Vec_Add(GetParticle(0).Position, GetParticle(last).Position), 2);
+			GetParticle(0).Position = Vec_Sub(center, Vec_Div(desired_vector, 2));
+			GetParticle(last).Position = Vec_Add(GetParticle(0).Position, desired_vector);
+		}
+		else if (GetParticle(last).Collision && !fixed)
+		{
+			// last collided... expand in direction of first
+			GetParticle(0).Position = Vec_Sub(GetParticle(last).Position, desired_vector);
+		}
+		else // if (GetParticle(0).Collision)
+		{
+			// first collided.. (or none collided) expand in direction of last
+			GetParticle(last).Position = Vec_Add(GetParticle(0).Position, desired_vector);
+		}
 	}
 }
 
