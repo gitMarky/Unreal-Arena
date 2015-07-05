@@ -75,9 +75,31 @@ private func VerletStep(proplist particle, bool gravity)
 
 private func ParticleCollision(proplist particle)
 {
-	// friction
-	var velocity = Vec_Div(Vec_Mul(particle.Velocity, 1000 - particle.Friction), 1000);
-	particle.Velocity = velocity;
+	if (!particle.Collision) return;
+
+	var event = particle.OnCollision[0];
+	var data = particle.OnCollision[1];
+	if (event == PC_Bounce()[0])
+	{
+		var length = Vec_Length(particle.Velocity);
+		
+		var normal = GetSurfaceVector(particle.Position.x / CHAIN_Precision - GetX(),
+									  particle.Position.y / CHAIN_Precision - GetY());
+		  
+		var normal_length = Max(1, Vec_Length(normal)); // prevent division by zero
+
+		var velocity = Vec_Div(Vec_Mul(normal, length), normal_length);
+
+		particle.Velocity = Vec_Div(Vec_Mul(velocity, data), 1000);
+		particle.VelocityOverride = true;
+	}
+	else
+	{
+		// friction
+		var velocity = Vec_Div(Vec_Mul(particle.Velocity, 1000 - particle.Friction), 1000);
+		particle.Velocity = velocity;
+		particle.VelocityOverride = true;
+	}
 }
 
 private func ParticleLandscape(proplist particle)
