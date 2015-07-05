@@ -25,15 +25,18 @@ private func SetupSegments()
 	SetParticle(CORPSE_Joint_LegL, Verlet_Particle(x - 130, y + 885, CHAIN_Precision), CORPSE_Joint_Hips);
 	SetParticle(CORPSE_Joint_LegR, Verlet_Particle(x + 130, y + 885, CHAIN_Precision), CORPSE_Joint_Hips);
 
+	var low = 200;
+	var high = 400;
+
 	// bounciness
-	GetParticle(CORPSE_Joint_Body).OnCollision = PC_Bounce(200);
-	GetParticle(CORPSE_Joint_Neck).OnCollision = PC_Bounce(200);
-	GetParticle(CORPSE_Joint_Head).OnCollision = PC_Bounce(400);
-	GetParticle(CORPSE_Joint_ArmL).OnCollision = PC_Bounce(400);
-	GetParticle(CORPSE_Joint_ArmR).OnCollision = PC_Bounce(400);
-	GetParticle(CORPSE_Joint_Hips).OnCollision = PC_Bounce(200);
-	GetParticle(CORPSE_Joint_LegL).OnCollision = PC_Bounce(400);
-	GetParticle(CORPSE_Joint_LegR).OnCollision = PC_Bounce(400);
+	GetParticle(CORPSE_Joint_Body).OnCollision = PC_Bounce(low);
+	GetParticle(CORPSE_Joint_Neck).OnCollision = PC_Bounce(low);
+	GetParticle(CORPSE_Joint_Head).OnCollision = PC_Bounce(high);
+	GetParticle(CORPSE_Joint_ArmL).OnCollision = PC_Bounce(high);
+	GetParticle(CORPSE_Joint_ArmR).OnCollision = PC_Bounce(high);
+	GetParticle(CORPSE_Joint_Hips).OnCollision = PC_Bounce(low);
+	GetParticle(CORPSE_Joint_LegL).OnCollision = PC_Bounce(high);
+	GetParticle(CORPSE_Joint_LegR).OnCollision = PC_Bounce(high);
 
 	// general settings
 	for (var particle in GetParticles())
