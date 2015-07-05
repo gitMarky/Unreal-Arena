@@ -69,6 +69,7 @@ private func VerletStep(proplist particle)
  
 	// apply gravity
 	velocity = Vec_Add(velocity, particle.Acceleration);
+	velocity = Vec_Add(velocity, ParticleGravity(particle));
 	
 	// update velocity
 	particle.Velocity = velocity;
@@ -231,7 +232,9 @@ private func ParticleLandscape(proplist particle)
 private func ParticleGravity(proplist particle)
 {
 	var gravity = 2 * GetGravity() * CHAIN_Precision / 100;
-	if (particle.Acceleration.y < gravity) particle.Acceleration.y += gravity;
+	    gravity = particle.Gravity * gravity / 1000;
+
+	return Vector2D(0, gravity);
 }
 
 private func ParticleOriginBackup(proplist particle)
@@ -242,6 +245,16 @@ private func ParticleOriginBackup(proplist particle)
 private func ParticleOriginUpdate(proplist particle)
 {
 	if (particle.Temp != nil) particle.Origin = particle.Temp;
+}
+
+private func UpdateLength(proplist particle)
+{
+	if (particle.Parent == nil) return;
+	var parent = GetParticle(particle.Parent);
+	if (parent == nil) return;
+
+	var length = Vec_Length(Vec_Sub(particle.Position, parent.Position));
+	particle.Length = length;
 }
 
 private func LandscapeTestArray()

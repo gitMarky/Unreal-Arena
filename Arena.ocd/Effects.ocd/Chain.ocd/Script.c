@@ -40,8 +40,6 @@ public func AttachTo(object previous)
 	prev = previous;
 	prev->SetNext(this);
 	prev->UpdateSegments();
-
-	if (!IsLast()) SetFixed(false);
 }
 
 public func IsChain()
@@ -74,6 +72,12 @@ public func SetNext(object obj)
 	next = obj;
 }
 
+public func SetupSegments()
+{
+	SetParticle(0, Verlet_Particle(GetX()-3, GetY()-3), nil);
+	SetParticle(1, Verlet_Particle(GetX(), GetY() + 5), 0);
+}
+
 public func UpdateSegments()
 {
 	segments = [];
@@ -97,11 +101,7 @@ public func SetParticle(int index, proplist verlet, int parent_index)
 	particles[index] = verlet;
 	particles[index].Parent = parent_index;
 
-	if (parent_index != nil)
-	{
-		var length = Vec_Length(Vec_Sub(GetParticle(index).Position, GetParticle(parent_index).Position));
-		particles[index].Length = length;
-	}
+	UpdateLength(GetParticle(index));
 }
 
 public func GetParticles()
@@ -119,18 +119,9 @@ protected func Initialize()
 	particles = [];
 	particle_objects = [];
 	segments = [];
-	SetParticle(0, Verlet_Particle(GetX()-3, GetY()-3), nil);
-	SetParticle(1, Verlet_Particle(GetX(), GetY() + 5), 0);
-	SetFixed(true);
+	SetupSegments();
 	UpdateSegments();
 	AddEffect("IntHang", this, 1, 1, this);
-}
-
-protected func SetFixed(bool state)
-{
-	GetParticle(0).Fixed = state;
-	
-	UpdateGravity();
 }
 
 private func FxIntHangTimer(object target, proplist effect, int time)
@@ -242,14 +233,6 @@ private func DrawParticleObject(int index)
 	obj->SetPosition(GetParticle(index).Position.x, GetParticle(index).Position.y, false, CHAIN_Precision);
 	obj->SetYDir();
 	obj->SetXDir();
-}
-
-private func UpdateGravity()
-{
-	for (var particle in GetParticles())
-	{
-		ParticleGravity(particle);
-	}
 }
 
 private func UpdateLines()

@@ -12,6 +12,7 @@ global func Verlet_Particle(int x, int y, int precision)
 		Mass = 1,
 		Collision = false,
 		Friction = 1000,
+		Gravity = 1000,
 		Fixed = true,
 		Parent = nil, // no parent particle
 		Length = 1, // a default length
