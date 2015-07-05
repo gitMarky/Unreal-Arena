@@ -81,16 +81,15 @@ private func ParticleCollision(proplist particle)
 	var data = particle.OnCollision[1];
 	if (event == PC_Bounce()[0])
 	{
-		var length = Vec_Length(particle.Velocity);
-		
 		var normal = GetSurfaceVector(particle.Position.x / CHAIN_Precision - GetX(),
 									  particle.Position.y / CHAIN_Precision - GetY());
-		  
-		var normal_length = Max(1, Vec_Length(normal)); // prevent division by zero
 
-		var velocity = Vec_Div(Vec_Mul(normal, length), normal_length);
+		var angle_in = Vec_Angle(particle.Velocity, normal, CHAIN_Precision);
 
-		particle.Velocity = Vec_Div(Vec_Mul(velocity, data), 1000);
+		var velocity = Vec_Rotate(particle.Velocity, 180 * CHAIN_Precision - 2 * angle_in, CHAIN_Precision); 
+		    velocity = Vec_Div(Vec_Mul(velocity, data), 1000);
+
+		particle.Velocity = velocity;
 		particle.VelocityOverride = true;
 	}
 	else
