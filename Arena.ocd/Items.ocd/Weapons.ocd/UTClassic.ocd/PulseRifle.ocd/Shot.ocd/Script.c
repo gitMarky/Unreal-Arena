@@ -1,4 +1,4 @@
-#include Library_Projectile
+#include Projectile_PlasmaBeam
 
 protected func Initialize()
 {
@@ -12,28 +12,15 @@ private func OnLaunch()
 	SetPhase(Random(4));
 }
 
-public func OnHitObject(object target)
+private func HitEffect()
 {
 	CreateImpactEffect(this.damage, 0, 0, "Magic", Particles_Plasma());
 }
 
 public func OnHitLandscape()
 {
-		Sound("pulse-exp");
-		CreateImpactEffect(this.damage, 0, 0, "Magic", Particles_Plasma());
-}
-
-private func Particles_Plasma()
-{
-	return
-	{
-		Prototype = Particles_Glimmer(),
-	    R = 0,
-	    G = PV_Linear(255, 128),
-	    B = 0,
-	    Alpha = PV_Random(255, 0, 3),
-		BlitMode = GFX_BLIT_Additive,
-	};
+	Sound("pulse-exp");
+	_inherited();
 }
 
 

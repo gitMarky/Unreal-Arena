@@ -5,6 +5,8 @@ local Name = "$Name$";
 local Description = "$Description$";
 local Collectible = 1;
 
+local laser_beam;
+
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
@@ -37,21 +39,21 @@ local fire_modes =
 		name = 				"primary", // string - menu caption
 		icon = 				nil, // id - menu icon
 		condition = 		nil, // string - callback for a condition
-		
+
 		ammo_id = 			Ammo_Pistol,
 		ammo_usage =		1,	// this many units of ammo
 		ammo_rate =			1, // per this many shots fired
-	
+
 		delay_charge =      0,
 		delay_recover = 	6, // time between consecutive shots
 		delay_cooldown = 	20,
 		delay_reload =		80, // time to reload, in frames
-	
+
 		mode = 			 WEAPON_FM_Auto,
-	
+
 		damage = 			10, 
 		damage_type = 		nil,	
-	
+
 		projectile_id = 	Projectile_Plasma,
 		projectile_speed = 	140,
 		projectile_range = PROJECTILE_Range_Infinite,
@@ -68,30 +70,30 @@ local fire_modes =
 		name = 				"secondary",
 		icon = 				nil, // id - menu icon
 		condition = 		nil, // string - callback for a condition
-		
+
 		ammo_id = 			Ammo_Pistol,
 		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			1, // per this many shots fired
-	
+		ammo_rate =			8, // per this many shots fired
+
 		delay_charge =      0,
 		delay_recover = 	2, // time between consecutive shots
 		delay_cooldown = 	20,
 		delay_reload =		260, // time to reload, in frames
-	
+
 		mode = 			 WEAPON_FM_Auto,
-	
-		damage = 			6, 
-		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_Bullet,
+
+		damage = 			1,
+		damage_type = 		nil,
+
+		projectile_id = 	Projectile_PlasmaBeam,
 		projectile_speed = 	210,
-		projectile_range = 600,
-		projectile_distance = 12,
+		projectile_range = 90,
+		projectile_distance = 13,
 		projectile_offset_y = -3,
 		projectile_number = 1,
-		projectile_spread = [15, 2], // 6 - default inaccuracy of a single projectile
+		projectile_spread = [0, 2],
 
-		spread = [0, 1],			   // inaccuracy from prolonged firing	},
+		spread = [0, 1],
 	},
 };
 
@@ -121,25 +123,55 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	projectile->Trail(1, 60);
+	if (firemode.name == fire_modes.primary.name)
+	{
+		projectile->Trail(1, 60);
+	}
+	else
+	{
+		projectile->HitScan();
+		projectile->SetBeam(laser_beam);
+	}
 }
 
 public func OnStartCooldown(object user, proplist firemode)
-{
-	
+{	
 	Sound("pulse-fire", nil, nil, nil, -1);
 	Sound("pulse-bolt", nil, nil, nil, -1);
 	Sound("pulse-down");
+	LaserStop();
 }
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	// muzzle flash
-	
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
-	EffectMuzzleFlash(user, x, y, angle, RandomX(12, 16), false, true, RGB(0,255,0));
+	if (firemode.name == fire_modes.primary.name)
+	{
+		EffectMuzzleFlash(user, x, y, angle, RandomX(12, 16), false, true, RGB(0,255,0));
+	}
+	else
+	{
+		LaserStart(x, y);
+	}
+}
+
+private func LaserStart(int x, int y)
+{
+	var x_start = GetX() + x;
+	var y_start = GetY() + y;
+	if (!laser_beam)
+		laser_beam = CreateObject(LaserEffect, x, y, NO_OWNER);
+	else
+		laser_beam->SetPosition(x_start, y_start);
+
+	laser_beam->SetWidth(6)->SetLifetime(0)->Color(RGB(0, 255, 0))->Activate();	
+}
+
+private func LaserStop()
+{
+	if (laser_beam) laser_beam->RemoveObject();
 }
 
 local ActMap = {
