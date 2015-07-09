@@ -1,0 +1,13 @@
+[DefCore]
+id=Effect_BlazingFlame
+Category=C4D_Vehicle
+Width=5
+Height=5
+Offset=-3,-3
+Picture=0,0,5,5
+Vertices=1
+VertexY=-1
+VertexFriction=20
+StretchGrowth=1
+IncompleteActivity=1
+Oversize=1

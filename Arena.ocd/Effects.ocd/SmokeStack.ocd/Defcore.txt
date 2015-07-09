@@ -1,0 +1,11 @@
+[DefCore]
+id=Effect_SmokeStack
+Category=C4D_Vehicle
+ContactCalls=1
+Width=4
+Height=4
+Offset=-2,-2
+Vertices=1
+VertexY=-1
+VertexCNAT=8
+VertexFriction=20

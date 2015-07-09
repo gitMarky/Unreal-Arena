@@ -91,28 +91,28 @@ global func Explosion(object pObj, int iDamage, int iRadius, bool fSmoke, string
 /*
 Creates a visual explosion effect at a position.
 smoothness (in percent) determines how round the effect will look like
-*//*
+*/
 global func ExplosionEffectSmoke(int level, int x, int y, int smoothness)
 {
 	var iRadius = level;
 	var iDamage = level;
 
-	CastObjectsCall([ID_Effect_SmokeStack, 6, 100], "Launch", 25 * iRadius / 10);
+	CastObjectsCall([Effect_SmokeStack, 6, 100, x, y], "Launch", 25 * iRadius / 10);
 
 	for (var i = 0; i < 3; i++)
 	{
 		// some smoke
-		SmokeX( (-iRadius + Random(iRadius * 2)) / 2,
-			    (-iRadius + Random(iRadius * 2)) / 2,
+		SmokeX( x + RandomX(-iRadius, iRadius) / 2,
+			    y + RandomX(-iRadius, iRadius) / 2,
 			    iRadius * 5,
 			    2,
 			    15 * iRadius / 10,
-			    RGB(60, 60, 60),
-			    RGB(20, 20, 20),
+			    RGBa(60, 60, 60, 195),
+			    RGBa(20, 20, 20, 0),
 			    1);
 
 		// cast flames
-		var flame = CreateObject(ID_Gore_Flame, 0, 0, NO_OWNER);
+		var flame = CreateObject(Effect_BlazingFlame, x, y, NO_OWNER);
 
 		var rot = Random(360);
 		var dist = iRadius + Random(30);
@@ -122,7 +122,7 @@ global func ExplosionEffectSmoke(int level, int x, int y, int smoothness)
 
 	ExplosionEffectBlast(level, x, y, smoothness);
 }
-*/
+
 
 /*
 Creates a visual explosion effect at a position.
@@ -193,7 +193,7 @@ global func ExplosionEffectBlast(int level, int x, int y, int smoothness)
 
 global func CastObjectsCall( aCastObjects, szCall, Par2, Par3, Par4, Par5, Par6, Par7, Par8, Par9 )
 {
-	// bereits vorhandene Objekte ausschließen
+	// exclude existing objects
 	var objects = FindObjects( Find_ID(aCastObjects[0]), Find_Distance( aCastObjects[2], aCastObjects[3], aCastObjects[4]));
 
 	CastObjects( aCastObjects[0],
@@ -209,7 +209,7 @@ global func CastObjectsCall( aCastObjects, szCall, Par2, Par3, Par4, Par5, Par6,
 	for( pcall in newobj )
 	{
 		if(GetLength(objects))
-			if(GetArrayItemPosition(pcall, objects) >= 0) continue; // die alten Objekte übergehen
+			if(IsValueInArray(objects, pcall)) continue; // skip existing objects
 		pcall->Call(szCall, Par2, Par3, Par4, Par5, Par6, Par7, Par8, Par9 );
 	}
 }
@@ -219,10 +219,6 @@ global func Particles_FxExplosion_Blast(int size, int color)
 	return
 	{
 		Size = PV_KeyFrames(0, 0, size / 8, 200, size / 5, 1000, size / 10), 
-//	    ForceY = GetGravity(),
-//		DampingY = PV_Linear(1000,700),
-//		DampingX = PV_Linear(1000,700),
-//		Stretch = PV_Speed(1000, 500),
 		Rotation = PV_Direction(),
 		OnCollision = PC_Stop(),
 		CollisionVertex = 500,

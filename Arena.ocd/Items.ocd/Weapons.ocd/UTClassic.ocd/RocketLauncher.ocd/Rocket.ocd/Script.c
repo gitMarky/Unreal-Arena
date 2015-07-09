@@ -56,6 +56,13 @@ public func Detonate()
 	return true;
 }
 
+
+public func ExplosionEffect(int level, int x, int y, int smoothness)
+{
+	ExplosionEffectSmoke(level, x, y, smoothness);
+}
+
+
 protected func Travelling()
 {
 	var self = this;
