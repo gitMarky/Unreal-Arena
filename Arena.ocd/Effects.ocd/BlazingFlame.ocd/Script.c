@@ -1,96 +1,54 @@
+/**
+ Flame effect. Can attach to an object or fall freely.
+ @author Marky
+ @version 0.1.0
+ */
 
-local master, x, y, rot, dist, ang;
 
-public func Hover()
+local master, master_angle, pos_x, pos_y , pos_distance, pos_angle;
+
+/**
+ Attaches the flame to an object.
+ @par target The flame will be attached to this object.
+ @par size The flame will be this large, in 1/10 of a pixel.
+ @par x The position of the flame, in x direction, relative to the object.
+ @par y The position of the flame, in y direction, relative to the object.
+ */
+public func SetUpFlame(object target, int size, int x, int y)
 {
-	if(!master) return RemoveObject();
+	pos_x = x;
+	pos_y = y;
 
-	var _x,_y,r;
+	pos_distance = Distance(0, 0, pos_x, pos_y);
+	pos_angle = Angle(0, 0, pos_x, pos_y);
 
-	r = ang + rot + master->GetR();
+	master_angle -= target->GetR();
 
-	_x=+Sin(r,dist);
-	_y=-Cos(r,dist);
+	SetCon(2 * size);
 
-	SetXDir();
-	SetYDir();
-
-	if(GetActTime() > 30 ) DoCon(-1);
-
-	SetPosition(master->GetX()+x, master->GetY()+y);
-
-	DoFlameParticle();
-}
-
-public func Fall()
-{
-	DoFlameParticle();
-	if(GetActTime() > 30) DoCon(-2);
-}
-
-private func DoFlameParticle()
-{
-	var size = Max(1, GetCon() * 7 / 100);
-	
-	var redness = PV_Random(100, 255);
-
-	CreateParticle("Thrust", PV_Random(-size/2, size/2),
-						     PV_Random(-size/2, size/2),
-						     GetXDir()/2, GetYDir()/2,
-						     PV_Random(8, 16),
-						     {Prototype = Particles_Thrust(),
-						      R = 255,
-						      G = redness,
-						      B = redness,
-						      Alpha = PV_Linear(160, 0),
-						      //Size = PV_KeyFrames(0, 0, size, 600, size, 1000, size / 3),
-						      //Size = PV_Linear(2 * size / 3, 3 * size / 2),
-						      Size = PV_Linear(PV_Random(2 * size / 3, size), PV_Random(size, 3 * size / 2)),
-						     ForceX = PV_KeyFrames(10, 0, PV_Random(-12, 12), 333, PV_Random(-8, 8), 666, PV_Random(-6, 6), 1000, PV_Random(-6, 6)),
-						     ForceY = PV_KeyFrames(10, 0, PV_Random(-16, -2), 333, PV_Random(-24, -3), 666, PV_Random(-32, -4), 1000, PV_Random(-40, -5))},
-						     RandomX(3, 5));
-}
-
-
-public func SetUpFlame( object obj, int dam, int _x, int _y)
-{
-	master = obj;
-	x = _x;
-	y = _y;
-
-	dist = Distance(0,0,x,y);
-	ang = Angle( 0, 0, x, y);
-
-	rot = - master->GetR();
-
-	//Incinerate();
-
-	SetCon(2*dam);
-
+	master = target;
 	SetAction("Hover", master);
 	SetObjectLayer(this);
 }
 
-public func SetMaster( object obj )
+/**
+ Lets the flame fall freely.
+ @par size The flame will be this large, in 1/10 of a pixel.
+ @par xdir The velocity of the flame, in x direction.
+ @par ydir The velocity of the flame, in y direction.
+ */
+public func SetUpSpark(int size, int xdir, int ydir)
 {
-	master = obj;
-	SetAction("Hover",master);
-}
+	SetCon(2 * size);
 
-public func SetUpSpark( int dam, int _x, int _y)
-{
-	//Incinerate();
-
-	SetCon(2*dam);
-
-	SetXDir(_x);
-	SetYDir(_y);
+	SetXDir(xdir);
+	SetYDir(ydir);
 
 	SetAction("Fall");
 	SetObjectLayer(this);
 }
 
-public func Hit()
+private func Hit()
 {
 	if(GetAction() == "Fall" && !GetEffect("IntRemove", this))
 	{
@@ -106,6 +64,53 @@ public func Hit()
 private func FxIntRemoveTimer()
 {
 	RemoveObject();
+}
+
+private func Hover()
+{
+	if (!master) return RemoveObject();
+
+	var _x,_y,r;
+
+	r = pos_angle + master_angle + master->GetR();
+
+	_x = +Sin(r, pos_distance);
+	_y = -Cos(r, pos_distance);
+
+	SetXDir();
+	SetYDir();
+
+	SetPosition(master->GetX() + pos_x, master->GetY() + pos_y);
+
+	DoFlameParticle();
+	if (GetActTime() > 30) DoCon(-1);
+}
+
+private func Fall()
+{
+	DoFlameParticle();
+	if (GetActTime() > 30) DoCon(-2);
+}
+
+private func DoFlameParticle()
+{
+	var size = Max(1, GetCon() * 7 / 100);
+	
+	var redness = PV_Random(100, 255);
+
+	CreateParticle("Thrust", PV_Random(-size/2, size/2),
+						     PV_Random(-size/2, size/2),
+						     GetXDir()/2, GetYDir()/2,
+						     PV_Random(8, 16),
+						     {    Prototype = Particles_Thrust(),
+							      R = 255,
+							      G = redness,
+							      B = redness,
+							      Alpha = PV_Linear(160, 0),
+							      Size = PV_Linear(PV_Random(2 * size / 3, size), PV_Random(size, 3 * size / 2)),
+						     ForceX = PV_KeyFrames(10, 0, PV_Random(-12, 12), 333, PV_Random(-8, 8), 666, PV_Random(-6, 6), 1000, PV_Random(-6, 6)),
+						     ForceY = PV_KeyFrames(10, 0, PV_Random(-16, -2), 333, PV_Random(-24, -3), 666, PV_Random(-32, -4), 1000, PV_Random(-40, -5))},
+						     RandomX(3, 5));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,10 +133,7 @@ Hover = {
 	Directions = 1,
 	Length = 1,
 	Delay = 1,
-	X = 0,
-	Y = 0,
-	Wdt = 5,
-	Hgt = 5,
+	FacetBase = 1,
 	NextAction = "Hover",
 	StartCall = "Hover",
 },
@@ -143,10 +145,7 @@ Fall = {
 	Directions = 1,
 	Length = 1,
 	Delay = 1,
-	X = 0,
-	Y = 0,
-	Wdt = 5,
-	Hgt = 5,
+	FacetBase = 1,
 	NextAction = "Fall",
 	StartCall = "Fall",
 },
