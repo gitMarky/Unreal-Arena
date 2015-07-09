@@ -9,3 +9,4 @@ Vertices=1
 VertexY=-1
 VertexCNAT=8
 VertexFriction=20
+Mass=1
