@@ -32,18 +32,44 @@ public func IsProjectileTarget(object projectile, object shooter)
 
 public func OnHit(int damage, int damage_type, object projectile, id weapon)
 {
-	Hit();
+	Detonate(true);
 }
 
 public func OnHitObject(object target)
 {
-	CreateImpactEffect(this.damage, 0, 0, "Magic", Particles_Plasma());
+	Detonate();
 }
 
 public func OnHitLandscape()
 {
-		Sound("shock-exp");
-		CreateImpactEffect(this.damage, 0, 0, "Magic", Particles_Plasma());
+	Detonate();
+}
+
+private func Detonate(bool large)
+{
+	Sound("shock-exp");
+	Explode(12 + 20 * large, true);
+}
+
+public func ExplosionEffect(int level, int x, int y, int smoothness)
+{
+	ExplosionEffectBlast(level, x, y, smoothness);
+}
+
+
+public func GetExplosionColor()
+{
+	var color = GetProjectileColor();
+	var color_start = RGBa( 8 * GetRGBaValue(color, RGBA_RED) / 10,
+							8 * GetRGBaValue(color, RGBA_GREEN) / 10,
+							8 * GetRGBaValue(color, RGBA_BLUE) / 10,
+							175);
+
+	return {
+ 				Center = SetRGBaValue(color, RandomX(125, 175), RGBA_ALPHA),
+ 				AmbientStart = color_start,
+ 				AmbientEnd = SetRGBaValue(color, 125, RGBA_ALPHA),
+ 		   };
 }
 
 private func Particles_Plasma()

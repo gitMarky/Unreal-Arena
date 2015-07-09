@@ -89,7 +89,7 @@ local fire_modes =
 		damage_type = 		nil,	
 	
 		projectile_id = 		Projectile_ShockBolt,
-		projectile_speed = 		150,
+		projectile_speed = 		100,
 		projectile_range = 		PROJECTILE_Range_Infinite,
 		projectile_distance = 	16,
 		projectile_offset_y = 	-3,
