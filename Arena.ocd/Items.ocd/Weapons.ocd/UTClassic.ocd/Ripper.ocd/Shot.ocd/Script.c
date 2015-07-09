@@ -46,6 +46,11 @@ private func Detonate()
 	Explode(10);
 }
 
+public func ExplosionEffect(int level, int x, int y, int smoothness)
+{
+	ExplosionEffectBlast(level, x, y, smoothness);
+}
+
 private func Reflect()
 {
 	Sound("ripper-hit");

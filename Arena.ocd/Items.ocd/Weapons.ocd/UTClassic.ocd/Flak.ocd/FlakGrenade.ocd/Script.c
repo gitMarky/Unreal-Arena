@@ -24,8 +24,7 @@ public func ContactBottom()
 
 public func Detonate()
 {
-	//Explosion( this,  64, 24, false );
-	
+
 	var firemode = weapon_ID.fire_modes.primary;
 	
 	// launch the single projectiles
@@ -42,9 +41,15 @@ public func Detonate()
 		          ->Launch(RandomX(-180, 180));
 	}
 	
-	
-	RemoveObject();
+	Explode(24);
+	//Explosion( this,  64, 24, false );
+	//RemoveObject();
 	return true;
+}
+
+public func ExplosionEffect(int level, int x, int y, int smoothness)
+{
+	ExplosionEffectBlast(level, x, y, smoothness);
 }
 
 protected func Travelling()
