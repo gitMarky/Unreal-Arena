@@ -1,22 +1,12 @@
 
-/*
-movement
+static const SMOKE_UA_Movement_None = 0;
+static const SMOKE_UA_Movement_Standard = 1;
+static const SMOKE_UA_Movement_Random = 2;
 
-0 = keine Bewegung
-1 = Standard-Clonk Rauch
-2 = Zufallsbewegung auf der Stelle
-
-*/
-
-/*
-effect
-
-0 = keine Farbübergänge
-1 = Farbübergang von rgba1 nach rgba2
-2 = Zufallsfarbe zwischen rgba1 und rgba2
-3 = wie 2,nur wechselnd
-
-*/
+static const SMOKE_UA_Color_Static = 0;
+static const SMOKE_UA_Color_Linear = 1;
+static const SMOKE_UA_Color_Random = 2;
+static const SMOKE_UA_Color_Rainbow = 3;
 
 global func SmokeUA(int x, int y, int con, int move_style, int lifetime, int dwColor1, int dwColor2, int effect_style, string name)
 {
@@ -45,12 +35,12 @@ global func SmokeUA(int x, int y, int con, int move_style, int lifetime, int dwC
 
 	var random = PV_Random(-10, 10);
 
-	if (move_style == 1)
+	if (move_style == SMOKE_UA_Movement_Standard)
 	{
 		force_y = -20;
 		force_x = PV_KeyFrames(0, 0, random, 300, random, 600, random, 1000, random);
 	}
-	else if (move_style == 2)
+	else if (move_style == SMOKE_UA_Movement_Random)
 	{
 		force_x = force_y = PV_KeyFrames(0, 0, random, 300, random, 600, random, 1000, random);
 	}
@@ -61,28 +51,28 @@ global func SmokeUA(int x, int y, int con, int move_style, int lifetime, int dwC
 					ForceX = force_x,
 					ForceY = force_y};
 
-	if (effect_style == 0)
+	if (effect_style == SMOKE_UA_Color_Static)
 	{
 		particle.R = 255;
 		particle.G = 255;
 		particle.B = 255;
 		particle.Alpha = 128;
 	}
-	else if (effect_style == 1)
+	else if (effect_style == SMOKE_UA_Color_Linear)
 	{
 		particle.R = PV_Linear(r1, r2);
 		particle.G = PV_Linear(g1, g2);
 		particle.B = PV_Linear(b1, b2);
 		particle.Alpha = PV_Linear(a1, a2);
 	}
-	else if (effect_style >= 2)
+	else if (effect_style >= SMOKE_UA_Color_Random)
 	{
 		particle.R = PV_Random(r1, r2, 100);
 		particle.G = PV_Random(g1, g2, 100);
 		particle.B = PV_Random(b1, b2, 100);
 		particle.Alpha = PV_Random(a1, a2, 100);
 
-		if (effect_style == 3)
+		if (effect_style == SMOKE_UA_Color_Rainbow)
 		{
 			particle.R = PV_KeyFrames(0, 0, particle.R, 300, particle.R, 600, particle.R, 1000, particle.R);
 			particle.G = PV_KeyFrames(0, 0, particle.G, 300, particle.G, 600, particle.G, 1000, particle.R);

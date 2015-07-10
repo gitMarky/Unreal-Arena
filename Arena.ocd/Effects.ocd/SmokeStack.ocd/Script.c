@@ -20,7 +20,7 @@ private func FxIntTravelTimer()
 {
 	timer = BoundBy(timer - change, end, timer);
 
-	SmokeUA(0, 0, timer, 2, RandomX(25, 40), RGBa(rgb1, rgb1, rgb1, 190), RGBa(rgb2, rgb2, rgb2, 0), 1);
+	SmokeUA(0, 0, timer, SMOKE_UA_Movement_Random, RandomX(25, 40), RGBa(rgb1, rgb1, rgb1, 190), RGBa(rgb2, rgb2, rgb2, 0), SMOKE_UA_Color_Linear);
 
 	if (timer <= end) RemoveObject();
 }
