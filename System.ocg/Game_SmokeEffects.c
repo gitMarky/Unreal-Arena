@@ -18,23 +18,23 @@ effect
 
 */
 
-global func SmokeX(int x, int y, int con, int move_style, int lifetime, int dwColor1, int dwColor2,int effect_style)
+global func SmokeUA(int x, int y, int con, int move_style, int lifetime, int dwColor1, int dwColor2, int effect_style, string name)
 {
 	con /= 2;
 	var size = con * 64 / 100;
 	var r1, g1, b1, a1;
 	var r2, g2, b2, a2;
-	
-	r1 = GetRGBaValue(dwColor1, 1);
-	g1 = GetRGBaValue(dwColor1, 2);
-	b1 = GetRGBaValue(dwColor1, 3);
-	a1 = GetRGBaValue(dwColor1, 0);
-	
-	r2 = GetRGBaValue(dwColor2, 1);
-	g2 = GetRGBaValue(dwColor2, 2);
-	b2 = GetRGBaValue(dwColor2, 3);
-	a2 = GetRGBaValue(dwColor2, 0);
-	
+
+	r1 = GetRGBaValue(dwColor1, RGBA_RED);
+	g1 = GetRGBaValue(dwColor1, RGBA_GREEN);
+	b1 = GetRGBaValue(dwColor1, RGBA_BLUE);
+	a1 = GetRGBaValue(dwColor1, RGBA_ALPHA);
+
+	r2 = GetRGBaValue(dwColor2, RGBA_RED);
+	g2 = GetRGBaValue(dwColor2, RGBA_GREEN);
+	b2 = GetRGBaValue(dwColor2, RGBA_BLUE);
+	a2 = GetRGBaValue(dwColor2, RGBA_ALPHA);
+
 	if (!a1 && !a2)
 	{
 		a1 = 200;
@@ -81,7 +81,7 @@ global func SmokeX(int x, int y, int con, int move_style, int lifetime, int dwCo
 		particle.G = PV_Random(g1, g2, 100);
 		particle.B = PV_Random(b1, b2, 100);
 		particle.Alpha = PV_Random(a1, a2, 100);
-		
+
 		if (effect_style == 3)
 		{
 			particle.R = PV_KeyFrames(0, 0, particle.R, 300, particle.R, 600, particle.R, 1000, particle.R);
@@ -90,6 +90,8 @@ global func SmokeX(int x, int y, int con, int move_style, int lifetime, int dwCo
 			particle.Alpha = PV_KeyFrames(0, 0, particle.Alpha, 300, particle.Alpha, 600, particle.Alpha, 1000, particle.Alpha);
 		}		
 	}
+	
+	if (name == nil) name = "Smoke2";
 
-	CreateParticle("Smoke2", x, y, 0, 0, lifetime, particle);
+	CreateParticle(name, x, y, 0, 0, lifetime, particle);
 }

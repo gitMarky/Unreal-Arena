@@ -1,94 +1,5 @@
 
 /*
-global func Explosion(object pObj, int iDamage, int iRadius, bool fSmoke, string szSound, bool fNoSprites, object shooter)
-{
-	var i, obj;
-	// -------------------------------------------------------------------------
-	// Raucheffekte
-	// -------------------------------------------------------------------------
-
-	if (fSmoke)
-	{
-		CastObjectsCall([ID_Effect_SmokeStack, 6, 100], "Launch", 25 * iRadius / 10);
-
-		// Toller Rauch
-		for (i = 0; i < 3; i++)
-			SmokeX
-			(
-				(-iRadius + Random(iRadius * 2)) / 2,
-				(-iRadius + Random(iRadius * 2)) / 2,
-				iRadius * 5,
-				2,
-				15 * iRadius / 10,
-				RGB(60, 60, 60),
-				RGB(20, 20, 20),
-				1
-			);
-
-		// Flammen wegschießen
-		for (i = 0; i < 3; i++)
-		{
-			obj = CreateObject(ID_Gore_Flame, 0, 0, -1);
-
-			var rot, dist;
-
-			rot = Random(360);
-			dist = iRadius + Random(30);
-
-			obj->~SetUpSpark(iDamage + Random(20), +Sin(rot, dist), -Cos(rot, dist));
-		}
-	}
-
-	// -------------------------------------------------------------------------
-	// Beleuchtungseffekte
-	// -------------------------------------------------------------------------
-
-	if (!fNoSprites)
-	{
-		var con, rad, size, x, rot, rrd, shock, shockr;
-
-		con = 100 * iRadius / 32;
-
-		rad = 16 * con / 100;
-		size = 64 * con / 20;
-
-		shock = 48 * con / 100;
-		shockr = 72 * con / 100;
-
-		var col_center, col_amb1, col_amb2;
-
-		if (!(col_center = pObj->~ExplosionColCenter()))
-			col_center = RGBa(255, 50 + Random(50), 0, 80 + Random(50));
-		if (!(col_amb1 = pObj->~ExplosionColAmb1()))
-			col_amb1 = RGBa(255, 50, 0, 80);
-		if (!(col_amb2 = pObj->~ExplosionColAmb2()))
-			col_amb2 = RGBa(255, 100, 0, 130);
-
-		for (x = 0; x < 5; x++)
-		{
-			rot = Random(360);
-			rrd = Random(rad);
-
-			CreateParticle("ColSparkNGSlow", Sin(rot, rrd), -Cos(rot, rrd), Sin(rot, 5), -Cos(rot, 5), size, col_center);
-		}
-
-		// Der da war bei allen Explosionen gleich bis jetzt, lassen wirs mal so ^^
-		CreateParticle("ColSparkNoGrav", 0, 0, 0, 0, size, RGBa(220 - Random(30), 255, 0, 80 + Random(50)));
-		CastParticles("ColSpark", shock, shockr, 0, 0, 40, 60, col_amb1, col_amb2);
-	}
-
-	if (szSound)
-	{
-		Sound(szSound);
-	}
-	else
-	{
-		Sound("Blast?");
-	}
-}
-*/
-
-/*
 Creates a visual explosion effect at a position.
 smoothness (in percent) determines how round the effect will look like
 */
@@ -102,7 +13,7 @@ global func ExplosionEffectSmoke(int level, int x, int y, int smoothness)
 	for (var i = 0; i < 3; i++)
 	{
 		// some smoke
-		SmokeX( x + RandomX(-iRadius, iRadius) / 2,
+		SmokeUA(x + RandomX(-iRadius, iRadius) / 2,
 			    y + RandomX(-iRadius, iRadius) / 2,
 			    iRadius * 5,
 			    2,
