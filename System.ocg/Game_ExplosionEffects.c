@@ -18,9 +18,7 @@ global func ExplosionEffectSmoke(int level, int x, int y, int smoothness)
 			    iRadius * 5,
 			    SMOKE_UA_Movement_Random,
 			    15 * iRadius / 10,
-			    RGBa(60, 60, 60, 195),
-			    RGBa(20, 20, 20, 0),
-			    SMOKE_UA_Color_Linear);
+			    PV_Linear(RGBa(60, 60, 60, 195), RGBa(20, 20, 20, 0)));
 
 		// cast flames
 		var flame = CreateObject(Effect_BlazingFlame, x, y, NO_OWNER);
