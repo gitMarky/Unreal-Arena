@@ -56,7 +56,7 @@ local fire_modes =
 	
 		mode = 			 	WEAPON_FM_Single,
 	
-		damage = 			0, 
+		damage = 			140, 
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_Rocket,
@@ -91,7 +91,7 @@ local fire_modes =
 	
 		mode = 			 	WEAPON_FM_Single,
 	
-		damage = 			0, 
+		damage = 			140, 
 		damage_type = 		nil,	
 	
 		projectile_id = 		Projectile_Rocket,

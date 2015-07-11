@@ -41,10 +41,7 @@ public func Detonate()
 		          ->Launch(RandomX(-180, 180));
 	}
 	
-	Explode(24);
-	//Explosion( this,  64, 24, false );
-	//RemoveObject();
-	return true;
+	Explode(24, false, damage);
 }
 
 public func ExplosionEffect(int level, int x, int y, int smoothness)

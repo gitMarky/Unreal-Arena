@@ -27,6 +27,10 @@ public func OnHitObject(object target)
 	{
 		Detonate();
 	}
+	else
+	{
+		RemoveObject();
+	}
 }
 
 public func OnHitLandscape()
@@ -43,7 +47,7 @@ public func OnHitLandscape()
 
 private func Detonate()
 {
-	Explode(10);
+	Explode(10, false, damage);
 }
 
 public func ExplosionEffect(int level, int x, int y, int smoothness)

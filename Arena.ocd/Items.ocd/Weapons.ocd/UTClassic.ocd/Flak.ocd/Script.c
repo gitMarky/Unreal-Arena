@@ -90,7 +90,7 @@ local fire_modes =
 	
 		mode = 			 WEAPON_FM_Single,
 	
-		damage = 			15, 
+		damage = 			64, 
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_FlakGrenade,

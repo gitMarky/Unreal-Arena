@@ -43,20 +43,20 @@ local fire_modes =
 		name = 				"primary",
 		icon = 				nil,
 		condition = 		nil,
-		
+
 		ammo_id = 			Ammo_Pistol,
 		ammo_usage =		1,
 		ammo_rate =			1,
-	
+
 		delay_prior = 		0,
 		delay_reload =		0,
 		delay_recover = 	26,
-	
+
 		mode = 			 	WEAPON_FM_Single,
-	
+
 		damage = 			40, 
 		damage_type = 		nil,	
-	
+
 		projectile_id = 		Projectile_ShockBeam,
 		projectile_speed = 		500,
 		projectile_range = 		PROJECTILE_Range_Sniper,
@@ -65,7 +65,7 @@ local fire_modes =
 		projectile_spread = 	[0, 1],
 
 		spread = [0, 1],
-		
+
 		sound = "shock-fire-reg",
 	},
 	
@@ -78,26 +78,26 @@ local fire_modes =
 		ammo_id = 			Ammo_Pistol,
 		ammo_usage =		1,
 		ammo_rate =			1,
-	
+
 		delay_prior = 		0,
 		delay_reload =		0,
 		delay_recover = 	24,
-	
+
 		mode = 			 	WEAPON_FM_Single,
-	
-		damage = 			40, 
+
+		damage = 			50, 
 		damage_type = 		nil,	
-	
+
 		projectile_id = 		Projectile_ShockBolt,
 		projectile_speed = 		100,
 		projectile_range = 		PROJECTILE_Range_Infinite,
 		projectile_distance = 	16,
 		projectile_offset_y = 	-3,
-		
+
 		projectile_spread = [5, 2],
 
 		spread = [0, 1],
-		
+
 		sound = "shock-fire-alt",
 	},
 };

@@ -87,7 +87,7 @@ local fire_modes =
 	
 		mode = 			 WEAPON_FM_Auto,
 	
-		damage = 			30, 
+		damage = 			24, 
 		damage_type = 		nil,	
 	
 		projectile_id = 	Projectile_Ripper,
@@ -127,7 +127,6 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 	{
 		projectile->SetSecondary();
 	}
-	//projectile->Trail(1, 60);
 }
 
 public func OnStartCooldown(object user, proplist firemode)

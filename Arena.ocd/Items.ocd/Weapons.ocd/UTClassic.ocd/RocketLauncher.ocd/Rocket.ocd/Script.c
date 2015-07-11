@@ -51,9 +51,7 @@ public func ContactBottom()
 
 public func Detonate()
 {
-	//Explosion( this,  64, 24, false );
-	Explode(30); // dummy explosion
-	return true;
+	Explode(32, false, damage);
 }
 
 

@@ -48,7 +48,8 @@ public func OnHitLandscape()
 private func Detonate(bool large)
 {
 	Sound("shock-exp");
-	Explode(12 + 20 * large, true);
+	var factor = (1 + large);
+	Explode(20 * factor, true, damage * factor);
 }
 
 public func ExplosionEffect(int level, int x, int y, int smoothness)
