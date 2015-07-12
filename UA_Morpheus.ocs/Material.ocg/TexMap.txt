@@ -31,14 +31,14 @@
 40=Granite-granite
 
 41=BackWall-city_light1
-42=BackWall-city_window_grey
-43=BackWall-fractal_concrete
+42=BackWall-city_window_gry
+43=BackWall-fractal_concret
 44=BackWall-fractal_stripes
 45=BackWall-rain_locker
 46=BackWall-rain_truss_ver
 47=BackWall-tech_light1
 
 50=Wall-fractal_stripes
-51=Wall-fractal_concrete
+51=Wall-fractal_concret
 52=Wall-rain_locker
 53=Wall-slums_pavement
