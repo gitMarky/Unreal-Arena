@@ -1,9 +1,6 @@
 # Static Map Material/Texture Table 
 # Index +128 for underground materials
 
-OverloadMaterials
-OverloadTextures
-
 1=Tunnel-smooth_tunnel
 8=Sand-smooth_tunnel
 10=Ashes-smooth_tunnel
