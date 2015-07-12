@@ -9,3 +9,8 @@ public func GetFlagBaseID()
 {
 	return Goal_FlagBase_UA;
 }
+
+public func GetGameConfigurationIcon()
+{
+	return Icon_CaptureTheFlag;
+}
