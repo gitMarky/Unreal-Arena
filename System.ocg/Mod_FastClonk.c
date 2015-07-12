@@ -10,4 +10,7 @@ Walk = {
 	Decel = 100,
 	Speed = 350,
 },
+Tumble = {
+	NextAction = "Jump",
+},
 };
