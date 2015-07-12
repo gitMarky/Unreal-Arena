@@ -1,0 +1,15 @@
+[Teams]
+Active=1
+AllowTeamSwitch=1
+TeamColors=1
+
+
+	[Team]
+	id=1
+	Name=$Blue$
+	Color=240
+
+	[Team]
+	id=2
+	Name=$Red$
+	Color=15728640
