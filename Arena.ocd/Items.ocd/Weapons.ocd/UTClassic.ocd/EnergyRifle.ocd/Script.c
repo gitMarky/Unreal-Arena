@@ -13,7 +13,7 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(-60, 0, 1, 0), Trans_Translate(0, 1000, 0));
+	return Trans_Mul(Trans_Rotate(-60, -1, 0, 0), Trans_Translate(1000, 0, 0));
 }
 
 local animation_set = {

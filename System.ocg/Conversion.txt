@@ -1,0 +1,14 @@
+Trans_Translate(x,y,z) -> Trans_Translate(y,-z,x);
+Trans_Rotate(angle,x,y,z) -> Trans_Rotate(angle,-y,z,-x) or Trans_Rotate(-angle,y,-z,x);
+Trans_Scale(x,y,z) -> Trans_Scale(y,z,x);
+
+
+
+Trans_Translate\((\d*), (\d*), (\d*)\)
+Trans_Translate\($2, -$3, -$1\)
+
+Trans_Scale\((\d*), (\d*), (\d*)\)
+Trans_Scale\($2, $3, $1\)
+
+Trans_Rotate\((\d*), (\d*), (\d*), (\d*)\)
+Trans_Rotate\($1, -$3, $4, -$2\)

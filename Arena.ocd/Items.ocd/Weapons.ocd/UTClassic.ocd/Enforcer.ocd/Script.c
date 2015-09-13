@@ -11,7 +11,7 @@ public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; 
 public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(90, 0, 1, 0), Trans_Rotate(-65,1,0,0));
+	return Trans_Mul(Trans_Rotate(90, -1, 0, 0), Trans_Rotate(-65, 0, 0, -1));
 }
 
 func Hit()
