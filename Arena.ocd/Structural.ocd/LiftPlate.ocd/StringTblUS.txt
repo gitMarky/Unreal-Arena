@@ -1,0 +1,3 @@
+Name=Liftplate
+Description=Standard transportation for any loads and persons.
+

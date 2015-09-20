@@ -1,0 +1,3 @@
+Name=Schwebeplatte
+Description=Der Standardtransporter für Lasten und Personen.
+
