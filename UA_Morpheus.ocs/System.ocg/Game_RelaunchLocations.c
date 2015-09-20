@@ -25,8 +25,8 @@ protected func RelaunchLocations()
 	   // right team
 	   { x = 1410, y = 470, team = 1},
 	   { x = 1205, y = 470, team = 1},
-	   { x = 1315, y = 600, team = 1},
-	   { x = 1205, y = 600, team = 1},
+	   { x = 1315, y = 660, team = 1},
+	   { x = 1205, y = 660, team = 1},
 	   { x = 1480, y = 580, team = 1},
 	   { x = 1205, y = 580, team = 1},
 	   { x = 1205, y = 470, team = 1}
