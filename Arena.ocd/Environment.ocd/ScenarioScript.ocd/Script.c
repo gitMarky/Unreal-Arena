@@ -59,7 +59,7 @@ protected func SpawnPlayer(int player)
 	
 	if (crew == nil)
 	{
-		crew->CreateObject(Clonk, 0, 0, player);
+		crew = CreateObject(Clonk, 0, 0, player);
 		crew->MakeCrewMember(player);
 	}
 	SetCursor(player, crew);
