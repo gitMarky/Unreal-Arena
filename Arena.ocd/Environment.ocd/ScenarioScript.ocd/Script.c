@@ -104,8 +104,8 @@ private func StartingEquipment(object crew)
 	else
 	{
 	    // determine the 
-    	var id_primary_weapon = GameConfiguration()->GetSpawnPointItem("weapon_slot_01");
-		var id_secondary_weapon = GameConfiguration()->GetSpawnPointItem("weapon_slot_02");
+    	var id_primary_weapon = GameConfiguration()->GetSpawnPointItem(SPAWN_Weapon_Chainsaw);
+		var id_secondary_weapon = GameConfiguration()->GetSpawnPointItem(SPAWN_Weapon_Enforcer);
 
 		if (nil != id_primary_weapon) crew->CreateContents(id_primary_weapon);
 		if (nil != id_secondary_weapon) crew->CreateContents(id_secondary_weapon);
