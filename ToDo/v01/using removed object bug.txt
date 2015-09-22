@@ -1,0 +1,13 @@
+
+ERROR: using removed object.
+ by: Launch(-91,[[...], [...]]) (LibraryShooter.ocd\Libraries.ocd\Projectile.ocd\Script.c:393)
+ by: Object(4241)->FireProjectiles(Object(4068),-91,Weapon_UT99_EnergyRifle.fire_modes.primary) (LibraryShooter.ocd\Libraries.ocd\Weapon.ocd\Script.c:560)
+ by: Object(4241)->Fire(Object(4068),-132,1) (LibraryShooter.ocd\Libraries.ocd\Weapon.ocd\Script.c:513)
+ by: Object(4241)->DoFireCycle(Object(4068),-132,1,true) (LibraryShooter.ocd\Libraries.ocd\Weapon.ocd\Script.c:458)
+ by: Object(4241)->ControlUseHolding(Object(4068),-132,1) (LibraryShooter.ocd\Libraries.ocd\Weapon.ocd\Script.c:389)
+ by: Object(4068)->HoldingUseControl(47,-132,1,Object(4241)) (planet\Objects.ocd\Libraries.ocd\ClonkControl.ocd\Script.c:824)
+ by: Object(4068)->ControlUse2Script(47,-132,1,100,true,0,Object(4241)) (planet\Objects.ocd\Libraries.ocd\ClonkControl.ocd\Script.c:914)
+ by: Object(4068)->ObjectControl(0,47,-132,1,100,true) (planet\Objects.ocd\Libraries.ocd\ClonkControl.ocd\Script.c:363)
+ by: Object(4068)->ObjectControl(0,1,-132,1,100) (UnrealArena.ocf\System.ocg\Mod_ClonkUseSecondary.c:32)
+ by: Object(4068)->ObjectControl(0,1,-132,1,100) (planet\Objects.ocd\Libraries.ocd\CarryHeavyControl.ocd\Script.c:106)
+ by: Global->PlayerControl(0,1,0,638,466,100) (planet\System.ocg\PlayerControl.c:86)
