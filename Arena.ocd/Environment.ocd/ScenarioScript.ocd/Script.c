@@ -55,15 +55,65 @@ protected func RelaunchPlayer(int player, int killer)
  */
 protected func SpawnPlayer(int player)
 {
-	var crew = GetHiRank(player);
-	
+	var crew = SpawnPlayerCrew(player);
+	var relaunch_location = GetRelaunchLocation(player);
+    ContainPlayer(relaunch_location, crew);
+    CreateStartingEquipment(crew);
+    return crew;
+}
+
+
+private func SpawnPlayerCrew(int player)
+{
+    var crew = GetHiRank(player);
+
 	if (crew == nil)
 	{
 		crew = CreateObject(Clonk, 0, 0, player);
 		crew->MakeCrewMember(player);
 	}
+
 	SetCursor(player, crew);
-	
+	return crew;
+}
+
+
+private func CreateStartingEquipment(object crew)
+{
+    RemoveEquipment(crew);
+	StartingEquipment(crew);
+}
+
+
+private func RemoveEquipment(object crew)
+{
+	// remove previous contents
+	for (var contents = crew->Contents(); contents != nil; contents = crew->Contents())
+	{
+		contents->RemoveObject();
+	}
+}
+
+
+private func StartingEquipment(object crew)
+{
+	if (IsInstaGibConfigured())
+	{
+		crew->CreateContents(Weapon_UT99_EnergyRifle);
+	}
+	else
+	{
+	    // determine the 
+    	var id_primary_weapon = GameConfiguration()->GetSpawnPointItem("weapon_slot_01");
+		var id_secondary_weapon = GameConfiguration()->GetSpawnPointItem("weapon_slot_02");
+
+		if (nil != id_primary_weapon) crew->CreateContents(id_primary_weapon);
+		if (nil != id_secondary_weapon) crew->CreateContents(id_secondary_weapon);
+	}
+}
+
+private func GetRelaunchLocation(int player)
+{
 	// sort the possible locations
 	var possible_locations = [];
 
@@ -74,12 +124,14 @@ protected func SpawnPlayer(int player)
 			PushBack(possible_locations, location);
 		}
 	}
-	
-	// determine a random location
-	var relaunch_location = possible_locations[Random(GetLength(possible_locations))];
 
-    // spawn player from relaunch container
-    
+	// determine a random location
+	return possible_locations[Random(GetLength(possible_locations))];
+}
+
+
+private func ContainPlayer(proplist relaunch_location, object crew)
+{
     // from existing one?
 	var relaunch_container = crew->Contained();
 	
@@ -102,7 +154,6 @@ protected func SpawnPlayer(int player)
      }
 
 	 relaunch_container->PrepareRelaunch(crew);
-	 return crew;
 }
 
 
