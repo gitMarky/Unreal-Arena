@@ -11,7 +11,6 @@ func Initialize()
 {
 	CreateObject(Environment_RoundManager);
 	CreateObject(Environment_ConfigurationUA);
-	CreateObject(RoundTester);
 }
 
 /**
