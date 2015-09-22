@@ -69,3 +69,8 @@ protected func SelectionMinor()
 {
 	Sound("SelectMinor", true);
 }
+
+protected func OnRoundEnd()
+{
+	Sound("Goal_WinRound", true);
+}
