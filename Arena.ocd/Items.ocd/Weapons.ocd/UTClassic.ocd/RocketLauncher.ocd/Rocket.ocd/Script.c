@@ -30,7 +30,7 @@ protected func Hit()
 }
 
 
-public func HitObject(object obj, bool no_remove, proplist effect)
+public func HitObject(object obj, bool remove, proplist effect)
 {
 	Detonate();
 }
