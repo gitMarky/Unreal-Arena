@@ -12,7 +12,7 @@ protected func Hit()
 }
 
 
-public func HitObject(object obj, bool no_remove)
+public func HitObject(object obj, bool no_remove, proplist effect)
 {
 	Detonate();
 }
