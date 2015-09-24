@@ -37,24 +37,6 @@ protected func OnRoundStart(int round)
 {
     // release all players from their relaunch containers, instantly.
 	ReleasePlayers(true);
-	// delegate call
-	DelegateRoundManagerCall("OnRoundStart", round);
-}
-
-/**
- Callback from the round manager.
- */
-protected func OnRoundReset(int round)
-{
-	DelegateRoundManagerCall("OnRoundReset", round);
-}
-
-/**
- Callback from the round manager.
- */
-protected func OnRoundEnd(int round)
-{
-	DelegateRoundManagerCall("OnRoundEnd", round);
 }
 
 /**
@@ -225,22 +207,3 @@ public func ReleaseCrew(object crew, bool instant)
 
 
 protected func RelaunchLocations(){ return [{ x = LandscapeWidth() / 2, y = 20, team = -1}];}
-
-private func DelegateRoundManagerCall(string call, int round)
-{
-	for (var target in FindObjects(Find_Func("DoRoundManagerCallbacks")))
-	{
-		if (call == "OnRoundEnd")
-		{
-			target->~OnRoundEnd(round);
-		}
-		else if (call == "OnRoundReset")
-		{
-			target->~OnRoundReset(round);
-		}
-		else if (call == "OnRoundStart")
-		{
-			target->~OnRoundStart(round);
-		}
-	}
-}
