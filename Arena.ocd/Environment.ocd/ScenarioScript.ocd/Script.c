@@ -117,7 +117,7 @@ private func GetRelaunchLocation(int player)
 
 	for (var location in RelaunchLocations())
 	{
-		if (location.team == -1 || location.team == GetPlayerTeam(player))
+		if (location.team == 0 || location.team == GetPlayerTeam(player))
 		{
 			PushBack(possible_locations, location);
 		}
