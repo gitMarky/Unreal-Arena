@@ -246,7 +246,7 @@
 //
 //		iClass = aMenuSelection[iOwner][BoundBy(iSelection - InfoMenuItems()-1,0,GetLength(aMenuSelection[iOwner])-1)];
 //
-//	//Log("Menu Selections: %v %d",aMenuSelection,iClass);
+//	//DebugLog("Menu Selections: %v %d",aMenuSelection,iClass);
 //
 //	//var iClass = iSelection - InfoMenuItems();
 //
@@ -412,14 +412,14 @@
 //{
 //	if(GetPlayerType( iPlr) == C4PT_Script)
 //	{
-//		//Log("Bot %d Selected %d", iPlr, iClass);
+//		//DebugLog("Bot %d Selected %d", iPlr, iClass);
 //	}
 //	if(!GetCData(iClass, CData_Condition, iPlr)) return;
 //
 //	//Speichern
-//	//Log("aLastClass was %d",aLastClass[iPlr] );
+//	//DebugLog("aLastClass was %d",aLastClass[iPlr] );
 //	aLastClass[iPlr] = iClass;
-//	//Log("aLastClass is %d",iClass);
+//	//DebugLog("aLastClass is %d",iClass);
 //	if(!GetCData(iClass,CData_Subclass,iPlr)) aClassName[iPlr] = GetCData(iClass, CData_Name, iPlr );
 //	var pCrew = aCrew[iPlr];
 //

@@ -16,7 +16,7 @@ public func DoSetup(int round)
 	flag_team1->SetColor(GetTeamColor(1));
 	flag_team2->SetColor(GetTeamColor(2));
 	
-	Log("Setup round %d", round);
+//	DebugLog("Setup round %d", round);
 	
 }
 

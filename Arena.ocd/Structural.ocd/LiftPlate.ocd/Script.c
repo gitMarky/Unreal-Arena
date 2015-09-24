@@ -85,14 +85,11 @@ func FxCheckAutoMoveTimer(object target, effect, int time)
 			continue;
 		if (proc != "WALK" && proc != "PUSH" && proc != "SCALE" && proc != "HANGLE" && proc != "SWIM") continue;
 		if (clonk->GetY() < GetY() - 20 && !PathFree(GetX(), GetY() - 10, GetX(), clonk->GetY()))
-		 {      Log("Ignore 1");
-				continue;}
+				continue;
 		if (clonk->GetY() > GetY() + 7 && !PathFree(GetX(), GetY(), GetX(), clonk->GetY()))
-		 {      Log("Ignore 2");
-				continue;}
+				continue;
 		if ((clonk->GetY() > GetY()) && GetContact(-1, CNAT_Bottom)) 
-		 {      Log("Ignore 3");
-				continue;}
+				continue;
 		
 		
 		// Priority rules: Cursor is better than no cursor, nearer is better than farer (Sort_Distance() & Sort_Reverse() do this)
