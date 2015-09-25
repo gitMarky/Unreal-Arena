@@ -74,3 +74,10 @@ protected func OnRoundEnd()
 {
 	Sound("Goal_WinRound", true);
 }
+
+
+public func CanConfigureSpawnPoints()
+{
+	return false;
+}
+
