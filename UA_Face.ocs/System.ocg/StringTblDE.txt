@@ -1,4 +1,0 @@
-
-MenuCaption=Konfiguration
-TxtConfigureGoals=Spielziel konfigurieren
-Finished=Fertig

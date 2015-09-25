@@ -1,4 +1,0 @@
-
-MenuCaption=Configuration
-TxtConfigureGoals=Configure goal
-Finished=Finished
