@@ -1,3 +1,0 @@
-Name=No Blood
-Description=Removes all blood and gore effects.
-

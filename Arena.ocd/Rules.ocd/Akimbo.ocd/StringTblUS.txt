@@ -1,3 +1,0 @@
-Name=Akimbo Guns
-Description=All guns can be collected twice!
-

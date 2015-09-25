@@ -1,3 +1,0 @@
-Name=Extras
-Description=Players can choose a special ability, such as Jetpack, Drones, etc.
-

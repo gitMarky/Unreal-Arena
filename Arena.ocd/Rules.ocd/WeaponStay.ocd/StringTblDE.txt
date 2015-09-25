@@ -1,3 +1,0 @@
-Name=Waffen bleiben
-Description=Wenn aktiviert, haben Spawnpunkte nicht immer nur ein Objekt zur Verfügung, sondern pro Spieler eines, so dass jeder immer eines bekommt.
-

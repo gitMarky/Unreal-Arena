@@ -1,3 +1,0 @@
-Name=Feste Teams
-Description=Alle Spieler eines Teams haben die selben Skins
-

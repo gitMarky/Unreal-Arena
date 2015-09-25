@@ -1,3 +1,0 @@
-Name=Weapon stay
-Description=Every spawnpoint contains an object for every player not only for one if activated.
-

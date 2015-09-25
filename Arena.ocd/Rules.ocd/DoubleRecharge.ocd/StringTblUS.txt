@@ -1,3 +1,0 @@
-Name=Rate of Fire
-Description=Rate of fire is reduced to 50% for all weapons.
-

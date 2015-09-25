@@ -1,3 +1,0 @@
-Name=Akimbo Guns
-Description=Alle Waffen können zweimal eingesammelt werden, für doppelten Spaß!
-

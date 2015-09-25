@@ -1,3 +1,0 @@
-Name=Fixed Teams
-Description=Every player receives a light that shines in his team colors.
-

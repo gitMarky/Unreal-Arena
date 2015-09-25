@@ -1,3 +1,0 @@
-Name=More Gore
-Description=Der Platzierungsfaktor bestimmt die Masse an Blut und anderen Effekten.
-

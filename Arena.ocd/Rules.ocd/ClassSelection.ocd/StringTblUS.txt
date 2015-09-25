@@ -1,3 +1,0 @@
-Name=Class Selection
-Description=Players can choose a class on every respawn. Without this rule players can choose skins only.
-

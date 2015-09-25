@@ -8,11 +8,7 @@ static const PROJECTILE_Damage_InstaGib = 10000;
 
 public func GameConfigConflictingRules()
 {
-	return [Rule_ClassSelection, 
-	        Rule_SelectSpecial,
-	        Rule_NoAmmo,
-	        Rule_WeaponsStay,
-	        Rule_FastBullets];
+	return [];
 }
 
 global func IsInstaGibConfigured()
