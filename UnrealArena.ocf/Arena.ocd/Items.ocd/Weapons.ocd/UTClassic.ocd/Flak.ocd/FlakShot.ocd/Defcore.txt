@@ -12,4 +12,3 @@ Vertices=1
 VertexY=-2
 VertexCNAT=8
 VertexFriction=20
-ContactCalls=1

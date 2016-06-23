@@ -57,3 +57,5 @@ protected func Travelling()
 		CreateParticle("Fire", PV_Random(x - 2, x + 2), PV_Random(y -2, y + 2), GetXDir()/2, GetYDir()/2 -1, PV_Random(5, 15), Particles_Glimmer());
 	}
 }
+
+local ContactCalls = true;

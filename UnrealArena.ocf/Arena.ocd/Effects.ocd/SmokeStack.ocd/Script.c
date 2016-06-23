@@ -29,3 +29,5 @@ private func ContactBottom()
 {
 	return RemoveObject();
 }
+
+local ContactCalls = true;

@@ -2,6 +2,7 @@
 
 local explodes = false;
 local reflections = 3;
+local ContactCalls = true;
 
 protected func Initialize()
 {

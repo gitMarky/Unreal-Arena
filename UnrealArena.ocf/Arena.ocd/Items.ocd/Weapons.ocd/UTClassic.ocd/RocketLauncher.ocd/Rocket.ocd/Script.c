@@ -1,6 +1,7 @@
 #include Library_Projectile
 
 local is_grenade = false;
+local ContactCalls = true;
 
 public func Grenade()
 {

@@ -14,4 +14,3 @@ Rotate=1
 Float=100000
 StretchGrowth=1
 IncompleteActivity=1
-ContactCalls=1

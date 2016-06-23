@@ -113,6 +113,7 @@ func FxCheckAutoMoveTimer(object target, effect, int time)
 
 local Name = "$Name$";
 local Description = "$Description$";
+local ContactCalls = true;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
