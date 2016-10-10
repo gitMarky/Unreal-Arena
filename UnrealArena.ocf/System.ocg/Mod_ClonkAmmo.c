@@ -1,7 +1,7 @@
 #include Library_AmmoManager
 #appendto Clonk
 
-public func GetAmmoSource()
+public func GetAmmoSource(id ammo)
 {
 	// redundant at the moment, but it should avoid problems in the future
 	// when real ammo counts are implemented 

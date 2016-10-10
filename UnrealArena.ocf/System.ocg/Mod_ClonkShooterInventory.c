@@ -8,14 +8,14 @@
 #appendto Clonk
 
 
-public func MaxContentsCount()
+public func OnRelaunched()
 {
 	if (IsInstaGibConfigured())
 	{
-		return 1;
+		SetMaxContentsCount(1);
 	}
 	else
 	{
-		return 10;
+		SetMaxContentsCount(10);
 	}
 }

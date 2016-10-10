@@ -2,5 +2,9 @@
 
 public func OnRelaunchCrew(object crew)
 {
-	if (RoundManager()->IsRoundActive()) crew->Sound("SpawnPlayer");
+	if (RoundManager()->IsRoundActive())
+	{
+		crew->Sound("SpawnPlayer");
+		crew->~OnRelaunch();
+	}
 }
