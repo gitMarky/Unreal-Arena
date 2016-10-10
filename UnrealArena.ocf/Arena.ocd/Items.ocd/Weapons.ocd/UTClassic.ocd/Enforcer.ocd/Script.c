@@ -3,7 +3,7 @@
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = 1;
+local Collectible = true;
 
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
@@ -55,9 +55,7 @@ local fire_modes =
 		projectile_range = 600,
 		projectile_distance = 10,
 		projectile_offset_y = -6,
-		projectile_spread = [7, 4],
-
-		spread = [0, 1],
+		projectile_spread = {angle = 7, precision = 4},
 	},
 	
 	secondary = 
@@ -85,9 +83,7 @@ local fire_modes =
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		
-		projectile_spread = [4, 1],
-
-		spread = [0, 1], 
+		projectile_spread = {angle = 4, precision = 1},
 	},
 };
 

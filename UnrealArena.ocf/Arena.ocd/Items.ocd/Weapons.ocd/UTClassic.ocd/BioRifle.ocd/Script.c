@@ -3,7 +3,7 @@
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = 1;
+local Collectible = true;
 
 local slime_charged = 0;
 
@@ -63,9 +63,7 @@ local fire_modes =
 		projectile_range = PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -4,
-		projectile_spread = [3, 2],
-
-		spread = [0, 1],
+		projectile_spread = {angle = 3, precision = 2},
 	},
 	
 	secondary = 
@@ -93,9 +91,7 @@ local fire_modes =
 		projectile_range = 	PROJECTILE_Range_Infinite,
 		projectile_distance = 10,
 		projectile_offset_y = -4,
-		projectile_spread = [3, 2],
-
-		spread = [0, 1],
+		projectile_spread = {angle = 3, precision = 2},
 	},
 };
 

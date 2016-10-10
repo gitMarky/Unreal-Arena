@@ -64,10 +64,8 @@ local fire_modes =
 		projectile_distance = 10,
 		projectile_offset_y = -6,
 		projectile_number = 1,
-		projectile_spread = [0, 1], // default inaccuracy of a single projectile
+		projectile_spread = nil, // default inaccuracy of a single projectile
 
-		spread = [0, 1],			   // inaccuracy from prolonged firing
-		
 		burst = 0, // number of projectiles fired in a burst
 		
 		sound = "rocket-fire-reg",

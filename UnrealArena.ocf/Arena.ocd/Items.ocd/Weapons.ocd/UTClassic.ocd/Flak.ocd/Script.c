@@ -64,10 +64,8 @@ local fire_modes =
 		projectile_distance = 12,
 		projectile_offset_y = -3,
 		projectile_number = 10,
-		projectile_spread = [2, 1], // default inaccuracy of a single projectile
+		projectile_spread = {angle = 2, precision = 1}, // default inaccuracy of a single projectile
 
-		spread = [0, 1],			   // inaccuracy from prolonged firing
-		
 		burst = 0, // number of projectiles fired in a burst
 		
 		sound = "flak-fire-reg",
@@ -99,10 +97,8 @@ local fire_modes =
 		projectile_distance = 10,
 		projectile_offset_y = -3,
 		projectile_number = 1,
-		projectile_spread = [5, 2],
+		projectile_spread = {angle = 5, precision = 2},
 
-		spread = [0, 1],
-		
 		burst = 0,
 		
 		sound = "flak-fire-alt",

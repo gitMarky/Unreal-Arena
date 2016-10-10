@@ -63,10 +63,8 @@ local fire_modes =
 		projectile_distance = 14,
 		projectile_offset_y = -3,
 		projectile_number = 1,
-		projectile_spread = [3, 2],
+		projectile_spread = {angle = 3, precision = 2},
 
-		spread = [0, 1],			   // inaccuracy from prolonged firing
-		
 		sound = "ripper-fire-reg",
 	},
 	
@@ -96,9 +94,7 @@ local fire_modes =
 		projectile_distance = 14,
 		projectile_offset_y = -3,
 		projectile_number = 1,
-		projectile_spread = [3, 2],
-
-		spread = [0, 1],			   // inaccuracy from prolonged firing	},
+		projectile_spread = {angle = 3, precision = 2},
 
 		sound = "ripper-fire-alt",
 	},

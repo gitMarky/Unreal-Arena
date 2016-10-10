@@ -62,9 +62,7 @@ local fire_modes =
 		projectile_range = 		PROJECTILE_Range_Sniper,
 		projectile_distance = 	16,
 		projectile_offset_y = 	-3,
-		projectile_spread = 	[0, 1],
-
-		spread = [0, 1],
+		projectile_spread = 	nil,
 
 		sound = "shock-fire-reg",
 	},
@@ -94,9 +92,7 @@ local fire_modes =
 		projectile_distance = 	16,
 		projectile_offset_y = 	-3,
 
-		projectile_spread = [5, 2],
-
-		spread = [0, 1],
+		projectile_spread = {angle = 5, precision = 2},
 
 		sound = "shock-fire-alt",
 	},
