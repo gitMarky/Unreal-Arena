@@ -19,7 +19,7 @@ public func SetSecondary()
 private func OnLaunch()
 {
 	SetAction("Travel");
-	remove_on_hit = false;
+	StayOnHit();
 }
 
 public func OnHitObject(object target)
@@ -71,6 +71,6 @@ private func Reflect()
 		//if (GetAction() != "TravelBallistic") SetAction("TravelBallistic");
 
 		reflections--;
-		if (reflections <= 0) remove_on_hit = true;
+		if (reflections <= 0) RemoveOnHit();
 	}
 }

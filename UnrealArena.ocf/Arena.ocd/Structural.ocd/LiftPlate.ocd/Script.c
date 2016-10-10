@@ -66,7 +66,7 @@ private func SetMoveDirection(int dir)
 }
 
 
-func FxCheckAutoMoveTimer(object target, effect, int time)
+func FxCheckAutoMoveTimer(object target, proplist effect, int time)
 {
 	if (GetAction() != "Check") return FX_OK;
 	

@@ -37,7 +37,7 @@ private func OnLaunch()
 	var size = 300 + 6 * damage / 5;
 
 	glob_size = size;	
-	remove_on_hit = false;
+	StayOnHit();
 
 	glob_color = RGBa(0, 250, 30, 160);
 	//glob_color = RGBa(77, 50, 27, 220); // DrWodka-Mode color

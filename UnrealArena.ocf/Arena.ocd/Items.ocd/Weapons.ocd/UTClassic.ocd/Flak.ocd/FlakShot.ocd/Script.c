@@ -6,7 +6,7 @@ private func OnLaunch()
 {
 	SetAction("TravelBallistic");
 	reflections = 5;
-	remove_on_hit = false;
+	StayOnHit();
 	SetLightRange(5, 5);
 }
 
@@ -27,14 +27,14 @@ private func Reflect()
 		SetYDir(-GetYDir()/2);
 		reflections--;
 		
-		if (reflections <= 0) remove_on_hit = true;
+		if (reflections <= 0) RemoveOnHit();
 	}
 	
 	if(self)
 	{	
 		OnHitLandscape();
 		
-		if (remove_on_hit) RemoveObject();
+		if (ShouldRemoveOnHit()) RemoveObject();
 	}
 }
 

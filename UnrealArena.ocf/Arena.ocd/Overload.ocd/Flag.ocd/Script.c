@@ -9,7 +9,7 @@
 #include Goal_Flag
 
 
-protected func FxFlagCarriedStart(object target, effect, int temp)
+protected func FxFlagCarriedStart(object target, proplist effect, int temp)
 {
 	if (temp) return;
 	
@@ -22,7 +22,7 @@ protected func FxFlagCarriedStart(object target, effect, int temp)
 }
 
 // Checks whether the carrier has reached its base.
-protected func FxFlagCarriedTimer(object target, effect)
+protected func FxFlagCarriedTimer(object target, proplist effect)
 {
 	var controller = target->GetController();
 	var ctrl_team = GetPlayerTeam(controller);
