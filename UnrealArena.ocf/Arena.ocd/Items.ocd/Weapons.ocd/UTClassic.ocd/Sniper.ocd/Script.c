@@ -1,9 +1,7 @@
-#include Library_Weapon
-#include Plugin_Weapon_FiremodeByUse
+#include Weapon_UT_Base
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = 1;
 
 static const PROJECTILE_Range_Sniper = 10000;
 

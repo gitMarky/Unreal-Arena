@@ -1,12 +1,7 @@
-#include Library_Weapon
-#include Plugin_Weapon_FiremodeByUse
-
-
+#include Weapon_UT_Base
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = 1;
-
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }

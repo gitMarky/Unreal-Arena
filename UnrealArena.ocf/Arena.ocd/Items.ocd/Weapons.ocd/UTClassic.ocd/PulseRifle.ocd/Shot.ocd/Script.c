@@ -3,7 +3,7 @@
 protected func Initialize()
 {
 	SetLightRange(10, 20);
-	SetLightColor(RGB(0,255,0));
+	SetLightColor(RGB(0, 255, 0));
 }
 
 private func OnLaunch()

@@ -1,9 +1,7 @@
-#include Library_Weapon
-#include Plugin_Weapon_FiremodeByUse
+#include Weapon_UT_Base
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = true;
 
 local slime_charged = 0;
 

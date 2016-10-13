@@ -1,13 +1,9 @@
-#include Library_Weapon
-#include Plugin_Weapon_FiremodeByUse
-
-static const WEAPON_UT99_Rocket_Max_Projectiles = 6;
-
+#include Weapon_UT_Base
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = 1;
 
+static const WEAPON_UT99_Rocket_Max_Projectiles = 6;
 
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
@@ -180,7 +176,6 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 private func GetSpread(proplist firemode)
 {
 	var spread = _inherited(firemode);
-	var additional = [GetProjectiles(firemode), 1];
-	PushBack(spread, additional);
-	return spread;
+	var additional = Projectile_Deviation(GetProjectiles(firemode));
+	return NormalizeDeviations([spread, additional]);
 }

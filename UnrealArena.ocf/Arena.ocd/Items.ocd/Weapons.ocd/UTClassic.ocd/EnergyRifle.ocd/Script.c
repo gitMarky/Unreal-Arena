@@ -1,9 +1,7 @@
-#include Library_Weapon
-#include Plugin_Weapon_FiremodeByUse
+#include Weapon_UT_Base
 
 local Name = "$Name$";
 local Description = "$Description$";
-local Collectible = 1;
 
 static const PROJECTILE_Range_EnergyRifle = 10000;
 static const PROJECTILE_Color_EnergyRifle = -11534081; // RGB(80, 0, 255);
