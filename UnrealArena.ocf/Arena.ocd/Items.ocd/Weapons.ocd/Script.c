@@ -3,6 +3,8 @@
 
 local Collectible = true;
 
+local firemode_primary, firemode_secondary;
+
 public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
 public func GetCarryBone() { return "Base"; }
@@ -20,4 +22,15 @@ public func GetAmmoSource(id ammo)
 public func GetAmmoContainer()
 {
 	return Contained();
+}
+
+public func Initialize()
+{
+	_inherited(...);
+
+	// firemode list
+	ClearFiremodes();
+	AddFiremode(firemode_primary);
+	AddFiremode(firemode_secondary);
+	ChangeFiremode(firemode_primary);
 }

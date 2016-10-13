@@ -11,65 +11,62 @@ public func GetCarryTransform()
 }
 
 
-local fire_modes =
+local firemode_primary = 
 {
-	primary = 
-	{
-		name = 				"primary", // string - menu caption
-		icon = 				nil, // id - menu icon
-		condition = 		nil, // string - callback for a condition
+	name = 				"primary", // string - menu caption
+	icon = 				nil, // id - menu icon
+	condition = 		nil, // string - callback for a condition
 
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			1, // per this many shots fired
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,	// this many units of ammo
+	ammo_rate =			1, // per this many shots fired
 
-		delay_charge =      0,
-		delay_recover = 	6, // time between consecutive shots
-		delay_cooldown = 	20,
-		delay_reload =		80, // time to reload, in frames
+	delay_charge =      0,
+	delay_recover = 	6, // time between consecutive shots
+	delay_cooldown = 	20,
+	delay_reload =		80, // time to reload, in frames
 
-		mode = 			 WEAPON_FM_Auto,
+	mode = 			 WEAPON_FM_Auto,
 
-		damage = 			10, 
-		damage_type = 		nil,	
+	damage = 			10, 
+	damage_type = 		nil,	
 
-		projectile_id = 	Projectile_Plasma,
-		projectile_speed = 	140,
-		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 12,
-		projectile_offset_y = -3,
-		projectile_number = 1,
-		projectile_spread = {angle = 7, precision = 2}, // 3 - default inaccuracy of a single projectile
-	},
-	
-	secondary = 
-	{
-		name = 				"secondary",
-		icon = 				nil, // id - menu icon
-		condition = 		nil, // string - callback for a condition
+	projectile_id = 	Projectile_Plasma,
+	projectile_speed = 	140,
+	projectile_range = PROJECTILE_Range_Infinite,
+	projectile_distance = 12,
+	projectile_offset_y = -3,
+	projectile_number = 1,
+	projectile_spread = {angle = 7, precision = 2}, // 3 - default inaccuracy of a single projectile
+};
 
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			8, // per this many shots fired
+local firemode_secondary = 
+{
+	name = 				"secondary",
+	icon = 				nil, // id - menu icon
+	condition = 		nil, // string - callback for a condition
 
-		delay_charge =      0,
-		delay_recover = 	2, // time between consecutive shots
-		delay_cooldown = 	20,
-		delay_reload =		260, // time to reload, in frames
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,	// this many units of ammo
+	ammo_rate =			8, // per this many shots fired
 
-		mode = 			 WEAPON_FM_Auto,
+	delay_charge =      0,
+	delay_recover = 	2, // time between consecutive shots
+	delay_cooldown = 	20,
+	delay_reload =		260, // time to reload, in frames
 
-		damage = 			1,
-		damage_type = 		nil,
+	mode = 			 WEAPON_FM_Auto,
 
-		projectile_id = 	Projectile_PlasmaBeam,
-		projectile_speed = 	210,
-		projectile_range = 90,
-		projectile_distance = 13,
-		projectile_offset_y = -3,
-		projectile_number = 1,
-		projectile_spread = nil,
-	},
+	damage = 			1,
+	damage_type = 		nil,
+
+	projectile_id = 	Projectile_PlasmaBeam,
+	projectile_speed = 	210,
+	projectile_range = 90,
+	projectile_distance = 13,
+	projectile_offset_y = -3,
+	projectile_number = 1,
+	projectile_spread = nil,
 };
 
 local weapon_properties = 

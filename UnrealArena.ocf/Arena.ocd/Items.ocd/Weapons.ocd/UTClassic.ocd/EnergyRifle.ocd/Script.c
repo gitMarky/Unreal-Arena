@@ -17,66 +17,63 @@ local animation_set = {
 };
 
 
-local fire_modes =
+local firemode_primary	= 
 {
-	primary	= 
-	{
-		name = 				"primary",
-		icon = 				nil,
-		condition = 		nil,
+	name = 				"primary",
+	icon = 				nil,
+	condition = 		nil,
 
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,
+	ammo_rate =			1,
 
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	26,
+	delay_prior = 		0,
+	delay_reload =		0,
+	delay_recover = 	26,
 
-		mode = 			 	WEAPON_FM_Single,
+	mode = 			 	WEAPON_FM_Single,
 
-		damage = 			40, 
-		damage_type = 		nil,	
+	damage = 			40, 
+	damage_type = 		nil,	
 
-		projectile_id = 		Projectile_ShockBeam,
-		projectile_speed = 		500,
-		projectile_range = 		PROJECTILE_Range_Sniper,
-		projectile_distance = 	16,
-		projectile_offset_y = 	-3,
-		projectile_spread = 	nil,
+	projectile_id = 		Projectile_ShockBeam,
+	projectile_speed = 		500,
+	projectile_range = 		PROJECTILE_Range_Sniper,
+	projectile_distance = 	16,
+	projectile_offset_y = 	-3,
+	projectile_spread = 	nil,
 
-		sound = "shock-fire-reg",
-	},
+	sound = "shock-fire-reg",
+};
 	
-	secondary = 
-	{
-		name = 				"secondary",
-		icon = 				nil,
-		condition = 		nil,
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+local firemode_secondary = 
+{
+	name = 				"secondary",
+	icon = 				nil,
+	condition = 		nil,
+	
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,
+	ammo_rate =			1,
 
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	24,
+	delay_prior = 		0,
+	delay_reload =		0,
+	delay_recover = 	24,
 
-		mode = 			 	WEAPON_FM_Single,
+	mode = 			 	WEAPON_FM_Single,
 
-		damage = 			50, 
-		damage_type = 		nil,	
+	damage = 			50, 
+	damage_type = 		nil,	
 
-		projectile_id = 		Projectile_ShockBolt,
-		projectile_speed = 		100,
-		projectile_range = 		PROJECTILE_Range_Infinite,
-		projectile_distance = 	16,
-		projectile_offset_y = 	-3,
+	projectile_id = 		Projectile_ShockBolt,
+	projectile_speed = 		100,
+	projectile_range = 		PROJECTILE_Range_Infinite,
+	projectile_distance = 	16,
+	projectile_offset_y = 	-3,
 
-		projectile_spread = {angle = 5, precision = 2},
+	projectile_spread = {angle = 5, precision = 2},
 
-		sound = "shock-fire-alt",
-	},
+	sound = "shock-fire-alt",
 };
 
 public func Initialize()

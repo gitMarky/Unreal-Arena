@@ -10,65 +10,62 @@ public func GetCarryTransform()
 }
 
 
-local fire_modes =
+local firemode_primary = 
 {
-	primary = 
-	{
-		name = 				"primary", // string - menu caption
-		icon = 				nil, // id - menu icon
-		condition = 		nil, // string - callback for a condition
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			1, // per this many shots fired
+	name = 				"primary", // string - menu caption
+	icon = 				nil, // id - menu icon
+	condition = 		nil, // string - callback for a condition
 	
-		delay_charge =      0,
-		delay_recover = 	4, // time between consecutive shots
-		delay_cooldown = 	20,
-		delay_reload =		260, // time to reload, in frames
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,	// this many units of ammo
+	ammo_rate =			1, // per this many shots fired
+
+	delay_charge =      0,
+	delay_recover = 	4, // time between consecutive shots
+	delay_cooldown = 	20,
+	delay_reload =		260, // time to reload, in frames
+
+	mode = 			 WEAPON_FM_Auto,
+
+	damage = 			6, 
+	damage_type = 		nil,	
+
+	projectile_id = 	Projectile_Bullet,
+	projectile_speed = 	210,
+	projectile_range = 600,
+	projectile_distance = 18,
+	projectile_offset_y = -2, // -4
+	projectile_number = 1,
+	projectile_spread = {angle = 5, precision = 2}, // 2 - default inaccuracy of a single projectile
+};
 	
-		mode = 			 WEAPON_FM_Auto,
+local firemode_secondary = 
+{
+	name = 				"secondary",
+	icon = 				nil, // id - menu icon
+	condition = 		nil, // string - callback for a condition
 	
-		damage = 			6, 
-		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	210,
-		projectile_range = 600,
-		projectile_distance = 18,
-		projectile_offset_y = -2, // -4
-		projectile_number = 1,
-		projectile_spread = {angle = 5, precision = 2}, // 2 - default inaccuracy of a single projectile
-	},
-	
-	secondary = 
-	{
-		name = 				"secondary",
-		icon = 				nil, // id - menu icon
-		condition = 		nil, // string - callback for a condition
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			1, // per this many shots fired
-	
-		delay_charge =      0,
-		delay_recover = 	2, // time between consecutive shots
-		delay_cooldown = 	20,
-		delay_reload =		260, // time to reload, in frames
-	
-		mode = 			 WEAPON_FM_Auto,
-	
-		damage = 			6, 
-		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	210,
-		projectile_range = 600,
-		projectile_distance = 18,
-		projectile_offset_y = -2, // -4
-		projectile_number = 1,
-		projectile_spread = {angle = 15, precision = 2}, // 6 - default inaccuracy of a single projectile
-	},
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,	// this many units of ammo
+	ammo_rate =			1, // per this many shots fired
+
+	delay_charge =      0,
+	delay_recover = 	2, // time between consecutive shots
+	delay_cooldown = 	20,
+	delay_reload =		260, // time to reload, in frames
+
+	mode = 			 WEAPON_FM_Auto,
+
+	damage = 			6, 
+	damage_type = 		nil,	
+
+	projectile_id = 	Projectile_Bullet,
+	projectile_speed = 	210,
+	projectile_range = 600,
+	projectile_distance = 18,
+	projectile_offset_y = -2, // -4
+	projectile_number = 1,
+	projectile_spread = {angle = 15, precision = 2}, // 6 - default inaccuracy of a single projectile
 };
 
 local weapon_properties = 

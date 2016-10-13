@@ -9,62 +9,59 @@ public func GetCarryTransform()
 }
 
 
-local fire_modes =
+local firemode_primary	= 
 {
-	primary	= 
-	{
-		name = 				"primary",
-		icon = 				nil,
-		condition = 		nil,
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+	name = 				"primary",
+	icon = 				nil,
+	condition = 		nil,
 	
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	15,
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,
+	ammo_rate =			1,
+
+	delay_prior = 		0,
+	delay_reload =		0,
+	delay_recover = 	15,
+
+	mode = 			 WEAPON_FM_Single,
+
+	damage = 			15, 
+	damage_type = 		nil,	
+
+	projectile_id = 	Projectile_Bullet,
+	projectile_speed = 	180,
+	projectile_range = 600,
+	projectile_distance = 10,
+	projectile_offset_y = -6,
+	projectile_spread = {angle = 7, precision = 4},
+};
+
+local firemode_secondary = 
+{
+	name = 				"secondary",
+	icon = 				nil,
+	condition = 		nil,
 	
-		mode = 			 WEAPON_FM_Single,
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,
+	ammo_rate =			1,
+
+	delay_prior = 		0,
+	delay_reload =		0,
+	delay_recover = 	10,
+
+	mode = 			 WEAPON_FM_Single,
+
+	damage = 			15, 
+	damage_type = 		nil,	
+
+	projectile_id = 	Projectile_Bullet,
+	projectile_speed = 	180,
+	projectile_range = 600,
+	projectile_distance = 10,
+	projectile_offset_y = -6,
 	
-		damage = 			15, 
-		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
-		projectile_range = 600,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
-		projectile_spread = {angle = 7, precision = 4},
-	},
-	
-	secondary = 
-	{
-		name = 				"secondary",
-		icon = 				nil,
-		condition = 		nil,
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
-	
-		delay_prior = 		0,
-		delay_reload =		0,
-		delay_recover = 	10,
-	
-		mode = 			 WEAPON_FM_Single,
-	
-		damage = 			15, 
-		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_Bullet,
-		projectile_speed = 	180,
-		projectile_range = 600,
-		projectile_distance = 10,
-		projectile_offset_y = -6,
-		
-		projectile_spread = {angle = 4, precision = 1},
-	},
+	projectile_spread = {angle = 4, precision = 1},
 };
 
 public func FireSound(object user, proplist firemode)

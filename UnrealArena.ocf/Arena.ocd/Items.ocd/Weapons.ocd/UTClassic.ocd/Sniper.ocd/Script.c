@@ -15,65 +15,62 @@ local animation_set = {
 		AnimationAim   = "CrossbowAimArms",
 };
 	
-local fire_modes =
+local firemode_primary = 
 {
-	primary = 
-	{
-		name = 				"primary", // string - menu caption
-		icon = 				nil, // id - menu icon
-		condition = 		nil, // string - callback for a condition
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			1, // per this many shots fired
+	name = 				"primary", // string - menu caption
+	icon = 				nil, // id - menu icon
+	condition = 		nil, // string - callback for a condition
 	
-		delay_charge =      0,
-		delay_recover = 	21, // time between consecutive shots
-		delay_cooldown = 	0,
-		delay_reload =		260, // time to reload, in frames
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,	// this many units of ammo
+	ammo_rate =			1, // per this many shots fired
+
+	delay_charge =      0,
+	delay_recover = 	21, // time between consecutive shots
+	delay_cooldown = 	0,
+	delay_reload =		260, // time to reload, in frames
+
+	mode = 			 	WEAPON_FM_Single,
+
+	damage = 			45,
+	damage_type = 		nil,
+
+	projectile_id = 		Projectile_Sniper,
+	projectile_speed = 		200,
+	projectile_range = 		PROJECTILE_Range_Sniper,
+	projectile_distance = 	17,
+	projectile_offset_y = 	-3, // -4
+	projectile_number = 	1,
+	projectile_spread = 	{angle = 3, precision = 5},
+};
+
+local firemode_secondary = 
+{
+	name = 				"secondary",
+	icon = 				nil, // id - menu icon
+	condition = 		nil, // string - callback for a condition
 	
-		mode = 			 	WEAPON_FM_Single,
-	
-		damage = 			45,
-		damage_type = 		nil,
-	
-		projectile_id = 		Projectile_Sniper,
-		projectile_speed = 		200,
-		projectile_range = 		PROJECTILE_Range_Sniper,
-		projectile_distance = 	17,
-		projectile_offset_y = 	-3, // -4
-		projectile_number = 	1,
-		projectile_spread = 	{angle = 3, precision = 5},
-	},
-	
-	secondary = 
-	{
-		name = 				"secondary",
-		icon = 				nil, // id - menu icon
-		condition = 		nil, // string - callback for a condition
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,	// this many units of ammo
-		ammo_rate =			1, // per this many shots fired
-	
-		delay_charge =      0,
-		delay_recover = 	2, // time between consecutive shots
-		delay_cooldown = 	0,
-		delay_reload =		260, // time to reload, in frames
-	
-		mode = 			 	WEAPON_FM_Single,
-	
-		damage = 			6, 
-		damage_type = 		nil,	
-	
-		projectile_id = 		Projectile_Sniper,
-		projectile_speed = 		210,
-		projectile_range = 		PROJECTILE_Range_Sniper,
-		projectile_distance = 	17,
-		projectile_offset_y = 	-3, // -4
-		projectile_number = 	1,
-		projectile_spread = 	{angle = 15, precision = 2}, // 6 - default inaccuracy of a single projectile
-	},
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,	// this many units of ammo
+	ammo_rate =			1, // per this many shots fired
+
+	delay_charge =      0,
+	delay_recover = 	2, // time between consecutive shots
+	delay_cooldown = 	0,
+	delay_reload =		260, // time to reload, in frames
+
+	mode = 			 	WEAPON_FM_Single,
+
+	damage = 			6, 
+	damage_type = 		nil,	
+
+	projectile_id = 		Projectile_Sniper,
+	projectile_speed = 		210,
+	projectile_range = 		PROJECTILE_Range_Sniper,
+	projectile_distance = 	17,
+	projectile_offset_y = 	-3, // -4
+	projectile_number = 	1,
+	projectile_spread = 	{angle = 15, precision = 2}, // 6 - default inaccuracy of a single projectile
 };
 
 local weapon_properties = 

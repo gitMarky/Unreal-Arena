@@ -15,63 +15,60 @@ local animation_set = {
 		AnimationAim   = "CrossbowAimArms",
 };
 
-local fire_modes =
+local firemode_primary	= 
 {
-	primary	= 
-	{
-		name = 				"primary",
-		icon = 				nil,
-		condition = 		nil,
-		
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+	name = 				"primary",
+	icon = 				nil,
+	condition = 		nil,
 	
-		delay_charge  =     0, // int, frames - time that the button must be held before the shot is fired
-		delay_recover = 	10, // int, frames - time between consecutive shots
-		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
-		delay_reload =		0, // int, frames - time to reload
-	
-		mode = 			 	WEAPON_FM_Auto,
-	
-		damage = 			40, 
-		damage_type = 		nil,	
-	
-		projectile_id = 	Projectile_SlimeShot,
-		projectile_speed = 	70,
-		projectile_range = PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
-		projectile_offset_y = -4,
-		projectile_spread = {angle = 3, precision = 2},
-	},
-	
-	secondary = 
-	{
-		name = 				"secondary",
-		icon = 				nil,
-		condition = 		nil,
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,
+	ammo_rate =			1,
 
-		ammo_id = 			Ammo_Pistol,
-		ammo_usage =		1,
-		ammo_rate =			1,
+	delay_charge  =     0, // int, frames - time that the button must be held before the shot is fired
+	delay_recover = 	10, // int, frames - time between consecutive shots
+	delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
+	delay_reload =		0, // int, frames - time to reload
 
-		delay_charge  =     160, // int, frames - time that the button must be held before the shot is fired
-		delay_recover = 	40, // int, frames - time between consecutive shots
-		delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
-		delay_reload =		0, // int, frames - time to reload
+	mode = 			 	WEAPON_FM_Auto,
 
-		mode = 			 	WEAPON_FM_Single,
+	damage = 			40, 
+	damage_type = 		nil,	
 
-		damage = 			40, 
-		damage_type = 		nil,	
+	projectile_id = 	Projectile_SlimeShot,
+	projectile_speed = 	70,
+	projectile_range = PROJECTILE_Range_Infinite,
+	projectile_distance = 10,
+	projectile_offset_y = -4,
+	projectile_spread = {angle = 3, precision = 2},
+};
 
-		projectile_id = 	Projectile_SlimeShot,
-		projectile_speed = 	70,
-		projectile_range = 	PROJECTILE_Range_Infinite,
-		projectile_distance = 10,
-		projectile_offset_y = -4,
-		projectile_spread = {angle = 3, precision = 2},
-	},
+local firemode_secondary = 
+{
+	name = 				"secondary",
+	icon = 				nil,
+	condition = 		nil,
+
+	ammo_id = 			Ammo_Pistol,
+	ammo_usage =		1,
+	ammo_rate =			1,
+
+	delay_charge  =     160, // int, frames - time that the button must be held before the shot is fired
+	delay_recover = 	40, // int, frames - time between consecutive shots
+	delay_cooldown =    0, // int, frames - time of cooldown after the last shot is fired
+	delay_reload =		0, // int, frames - time to reload
+
+	mode = 			 	WEAPON_FM_Single,
+
+	damage = 			40, 
+	damage_type = 		nil,	
+
+	projectile_id = 	Projectile_SlimeShot,
+	projectile_speed = 	70,
+	projectile_range = 	PROJECTILE_Range_Infinite,
+	projectile_distance = 10,
+	projectile_offset_y = -4,
+	projectile_spread = {angle = 3, precision = 2},
 };
 
 public func FireSound(object user, proplist firemode)
