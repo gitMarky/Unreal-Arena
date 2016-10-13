@@ -13,7 +13,7 @@ public func GetCarryTransform()
 
 local firemode_primary = 
 {
-	name = 				"primary", // string - menu caption
+	name = 				WEAPON_Firemode_Primary, // string - menu caption
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 
@@ -42,7 +42,7 @@ local firemode_primary =
 
 local firemode_secondary = 
 {
-	name = 				"secondary",
+	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 

@@ -16,7 +16,7 @@ local animation_set = {
 
 local firemode_primary = 
 {
-	name = 				"primary",
+	name = 				WEAPON_Firemode_Primary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 	
@@ -49,7 +49,7 @@ local firemode_primary =
 
 local firemode_secondary = 
 {
-	name = 				"secondary",
+	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil,
 	condition = 		nil,
 	
