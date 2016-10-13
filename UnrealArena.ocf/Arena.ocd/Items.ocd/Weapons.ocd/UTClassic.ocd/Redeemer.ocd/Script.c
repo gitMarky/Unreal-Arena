@@ -20,7 +20,7 @@ local firemode_primary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 	
-	ammo_id = 			nil,
+	ammo_id = 			Ammo_Pistol,
 	ammo_usage =		1, // int - this many units of ammo
 	ammo_rate =			1, // int - per this many shots fired
 
@@ -53,7 +53,7 @@ local firemode_secondary =
 	icon = 				nil,
 	condition = 		nil,
 	
-	ammo_id = 			nil,
+	ammo_id = 			Ammo_Pistol,
 	ammo_usage =		1,
 	ammo_rate =			1,
 
