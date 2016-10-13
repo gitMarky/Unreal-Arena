@@ -3,9 +3,6 @@
 local Name = "$Name$";
 local Description = "$Description$";
 
-public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
-public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
-public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
 	return Trans_Rotate(120, -1, 0, 0);

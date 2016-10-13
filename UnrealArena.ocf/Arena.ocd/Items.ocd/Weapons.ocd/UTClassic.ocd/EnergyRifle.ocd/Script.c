@@ -6,9 +6,6 @@ local Description = "$Description$";
 static const PROJECTILE_Range_EnergyRifle = 10000;
 static const PROJECTILE_Color_EnergyRifle = -11534081; // RGB(80, 0, 255);
 
-public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
-public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
-public func GetCarryBone() { return "Base"; }
 public func GetCarryTransform()
 {
 	return Trans_Mul(Trans_Rotate(-60, -1, 0, 0), Trans_Translate(1000, 0, 0));
