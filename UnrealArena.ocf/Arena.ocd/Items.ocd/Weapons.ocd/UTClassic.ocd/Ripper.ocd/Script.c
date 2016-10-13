@@ -13,21 +13,6 @@ local animation_set = {
 		AnimationAim   = "CrossbowAimArms",
 };
 
-func Hit()
-{
-	Sound("GeneralHit?");
-}
-
-public func GetAmmoSource(id ammo)
-{
-	return AMMO_Source_Container;
-}
-
-public func GetAmmoContainer()
-{
-	return Contained();
-}
-
 
 local fire_modes =
 {

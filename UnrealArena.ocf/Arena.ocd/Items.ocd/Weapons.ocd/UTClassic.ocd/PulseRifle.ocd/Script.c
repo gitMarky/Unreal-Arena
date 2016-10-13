@@ -10,21 +10,6 @@ public func GetCarryTransform()
 	return Trans_Rotate(120, -1, 0, 0);
 }
 
-func Hit()
-{
-	Sound("GeneralHit?");
-}
-
-public func GetAmmoSource(id ammo)
-{
-	return AMMO_Source_Container;
-}
-
-public func GetAmmoContainer()
-{
-	return Contained();
-}
-
 
 local fire_modes =
 {
