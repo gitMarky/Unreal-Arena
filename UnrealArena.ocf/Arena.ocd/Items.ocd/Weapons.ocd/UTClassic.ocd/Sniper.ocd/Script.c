@@ -81,7 +81,7 @@ local weapon_properties =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("sniper-fire");
+	Sound("Weapon::Classic::sniper-fire");
 }
 
 

@@ -81,13 +81,13 @@ local animation_set = {
 
 public func FireSound(object user, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name)
+	if (firemode.name == WEAPON_Firemode_Primary)
 	{
-		Sound("m1-fire-reg", nil, nil, nil, 1);
+		Sound("Weapon::Classic::m1-fire-reg", nil, nil, nil, 1);
 	}
 	else
 	{
-		Sound("m1-fire-alt", nil, nil, nil, 1);
+		Sound("Weapon::Classic::m1-fire-alt", nil, nil, nil, 1);
 	}
 }
 
@@ -100,9 +100,9 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 public func OnStartCooldown(object user, proplist firemode)
 {
 	
-	Sound("m1-fire-reg", nil, nil, nil, -1);
-	Sound("m1-fire-alt", nil, nil, nil, -1);
-	Sound("m1-cooldown");
+	Sound("Weapon::Classic::m1-fire-reg", nil, nil, nil, -1);
+	Sound("Weapon::Classic::m1-fire-alt", nil, nil, nil, -1);
+	Sound("Weapon::Classic::m1-cooldown");
 }
 
 public func FireEffect(object user, int angle, proplist firemode)
@@ -124,15 +124,3 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	CreateCartridgeEffect("Cartridge_Pistol", 4, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};

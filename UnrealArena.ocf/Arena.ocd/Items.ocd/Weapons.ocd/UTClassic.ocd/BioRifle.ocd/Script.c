@@ -73,7 +73,7 @@ local firemode_secondary =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("bio-fire");
+	Sound("Weapon::Classic::bio-fire");
 }
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
@@ -95,7 +95,7 @@ public func FireEffect(object user, int angle, proplist firemode)
  */
 public func OnFinishCharge(object user, int x, int y, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name) return;
+	if (firemode.name == WEAPON_Firemode_Primary) return;
 	ShootBigBlob(user, x, y);
 }
 
@@ -107,7 +107,7 @@ public func OnFinishCharge(object user, int x, int y, proplist firemode)
  */
 public func OnCancelCharge(object user, int x, int y, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name) return;
+	if (firemode.name == WEAPON_Firemode_Primary) return;
 	ShootBigBlob(user, x, y, firemode);
 }
 
@@ -120,7 +120,7 @@ private func ShootBigBlob(object user, int x, int y, proplist firemode)
 
 private func Fire(object user, int x, int y)
 {
-	if (GetFiremode() == fire_modes.secondary)
+	if (GetFiremode() == firemode_secondary)
 	{
 		if (slime_charged > 0) _inherited(user, x, y);
 	}
@@ -129,15 +129,3 @@ private func Fire(object user, int x, int y)
 		_inherited(user, x, y);
 	}
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};

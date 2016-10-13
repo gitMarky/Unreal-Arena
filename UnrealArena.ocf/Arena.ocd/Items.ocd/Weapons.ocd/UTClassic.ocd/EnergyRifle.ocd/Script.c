@@ -43,7 +43,7 @@ local firemode_primary	=
 	projectile_offset_y = 	-3,
 	projectile_spread = 	nil,
 
-	sound = "shock-fire-reg",
+	sound = "Weapon::Classic::shock-fire-reg",
 };
 	
 local firemode_secondary = 
@@ -73,7 +73,7 @@ local firemode_secondary =
 
 	projectile_spread = {angle = 5, precision = 2},
 
-	sound = "shock-fire-alt",
+	sound = "Weapon::Classic::shock-fire-alt",
 };
 
 public func Initialize()
@@ -93,7 +93,7 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name)
+	if (firemode.name == WEAPON_Firemode_Primary)
 	{
 		projectile->HitScan();
 	}
@@ -116,15 +116,3 @@ public func ChangeFiremode(string firemode)
 		_inherited(firemode);
 	}
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};

@@ -42,7 +42,7 @@ local firemode_primary =
 	projectile_number = 1,
 	projectile_spread = {angle = 3, precision = 2},
 
-	sound = "ripper-fire-reg",
+	sound = "Weapon::Classic::ripper-fire-reg",
 };
 
 local firemode_secondary = 
@@ -73,7 +73,7 @@ local firemode_secondary =
 	projectile_number = 1,
 	projectile_spread = {angle = 3, precision = 2},
 
-	sound = "ripper-fire-alt",
+	sound = "Weapon::Classic::ripper-fire-alt",
 };
 
 local weapon_properties = 
@@ -95,7 +95,7 @@ public func FireSound(object user, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	if (firemode.name == fire_modes.secondary.name)
+	if (firemode.name == WEAPON_Firemode_Secondary)
 	{
 		projectile->SetSecondary();
 	}
@@ -109,15 +109,3 @@ public func FireEffect(object user, int angle, proplist firemode)
 {
 	//
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};

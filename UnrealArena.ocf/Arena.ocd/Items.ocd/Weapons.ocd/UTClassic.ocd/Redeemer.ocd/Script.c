@@ -44,7 +44,7 @@ local firemode_primary =
 
 	burst = 0, // number of projectiles fired in a burst
 	
-	sound = "rocket-fire-reg",
+	sound = "Weapon::Classic::rocket-fire-reg",
 };
 
 local firemode_secondary = 
@@ -79,7 +79,7 @@ local firemode_secondary =
 	
 	burst = 0,
 	
-	sound = "rocket-fire-alt",
+	sound = "Weapon::Classic::rocket-fire-alt",
 };
 
 public func FireSound(object user, proplist firemode)
@@ -94,7 +94,7 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	if (firemode.name == fire_modes.secondary.name)
+	if (firemode.name == WEAPON_Firemode_Secondary)
 	{
 		projectile->Grenade();
 	}

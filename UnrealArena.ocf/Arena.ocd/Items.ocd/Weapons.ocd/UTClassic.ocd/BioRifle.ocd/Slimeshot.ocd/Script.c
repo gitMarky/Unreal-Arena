@@ -140,7 +140,7 @@ private func RemoveGlob()
 
 private func SplashGlob()
 {
-	var constant = Weapon_UT99_BioRifle.fire_modes.primary.damage;
+	var constant = Weapon_UT99_BioRifle.firemode_primary.damage;
 
 	damage -= constant;
 

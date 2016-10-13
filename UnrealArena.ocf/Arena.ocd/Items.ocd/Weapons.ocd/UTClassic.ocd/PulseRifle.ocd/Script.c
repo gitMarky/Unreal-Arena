@@ -82,20 +82,20 @@ local animation_set = {
 
 public func FireSound(object user, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name)
+	if (firemode.name == WEAPON_Firemode_Primary)
 	{
-		Sound("pulse-fire", nil, nil, nil, 1);
+		Sound("Weapon::Classic::pulse-fire", nil, nil, nil, 1);
 	}
 	else
 	{
-		Sound("pulse-bolt", nil, nil, nil, 1);
+		Sound("Weapon::Classic::pulse-bolt", nil, nil, nil, 1);
 	}
 }
 
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	if (firemode.name == fire_modes.primary.name)
+	if (firemode.name == WEAPON_Firemode_Primary)
 	{
 		projectile->Trail(1, 60);
 	}
@@ -108,9 +108,9 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 
 public func OnStartCooldown(object user, proplist firemode)
 {	
-	Sound("pulse-fire", nil, nil, nil, -1);
-	Sound("pulse-bolt", nil, nil, nil, -1);
-	Sound("pulse-down");
+	Sound("Weapon::Classic::pulse-fire", nil, nil, nil, -1);
+	Sound("Weapon::Classic::pulse-bolt", nil, nil, nil, -1);
+	Sound("Weapon::Classic::pulse-down");
 	LaserStop();
 }
 
@@ -119,7 +119,7 @@ public func FireEffect(object user, int angle, proplist firemode)
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
-	if (firemode.name == fire_modes.primary.name)
+	if (firemode.name == WEAPON_Firemode_Primary)
 	{
 		EffectMuzzleFlash(user, x, y, angle, RandomX(12, 16), false, true, RGB(0,255,0));
 	}
@@ -145,15 +145,3 @@ private func LaserStop()
 {
 	if (laser_beam) laser_beam->RemoveObject();
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};

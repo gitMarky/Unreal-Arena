@@ -46,7 +46,7 @@ local firemode_primary =
 
 	burst = 0, // number of projectiles fired in a burst
 	
-	sound = "rocket-fire-reg",
+	sound = "Weapon::Classic::rocket-fire-reg",
 };
 
 local firemode_secondary = 
@@ -79,7 +79,7 @@ local firemode_secondary =
 
 	burst = 0,
 	
-	sound = "rocket-fire-alt",
+	sound = "Weapon::Classic::rocket-fire-alt",
 };
 
 local projectiles_loaded;
@@ -134,7 +134,7 @@ public func OnFinishCharge(object user, int x, int y, proplist firemode)
 {
 	if (GetProjectiles(firemode) < WEAPON_UT99_Rocket_Max_Projectiles)
 	{
-		Sound("rocket-load");
+		Sound("Weapon::Classic::rocket-load");
 		LoadProjectiles(firemode);
 		CancelCharge(user, x, y, firemode, false);
 	}
@@ -147,7 +147,7 @@ public func OnCancelCharge(object user, int x, int y, proplist firemode)
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
-	if (firemode.name == fire_modes.secondary.name)
+	if (firemode.name == WEAPON_Firemode_Secondary)
 	{
 		projectile->Grenade();
 	}

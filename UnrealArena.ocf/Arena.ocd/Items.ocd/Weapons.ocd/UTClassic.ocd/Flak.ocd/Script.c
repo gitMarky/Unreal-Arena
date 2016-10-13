@@ -45,7 +45,7 @@ local firemode_primary =
 
 	burst = 0, // number of projectiles fired in a burst
 	
-	sound = "flak-fire-reg",
+	sound = "Weapon::Classic::flak-fire-reg",
 };
 
 local firemode_secondary = 
@@ -78,13 +78,13 @@ local firemode_secondary =
 
 	burst = 0,
 	
-	sound = "flak-fire-alt",
+	sound = "Weapon::Classic::flak-fire-alt",
 };
 
 public func FireSound(object user, proplist firemode)
 {
 	Sound(firemode.sound);
-	Sound("flak-cock");
+	Sound("Weapon::Classic::flak-cock");
 }
 
 public func FireEffect(object user, int angle, proplist firemode)

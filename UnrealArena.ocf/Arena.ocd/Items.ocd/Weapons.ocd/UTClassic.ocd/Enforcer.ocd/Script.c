@@ -66,7 +66,7 @@ local firemode_secondary =
 
 public func FireSound(object user, proplist firemode)
 {
-	Sound("enforcer-fire");
+	Sound("Weapon::Classic::enforcer-fire");
 }
 
 public func OnFireProjectile(object user, object projectile, proplist firemode)
@@ -76,15 +76,6 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	// this does nothing at the moment, 
-	// probably because the animation is too small to be noticeable on the attached mesh :(
-	
-	//PlayAnimation("Fire", 1, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Remove), Anim_Const(1000));
-	//PlayAnimation("Fire", 6, Anim_Linear(0, 0, GetAnimationLength("Fire"), 10, ANIM_Hold), Anim_Const(1000));
-	//PlayAnimation("Fire", 6, Anim_Linear(0, 0, GetAnimationLength("Fire"), animation_set["ShootTime"], ANIM_Hold), Anim_Const(1000));
-
-	//SetAction("Fire");
-	
 	// muzzle flash
 	
 	var x = +Sin(angle, firemode.projectile_distance);
@@ -100,15 +91,3 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, user->GetXDir() + Sin(-angle, 10), user->GetYDir() - RandomX(12, 15));
 }
-
-local ActMap = {
-	Fire = {
-		Prototype = Action,
-		Name = "Fire",
-		Procedure = DFA_NONE,
-		Length = 10,
-		Delay = 1,
-		NextAction = "Idle",
-		Animation = "Fire",
-	},
-};

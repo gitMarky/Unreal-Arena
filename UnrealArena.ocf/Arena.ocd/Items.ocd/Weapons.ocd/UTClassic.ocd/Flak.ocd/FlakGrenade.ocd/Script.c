@@ -25,7 +25,7 @@ public func ContactBottom()
 public func Detonate()
 {
 
-	var firemode = weapon_ID.fire_modes.primary;
+	var firemode = weapon_ID.firemode_primary;
 	
 	// launch the single projectiles
 	for (var i = 0; i < firemode.projectile_number; i++)
