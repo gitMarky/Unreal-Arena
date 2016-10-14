@@ -24,4 +24,4 @@ Crew=Clonk=1
 
 [Landscape]
 Sky=Clouds1;Default
-MapZoom=2
+MapZoom=5
