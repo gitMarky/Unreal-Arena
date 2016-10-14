@@ -1,3 +1,0 @@
-Name=Sniper Bullets
-Description=*bang* *bang*
-

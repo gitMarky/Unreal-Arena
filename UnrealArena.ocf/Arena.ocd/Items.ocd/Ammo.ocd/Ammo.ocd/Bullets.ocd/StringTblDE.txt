@@ -1,3 +1,0 @@
-Name=Scharfschützen-Kugeln
-Description=*bähm* *bähm*
-
