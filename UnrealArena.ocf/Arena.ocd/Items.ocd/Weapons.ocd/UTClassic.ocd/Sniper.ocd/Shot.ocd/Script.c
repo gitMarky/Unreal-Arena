@@ -7,7 +7,7 @@ protected func Initialize()
 
 public func OnHitLandscape()
 {
-		Sound("BulletHitGround?");
+		// TODO: Sound("BulletHitGround?");
 		CreateImpactEffect(this.damage / 3);
 }
 

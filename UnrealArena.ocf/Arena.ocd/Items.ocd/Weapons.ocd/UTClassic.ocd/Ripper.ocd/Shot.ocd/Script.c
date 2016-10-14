@@ -58,7 +58,7 @@ public func ExplosionEffect(int level, int x, int y, int smoothness)
 
 private func Reflect()
 {
-	Sound("ripper-hit");
+	Sound("Weapon::Classic::ripper-hit");
 	CreateImpactEffect(5);
 	
 	if(reflections)

@@ -26,7 +26,7 @@ public func OnHitObject(object target)
 
 public func OnHitLandscape()
 {
-		Sound("shock-exp");
+		Sound("Weapon::Classic::shock-exp");
 		CreateImpactEffect(PROJECTILE_Impact_Size_EnergyRifle, 0, 0, "Magic", Particles_Plasma());
 }
 

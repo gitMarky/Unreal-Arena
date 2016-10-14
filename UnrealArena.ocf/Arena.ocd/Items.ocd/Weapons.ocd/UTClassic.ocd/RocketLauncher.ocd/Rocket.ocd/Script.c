@@ -40,7 +40,7 @@ public func ContactBottom()
 {
 	if(is_grenade)
 	{
-		Sound("rocket-grenade-floor");
+		Sound("Weapon::Classic::rocket-grenade-floor");
 		if (GBackSolid(5,0) || GBackSolid(-5,0)) SetXDir(GetXDir()/-2);
 		if (GBackSolid(0,5) || GBackSolid(0,-5)) SetYDir(GetYDir()/-2);
  	}

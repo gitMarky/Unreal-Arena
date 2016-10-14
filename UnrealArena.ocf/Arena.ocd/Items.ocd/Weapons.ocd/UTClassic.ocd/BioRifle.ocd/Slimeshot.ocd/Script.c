@@ -50,7 +50,7 @@ private func OnHitLandscape()
 {
 	if (!IsSticking())
 	{
-		Sound("bio-hit");
+		Sound("Weapon::Classic::bio-hit");
 		SetAction("Stick");
 		Wobble(SLIMEGLOB_Wobble_Strength, SLIMEGLOB_Wobble_Duration, SLIMEGLOB_Wobble_FallOff, SLIMEGLOB_Wobble_Speed);
 	}
