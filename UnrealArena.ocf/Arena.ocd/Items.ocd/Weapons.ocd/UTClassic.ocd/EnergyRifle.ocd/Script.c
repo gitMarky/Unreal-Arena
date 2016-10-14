@@ -78,7 +78,7 @@ local firemode_secondary =
 
 public func Initialize()
 {
-	_inherited();
+	_inherited(...);
 	
 	if (IsInstaGibConfigured())
 	{
@@ -104,7 +104,7 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 	}
 }
 
-public func ChangeFiremode(string firemode)
+public func ChangeFiremode(firemode)
 {
 	// InstaGib supports only the primary firemode
 	if (IsInstaGibConfigured())
