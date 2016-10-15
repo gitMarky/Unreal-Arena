@@ -21,7 +21,7 @@ local firemode_primary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 	
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Sniper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
 
@@ -50,7 +50,7 @@ local firemode_secondary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 	
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Sniper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
 
@@ -108,3 +108,6 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	CreateCartridgeEffect("Cartridge_Pistol", 3, x, y, - dir * Cos(angle - 35 * dir, RandomX(30, 45)), - dir * Sin(angle - 35 * dir, RandomX(30, 45)));
 }
+
+public func AmmoOnPickup(){ return [Ammo_Sniper, 8]; }
+

@@ -17,7 +17,7 @@ local firemode_primary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Plasma,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
 
@@ -46,7 +46,7 @@ local firemode_secondary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Plasma,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			8, // per this many shots fired
 
@@ -145,3 +145,5 @@ private func LaserStop()
 {
 	if (laser_beam) laser_beam->RemoveObject();
 }
+
+public func AmmoOnPickup(){ return [Ammo_Plasma, 60]; }

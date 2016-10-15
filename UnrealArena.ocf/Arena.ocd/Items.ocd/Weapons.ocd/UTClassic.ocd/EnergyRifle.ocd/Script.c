@@ -23,7 +23,7 @@ local firemode_primary	=
 	icon = 				nil,
 	condition = 		nil,
 
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Energy,
 	ammo_usage =		1,
 	ammo_rate =			1,
 
@@ -52,7 +52,7 @@ local firemode_secondary =
 	icon = 				nil,
 	condition = 		nil,
 	
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Energy,
 	ammo_usage =		1,
 	ammo_rate =			1,
 
@@ -116,3 +116,5 @@ public func ChangeFiremode(firemode)
 		_inherited(firemode);
 	}
 }
+
+public func AmmoOnPickup(){ return [Ammo_Energy, 20]; }

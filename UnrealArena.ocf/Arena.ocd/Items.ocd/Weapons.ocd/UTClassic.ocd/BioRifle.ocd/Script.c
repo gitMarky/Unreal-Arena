@@ -21,7 +21,7 @@ local firemode_primary	=
 	icon = 				nil,
 	condition = 		nil,
 	
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Bio,
 	ammo_usage =		1,
 	ammo_rate =			1,
 
@@ -49,7 +49,7 @@ local firemode_secondary =
 	icon = 				nil,
 	condition = 		nil,
 
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Bio,
 	ammo_usage =		1,
 	ammo_rate =			1,
 
@@ -129,3 +129,5 @@ private func Fire(object user, int x, int y)
 		_inherited(user, x, y);
 	}
 }
+
+public func AmmoOnPickup(){ return [Ammo_Bio, 25]; }

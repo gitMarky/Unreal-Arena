@@ -91,3 +91,6 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	CreateCartridgeEffect("Cartridge_Pistol", 2, x, y, user->GetXDir() + Sin(-angle, 10), user->GetYDir() - RandomX(12, 15));
 }
+
+public func AmmoOnPickup(){ return [Ammo_Pistol, 30]; }
+

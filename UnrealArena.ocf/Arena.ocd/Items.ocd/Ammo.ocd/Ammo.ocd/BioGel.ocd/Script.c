@@ -1,3 +1,3 @@
 
 public func IsAmmo()  { return true; }
-public func MaxAmmo() { return 199; }
+public func MaxAmmo() { return 100; }

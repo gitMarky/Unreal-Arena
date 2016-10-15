@@ -20,7 +20,7 @@ local firemode_primary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 	
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Ripper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
 
@@ -51,7 +51,7 @@ local firemode_secondary =
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
 	
-	ammo_id = 			Ammo_Pistol,
+	ammo_id = 			Ammo_Ripper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
 
@@ -109,3 +109,5 @@ public func FireEffect(object user, int angle, proplist firemode)
 {
 	//
 }
+
+public func AmmoOnPickup(){ return [Ammo_Ripper, 15]; }
