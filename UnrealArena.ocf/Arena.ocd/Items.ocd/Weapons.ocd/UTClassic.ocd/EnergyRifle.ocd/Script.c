@@ -8,7 +8,7 @@ static const PROJECTILE_Color_EnergyRifle = -11534081; // RGB(80, 0, 255);
 
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(-60, -1, 0, 0), Trans_Translate(1000, 0, 0));
+	return Trans_Mul(Trans_Rotate(-60, -1, 0, 0), Trans_Translate(1000, -2000, 0), Trans_Rotate(90, 0, 0, 1));
 }
 
 local animation_set = {

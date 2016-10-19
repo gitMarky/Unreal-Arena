@@ -5,7 +5,7 @@ local Description = "$Description$";
 
 public func GetCarryTransform()
 {
-	return Trans_Rotate(120, -1, 0, 0);
+	return Trans_Mul(Trans_Rotate(240, 1, 0, 0), Trans_Rotate(90, 0, 0, 1));
 }
 
 local animation_set = {
