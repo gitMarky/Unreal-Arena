@@ -5,7 +5,7 @@ local Collectible = true;
 
 local firemode_primary, firemode_secondary;
 
-public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; }
+public func GetCarryMode(object user) {    if (is_selected) return CARRY_Hand; return CARRY_None; }
 public func GetCarrySpecial(object user) { if (is_selected) return "pos_hand2"; }
 public func GetCarryBone() { return "Base"; }
 
