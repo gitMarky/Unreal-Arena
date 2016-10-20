@@ -8,6 +8,7 @@ MinPlayer=1
 Definition1=Objects.ocd
 Definition2=LibraryArenaGames.ocd
 Definition3=LibraryShooter.ocd
+Definition4=LibraryCharacter.ocd
 
 [Player1]
 Crew=Clonk=1
