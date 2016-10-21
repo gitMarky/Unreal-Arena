@@ -11,16 +11,16 @@ Definition3=LibraryShooter.ocd
 Definition4=LibraryCharacter.ocd
 
 [Player1]
-Crew=Clonk=1
+Crew=UA_Clonk=1
 
 [Player2]
-Crew=Clonk=1
+Crew=UA_Clonk=1
 
 [Player3]
-Crew=Clonk=1
+Crew=UA_Clonk=1
 
 [Player4]
-Crew=Clonk=1
+Crew=UA_Clonk=1
 
 
 [Landscape]
