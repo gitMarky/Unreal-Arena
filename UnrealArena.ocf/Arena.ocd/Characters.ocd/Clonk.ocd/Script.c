@@ -63,7 +63,12 @@ func DoSplatter(proplist skin)
 	var corpse = CreateObject(UA_Clonk_Corpse, 0, 0, NO_OWNER);
 	corpse->AddAppearance(0, skin);
 	corpse->SetSpeed(RandomX(-1, 1) * 30, RandomX(-20, -60));
-	corpse->StartDead();
+	corpse->SetRDir(corpse->GetXDir()/3 -1);
+	corpse->SetAction(GetAction());
+	corpse->SetDir(GetDir());
+	corpse->SetPhase(GetPhase());
+	corpse.MeshTransformation = this.MeshTransformation;
+	ScheduleCall(corpse, corpse.StartSplatter, 10);
 //	corpse.Visibility = VIS_All;
 }
 
