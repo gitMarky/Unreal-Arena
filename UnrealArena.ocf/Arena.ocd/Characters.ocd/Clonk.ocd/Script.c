@@ -23,15 +23,27 @@ func SetSkin(int new_skin)
 	SetAction("Jump");
 	SetAction(prev_action);
 	SetOwner(GetOwner()); // somehow the color did not get updated after setting the color
+	
+	var skins = GetSkinTextures();
 
 	// TODO: use the actual skin data instead of predefined strings
-	AddAppearance(0, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_MatchSkeleton, MeshMaterial = ["m_soldier_guard_body", "m_soldier_guard_arms"]});
-	AddAppearance(1, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_MatchSkeleton, MeshMaterial = ["gore_torso", "m_soldier_guard_legs", "m_soldier_guard_arms"]});
-	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_MatchSkeleton, MeshMaterial = ["m_soldier_guard_body", "m_soldier_guard_arms", "m_soldier_guard_head"]});
-	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_MatchSkeleton, MeshMaterial = ["m_soldier_guard_body", "m_soldier_guard_arms", "m_soldier_guard_head"]});
-	AddAppearance(4, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_MatchSkeleton, MeshMaterial = "m_soldier_guard_head"});
+	AddAppearance(0, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms]});
+	AddAppearance(1, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_MatchSkeleton, MeshMaterial = ["gore_torso", skins.legs, skins.arms]});
+	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_MatchSkeleton, MeshMaterial = [skinds.body, skins.arms, skins.head]});
+	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_MatchSkeleton, MeshMaterial = [skinds.body, skins.arms, skins.head]});
+	AddAppearance(4, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_MatchSkeleton, MeshMaterial = [skins.head]});
 
 	return skin;
+}
+
+func GetSkinTextures()
+{
+	var prefix = "_guard";
+	return {body = Format("m_soldier%s_body", prefix),
+            legs = Format("m_soldier%s_legs", prefix),
+            arms = Format("m_soldier%s_arms", prefix),
+            head = Format("m_soldier%s_head", prefix),
+           };
 }
 
 func Splatter()
@@ -53,3 +65,4 @@ func DoSplatter(proplist skin)
 	corpse->StartDead();
 //	corpse.Visibility = VIS_All;
 }
+
