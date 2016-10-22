@@ -16,7 +16,7 @@ material m_soldier_body
 
             texture_unit 
             {
-                texture skin_m_soldier_body.jpg
+                texture m_soldier_body.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
@@ -43,7 +43,7 @@ material m_soldier_arms
 
             texture_unit 
             {
-                texture skin_m_soldier_arms.jpg
+                texture m_soldier_arms.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
@@ -70,7 +70,7 @@ material m_soldier_legs
 
             texture_unit 
             {
-                texture skin_m_soldier_legs.jpg
+                texture m_soldier_legs.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
@@ -97,7 +97,7 @@ material m_soldier_head
 
             texture_unit 
             {
-                texture skin_m_soldier_face.jpg
+                texture m_soldier_head.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
