@@ -1,4 +1,4 @@
-material m_soldier_body 
+material m_soldier_guard_body 
 {
     receive_shadows on 
 
@@ -16,7 +16,7 @@ material m_soldier_body
 
             texture_unit 
             {
-                texture m_soldier_none_body.jpg
+                texture m_soldier_guard_body.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
@@ -25,7 +25,7 @@ material m_soldier_body
     }
 }
 
-material m_soldier_arms 
+material m_soldier_guard_arms 
 {
     receive_shadows on 
 
@@ -43,7 +43,7 @@ material m_soldier_arms
 
             texture_unit 
             {
-                texture m_soldier_none_arms.jpg
+                texture m_soldier_guard_arms.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
@@ -52,7 +52,7 @@ material m_soldier_arms
     }
 }
 
-material m_soldier_legs 
+material m_soldier_guard_legs 
 {
     receive_shadows on 
 
@@ -70,7 +70,7 @@ material m_soldier_legs
 
             texture_unit 
             {
-                texture m_soldier_none_legs.jpg
+                texture m_soldier_guard_legs.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
@@ -79,7 +79,7 @@ material m_soldier_legs
     }
 }
 
-material m_soldier_head 
+material m_soldier_guard_head 
 {
     receive_shadows on 
 
@@ -97,34 +97,7 @@ material m_soldier_head
 
             texture_unit 
             {
-                texture m_soldier_none_head.jpg
-                tex_address_mode wrap
-                scale 1.0 1.0
-                colour_op modulate
-            }
-        }
-    }
-}
-
-material gore_torso
-{
-    receive_shadows on 
-
-    technique
-    {
-        pass material
-        {
-		    cull_hardware none
-            scene_blend alpha_blend
-		
-            ambient 1.0 1.0 1.0 1.0
-            diffuse 1.0 1.0 1.0 1.0
-            specular 0.5 0.5 0.5 1.0 12.5
-            emissive 0.0 0.0 0.0 1.0
-
-            texture_unit 
-            {
-                texture gore_torso.jpg
+                texture m_soldier_guard_head.jpg
                 tex_address_mode wrap
                 scale 1.0 1.0
                 colour_op modulate
