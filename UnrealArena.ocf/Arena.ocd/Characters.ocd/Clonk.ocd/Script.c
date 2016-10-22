@@ -10,10 +10,10 @@ func SetSkin(int new_skin)
 	skin = new_skin;
 	
 	// determine skin data
-	if (skin == 0 || skin == 1)	skin_name = "Commander";
-	if (skin == 2 || skin == 3)	skin_name = "Soldier";
-	if (skin == 0 || skin == 2)	skin_gender = "M";
-	if (skin == 1 || skin == 3)	skin_gender = "F";
+	if (skin == 0 || skin == 1)	skin_name = "commander";
+	if (skin == 2 || skin == 3)	skin_name = "soldier";
+	if (skin == 0 || skin == 2)	skin_gender = "m";
+	if (skin == 1 || skin == 3)	skin_gender = "f";
 	
 	RemoveBackpack(); // remove the backpack
 
@@ -38,11 +38,12 @@ func SetSkin(int new_skin)
 
 func GetSkinTextures()
 {
-	var prefix = "_guard";
-	return {body = Format("m_soldier%s_body", prefix),
-            legs = Format("m_soldier%s_legs", prefix),
-            arms = Format("m_soldier%s_arms", prefix),
-            head = Format("m_soldier%s_head", prefix),
+	var skin = "_guard";
+	var prefix = Format("%s_%s%s", skin_gender, skin_name, skin);
+	return {body = Format("%s_body", prefix),
+            legs = Format("%s_legs", prefix),
+            arms = Format("%s_arms", prefix),
+            head = Format("%s_head", prefix),
            };
 }
 
