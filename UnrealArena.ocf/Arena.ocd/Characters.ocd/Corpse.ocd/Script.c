@@ -24,6 +24,65 @@ func StartSplatter()
 	SetTurnType(1);
 }
 
+func VertexSetupLegs()
+{
+	var permanent = 2;
+	SetVertex(1, VTX_Y, 2, permanent);
+	SetVertex(3, VTX_Y, 2, permanent);
+	SetVertex(4, VTX_Y, 2, permanent);
+	SetVertex(5, VTX_X,-2, permanent);
+	SetVertex(6, VTX_X, 2, permanent);
+	SetVertex(5, VTX_Y, 4, permanent);
+	SetVertex(6, VTX_Y, 4, permanent);
+}
+
+func VertexSetupBody()
+{
+	var permanent = 2;
+	SetVertex(1, VTX_Y, -4, permanent);
+	SetVertex(2, VTX_Y, 2, permanent);
+	SetVertex(5, VTX_X, 0, permanent);
+	SetVertex(6, VTX_X, 0, permanent);
+	SetVertex(7, VTX_Y, 0, permanent);
+	SetVertex(8, VTX_Y, 0, permanent);
+}
+
+func VertexSetupHead()
+{
+	var permanent = 2;
+	SetVertex(1, VTX_Y, -9, permanent);
+	SetVertex(0, VTX_Y, -8, permanent);
+	SetVertex(2, VTX_Y, -7, permanent);
+
+	SetVertex(3, VTX_Y, -8, permanent);
+	SetVertex(4, VTX_Y, -8, permanent);
+	SetVertex(5, VTX_Y, -8, permanent);
+	SetVertex(6, VTX_Y, -8, permanent);
+	SetVertex(7, VTX_Y, -8, permanent);
+	SetVertex(8, VTX_Y, -8, permanent);
+
+	SetVertex(5, VTX_X, -2, permanent);
+	SetVertex(6, VTX_X, +2, permanent);
+}
+
+func VertexSetupArmL()
+{
+	var permanent = 2;
+	SetVertex(2, VTX_Y, 2, permanent);
+	SetVertex(7, VTX_Y, 0, permanent);
+	SetVertex(8, VTX_Y, 0, permanent);
+}
+
+func VertexSetupArmR()
+{
+	var permanent = 2;
+	SetVertex(2, VTX_Y, 2, permanent);
+	SetVertex(7, VTX_Y, 0, permanent);
+	SetVertex(8, VTX_Y, 0, permanent);
+}
+
+
+
 // override functions that are expected by clonk animations
 
 func IsWalking(){ return false;}

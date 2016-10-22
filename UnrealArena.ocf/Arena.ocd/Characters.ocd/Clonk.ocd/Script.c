@@ -49,11 +49,11 @@ func GetSkinTextures()
 
 func Splatter()
 {
-	DoSplatter(RemoveAppearance(0));
-	DoSplatter(RemoveAppearance(1));
-	DoSplatter(RemoveAppearance(2));
-	DoSplatter(RemoveAppearance(3));
-	DoSplatter(RemoveAppearance(4));
+	DoSplatter(RemoveAppearance(0))->VertexSetupBody();
+	DoSplatter(RemoveAppearance(1))->VertexSetupLegs();
+	DoSplatter(RemoveAppearance(2))->VertexSetupArmL();
+	DoSplatter(RemoveAppearance(3))->VertexSetupArmR();
+	DoSplatter(RemoveAppearance(4))->VertexSetupHead();
 }
 
 
@@ -70,5 +70,6 @@ func DoSplatter(proplist skin)
 	corpse.MeshTransformation = this.MeshTransformation;
 	ScheduleCall(corpse, corpse.StartSplatter, 10);
 //	corpse.Visibility = VIS_All;
+	return corpse;
 }
 
