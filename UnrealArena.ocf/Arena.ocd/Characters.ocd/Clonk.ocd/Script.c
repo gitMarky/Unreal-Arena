@@ -10,7 +10,7 @@ func SetSkin(int new_skin)
 	skin = new_skin;
 	
 	// determine skin data
-	if (skin == 0 || skin == 1)	skin_name = "commander";
+	if (skin == 0 || skin == 1)	skin_name = "soldier"; //"commander";
 	if (skin == 2 || skin == 3)	skin_name = "soldier";
 	if (skin == 0 || skin == 2)	skin_gender = "m";
 	if (skin == 1 || skin == 3)	skin_gender = "f";
@@ -29,8 +29,8 @@ func SetSkin(int new_skin)
 	// TODO: use the actual skin data instead of predefined strings
 	AddAppearance(0, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms]});
 	AddAppearance(1, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_MatchSkeleton, MeshMaterial = ["gore_torso", skins.legs, skins.arms]});
-	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_MatchSkeleton, MeshMaterial = [skinds.body, skins.arms, skins.head]});
-	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_MatchSkeleton, MeshMaterial = [skinds.body, skins.arms, skins.head]});
+	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
+	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
 	AddAppearance(4, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_MatchSkeleton, MeshMaterial = [skins.head]});
 
 	return skin;
@@ -38,8 +38,8 @@ func SetSkin(int new_skin)
 
 func GetSkinTextures()
 {
-	var skin = "_guard";
-	var prefix = Format("%s_%s%s", skin_gender, skin_name, skin);
+	var skin_suffix = "_marine";
+	var prefix = Format("%s_%s%s", skin_gender, skin_name, skin_suffix);
 	return {body = Format("%s_body", prefix),
             legs = Format("%s_legs", prefix),
             arms = Format("%s_arms", prefix),

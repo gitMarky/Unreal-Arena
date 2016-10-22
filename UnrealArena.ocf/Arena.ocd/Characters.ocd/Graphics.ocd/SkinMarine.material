@@ -1,0 +1,107 @@
+material m_soldier_marine_body 
+{
+    receive_shadows on 
+
+    technique
+    {
+        pass material
+        {
+		    cull_hardware none
+            scene_blend alpha_blend
+		
+            ambient 1.0 1.0 1.0 1.0
+            diffuse 1.0 1.0 1.0 1.0
+            specular 0.5 0.5 0.5 1.0 12.5
+            emissive 0.0 0.0 0.0 1.0
+
+            texture_unit 
+            {
+                texture m_soldier_marine_body.jpg
+                tex_address_mode wrap
+                scale 1.0 1.0
+                colour_op modulate
+            }
+        }
+    }
+}
+
+material m_soldier_marine_arms 
+{
+    receive_shadows on 
+
+    technique
+    {
+        pass material
+        {
+		    cull_hardware none
+            scene_blend alpha_blend
+		
+            ambient 1.0 1.0 1.0 1.0
+            diffuse 1.0 1.0 1.0 1.0
+            specular 0.5 0.5 0.5 1.0 12.5
+            emissive 0.0 0.0 0.0 1.0
+
+            texture_unit 
+            {
+                texture m_soldier_marine_arms.jpg
+                tex_address_mode wrap
+                scale 1.0 1.0
+                colour_op modulate
+            }
+        }
+    }
+}
+
+material m_soldier_marine_legs 
+{
+    receive_shadows on 
+
+    technique
+    {
+        pass material
+        {
+		    cull_hardware none
+            scene_blend alpha_blend
+		
+            ambient 1.0 1.0 1.0 1.0
+            diffuse 1.0 1.0 1.0 1.0
+            specular 0.5 0.5 0.5 1.0 12.5
+            emissive 0.0 0.0 0.0 1.0
+
+            texture_unit 
+            {
+                texture m_soldier_marine_legs.jpg
+                tex_address_mode wrap
+                scale 1.0 1.0
+                colour_op modulate
+            }
+        }
+    }
+}
+
+material m_soldier_marine_head 
+{
+    receive_shadows on 
+
+    technique
+    {
+        pass material
+        {
+		    cull_hardware none
+            scene_blend alpha_blend
+		
+            ambient 1.0 1.0 1.0 1.0
+            diffuse 1.0 1.0 1.0 1.0
+            specular 0.5 0.5 0.5 1.0 12.5
+            emissive 0.0 0.0 0.0 1.0
+
+            texture_unit 
+            {
+                texture m_soldier_marine_head.jpg
+                tex_address_mode wrap
+                scale 1.0 1.0
+                colour_op modulate
+            }
+        }
+    }
+}
