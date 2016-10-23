@@ -112,7 +112,7 @@ public func FireEffect(object user, int angle, proplist firemode)
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
-	EffectMuzzleFlash(user, x, y, angle, RandomX(15, 18), false, true, -1, "MuzzleFlash2");
+	EffectMuzzleFlash(user, x, y, angle, RandomX(15, 18) * 3, false, true, -1, "MuzzleFlash2");
 		
 	// casing
 	

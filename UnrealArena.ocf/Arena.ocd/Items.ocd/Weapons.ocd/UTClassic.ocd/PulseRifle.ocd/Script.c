@@ -121,7 +121,7 @@ public func FireEffect(object user, int angle, proplist firemode)
 
 	if (firemode.name == WEAPON_Firemode_Primary)
 	{
-		EffectMuzzleFlash(user, x, y, angle, RandomX(12, 16), false, true, RGB(0,255,0));
+		EffectMuzzleFlash(user, x, y, angle, RandomX(12, 16) * 3, false, true, RGB(0,255,0));
 	}
 	else
 	{

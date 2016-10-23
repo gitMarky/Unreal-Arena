@@ -95,7 +95,7 @@ public func FireEffect(object user, int angle, proplist firemode)
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 	 
 	
-	EffectMuzzleFlash(user, x, y, angle, RandomX(10, 20), false, true);		
+	EffectMuzzleFlash(user, x, y, angle, RandomX(10, 20) * 3, false, true);		
 }
 
 public func AmmoOnPickup(){ return [Ammo_Flak, 10]; }
