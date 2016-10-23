@@ -40,8 +40,8 @@ func StartSplatter()
 
 func OverlayDeathAnimation(int slot, string animation1, string animation2)
 {
-	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 20, ANIM_Hold), Anim_Linear(0, 0, 1000, 5, ANIM_Remove));
-	PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 40, ANIM_Hold), Anim_Linear(0, 0, 1000, 15, ANIM_Remove));
+	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 40, ANIM_Hold), Anim_Linear(0, 0, 1000, 20, ANIM_Remove));
+	PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 80, ANIM_Hold), Anim_Linear(0, 0, 1000, 40, ANIM_Remove));
 }
 
 func CopyAnimationPositionFrom(object target)
@@ -112,13 +112,13 @@ func VertexSetupHead()
 
 func VertexSetupArmL()
 {
-	var position = +4 * GetXDirection();
+	var position = +1 * GetXDirection();
 	VertexSetupArm(position);
 }
 
 func VertexSetupArmR()
 {
-	var position = -4 * GetXDirection();
+	var position = -1 * GetXDirection();
 	VertexSetupArm(position);
 }
 
@@ -128,12 +128,15 @@ func VertexSetupArm(int position)
 
 	for (var i = 0; i < 9; ++i) SetVertex(i, VTX_X, position, permanent);
 
-	SetVertex(0, VTX_Y, -3, permanent);
-	SetVertex(2, VTX_Y, 0, permanent);
-	SetVertex(5, VTX_Y, -4, permanent);
-	SetVertex(6, VTX_Y, -1, permanent);
-	SetVertex(7, VTX_Y, -5, permanent);
-	SetVertex(8, VTX_Y, -6, permanent);
+	SetVertex(0, VTX_Y,  0, permanent);
+	SetVertex(1, VTX_Y, -3, permanent);
+	SetVertex(2, VTX_Y, +3, permanent);
+	SetVertex(3, VTX_Y, -2, permanent);
+	SetVertex(4, VTX_Y, +2, permanent);
+	SetVertex(5, VTX_Y, -1, permanent);
+	SetVertex(6, VTX_Y, +1, permanent);
+	SetVertex(7, VTX_Y, -1, permanent);
+	SetVertex(8, VTX_Y, +1, permanent);
 	
 	ApplyOffset(0, -5000);
 }

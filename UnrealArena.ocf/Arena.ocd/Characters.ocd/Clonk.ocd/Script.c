@@ -61,6 +61,7 @@ func DoSplatter(proplist skin)
 {
 	if (!skin) return;
 	var corpse = CreateObject(UA_Clonk_Corpse, 0, 0, NO_OWNER);
+	corpse.MeshTransformation = this.MeshTransformation;
 	corpse->AddAppearance(0, skin);
 	corpse->SetSpeed(RandomX(-1, 1) * 30, RandomX(-20, -60));
 	corpse->SetRDir((-1 + 2 * Random(2)) * RandomX(5, 15));
@@ -68,8 +69,8 @@ func DoSplatter(proplist skin)
 	corpse->SetDir(GetDir());
 	corpse->SetPhase(GetPhase());
 	corpse->CopyAnimationPositionFrom(this);
-	corpse.MeshTransformation = this.MeshTransformation;
-	ScheduleCall(corpse, corpse.StartSplatter, 15);
+	corpse->StartSplatter();
+	//ScheduleCall(corpse, corpse.StartSplatter, 1);
 	return corpse;
 }
 
