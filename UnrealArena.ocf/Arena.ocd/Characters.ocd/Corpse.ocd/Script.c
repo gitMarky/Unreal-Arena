@@ -143,9 +143,6 @@ func VertexSetupArm(int position)
 
 func ApplyOffset(int x, int y)
 {
-	//SetObjDrawTransform(1000, 0, x, 0, 1000, 10000 + y);
-	//MovePosition((-1) * x, (-1) * y - 4000, 1000);
-	//MovePosition(0, 7000, 1000);
 }
 
 // override functions that are expected by clonk animations
@@ -191,11 +188,6 @@ func BouncePhysics()
 	SetRDir(-2 * GetRDir());
 
 //	if(dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
-
-	//if (GBackSolid(5,0) || GBackSolid(-5,0)) SetXDir(GetXDir()/-2);
-	//if (GBackSolid(0,5) || GBackSolid(0,-5)) SetYDir(GetYDir()/-2);
-	//if (GBackSolid(10,0) || GBackSolid(-10,0)) SetXDir(GetXDir()/-2);
-	//if (GBackSolid(0,10) || GBackSolid(0,-10)) SetYDir(GetYDir()/-2);
 
 	return true;
 }

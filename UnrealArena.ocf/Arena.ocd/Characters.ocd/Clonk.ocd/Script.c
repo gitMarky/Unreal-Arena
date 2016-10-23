@@ -70,7 +70,7 @@ func DoSplatter(proplist skin)
 	corpse->SetPhase(GetPhase());
 	corpse->CopyAnimationPositionFrom(this);
 	corpse->StartSplatter();
-	//ScheduleCall(corpse, corpse.StartSplatter, 1);
+	//ScheduleCall(corpse, corpse.StartSplatter, 10);
 	return corpse;
 }
 
