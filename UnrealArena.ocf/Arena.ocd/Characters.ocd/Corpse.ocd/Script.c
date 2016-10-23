@@ -140,8 +140,9 @@ func VertexSetupArm(int position)
 
 func ApplyOffset(int x, int y)
 {
-	SetObjDrawTransform(1000, 0, x, 0, 1000, 10000 + y);
-	MovePosition((-1) * x, (-1) * y - 4000, 1000);
+	//SetObjDrawTransform(1000, 0, x, 0, 1000, 10000 + y);
+	//MovePosition((-1) * x, (-1) * y - 4000, 1000);
+	//MovePosition(0, 7000, 1000);
 }
 
 // override functions that are expected by clonk animations
