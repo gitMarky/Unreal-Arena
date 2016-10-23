@@ -4,7 +4,6 @@
 func Initialize()
 {
 	_inherited(...);
-	//this.ActMap = new Clonk.ActMap{};
 	SetAction("Be");
 }
 
@@ -16,7 +15,7 @@ func StartSplatter()
 	
 	var death = false;
 	
-	// Copy all animations except for the death slot from the target
+	// Overlay death animations except for the death slot
 	for (var slot = 0; slot < CLONK_ANIM_SLOT_Death; ++slot)
 	{
 		var number = GetRootAnimation(slot); 
@@ -62,6 +61,29 @@ func CopyAnimationPositionFrom(object target)
 		PlayAnimation(name, slot, Anim_Linear(position, 0, GetAnimationLength(name), range, ANIM_Hold), Anim_Linear(0, 1000, range, ANIM_Remove));
 	}
 }
+
+func Flinch(int duration)
+{
+	var stand = "Stand";
+	var duration = 20;
+	PlayAnimation(stand, CLONK_ANIM_SLOT_Movement, Anim_Linear(0, 0, GetAnimationLength(stand), duration ?? 2, ANIM_Remove));
+}
+
+local ActMap = {
+Be = {
+	Prototype = Action,
+	Name = "Be",
+	Procedure = DFA_NONE,
+	Directions = 2,
+	FlipDir = 0,
+	Length = 1,
+	Delay = 0,
+	X = 0,
+	Y = 0,
+	Wdt = 8,
+	Hgt = 20,
+},
+};
 
 // vertex configurations
 
@@ -147,16 +169,17 @@ func ApplyOffset(int x, int y)
 {
 }
 
+func GetXDirection()
+{
+	return -1 + 2 * GetDir();
+}
+
 // override functions that are expected by clonk animations
 
 func IsWalking(){ return false;}
 func StartSearchLadder(){}
 func PlaySoundIdle(){}
 
-func GetXDirection()
-{
-	return -1 + 2 * GetDir();
-}
 
 // contact and physics
 
@@ -204,26 +227,3 @@ protected func Hit(int dx, int dy)
 	Flinch();
 	BouncePhysics();
 }
-
-func Flinch(int duration)
-{
-	var stand = "Stand";
-	var duration = 20;
-	PlayAnimation(stand, CLONK_ANIM_SLOT_Movement, Anim_Linear(0, 0, GetAnimationLength(stand), duration ?? 2, ANIM_Remove));
-}
-
-local ActMap = {
-Be = {
-	Prototype = Action,
-	Name = "Be",
-	Procedure = DFA_NONE,
-	Directions = 2,
-	FlipDir = 0,
-	Length = 1,
-	Delay = 0,
-	X = 0,
-	Y = 0,
-	Wdt = 8,
-	Hgt = 20,
-},
-};
