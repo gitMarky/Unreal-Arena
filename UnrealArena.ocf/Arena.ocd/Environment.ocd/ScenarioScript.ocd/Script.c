@@ -9,6 +9,8 @@ local Description = "$Description$";
 
 func Initialize()
 {
+	_inherited(...);
+
 	CreateObject(Environment_RoundManager);
 	CreateObject(Environment_ConfigurationUA);
 }
@@ -67,7 +69,7 @@ private func SpawnPlayerCrew(int player)
 
 	if (crew == nil)
 	{
-		crew = CreateObject(Clonk, 0, 0, player);
+		crew = CreateObject(UA_Clonk, 0, 0, player);
 		crew->MakeCrewMember(player);
 	}
 

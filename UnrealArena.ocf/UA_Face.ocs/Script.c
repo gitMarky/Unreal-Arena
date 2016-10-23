@@ -1,3 +1,4 @@
+#include Environment_ScenarioScript
 
 static const SPAWN_Ammo_BaseFront = "b";
 static const SPAWN_Ammo_BaseBack = "d";
@@ -17,7 +18,8 @@ static const SPAWN_Superweapon = "n";
 protected func Initialize()
 {
 	CreateSpawnPoints();
-	CreateObject(Environment_ScenarioScript);
+	
+	_inherited(...);
 }
 
 // Gamecall from LastManStanding goal, on respawning.
