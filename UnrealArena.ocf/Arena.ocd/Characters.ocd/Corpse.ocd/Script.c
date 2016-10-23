@@ -73,7 +73,8 @@ func VertexSetupLegs()
 	SetVertex(6, VTX_X, 2, permanent);
 	SetVertex(5, VTX_Y, 4, permanent);
 	SetVertex(6, VTX_Y, 4, permanent);
-	//SetShape(-4, 0, 8, 10);
+	
+	ApplyOffset(0, -8000);
 }
 
 func VertexSetupBody()
@@ -85,7 +86,8 @@ func VertexSetupBody()
 	SetVertex(6, VTX_X, 0, permanent);
 	SetVertex(7, VTX_Y, 0, permanent);
 	SetVertex(8, VTX_Y, 0, permanent);
-	//SetShape(-4, -5, 8, 10);
+	
+	ApplyOffset(0, -3000);
 }
 
 func VertexSetupHead()
@@ -104,6 +106,8 @@ func VertexSetupHead()
 
 	SetVertex(5, VTX_X, -2, permanent);
 	SetVertex(6, VTX_X, +2, permanent);
+	
+	ApplyOffset(0, 3000);
 }
 
 func VertexSetupArmL()
@@ -130,9 +134,15 @@ func VertexSetupArm(int position)
 	SetVertex(6, VTX_Y, -1, permanent);
 	SetVertex(7, VTX_Y, -5, permanent);
 	SetVertex(8, VTX_Y, -6, permanent);
+	
+	ApplyOffset(0, -5000);
 }
 
-
+func ApplyOffset(int x, int y)
+{
+	SetObjDrawTransform(1000, 0, x, 0, 1000, 10000 + y);
+	MovePosition((-1) * x, (-1) * y - 4000, 1000);
+}
 
 // override functions that are expected by clonk animations
 
@@ -190,8 +200,6 @@ protected func Hit(int dx, int dy)
 {
 	if (dy > 1)
 	{
-		SetYDir(dy * 3 / -4, 100);
+		SetYDir(dy / -4, 100);
 	}
 }
-
-
