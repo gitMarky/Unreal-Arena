@@ -65,12 +65,10 @@ func DoSplatter(proplist skin)
 	corpse->AddAppearance(0, skin);
 	corpse->SetSpeed(RandomX(-1, 1) * 30, RandomX(-20, -60));
 	corpse->SetRDir((-1 + 2 * Random(2)) * RandomX(5, 15));
-	corpse->SetAction(GetAction());
 	corpse->SetDir(GetDir());
 	corpse->SetPhase(GetPhase());
 	corpse->CopyAnimationPositionFrom(this);
 	corpse->StartSplatter();
-	//ScheduleCall(corpse, corpse.StartSplatter, 10);
 	return corpse;
 }
 

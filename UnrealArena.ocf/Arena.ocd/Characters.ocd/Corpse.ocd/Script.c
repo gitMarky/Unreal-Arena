@@ -4,7 +4,8 @@
 func Initialize()
 {
 	_inherited(...);
-	this.ActMap = new Clonk.ActMap{};
+	//this.ActMap = new Clonk.ActMap{};
+	SetAction("Be");
 }
 
 func StartSplatter()
@@ -25,9 +26,9 @@ func StartSplatter()
 		OverlayDeathAnimation(slot, name, stand);
 	}
 	
-	if (!death)
+	if (!death) // add the animation on the lowest slot, so that blending is not disturbed
 	{
-		OverlayDeathAnimation(CLONK_ANIM_SLOT_Death, name, stand);
+		OverlayDeathAnimation(CLONK_ANIM_SLOT_Movement, name, stand);
 	}
 	
 	// Update carried items
@@ -40,8 +41,8 @@ func StartSplatter()
 
 func OverlayDeathAnimation(int slot, string animation1, string animation2)
 {
-	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 40, ANIM_Hold), Anim_Linear(0, 0, 1000, 20, ANIM_Remove));
-	PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 80, ANIM_Hold), Anim_Linear(0, 0, 1000, 40, ANIM_Remove));
+	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 40, ANIM_Hold), Anim_Const(300));
+	PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 80, ANIM_Hold), Anim_Const(300));
 }
 
 func CopyAnimationPositionFrom(object target)
@@ -57,7 +58,8 @@ func CopyAnimationPositionFrom(object target)
 		
 		var position = target->GetAnimationPosition(number);
 		
-		PlayAnimation(name, slot, Anim_Linear(position, 0, GetAnimationLength(name), 30, ANIM_Remove));
+		var range = 30;
+		PlayAnimation(name, slot, Anim_Linear(position, 0, GetAnimationLength(name), range, ANIM_Hold), Anim_Linear(0, 1000, range, ANIM_Remove));
 	}
 }
 
@@ -185,7 +187,7 @@ func BouncePhysics()
 	//if(!dismembered) return(0);
 	if (!GetXDir() && !GetYDir()) return;
 
-	SetRDir(-2 * GetRDir());
+	SetRDir(-(3 * GetRDir()) / 2);
 
 //	if(dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
 
@@ -198,4 +200,30 @@ protected func Hit(int dx, int dy)
 	{
 		SetYDir(dy / -4, 100);
 	}
+	
+	Flinch();
+	BouncePhysics();
 }
+
+func Flinch(int duration)
+{
+	var stand = "Stand";
+	var duration = 20;
+	PlayAnimation(stand, CLONK_ANIM_SLOT_Movement, Anim_Linear(0, 0, GetAnimationLength(stand), duration ?? 2, ANIM_Remove));
+}
+
+local ActMap = {
+Be = {
+	Prototype = Action,
+	Name = "Be",
+	Procedure = DFA_NONE,
+	Directions = 2,
+	FlipDir = 0,
+	Length = 1,
+	Delay = 0,
+	X = 0,
+	Y = 0,
+	Wdt = 8,
+	Hgt = 20,
+},
+};
