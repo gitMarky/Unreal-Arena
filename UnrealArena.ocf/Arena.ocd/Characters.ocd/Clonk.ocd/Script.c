@@ -27,11 +27,11 @@ func SetSkin(int new_skin)
 	var skins = GetSkinTextures();
 
 	// TODO: use the actual skin data instead of predefined strings
-	AddAppearance(0, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms]});
-	AddAppearance(1, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_MatchSkeleton, MeshMaterial = ["gore_torso", skins.legs, skins.arms]});
-	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
-	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
-	AddAppearance(4, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_MatchSkeleton, MeshMaterial = [skins.head]});
+	AddAppearance(0, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms]});
+	AddAppearance(1, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = ["gore_torso", skins.legs, skins.arms]});
+	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
+	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
+	AddAppearance(4, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.head]});
 
 	return skin;
 }
