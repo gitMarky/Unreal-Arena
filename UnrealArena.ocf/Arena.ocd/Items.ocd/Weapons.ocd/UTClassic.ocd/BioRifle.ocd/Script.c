@@ -7,7 +7,7 @@ local slime_charged = 0;
 
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(120, -1, 0, 0), Trans_Rotate(90, 0, 0, 1));
+	return Trans_Mul(Trans_Rotate(60, 1, 0, 0), Trans_Rotate(90, 0, 0, 1));
 }
 
 local animation_set = {

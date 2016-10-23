@@ -7,7 +7,7 @@ local laser_beam;
 
 public func GetCarryTransform()
 {
-	return Trans_Mul(Trans_Rotate(240, 1, 0, 0), Trans_Rotate(90, 0, 0, 1));
+	return Trans_Mul(Trans_Rotate(60, 1, 0, 0), Trans_Rotate(90, 0, 0, 1));
 }
 
 
