@@ -73,6 +73,7 @@ func VertexSetupLegs()
 	SetVertex(6, VTX_X, 2, permanent);
 	SetVertex(5, VTX_Y, 4, permanent);
 	SetVertex(6, VTX_Y, 4, permanent);
+	//SetShape(-4, 0, 8, 10);
 }
 
 func VertexSetupBody()
@@ -84,6 +85,7 @@ func VertexSetupBody()
 	SetVertex(6, VTX_X, 0, permanent);
 	SetVertex(7, VTX_Y, 0, permanent);
 	SetVertex(8, VTX_Y, 0, permanent);
+	//SetShape(-4, -5, 8, 10);
 }
 
 func VertexSetupHead()
@@ -106,18 +108,28 @@ func VertexSetupHead()
 
 func VertexSetupArmL()
 {
-	var permanent = 2;
-	SetVertex(2, VTX_Y, 2, permanent);
-	SetVertex(7, VTX_Y, 0, permanent);
-	SetVertex(8, VTX_Y, 0, permanent);
+	var position = +4 * GetXDirection();
+	VertexSetupArm(position);
 }
 
 func VertexSetupArmR()
 {
+	var position = -4 * GetXDirection();
+	VertexSetupArm(position);
+}
+
+func VertexSetupArm(int position)
+{
 	var permanent = 2;
-	SetVertex(2, VTX_Y, 2, permanent);
-	SetVertex(7, VTX_Y, 0, permanent);
-	SetVertex(8, VTX_Y, 0, permanent);
+
+	for (var i = 0; i < 9; ++i) SetVertex(i, VTX_X, position, permanent);
+
+	SetVertex(0, VTX_Y, -3, permanent);
+	SetVertex(2, VTX_Y, 0, permanent);
+	SetVertex(5, VTX_Y, -4, permanent);
+	SetVertex(6, VTX_Y, -1, permanent);
+	SetVertex(7, VTX_Y, -5, permanent);
+	SetVertex(8, VTX_Y, -6, permanent);
 }
 
 
@@ -127,3 +139,8 @@ func VertexSetupArmR()
 func IsWalking(){ return false;}
 func StartSearchLadder(){}
 func PlaySoundIdle(){}
+
+func GetXDirection()
+{
+	return -1 + 2 * GetDir();
+}
