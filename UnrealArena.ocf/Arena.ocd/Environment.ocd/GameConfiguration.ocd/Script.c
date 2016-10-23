@@ -74,3 +74,15 @@ protected func OnRoundEnd()
 {
 	Sound("Goal_WinRound", true);
 }
+
+protected func PreconfigureBots()
+{
+	var missing_players = Max(0, GetDefaultPlayerAmount() - GetPlayerCount());
+	
+	if (missing_players > 0) AddBots(missing_players);
+}
+
+protected func GetDefaultPlayerAmount()
+{
+	return 4;
+}

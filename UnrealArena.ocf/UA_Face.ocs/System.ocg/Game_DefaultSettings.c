@@ -13,5 +13,5 @@ protected func GetDefaultRules()
 
 protected func GetAvailableGoals()
 {
-	return [Goal_CaptureTheFlagEx, Goal_DeathMatch];
+	return [Goal_CaptureTheFlagEx];
 }

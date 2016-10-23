@@ -38,7 +38,7 @@ func SetSkin(int new_skin)
 
 func GetSkinTextures()
 {
-	var skin_suffix = "_guard";
+	var skin_suffix = "";
 	var prefix = Format("%s_%s%s", skin_gender, skin_name, skin_suffix);
 	return {body = Format("%s_body", prefix),
             legs = Format("%s_legs", prefix),
