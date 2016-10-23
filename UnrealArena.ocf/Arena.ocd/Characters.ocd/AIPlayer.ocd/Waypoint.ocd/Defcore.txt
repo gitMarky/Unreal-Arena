@@ -1,0 +1,8 @@
+[DefCore]
+id=WAYP
+Version=7,0
+Category=C4D_StaticBack|C4D_Foreground
+Width=16
+Height=16
+Offset=-8,-8
+Picture=0,0,16,16

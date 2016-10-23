@@ -1,0 +1,5 @@
+Name=KI-Spieler
+Description=Künstliche Intelligenz.
+
+Team=KI-Team %d
+NoTeam=KI %d

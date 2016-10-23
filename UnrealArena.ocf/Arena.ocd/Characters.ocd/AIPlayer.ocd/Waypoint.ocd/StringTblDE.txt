@@ -1,0 +1,3 @@
+Name=Wegpunkt
+Description=Wegpunkte zur Routenfindung.
+
