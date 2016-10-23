@@ -144,3 +144,54 @@ func GetXDirection()
 {
 	return -1 + 2 * GetDir();
 }
+
+// contact and physics
+
+local ContactCalls = true;
+
+func ContactBottom()
+{
+	return BouncePhysics();
+}
+
+func ContactTop()
+{
+	return BouncePhysics();
+}
+
+func ContactLeft()
+{
+	return BouncePhysics();
+}
+
+func ContactRight()
+{
+	return BouncePhysics();
+}
+
+func BouncePhysics()
+{
+	//if(!dismembered) return(0);
+	if (!GetXDir() && !GetYDir()) return;
+
+	SetRDir(-2 * GetRDir());
+
+//	if(dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
+
+	//if (GBackSolid(5,0) || GBackSolid(-5,0)) SetXDir(GetXDir()/-2);
+	//if (GBackSolid(0,5) || GBackSolid(0,-5)) SetYDir(GetYDir()/-2);
+	//if (GBackSolid(10,0) || GBackSolid(-10,0)) SetXDir(GetXDir()/-2);
+	//if (GBackSolid(0,10) || GBackSolid(0,-10)) SetYDir(GetYDir()/-2);
+
+	return true;
+}
+
+protected func Hit(int dx, int dy)
+{
+	if (dy > 1)
+	{
+		SetYDir(dy * 3 / -4, 100);
+	}
+}
+
+

@@ -63,7 +63,7 @@ func DoSplatter(proplist skin)
 	var corpse = CreateObject(UA_Clonk_Corpse, 0, 0, NO_OWNER);
 	corpse->AddAppearance(0, skin);
 	corpse->SetSpeed(RandomX(-1, 1) * 30, RandomX(-20, -60));
-	corpse->SetRDir(corpse->GetXDir()/3 -1);
+	corpse->SetRDir((-1 + 2 * Random(2)) * RandomX(5, 15));
 	corpse->SetAction(GetAction());
 	corpse->SetDir(GetDir());
 	corpse->SetPhase(GetPhase());
