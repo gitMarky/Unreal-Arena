@@ -5,24 +5,63 @@ func Initialize()
 {
 	_inherited(...);
 	this.ActMap = new Clonk.ActMap{};
-	
-	// override animation start/end calls
-	for (var property in GetProperties(this.ActMap))
-	{
-		this.ActMap[property].StartCall = nil;
-		this.ActMap[property].EndCall = nil;
-	}
 }
 
 func StartSplatter()
 {
 	var side = "L"; if (Random(2)) side = "R";
-	PlayAnimation(Format("JumpUp.%s", side), CLONK_ANIM_SLOT_Death, Anim_Linear(0, 0, GetAnimationLength("Dead"), 20, ANIM_Hold), Anim_Linear(0, 0, 1000, 5, ANIM_Remove));
+	var name = Format("JumpUp.%s", side);
+	var stand = "Stand";
+	
+	var death = false;
+	
+	// Copy all animations except for the death slot from the target
+	for (var slot = 0; slot < CLONK_ANIM_SLOT_Death; ++slot)
+	{
+		var number = GetRootAnimation(slot); 
+		if (number == nil) continue;
+
+		death = true;
+		OverlayDeathAnimation(slot, name, stand);
+	}
+	
+	if (!death)
+	{
+		OverlayDeathAnimation(CLONK_ANIM_SLOT_Death, name, stand);
+	}
+	
 	// Update carried items
 	UpdateAttach();
 	// Set proper turn type
 	SetTurnType(1);
 }
+
+// animation stuff
+
+func OverlayDeathAnimation(int slot, string animation1, string animation2)
+{
+	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 20, ANIM_Hold), Anim_Linear(0, 0, 1000, 5, ANIM_Remove));
+	PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 40, ANIM_Hold), Anim_Linear(0, 0, 1000, 15, ANIM_Remove));
+}
+
+func CopyAnimationPositionFrom(object target)
+{
+	// Copy all animations except for the death slot from the target
+	for (var slot = 0; slot < CLONK_ANIM_SLOT_Death; ++slot)
+	{
+		var number = target->GetRootAnimation(slot); 
+		if (number == nil) continue;
+		
+		var name = target->GetAnimationName(number);
+		if (!name) continue; // for simplicity we skip combination nodes
+		
+		var position = target->GetAnimationPosition(number);
+		
+		PlayAnimation(name, slot, Anim_Linear(position, 0, GetAnimationLength(name), 30, ANIM_Remove));
+	}
+}
+
+// vertex configurations
 
 func VertexSetupLegs()
 {

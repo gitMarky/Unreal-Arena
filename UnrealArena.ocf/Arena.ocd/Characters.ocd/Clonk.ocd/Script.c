@@ -67,9 +67,38 @@ func DoSplatter(proplist skin)
 	corpse->SetAction(GetAction());
 	corpse->SetDir(GetDir());
 	corpse->SetPhase(GetPhase());
+	corpse->CopyAnimationPositionFrom(this);
 	corpse.MeshTransformation = this.MeshTransformation;
-	ScheduleCall(corpse, corpse.StartSplatter, 10);
-//	corpse.Visibility = VIS_All;
+	ScheduleCall(corpse, corpse.StartSplatter, 15);
 	return corpse;
 }
 
+// Better death animation
+
+func StartDead()
+{
+	// Copy all animations except for the death slot from the target
+	var dead = false;	
+	for (var slot = 0; slot < CLONK_ANIM_SLOT_Death; ++slot)
+	{
+		if (GetRootAnimation(slot) == nil) continue;
+		OverlayDeathAnimation(slot);
+		dead = true;
+	}
+	
+	if (!dead)
+	{
+		OverlayDeathAnimation(CLONK_ANIM_SLOT_Death);
+	}
+
+	// Update carried items
+	UpdateAttach();
+	// Set proper turn type
+	SetTurnType(1);
+}
+
+func OverlayDeathAnimation(int slot)
+{
+	var animation = "Dead";
+	PlayAnimation(animation, slot, Anim_Linear(0, 0, GetAnimationLength(animation), 20, ANIM_Hold), Anim_Linear(0, 0, 1000, 10, ANIM_Remove));
+}
