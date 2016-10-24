@@ -86,3 +86,13 @@ protected func GetDefaultPlayerAmount()
 {
 	return 4;
 }
+
+func ContainCrew(object crew)
+{
+	var container = _inherited(crew, ...);
+	
+	if (container)
+	{
+		container->SetPosition(LandscapeWidth() / 2, LandscapeHeight() / 2);
+	}
+}
