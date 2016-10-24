@@ -1,5 +1,44 @@
 local bDeathHeadshot, bNoCorpse, LastDmgWeapon;
 
+// TODO - start 
+static const ID_Gore_Chunk = nil; 
+
+func MOD_MoreGore()
+{
+	return 0;
+}
+
+func MOD_NoBlood()
+{
+	return false;
+}
+
+func MOD_FastBullets()
+{
+	return false;
+}
+
+func CrewGetBlood()
+{
+	return 0;
+}
+
+func CrewGetVoice()
+{
+}
+
+func DeathThrowWeapon()
+{
+}
+
+static const CLBD = nil;
+
+static const ID_Gore_BloodStream = nil;
+
+static const WC6I = nil;
+
+// TODO - end
+
 // Waffe des Killers speichern!
 public func LastDamageWeapon(id idWeap,bool bOverride)
 {
@@ -73,19 +112,19 @@ public func OnHit(int iDmg, int iType, object pFrom)
 
 
 	// Gore-Effekte
-	if( iDmg > (GetPhysical("Energy")/10000))
+	if( iDmg > (this.MaxEnergy/10000))
 	{
 		if(MOD_MoreGore()) CastGore(ID_Gore_Chunk,1,60+Abs( iDmg )-Random(Abs( iDmg )));
 	}
 
 
-	if( iDmg > (GetPhysical("Energy")/5000))
+	if( iDmg > (this.MaxEnergy/5000))
 	{
 		if(MOD_MoreGore()) CastGore(ID_Gore_Chunk,1,60+Abs( iDmg )-Random(Abs( iDmg )));
 		if(MOD_MoreGore()>10) CastGore(ID_Gore_Chunk,1,60+Abs( iDmg )-Random(Abs( iDmg )));
 		if(MOD_MoreGore()>18) CastGore(ID_Gore_Chunk,1,60+Abs( iDmg )-Random(Abs( iDmg )));
 
-		CreateObject(ID_Gore_Flame,0,0,-1)->~SetUpFlame(this,iDmg,GetX( pProjectile )-GetX(),GetY( pProjectile )-GetY());
+		CreateObject(Effect_BlazingFlame,0,0,-1)->~SetUpFlame(this,iDmg,GetX( pProjectile )-GetX(),GetY( pProjectile )-GetY());
 	}
 
 	//if(! fnoblood ) if(!damblocked)
@@ -264,10 +303,10 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 
 	cl_legs->SetSpeed(GetXDir(),GetYDir());
 	SetSpeed();
-	SetVisibility(VIS_None);
+	this.Visibility = VIS_None;
 
 	// Flammen-Effekte auf die Leiche übertragen
-	var flame, flames = FindObjects( Find_ID(ID_Gore_Flame),Find_Action("Hover"),Find_ActionTarget(this));
+	var flame, flames = FindObjects( Find_ID(Effect_BlazingFlame),Find_Action("Hover"),Find_ActionTarget(this));
 	for( flame in flames)
 	{
 		flame->~SetMaster(cl_legs);
@@ -336,7 +375,7 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 
 	// "Death-Cam" an
 	SetPlrView(GetOwner(),cl_body);
-	if( GetPlayerType(GetOwner())==C4PT_User) AddEffect("DeathCam",deathcam_obj,200,1,0,UBOT,GetOwner());
+	if( GetPlayerType(GetOwner())==C4PT_User) AddEffect("DeathCam",deathcam_obj,200,1,0,UA_Clonk,GetOwner());
 
 	//DeathComment( iDmg , pCounter , idWeapon, pProjectile, fBlastWeapon, fHeadshotWeapon, headshot );*/
 }
@@ -372,24 +411,25 @@ public func FlingGore( id idGore, int iXDir, int iYDir, int iX, int iY )
 }
 
 
-public func FxDeathCamStart( object pTarget, int iEffectNumber, int iTemp, int iOwner)
+public func FxDeathCamStart( object pTarget, proplist iEffectNumber, int iTemp, int iOwner)
 {
-	EffectVar(0,pTarget,iEffectNumber) = iOwner;
+	iEffectNumber.var0 = iOwner;
 }
 
-public func FxDeathCamTimer(object pTarget, int iEffectNumber, int iEffectTime)
+public func FxDeathCamTimer(object pTarget, proplist iEffectNumber, int iEffectTime)
 {
 	if(iEffectTime > 90) {Log("DeathCamTimout"); return -1;}
 	if(!pTarget) {Log("DeathCamTarget"); return -1;}
 	//SetPlrViewRange( pTarget->~GetSight(), pTarget );
 	//SetPlrViewRange( pTarget->~GetSight(), pTarget );
+	var g_iPlrViewRange = 700;
 	var i = (g_iPlrViewRange*Cos(iEffectTime,100))/100;
 	SetPlrViewRange( i, pTarget );
-	SetPlrView(EffectVar(0,pTarget,iEffectNumber),pTarget);
+	SetPlrView(iEffectNumber.var0,pTarget);
 }
 
-public func FxDeathCamStop( object pTarget, int iEffectNumber, int iReason)
+public func FxDeathCamStop( object pTarget, proplist iEffectNumber, int iReason)
 {
-	SetPlrView(EffectVar(0,pTarget,iEffectNumber),GetHiRank(EffectVar(0,pTarget,iEffectNumber)));
+	SetPlrView(iEffectNumber.var0,GetHiRank(iEffectNumber.var0));
 }
 

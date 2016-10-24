@@ -1,5 +1,17 @@
 /* Gestorben */
 
+// TODO - start
+
+local bNoCorpse;
+
+local ammobag, wpneffect, bDeathHeadshot;
+
+func UA_Announcer(){}
+
+func OnDeathExtended(){}
+
+// TODO - end
+
 protected func Death()
 {
 	//Schedule("RemoveObject()",1);
@@ -72,6 +84,8 @@ private func DeathAnnounce(int plr, object clonk, int killplr)
 		  bDeathHeadshot = false;
 		  UA_Announcer( "an_aw_headshot", GetKiller() );
 	  }
+	  
+	  var HHKS = nil; // TODO
 
 	  //Selfkill?
 	  if(plr == killplr)
