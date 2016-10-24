@@ -16,48 +16,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 			is_headshot = true;
 	}
 	
-	// gore effects
-	if (damage_amount > (this.MaxEnergy / 10000))
-	{
-		if (MOD_MoreGore())
-			CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
-	}
-	
-	if (damage_amount > (this.MaxEnergy / 5000))
-	{
-		if (MOD_MoreGore()) 		CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
-		if (MOD_MoreGore() > 10)	CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
-		if (MOD_MoreGore() > 18)	CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
-
-		CreateObject(Effect_BlazingFlame, 0, 0, -1)->~SetUpFlame(this, damage_amount, projectile->GetX() - GetX(), projectile->GetY() - GetY());
-	}
-	
-	if (!MOD_NoBlood())
-	{
-		var divisor = 3 * (1 + MOD_FastBullets());
-		var type = BloodFXColor(CrewGetBlood(this));
-		CastParticles
-		(
-			"Blood",
-			damage_amount * 3,
-			30,
-			projectile->GetX() - GetX(),
-			projectile->GetY() - GetY(),
-			10,
-			40,
-			type[0],
-			type[1]
-		);
-		FlingGore
-		(
-			ID_Gore_BloodStream,
-			projectile->GetXDir() / divisor,
-			projectile->GetYDir() / divisor,
-			projectile->GetX() - GetX(),
-			projectile->GetY() - GetY()
-		);
-	}
-	
+	DoGoreEffects();	
 
 	// Treffer: Kopf
 	if (is_headshot)
@@ -113,4 +72,33 @@ func FlingGore()
 func CrewGetBlood()
 {
 	// TODO
+}
+
+func DoGoreEffects(object projectile, int damage_amount)
+{
+	if (MOD_NoBlood()) return;
+
+	var is_heavy_hit = damage_amount > this.MaxEnergy / 10000;
+	var is_critical_hit = damage_amount > this.MaxEnergy / 5000;
+
+	// gore effects
+	if (is_heavy_hit && MOD_MoreGore())
+	{
+		CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
+	}
+	
+	if (is_critical_hit)
+	{
+		CreateObject(Effect_BlazingFlame, 0, 0, NO_OWNER)->~SetUpFlame(this, damage_amount, projectile->GetX() - GetX(), projectile->GetY() - GetY());
+
+		if (MOD_MoreGore()) 		CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
+		if (MOD_MoreGore() > 10)	CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
+		if (MOD_MoreGore() > 18)	CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
+	}
+	
+	// blood effects
+	var divisor = 3 * (1 + MOD_FastBullets());
+	var type = BloodFXColor(CrewGetBlood(this));
+	CastParticles("Blood", damage_amount * 3, 30, projectile->GetX() - GetX(), projectile->GetY() - GetY(),	10,	40, type[0], type[1]);
+	FlingGore(ID_Gore_BloodStream, projectile->GetXDir() / divisor, projectile->GetYDir() / divisor, projectile->GetX() - GetX(), projectile->GetY() - GetY());
 }
