@@ -56,14 +56,6 @@ global func BloodFXColor( string szType )
 	return [RGBa(255,0,0,40),RGBa(200,0,0,160)];
 }
 
-/*
-global func BloodFXColor( string szType )
-{
-	if( szType == "Machine") return [RGBa(90,0,200,40),RGBa(73,0,160,160)];
-	if( szType == "Alien") return [RGBa(0,220,0,40),RGBa(0,180,0,160)];
-	return [RGBa(255,0,0,40),RGBa(200,0,0,160)];
-}
-*/
 public func OnDmg( int iDmg, int iType)
 {
 	var armor = GetUTArmor(this);
@@ -75,7 +67,6 @@ public func OnDmg( int iDmg, int iType)
 	DoUTShield(-shield);
 	dmg -= shield;
 	if(shield) Sound("FieldHit*");
-	//if(dmg <= 0) return 100; // alles abfangen
 
 	// jetzt von der Rüstung,
 	// die fängt aber nur halben Schaden!
@@ -86,7 +77,6 @@ public func OnDmg( int iDmg, int iType)
 
 	// Prozent des gefangenen Schadens angeben
 	var res = (iDmg-dmg)*100 / iDmg;
-	//Log("%d Prozent Schaden abgefange", res);
 	return res;
 }
 
@@ -96,7 +86,6 @@ public func OnHit(int iDmg, int iType, object pFrom)
 	var bHeadshot = false;
 	var iEnergy = GetEnergy()-iDmg;
 	var pProjectile = pFrom;
-	//if(GetEnergy() <=0 ) return CorpsDamaged( iDmg );
 
 	if(pProjectile)
 	{
@@ -108,7 +97,6 @@ public func OnHit(int iDmg, int iType, object pFrom)
 	{
 		if( Inside(GetX( pFrom )-GetX(),-7,7) && Inside(GetY( pFrom )-GetY(),-10,-6)) bHeadshot = true;
 	}
-	//if(Or((GetEnergy()- iDmg )<1,headshot)) DeathThrowWeapon( iDmg , pProjectile , fBlastWeapon );
 
 
 	// Gore-Effekte
@@ -127,18 +115,13 @@ public func OnHit(int iDmg, int iType, object pFrom)
 		CreateObject(Effect_BlazingFlame,0,0,-1)->~SetUpFlame(this,iDmg,GetX( pProjectile )-GetX(),GetY( pProjectile )-GetY());
 	}
 
-	//if(! fnoblood ) if(!damblocked)
-	//{
 		if(!MOD_NoBlood())
 		{
 			var divisor = 3*(1+MOD_FastBullets());
 			var type = BloodFXColor(CrewGetBlood(this));
 			CastParticles("Blood", iDmg *3,30,GetX( pProjectile )-GetX(),GetY( pProjectile )-GetY(),10,40,type[0],type[1] );
-			//SetSpeed(GetXDir( pProjectile )/divisor,GetYDir( pProjectile )/divisor,CreateObject(ID_Gore_BloodStream,GetX( pProjectile )-GetX(),GetY( pProjectile )-GetY(),-1));
 			FlingGore(ID_Gore_BloodStream,GetXDir( pProjectile )/divisor,GetYDir( pProjectile )/divisor,GetX( pProjectile )-GetX(),GetY( pProjectile )-GetY());
 		}
-   	//}
-
 
 
 	// Treffer: Kopf
@@ -162,12 +145,6 @@ public func OnHit(int iDmg, int iType, object pFrom)
 
 private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot )
 {
-	//if(headshot) UA_Announcer( "an_aw_headshot", GetKiller() );
-	//DeathAnnounce(GetOwner(),this,GetKiller());
-	//NoDeathAnnounce(); // nicht nochmal aufrufen
-
-	//if(GetEffect("NoCorpse",this)) return;
-	//AddEffect("NoCorpse",this,50,0,this);
 	if(bNoCorpse) return;
 	bNoCorpse = true;
 
@@ -182,20 +159,14 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 
 	var bodyshot, feetshot;
 
-	//is_dead=1;
-
-
 	// In einem Fahrzeug? Rausschmeissen!
 	if(Contained()->~IsVehicle()) Contained()->~ExitPassenger(this);
-
-	// Regen an?
-	//if(MOD_Regeneration()) if(ObjectCall( pProjectile ,"BulletOwner")) DoEnergy(10,ObjectCall( pProjectile ,"BulletOwner"));
 
 
 	if( fBlastWeapon )
 	{
-		if(/*Inside(GetX( pProjectile )-GetX(),-7,7) &&*/ Inside(GetY( pProjectile )-GetY(),-6,1)) bodyshot=1;
-		if(/*Inside(GetX( pProjectile )-GetX(),-7,7) &&*/ Inside(GetY( pProjectile )-GetY(),1,10)) feetshot=1;
+		if(Inside(GetY( pProjectile )-GetY(),-6,1)) bodyshot=1;
+		if(Inside(GetY( pProjectile )-GetY(),1,10)) feetshot=1;
 	}
 
 	// Projektil sehr schnell: zurückschleudern;
@@ -210,41 +181,6 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 	}
 
 
-	// Bloodsplats aktiviert?
-	/*if(MOD_BloodSplats())
-	{
-		CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		if(!Random(5)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-
-		if(MOD_MoreGore())
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-
-		if(MOD_BloodSplats()>=2)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-		if(MOD_BloodSplats()>=3)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-		if(MOD_BloodSplats()>=4)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-		if(MOD_BloodSplats()>=5)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-	}
-*/
 	// MoreGore aktiviert?
 	if(!MOD_NoBlood())
 	{
@@ -338,9 +274,8 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 		SetRDir((GetXDir( pProjectile )+GetYDir( pProjectile ))/(10*divisor),cl_head);
 		cl_head->~SetMaster();
 	}
-	if(bodyshot) //if(!Random(3))
+	if(bodyshot)
 	{
-		//cl_head->~SetMaster();
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
 		SetSpeed(GetXDir()+GetXDir( pProjectile )/(3*divisor),-Random(10)+GetYDir()+GetYDir( pProjectile )/(3*divisor),cl_head);
@@ -354,7 +289,7 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 		SetRDir((GetXDir( pProjectile )+GetYDir( pProjectile ))/(10*divisor),cl_body);
 		SetRDir((GetXDir( pProjectile )+GetYDir( pProjectile ))/(10*divisor),cl_head);
 	}
-	if(feetshot) //if(!Random(3))
+	if(feetshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
@@ -376,8 +311,6 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 	// "Death-Cam" an
 	SetPlrView(GetOwner(),cl_body);
 	if( GetPlayerType(GetOwner())==C4PT_User) AddEffect("DeathCam",deathcam_obj,200,1,0,UA_Clonk,GetOwner());
-
-	//DeathComment( iDmg , pCounter , idWeapon, pProjectile, fBlastWeapon, fHeadshotWeapon, headshot );*/
 }
 
 
@@ -385,9 +318,6 @@ public func DeathSound( string szSound )
 {
 	if(GetEffect("NoDeathSound",this)) return;
 	AddEffect("NoDeathSound",this,1,0,this);
-	//local deathsound;
-	//if(deathsound) return;
-	//deathsound=1;
 	if(szSound) return Sound(szSound);
 	return(Sound(Format("%s_death0*",CrewGetVoice(this) )));
 }
@@ -420,8 +350,6 @@ public func FxDeathCamTimer(object pTarget, proplist iEffectNumber, int iEffectT
 {
 	if(iEffectTime > 90) {Log("DeathCamTimout"); return -1;}
 	if(!pTarget) {Log("DeathCamTarget"); return -1;}
-	//SetPlrViewRange( pTarget->~GetSight(), pTarget );
-	//SetPlrViewRange( pTarget->~GetSight(), pTarget );
 	var g_iPlrViewRange = 700;
 	var i = (g_iPlrViewRange*Cos(iEffectTime,100))/100;
 	SetPlrViewRange( i, pTarget );

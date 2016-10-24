@@ -14,19 +14,16 @@ func OnDeathExtended(){}
 
 protected func Death()
 {
-	//Schedule("RemoveObject()",1);
-
 	if(!bNoCorpse)
 		OnDeathExtended(0, DMG_Melee, this, false );
 
 	var plr = GetOwner();
 
 	// Sound und Meldung
-	//Sound("Die");
 	DeathAnnounce(plr, this, GetKiller());
 		NoDeathAnnounce(); // nicht nochmal aufrufen
-	// Letztes Mannschaftsmitglied func tot() { neuer Einsatz
 
+	// Letztes Mannschaftsmitglied func tot() { neuer Einsatz
 	if(GetPlayerType(GetOwner()) == C4PT_Script)
 		GameCallEx("RelaunchPlayer", plr, this, GetKiller());
 	else
@@ -46,7 +43,6 @@ protected func Death()
 	if(GetEffect(0,0,wpneffect))
 		RemoveEffect(0,0,wpneffect);
 
-	//FadeOut(this());
 	RemoveObject();
 
 	_inherited();
@@ -98,8 +94,6 @@ private func DeathAnnounce(int plr, object clonk, int killplr)
 	  //Zwar ungenau wenn mehrere Clonks eines Spielers im Spiel sind,
 	  //aber wann ist das schon der Fall?
 	  HHKS->KillStat(GetCursor(killplr),plr);
-
-	  //_inherited(plr, clonk, killplr);
 }
 
 
