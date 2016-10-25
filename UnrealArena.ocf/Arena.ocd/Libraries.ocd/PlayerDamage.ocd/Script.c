@@ -52,10 +52,6 @@ func MOD_FastBullets()
 	// TODO
 }
 
-func CastGore()
-{
-	// TODO
-}
 
 func FlingGore()
 {
@@ -80,20 +76,25 @@ func DoGoreEffects(object projectile, int damage_amount)
 	// gore effects
 	if (is_heavy_hit && MOD_MoreGore())
 	{
-		CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
+		CastGore(damage_amount);
 	}
 
 	if (is_critical_hit)
 	{
 		CreateObject(Effect_BlazingFlame, 0, 0, NO_OWNER)->~SetUpFlame(this, damage_amount, hit_x, hit_y);
 
-		if (MOD_MoreGore()) 		CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
-		if (MOD_MoreGore() > 10)	CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
-		if (MOD_MoreGore() > 18)	CastGore(ID_Gore_Chunk, 1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
+		if (MOD_MoreGore()) 		CastGore(damage_amount);
+		if (MOD_MoreGore() > 10)	CastGore(damage_amount);
+		if (MOD_MoreGore() > 18)	CastGore(damage_amount);
 	}
 	
 	// blood effects
 	var divisor = 3 * (1 + MOD_FastBullets());
 	EffectBloodSpray(damage_amount * 3, 30, hit_x, hit_y);
 	EffectBloodStream(hit_x, hit_y, projectile->GetXDir() / divisor, projectile->GetYDir() / divisor);
+}
+
+func CastGore(int damage_amount)
+{
+	EffectCastGore(1, 60 + Abs(damage_amount) - Random(Abs(damage_amount)));
 }
