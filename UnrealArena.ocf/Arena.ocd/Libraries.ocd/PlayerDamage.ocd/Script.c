@@ -93,7 +93,7 @@ func DoGoreEffects(object projectile, int damage_amount)
 	
 	// blood effects
 	var divisor = 3 * (1 + MOD_FastBullets());
-	EffectBloodSpray(damage_amount * 3, 30, hit_x, hit_y);
+	EffectBloodSpray(damage_amount, 10, hit_x, hit_y);
 	EffectBloodStream(hit_x, hit_y, projectile->GetXDir() / divisor, projectile->GetYDir() / divisor);
 }
 
