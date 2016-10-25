@@ -19,7 +19,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 			is_headshot = true;
 	}
 	
-	DoGoreEffects();	
+	DoGoreEffects(projectile, damage_amount);	
 
 	// Treffer: Kopf
 	if (is_headshot)
