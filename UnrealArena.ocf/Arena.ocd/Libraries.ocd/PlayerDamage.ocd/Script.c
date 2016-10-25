@@ -104,17 +104,6 @@ func DoGoreEffects(object projectile, int damage_amount)
 	
 	// blood effects
 	var divisor = 3 * (1 + MOD_FastBullets());
-	BloodSpray(damage_amount * 3, 30, hit_x, hit_y);
-	BloodStream(hit_x, hit_y, projectile->GetXDir() / divisor, projectile->GetYDir() / divisor);
-}
-
-func BloodSpray(int amount, int radius, int x, int y)
-{
-	var type = BloodFXColor(CrewGetBlood(this));
-	//CastParticles("Blood", amount, radius, x, y, 10,	40, type[0], type[1]);
-}
-
-func BloodStream(int x, int y)
-{
-	FlingGore(ID_Gore_BloodStream, xdir, ydir, x, y);
+	EffectBloodSpray(damage_amount * 3, 30, hit_x, hit_y);
+	EffectBloodStream(hit_x, hit_y, projectile->GetXDir() / divisor, projectile->GetYDir() / divisor);
 }
