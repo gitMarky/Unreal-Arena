@@ -33,7 +33,7 @@ local firemode_primary	=
 	mode = 			 	WEAPON_FM_Auto,
 
 	damage = 			40, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Bio,	
 
 	projectile_id = 	Projectile_SlimeShot,
 	projectile_speed = 	70,
@@ -61,7 +61,7 @@ local firemode_secondary =
 	mode = 			 	WEAPON_FM_Single,
 
 	damage = 			40, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Bio,	
 
 	projectile_id = 	Projectile_SlimeShot,
 	projectile_speed = 	70,

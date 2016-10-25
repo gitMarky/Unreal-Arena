@@ -33,7 +33,7 @@ local firemode_primary =
 	mode = 			 	WEAPON_FM_Single,
 
 	damage = 			45,
-	damage_type = 		nil,
+	damage_type = 		DMG_Projectile|DMG_Headshot,
 
 	projectile_id = 		Projectile_Sniper,
 	projectile_speed = 		200,
@@ -62,7 +62,7 @@ local firemode_secondary =
 	mode = 			 	WEAPON_FM_Single,
 
 	damage = 			6, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Projectile|DMG_Headshot,	
 
 	projectile_id = 		Projectile_Sniper,
 	projectile_speed = 		210,

@@ -33,7 +33,7 @@ local firemode_primary =
 	mode = 			 WEAPON_FM_Single,
 
 	damage = 			8, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Projectile,	
 
 	projectile_id = 	Projectile_FlakShot,
 	projectile_speed = 	[60, 90, 10],
@@ -66,7 +66,7 @@ local firemode_secondary =
 	mode = 			 WEAPON_FM_Single,
 
 	damage = 			64, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Projectile,	
 
 	projectile_id = 	Projectile_FlakGrenade,
 	projectile_speed = 	[70, 90],

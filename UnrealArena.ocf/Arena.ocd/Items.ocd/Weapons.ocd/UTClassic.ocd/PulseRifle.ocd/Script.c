@@ -29,7 +29,7 @@ local firemode_primary =
 	mode = 			 WEAPON_FM_Auto,
 
 	damage = 			10, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Energy,	
 
 	projectile_id = 	Projectile_Plasma,
 	projectile_speed = 	140,
@@ -58,7 +58,7 @@ local firemode_secondary =
 	mode = 			 WEAPON_FM_Auto,
 
 	damage = 			1,
-	damage_type = 		nil,
+	damage_type = 		DMG_Energy,
 
 	projectile_id = 	Projectile_PlasmaBeam,
 	projectile_speed = 	210,

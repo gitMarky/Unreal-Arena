@@ -34,7 +34,7 @@ local firemode_primary	=
 	mode = 			 	WEAPON_FM_Single,
 
 	damage = 			40, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Energy,	
 
 	projectile_id = 		Projectile_ShockBeam,
 	projectile_speed = 		500,
@@ -63,7 +63,7 @@ local firemode_secondary =
 	mode = 			 	WEAPON_FM_Single,
 
 	damage = 			50, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Energy,	
 
 	projectile_id = 		Projectile_ShockBolt,
 	projectile_speed = 		100,

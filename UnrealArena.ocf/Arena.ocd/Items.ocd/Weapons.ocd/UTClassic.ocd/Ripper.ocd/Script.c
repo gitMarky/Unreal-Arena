@@ -32,7 +32,7 @@ local firemode_primary =
 	mode = 			 WEAPON_FM_Auto,
 
 	damage = 			30, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Projectile|DMG_Headshot,	
 
 	projectile_id = 	Projectile_Ripper,
 	projectile_speed = 	180,
@@ -63,7 +63,7 @@ local firemode_secondary =
 	mode = 			 WEAPON_FM_Auto,
 
 	damage = 			24, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Explosion,	
 
 	projectile_id = 	Projectile_Ripper,
 	projectile_speed = 	180,

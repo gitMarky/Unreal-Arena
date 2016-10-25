@@ -32,7 +32,7 @@ local firemode_primary =
 	mode = 			 WEAPON_FM_Single,
 
 	damage = 			0, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Explosion,	
 
 	projectile_id = 	Projectile_Rocket,
 	projectile_speed = 	120,
@@ -65,7 +65,7 @@ local firemode_secondary =
 	mode = 			 WEAPON_FM_Single,
 
 	damage = 			15, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Explosion,	
 
 	projectile_id = 	Projectile_Rocket,
 	projectile_speed = 	[60, 80, 5],

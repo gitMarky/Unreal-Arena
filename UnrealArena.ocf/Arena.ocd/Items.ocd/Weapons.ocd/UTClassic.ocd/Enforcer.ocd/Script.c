@@ -26,7 +26,7 @@ local firemode_primary	=
 	mode = 			 WEAPON_FM_Single,
 
 	damage = 			15, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Projectile,	
 
 	projectile_id = 	Projectile_Bullet,
 	projectile_speed = 	180,
@@ -53,7 +53,7 @@ local firemode_secondary =
 	mode = 			 WEAPON_FM_Single,
 
 	damage = 			15, 
-	damage_type = 		nil,	
+	damage_type = 		DMG_Projectile,	
 
 	projectile_id = 	Projectile_Bullet,
 	projectile_speed = 	180,
