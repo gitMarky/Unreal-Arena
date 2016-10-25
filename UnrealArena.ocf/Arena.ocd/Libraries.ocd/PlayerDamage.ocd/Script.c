@@ -53,11 +53,6 @@ func MOD_FastBullets()
 }
 
 
-func FlingGore()
-{
-	// TODO
-}
-
 func CrewGetBlood()
 {
 	// TODO
