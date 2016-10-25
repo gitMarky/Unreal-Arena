@@ -47,16 +47,6 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	}
 }
 
-func MOD_MoreGore()
-{
-	// TODO
-}
-
-func MOD_NoBlood()
-{
-	// TODO
-}
-
 func MOD_FastBullets()
 {
 	// TODO

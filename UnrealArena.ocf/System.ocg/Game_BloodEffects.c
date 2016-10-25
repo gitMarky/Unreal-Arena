@@ -57,9 +57,9 @@ global func EffectBloodStream(int x, int y, int xdir, int ydir)
 {
 	AssertObjectContext("EffectBloodStream");
 
-	var stream = CreateObject(Dummy, x, y, NO_OWNER);
+	var stream = CreateObject(Effect_BloodStream, x, y, NO_OWNER);
 	stream->SetSpeed(xdir, ydir);
-	stream->~Launch(this->~CrewGetBlood());
+	stream->Launch(this->~CrewGetBlood());
 }
 
 global func EffectGoreChunk(int x, int y, int xdir, int ydir)
@@ -69,4 +69,14 @@ global func EffectGoreChunk(int x, int y, int xdir, int ydir)
 	var chunk = CreateObject(Dummy, x, y, NO_OWNER);
 	chunk->SetSpeed(xdir, ydir);
 	chunk->~Launch(this->~CrewGetBlood());
+}
+
+global func MOD_MoreGore()
+{
+	return 0; // TODO
+}
+
+global func MOD_NoBlood()
+{
+	return false; // TODO
 }
