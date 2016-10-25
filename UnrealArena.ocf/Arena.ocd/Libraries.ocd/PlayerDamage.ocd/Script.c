@@ -32,14 +32,13 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	if (remaining_health > 0)
 	{
 		if (damage_type & DMG_Explosion)
-			if (GetID(projectile) != WC6I)
-			{
-				var divisor = 1 + MOD_FastBullets();
+		{
+			var divisor = 1 + MOD_FastBullets();
 
-				SetSpeed(RandomX(-5, 5) + projectile->GetXDir() / divisor,
-					     RandomX(-5, 5) + projectile->GetYDir() / divisor);
-				SetAction("Tumble");
-			}
+			SetSpeed(RandomX(-5, 5) + projectile->GetXDir() / divisor,
+				     RandomX(-5, 5) + projectile->GetYDir() / divisor);
+			SetAction("Tumble");
+		}
 	}
 	else
 	{
