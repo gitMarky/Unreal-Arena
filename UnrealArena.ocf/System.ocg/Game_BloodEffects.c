@@ -66,7 +66,7 @@ global func EffectGoreChunk(int x, int y, int xdir, int ydir)
 {
 	AssertObjectContext("EffectGoreChunk");
 
-	var chunk = CreateObject(Dummy, x, y, NO_OWNER);
+	var chunk = CreateObject(Effect_GoreChunk, x, y, NO_OWNER);
 	chunk->SetSpeed(xdir, ydir);
 	chunk->~Launch(this->~CrewGetBlood());
 }
