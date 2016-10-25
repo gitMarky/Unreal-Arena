@@ -2,3 +2,4 @@
 id=Library_UA_PlayerDamage
 Version=7,0
 Category=C4D_StaticBack
+HideInCreator=true
