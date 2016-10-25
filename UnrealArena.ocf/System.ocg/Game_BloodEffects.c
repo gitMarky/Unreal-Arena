@@ -43,6 +43,8 @@ global func EffectBloodColor(string type)
 
 global func EffectBloodSpray(int amount, int radius, int x, int y)
 {
+	if (MOD_NoBlood()) return;
+
 	AssertObjectContext("EffectBloodSpray");
 	
 	var ydir = -3;
@@ -55,6 +57,8 @@ global func EffectBloodSpray(int amount, int radius, int x, int y)
 
 global func EffectBloodStream(int x, int y, int xdir, int ydir)
 {
+	if (MOD_NoBlood()) return;
+
 	AssertObjectContext("EffectBloodStream");
 
 	var stream = CreateObject(Effect_BloodStream, x, y, NO_OWNER);
@@ -64,11 +68,28 @@ global func EffectBloodStream(int x, int y, int xdir, int ydir)
 
 global func EffectGoreChunk(int x, int y, int xdir, int ydir)
 {
+	if (MOD_NoBlood()) return;
+
 	AssertObjectContext("EffectGoreChunk");
 
 	var chunk = CreateObject(Effect_GoreChunk, x, y, NO_OWNER);
 	chunk->SetSpeed(xdir, ydir);
 	chunk->~Launch(this->~CrewGetBlood());
+	return chunk;
+}
+
+global func EffectCastGore(int amount, int radius, int x, int y)
+{
+	if (MOD_NoBlood()) return;
+
+	AssertObjectContext("EffectCastGore");
+	
+	var chunks = CastObjects(Effect_GoreChunk, amount, radius, x, y);
+	for (var chunk in chunks)
+	{
+		chunk->~Launch(this->~CrewGetBlood());
+	}
+	return chunks;
 }
 
 global func MOD_MoreGore()
