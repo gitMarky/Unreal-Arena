@@ -16,6 +16,58 @@ func IsCorpse()
 	return lib_player_death.is_corpse;
 }
 
+
+protected func Death(int killed_by)
+{
+	// Do not announce the death as usual!
+	this.silent_death = true;
+
+	// This must be done first, before any goals do funny stuff with the clonk
+	_inherited(killed_by,...);
+		
+	// The broadcast could have revived the clonk.
+	if (GetAlive()) return;
+	
+	// Make him a corpse
+	if (!IsCorpse())
+	{
+		OnDeathExtended(0, DMG_Melee, this, false);
+	}
+
+	// Custom death announcement?
+	DeathAnnounceExtended(GetOwner(), GetKiller());
+	RemoveObject();
+}
+
+
+func DeathAnnounceExtended(int plr, int killplr)
+{
+// TODO
+/*
+	if (GetEffect("NoAnnounce", this)) return;
+
+	if (killplr == NO_OWNER) return;
+	if ( bDeathHeadshot )
+	{
+		bDeathHeadshot = false;
+		UA_Announcer( "an_aw_headshot", GetKiller() );
+	}
+
+	// suicide?
+	if(plr == killplr)
+		  HHKS->SKMsg(plr);
+	else
+		HHKS->KTMsg(killplr, plr, clonk->~LastDamageType(),clonk->~LastDamageWeapon());
+
+
+	//Killstatistik.
+	//Zwar ungenau wenn mehrere Clonks eines Spielers im Spiel sind,
+	//aber wann ist das schon der Fall?
+	HHKS->KillStat(GetCursor(killplr),plr);
+*/
+}
+
+
 /**
  Ejects the currently selected weapon, removes the rest of the inventory.
  
