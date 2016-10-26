@@ -199,7 +199,7 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
 			cl_head
 		);
-		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_head);
+		cl_head->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
 		cl_head->~SetMaster();
 	}
 	if (bodyshot)
@@ -226,15 +226,15 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
 			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),);
 		}
-		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_body);
-		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_head);
+		cl_body->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
+		cl_head->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
 	}
 	if (feetshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
 		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_legs);
-		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_legs);
+		cl_legs->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
 		
 		if (!MOD_NoBlood())
 		{
