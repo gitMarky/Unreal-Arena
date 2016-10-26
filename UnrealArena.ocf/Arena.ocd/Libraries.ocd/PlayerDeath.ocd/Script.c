@@ -51,7 +51,7 @@ func DeathThrowWeapon(object projectile)
 }
 
 
-func OnDeathExtended(int damage_amount, int iType, object projectile, bool headshot)
+func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool headshot)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -66,7 +66,7 @@ func OnDeathExtended(int damage_amount, int iType, object projectile, bool heads
 	var divisor = 1 + MOD_FastBullets();
 	
 	var fBlastWeapon = false;
-	if (iType & DMG_Explosion)
+	if (damage_type & DMG_Explosion)
 	{
 		fBlastWeapon = true;
 		Log("BlastAttack");
