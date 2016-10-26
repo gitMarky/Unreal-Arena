@@ -1,9 +1,4 @@
 
-func Bullshit()
-{
-	Log("Bullshit");
-}
-
 func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type)
 {
 	var is_headshot = false;
@@ -53,11 +48,6 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	{
 		// TODO: OnDeathExtended(damage_amount, damage_type, projectile, is_headshot);
 	}
-}
-
-func MOD_FastBullets()
-{
-	// TODO
 }
 
 

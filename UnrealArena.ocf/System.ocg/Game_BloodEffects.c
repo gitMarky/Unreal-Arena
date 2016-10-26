@@ -92,6 +92,19 @@ global func EffectCastGore(int amount, int radius, int x, int y)
 	return chunks;
 }
 
+global func EffectCastBloodStream(int amount, int radius, int x, int y)
+{
+	if (MOD_NoBlood()) return;
+
+	AssertObjectContext("EffectCastBloodStream");
+
+	var streams = CastObjects(Effect_BloodStream, amount, radius, x, y);
+	for (var stream in streams)
+	{
+		stream->Launch(this->~CrewGetBlood());
+	}
+}
+
 global func MOD_MoreGore()
 {
 	return 0; // TODO

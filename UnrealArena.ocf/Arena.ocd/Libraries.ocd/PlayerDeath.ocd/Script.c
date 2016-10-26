@@ -60,7 +60,7 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	
 	if (headshot)
 		pProjectile->DoEnergy(-1000, this);
-	
+
 	var divisor = 1 + MOD_FastBullets();
 	
 	var fBlastWeapon = false;
@@ -107,27 +107,15 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	// MoreGore aktiviert?
 	if (!MOD_NoBlood())
 	{
-		CastGore(ID_Gore_BloodStream, MOD_MoreGore() * 2, 40 + Abs(iDmg) - Random(Abs(iDmg)));
-		CastGore(ID_Gore_Chunk, MOD_MoreGore() / 3, 60 + Abs(iDmg) - Random(Abs(iDmg)));
+		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(Abs(iDmg)));
+		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(Abs(iDmg)));
 		
 		if (headshot)
 		{
-			if (MOD_MoreGore() > 18)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 16)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 12)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 8)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 6)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 4)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 2)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
-			if (MOD_MoreGore() > 0)
-				FlingGore(ID_Gore_Chunk, -10 + Random(21) + GetXDir() / 5, GetYDir() / 5 - 10 - Random(25));
+			for (var amount = MOD_MoreGore(); amount > 0; amount -= 2)
+			{
+				CastGoreHeadshot();
+			}
 		}
 	}
 	
@@ -170,10 +158,10 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	
 	cl_legs->SetSpeed(GetXDir(), GetYDir());
 	SetSpeed();
-	SetVisibility(VIS_None);
+	this.Visibility = VIS_None; // TODO: possibly not necessary anymore.
 	
 	// Flammen-Effekte auf die Leiche übertragen
-	var flame, flames = FindObjects(Find_ID(ID_Gore_Flame), Find_Action("Hover"), Find_ActionTarget(this));
+	var flame, flames = FindObjects(Find_ID(Effect_BlazingFlame), Find_Action("Hover"), Find_ActionTarget(this));
 	for (flame in flames) 
 	{
 		flame->~SetMaster(cl_legs);
@@ -234,88 +222,52 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 		);
 		if (!MOD_NoBlood())
 		{
-			FlingGore
-			(
-				ID_Gore_Chunk,
-				GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-				-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-				-3 + Random(7),
-				-3 + Random(7)
-			);
-			FlingGore
-			(
-				ID_Gore_Chunk,
-				GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-				-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-				-3 + Random(7),
-				-3 + Random(7)
-			);
-			FlingGore
-			(
-				ID_Gore_Chunk,
-				GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-				-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-				-3 + Random(7),
-				-3 + Random(7)
-			);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),);
 		}
 		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_body);
 		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_head);
 	}
 	if (feetshot)
-	//if(!Random(3))
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		SetSpeed
-		(
-			GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-			-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-			cl_legs
-		);
+		SetSpeed(GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor), cl_legs);
 		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_legs);
 		
 		if (!MOD_NoBlood())
 		{
-			FlingGore
-			(
-				ID_Gore_Chunk,
-				GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-				-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-				-3 + Random(7),
-				-3 + Random(7)
-			);
-			FlingGore
-			(
-				ID_Gore_Chunk,
-				GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-				-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-				-3 + Random(7),
-				-3 + Random(7)
-			);
-			FlingGore
-			(
-				ID_Gore_Chunk,
-				GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-				-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
-				-3 + Random(7),
-				-3 + Random(7)
-			);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
 		}
 	}
 	
-	if (bodyshot)
-		if (!Random(3))
+	if (bodyshot && !Random(3))
 			DeathSound(Format("%s_medic", CrewGetVoice(this)));
-	if (feetshot)
-		if (!Random(3))
+	if (feetshot && !Random(3))
 			DeathSound(Format("%s_cant_feel_my_legs", CrewGetVoice(this)));
 	if (!headshot)
 		DeathSound();
-	
+
 	// "Death-Cam" an
 	SetPlrView(GetOwner(), cl_body);
 	if (GetPlayerType(GetOwner()) == C4PT_User)
-		AddEffect("DeathCam", deathcam_obj, 200, 1, 0, UBOT, GetOwner());
+		AddEffect("DeathCam", deathcam_obj, 200, 1, 0, Library_UA_PlayerDeath, GetOwner());
 }
 
+func CastGoreHeadshot()
+{
+	EffectGoreChunk(0, -7, RandomX(-10, +10) + GetXDir() / 5, RandomX(-10, -35) + GetYDir() / 5 - 10);
+}
+
+func DeathSound()
+{
+	// TODO
+}
+
+func CrewGetVoice()
+{
+	// TODO
+}
