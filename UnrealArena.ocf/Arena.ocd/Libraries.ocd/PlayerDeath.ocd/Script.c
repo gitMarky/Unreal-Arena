@@ -116,32 +116,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		}
 	}
 	
-	/* Todesanimation bestimmen */
-	var iPhase = 0;
-	
-	if (!GetDir())
-	{
-		if (projectile->GetX() > GetX())
-		{
-			iPhase = 1;
-		}
-		else if (projectile->GetX() < GetX())
-		{
-			iPhase = 2;
-		}
-	}
-	else
-	{
-		if (projectile->GetX() < GetX())
-		{
-			iPhase = 1;
-		}
-		else if (projectile->GetX() > GetX())
-		{
-			iPhase = 2;
-		}
-	}
-	
+	/* Todesanimation bestimmen */	
 	var rdir_base = (projectile->GetXDir() + projectile->GetYDir());
 
 	var cl_body, cl_head, cl_legs;
@@ -154,9 +129,9 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	cl_body->SetPosition(GetX(), GetY());
 	cl_head->SetPosition(GetX(), GetY());
 	
-	cl_legs->~CreateCorps(this, 0, iPhase);
-	cl_body->~CreateCorps(cl_legs, "Body", iPhase);
-	cl_head->~CreateCorps(cl_body, "Head", iPhase);
+	cl_legs->~CreateCorps(this, nil);
+	cl_body->~CreateCorps(cl_legs, "Body");
+	cl_head->~CreateCorps(cl_body, "Head");
 	cl_legs->~SetMaster();
 	cl_body->SetDir(GetDir());
 	cl_head->SetDir(GetDir());
