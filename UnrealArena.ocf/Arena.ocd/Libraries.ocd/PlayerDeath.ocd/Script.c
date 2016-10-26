@@ -103,7 +103,7 @@ func DeathThrowWeapon(object projectile)
 }
 
 
-func OnDeathExtended(int damage_amount, int damage_type, object projectile)
+func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool headshot)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -161,13 +161,6 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile)
 		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(Abs(damage_amount)));
 		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(Abs(damage_amount)));
 		
-		if (headshot)
-		{
-			for (var amount = MOD_MoreGore(); amount > 0; amount -= 2)
-			{
-				CastGoreHeadshot();
-			}
-		}
 	}
 	
 	//------------------------------------------
@@ -295,10 +288,6 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile)
 	}
 }
 
-func CastGoreHeadshot()
-{
-	EffectGoreChunk(0, -7, RandomX(-10, +10) + GetXDir() / 5, RandomX(-10, -35) + GetYDir() / 5 - 10);
-}
 
 func DeathSound()
 {
