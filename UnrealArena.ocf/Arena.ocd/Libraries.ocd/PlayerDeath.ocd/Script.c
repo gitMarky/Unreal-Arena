@@ -194,41 +194,44 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	/* Teile anpassen */
 	var deathcam_obj = cl_legs;
 	
+	var xdir_corpse = GetXDir() + projectile->GetXDir() / (3 * divisor);
+	var ydir_corpse = GetYDir() + projectile->GetYDir() / (3 * divisor);
+	var rdir_corpse = (projectile->GetXDir() + projectile->GetYDir()) / (10 * divisor);
+	
 	if (headshot)
 	{
-		
 		SetPosition(GetX(), GetY() - 5, cl_head);
-		cl_head->SetSpeed(GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
-		cl_head->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (10 * divisor));
+		cl_head->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
+		cl_head->SetRDir(rdir_corpse);
 		cl_head->~SetMaster();
 	}
 	if (bodyshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		cl_head->SetSpeed(GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
-		cl_body->SetSpeed(GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
+		cl_head->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
+		cl_body->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
 		if (!MOD_NoBlood())
 		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor),);
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor),);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse,);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse,);
 		}
-		cl_body->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (10 * divisor));
-		cl_head->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (10 * divisor));
+		cl_body->SetRDir(rdir_corpse);
+		cl_head->SetRDir(rdir_corpse);
 	}
 	if (feetshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		cl_legs->SetSpeed(GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
-		cl_legs->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (10 * divisor));
+		cl_legs->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
+		cl_legs->SetRDir(rdir_corpse);
 		
 		if (!MOD_NoBlood())
 		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + projectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + projectile->GetYDir() / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
 		}
 	}
 	
