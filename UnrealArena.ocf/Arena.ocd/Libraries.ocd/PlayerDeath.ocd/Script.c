@@ -142,6 +142,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		}
 	}
 	
+	var rdir_base = (projectile->GetXDir() + projectile->GetYDir());
 
 	var cl_body, cl_head, cl_legs;
 	
@@ -172,23 +173,21 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		flame->~SetMaster(cl_legs);
 	}
 	
+	 // TODO: this is somewhat stupid because it is overriden by the values below?
 	if (fBlastWeapon)
 	{
-		cl_legs->SetSpeed
-		(
-			projectile->GetXDir() / divisor - 5 + Random(11),
-			projectile->GetYDir() / divisor - 5 + Random(11)
-		);
-		var amount = cl_legs->GetXDir() + cl_legs->GetYDir();
-		cl_legs->SetRDir(amount);
-		cl_head->SetRDir(amount / 2);
-		cl_body->SetRDir(amount / 2);
+		cl_legs->SetSpeed(RandomX(-5, +5) + projectile->GetXDir() / divisor,
+						  RandomX(-5, +5) + projectile->GetYDir() / divisor);
+		var rdir_legs = cl_legs->GetXDir() + cl_legs->GetYDir();
+		cl_legs->SetRDir(rdir_legs);
+		cl_head->SetRDir(rdir_legs / 2);
+		cl_body->SetRDir(rdir_legs / 2);
 	}
 	else
 	{
-		cl_legs->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (30 * divisor));
-		cl_head->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (50 * divisor));
-		cl_body->SetRDir((projectile->GetXDir() + projectile->GetYDir()) / (50 * divisor));
+		cl_legs->SetRDir(rdir_base / (30 * divisor));
+		cl_head->SetRDir(rdir_base / (50 * divisor));
+		cl_body->SetRDir(rdir_base / (50 * divisor));
 	}
 	
 	/* Teile anpassen */
@@ -196,7 +195,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	
 	var xdir_corpse = GetXDir() + projectile->GetXDir() / (3 * divisor);
 	var ydir_corpse = GetYDir() + projectile->GetYDir() / (3 * divisor);
-	var rdir_corpse = (projectile->GetXDir() + projectile->GetYDir()) / (10 * divisor);
+	var rdir_corpse = rdir_base / (10 * divisor);
 	
 	if (headshot)
 	{
