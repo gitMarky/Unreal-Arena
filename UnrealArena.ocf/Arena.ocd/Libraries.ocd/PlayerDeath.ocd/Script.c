@@ -197,10 +197,12 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	var ydir_corpse = GetYDir() + projectile->GetYDir() / (3 * divisor);
 	var rdir_corpse = rdir_base / (10 * divisor);
 	
+	var ydir_variance = 10;
+	
 	if (headshot)
 	{
 		SetPosition(GetX(), GetY() - 5, cl_head);
-		cl_head->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
+		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_head->SetRDir(rdir_corpse);
 		cl_head->~SetMaster();
 	}
@@ -208,13 +210,13 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		cl_head->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
-		cl_body->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
+		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
+		cl_body->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		if (!MOD_NoBlood())
 		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse,);
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse,);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		}
 		cl_body->SetRDir(rdir_corpse);
 		cl_head->SetRDir(rdir_corpse);
@@ -223,14 +225,14 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		cl_legs->SetSpeed(xdir_corpse, -Random(10) + ydir_corpse);
+		cl_legs->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_legs->SetRDir(rdir_corpse);
 		
 		if (!MOD_NoBlood())
 		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, -Random(10) + ydir_corpse);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		}
 	}
 	
