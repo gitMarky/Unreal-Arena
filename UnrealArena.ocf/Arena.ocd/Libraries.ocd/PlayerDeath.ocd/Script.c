@@ -79,19 +79,19 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 
 	if (fBlastWeapon)
 	{
-		if (Inside(GetY(pProjectile) - GetY(), -6, 1))
+		if (Inside(pProjectile->GetY() - GetY(), -6, 1))
 			bodyshot = 1;
-		if (Inside(GetY(pProjectile) - GetY(), 1, 10))
+		if (Inside(pProjectile->GetY() - GetY(), 1, 10))
 			feetshot = 1;
 	}
 	
 	// Projektil sehr schnell: zurückschleudern;
-	if (Abs(GetXDir(pProjectile)) > 140)
+	if (Abs(pProjectile->GetXDir()) > 140)
 	{
 		SetSpeed
 		(
-			GetXDir() + GetXDir(pProjectile) / (4 * divisor),
-			GetYDir() + GetYDir(pProjectile) / (4 * divisor)
+			GetXDir() + pProjectile->GetXDir() / (4 * divisor),
+			GetYDir() + pProjectile->GetYDir() / (4 * divisor)
 		);
 	}
 	else
@@ -99,8 +99,8 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 		
 		SetSpeed
 		(
-			GetXDir() + GetXDir(pProjectile) / (8 * divisor),
-			GetYDir() + GetYDir(pProjectile) / (8 * divisor)
+			GetXDir() + pProjectile->GetXDir() / (8 * divisor),
+			GetYDir() + pProjectile->GetYDir() / (8 * divisor)
 		);
 	}
 	
@@ -124,16 +124,16 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	
 	if (!GetDir())
 	{
-		if (GetX(pProjectile) > GetX())
+		if (pProjectile->GetX() > GetX())
 			iPhase = 1;
-		else if (GetX(pProjectile) < GetX())
+		else if (pProjectile->GetX() < GetX())
 			iPhase = 2;
 	}
 	else
 	{
-		if (GetX(pProjectile) < GetX())
+		if (pProjectile->GetX() < GetX())
 			iPhase = 1;
-		else if (GetX(pProjectile) > GetX())
+		else if (pProjectile->GetX() > GetX())
 			iPhase = 2;
 	}
 	
@@ -171,19 +171,19 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	{
 		cl_legs->SetSpeed
 		(
-			GetXDir(pProjectile) / divisor - 5 + Random(11),
-			GetYDir(pProjectile) / divisor - 5 + Random(11)
+			pProjectile->GetXDir() / divisor - 5 + Random(11),
+			pProjectile->GetYDir() / divisor - 5 + Random(11)
 		);
-		var amount = GetXDir(cl_legs) + GetYDir(cl_legs);
+		var amount = cl_legs->GetXDir() + cl_legs->GetYDir();
 		cl_legs->SetRDir(amount);
 		cl_head->SetRDir(amount / 2);
 		cl_body->SetRDir(amount / 2);
 	}
 	else
 	{
-		cl_legs->SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (30 * divisor));
-		cl_head->SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (50 * divisor));
-		cl_body->SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (50 * divisor));
+		cl_legs->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (30 * divisor));
+		cl_head->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (50 * divisor));
+		cl_body->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (50 * divisor));
 	}
 	
 	/* Teile anpassen */
@@ -195,11 +195,11 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 		SetPosition(GetX(), GetY() - 5, cl_head);
 		SetSpeed
 		(
-			GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-			-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
+			GetXDir() + pProjectile->GetXDir() / (3 * divisor),
+			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
 			cl_head
 		);
-		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_head);
+		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_head);
 		cl_head->~SetMaster();
 	}
 	if (bodyshot)
@@ -210,37 +210,37 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 		deathcam_obj = cl_body;
 		SetSpeed
 		(
-			GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-			-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
+			GetXDir() + pProjectile->GetXDir() / (3 * divisor),
+			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
 			cl_head
 		);
 		SetSpeed
 		(
-			GetXDir() + GetXDir(pProjectile) / (3 * divisor),
-			-Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),
+			GetXDir() + pProjectile->GetXDir() / (3 * divisor),
+			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
 			cl_body
 		);
 		if (!MOD_NoBlood())
 		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),);
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor),);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),);
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),);
 		}
-		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_body);
-		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_head);
+		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_body);
+		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_head);
 	}
 	if (feetshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		SetSpeed(GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor), cl_legs);
-		SetRDir((GetXDir(pProjectile) + GetYDir(pProjectile)) / (10 * divisor), cl_legs);
+		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_legs);
+		SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor), cl_legs);
 		
 		if (!MOD_NoBlood())
 		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + GetXDir(pProjectile) / (3 * divisor), -Random(10) + GetYDir() + GetYDir(pProjectile) / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
+			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
 		}
 	}
 	
