@@ -56,6 +56,9 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
 	
+	//------------------------------------------
+	// cleanup stuff
+	
 	DeathThrowWeapon(projectile);
 	
 	if (headshot)
@@ -63,24 +66,28 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		projectile->DoEnergy(-1000, this);
 	}
 
-	var divisor = 1 + MOD_FastBullets();
-	
-	var fBlastWeapon = false;
-	if (damage_type & DMG_Explosion)
-	{
-		fBlastWeapon = true;
-		Log("BlastAttack");
-	}
-	
-	var bodyshot, feetshot;
-	
 	// In einem Fahrzeug? Rausschmeissen!
 	if (Contained()->~IsVehicle())
 	{
 		Contained()->~ExitPassenger(this);
 	}
 
-	if (fBlastWeapon)
+	//------------------------------------------
+	// determine settings for effects
+
+	var divisor = 1 + MOD_FastBullets();
+	
+	var is_blast_weapon = false;
+	if (damage_type & DMG_Explosion)
+	{
+		is_blast_weapon = true;
+		Log("BlastAttack");
+	}
+	
+	var bodyshot, feetshot;
+	
+
+	if (is_blast_weapon)
 	{
 		if (Inside(projectile->GetY() - GetY(), -6, 1))
 			bodyshot = true;
@@ -116,7 +123,9 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		}
 	}
 	
-	/* Todesanimation bestimmen */	
+	//------------------------------------------
+	// set up the corpse
+
 	var rdir_base = (projectile->GetXDir() + projectile->GetYDir());
 
 	var cl_body, cl_head, cl_legs;
@@ -149,7 +158,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	}
 	
 	 // TODO: this is somewhat stupid because it is overriden by the values below?
-	if (fBlastWeapon)
+	if (is_blast_weapon)
 	{
 		cl_legs->SetSpeed(RandomX(-5, +5) + projectile->GetXDir() / divisor,
 						  RandomX(-5, +5) + projectile->GetYDir() / divisor);
@@ -211,6 +220,9 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		}
 	}
 	
+	//------------------------------------------
+	// sound effects
+
 	var death_sound = nil;
 	if (!death_sound && bodyshot && !Random(3))
 	{
@@ -224,6 +236,9 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	{
 		DeathSound(death_sound);
 	}
+
+	//------------------------------------------
+	// follow the corpse
 
 	// "Death-Cam" an
 	SetPlrView(GetOwner(), cl_body);
