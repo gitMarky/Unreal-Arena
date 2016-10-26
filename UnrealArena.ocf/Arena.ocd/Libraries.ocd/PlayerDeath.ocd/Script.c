@@ -1,4 +1,21 @@
 
+local lib_player_death;
+
+func Initialize()
+{
+	_inherited(...);
+	
+	lib_player_death = 
+	{
+		is_corpse = false,
+	};
+}
+
+func IsCorpse()
+{
+	return lib_player_death.is_corpse;
+}
+
 /**
  Ejects the currently selected weapon, removes the rest of the inventory.
  
@@ -36,9 +53,8 @@ func DeathThrowWeapon(object projectile)
 
 func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 {
-	if (bNoCorpse)
-		return;
-	bNoCorpse = true;
+	if (IsCorpse()) return;
+	lib_player_death.is_corpse = true;
 	
 	DeathThrowWeapon(pProjectile);
 	
