@@ -201,7 +201,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	
 	if (headshot)
 	{
-		SetPosition(GetX(), GetY() - 5, cl_head);
+		cl_head->SetPosition(GetX(), GetY() - 5);
 		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_head->SetRDir(rdir_corpse);
 		cl_head->~SetMaster();
