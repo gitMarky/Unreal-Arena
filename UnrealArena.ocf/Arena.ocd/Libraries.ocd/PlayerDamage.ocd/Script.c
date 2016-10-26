@@ -46,7 +46,12 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	}
 	else
 	{
-		// TODO: OnDeathExtended(damage_amount, damage_type, projectile, is_headshot);
+		this->~OnDeathExtended(damage_amount, damage_type, projectile);
+		
+		if (is_headshot)
+		{
+			projectile->DoEnergy(-1000, this);
+		}		
 	}
 }
 

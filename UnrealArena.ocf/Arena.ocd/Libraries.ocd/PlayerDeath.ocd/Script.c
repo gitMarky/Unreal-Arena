@@ -103,7 +103,7 @@ func DeathThrowWeapon(object projectile)
 }
 
 
-func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool headshot)
+func OnDeathExtended(int damage_amount, int damage_type, object projectile)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -112,11 +112,6 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	// cleanup stuff
 	
 	DeathThrowWeapon(projectile);
-	
-	if (headshot)
-	{
-		projectile->DoEnergy(-1000, this);
-	}
 
 	// In einem Fahrzeug? Rausschmeissen!
 	if (Contained()->~IsVehicle())
