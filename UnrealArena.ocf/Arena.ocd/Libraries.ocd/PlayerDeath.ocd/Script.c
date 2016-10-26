@@ -198,7 +198,7 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	{
 		
 		SetPosition(GetX(), GetY() - 5, cl_head);
-		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_head);
+		cl_head->SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
 		cl_head->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
 		cl_head->~SetMaster();
 	}
@@ -206,8 +206,8 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_head);
-		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_body);
+		cl_head->SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
+		cl_body->SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
 		if (!MOD_NoBlood())
 		{
 			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),);
@@ -221,7 +221,7 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	{
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_legs);
+		cl_legs->SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor));
 		cl_legs->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
 		
 		if (!MOD_NoBlood())
@@ -250,7 +250,7 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	SetPlrView(GetOwner(), cl_body);
 	if (GetPlayerType(GetOwner()) == C4PT_User)
 	{
-		AddEffect("DeathCam", deathcam_obj, 200, 1, 0, Library_UA_PlayerDeath, GetOwner());
+		AddEffect("DeathCam", deathcam_obj, 200, 1, nil, Library_UA_PlayerDeath, GetOwner());
 	}
 }
 
