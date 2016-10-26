@@ -208,8 +208,8 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	}
 	if (bodyshot)
 	{
-		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
+		cl_body->~SetMaster();
 		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_body->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		if (!MOD_NoBlood())
@@ -223,8 +223,8 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	}
 	if (feetshot)
 	{
-		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
+		cl_body->~SetMaster();
 		cl_legs->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_legs->SetRDir(rdir_corpse);
 		
