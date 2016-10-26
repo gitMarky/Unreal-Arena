@@ -35,12 +35,6 @@ func DeathThrowWeapon(object projectile)
 
 private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot )
 {
-	//if(headshot) UA_Announcer( "an_aw_headshot", GetKiller() );
-	//DeathAnnounce(GetOwner(),this,GetKiller());
-	//NoDeathAnnounce(); // nicht nochmal aufrufen
-
-	//if(GetEffect("NoCorpse",this)) return;
-	//AddEffect("NoCorpse",this,50,0,this);
 	if(bNoCorpse) return;
 	bNoCorpse = true;
 
@@ -55,20 +49,14 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 
 	var bodyshot, feetshot;
 
-	//is_dead=1;
-
-
 	// In einem Fahrzeug? Rausschmeissen!
 	if(Contained()->~IsVehicle()) Contained()->~ExitPassenger(this);
-
-	// Regen an?
-	//if(MOD_Regeneration()) if(ObjectCall( pProjectile ,"BulletOwner")) DoEnergy(10,ObjectCall( pProjectile ,"BulletOwner"));
 
 
 	if( fBlastWeapon )
 	{
-		if(/*Inside(GetX( pProjectile )-GetX(),-7,7) &&*/ Inside(GetY( pProjectile )-GetY(),-6,1)) bodyshot=1;
-		if(/*Inside(GetX( pProjectile )-GetX(),-7,7) &&*/ Inside(GetY( pProjectile )-GetY(),1,10)) feetshot=1;
+		if(Inside(GetY( pProjectile )-GetY(),-6,1)) bodyshot=1;
+		if(Inside(GetY( pProjectile )-GetY(),1,10)) feetshot=1;
 	}
 
 	// Projektil sehr schnell: zurückschleudern;
@@ -82,42 +70,6 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 		SetSpeed(GetXDir()+GetXDir( pProjectile )/(8*divisor),GetYDir()+GetYDir( pProjectile )/(8*divisor));
 	}
 
-
-	// Bloodsplats aktiviert?
-	/*if(MOD_BloodSplats())
-	{
-		CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		if(!Random(5)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-
-		if(MOD_MoreGore())
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-
-		if(MOD_BloodSplats()>=2)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-		if(MOD_BloodSplats()>=3)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-		if(MOD_BloodSplats()>=4)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-		if(MOD_BloodSplats()>=5)
-		{
-			CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-			if(!Random(3)) CreateBloodsplat(ObjectCall( pProjectile ,"BulletOwner"));
-		}
-	}
-*/
 	// MoreGore aktiviert?
 	if(!MOD_NoBlood())
 	{
@@ -249,7 +201,5 @@ private func OnDeathExtended(int iDmg, int iType, object pProjectile, bool heads
 	// "Death-Cam" an
 	SetPlrView(GetOwner(),cl_body);
 	if( GetPlayerType(GetOwner())==C4PT_User) AddEffect("DeathCam",deathcam_obj,200,1,0,UBOT,GetOwner());
-
-	//DeathComment( iDmg , pCounter , idWeapon, pProjectile, fBlastWeapon, fHeadshotWeapon, headshot );*/
 }
 
