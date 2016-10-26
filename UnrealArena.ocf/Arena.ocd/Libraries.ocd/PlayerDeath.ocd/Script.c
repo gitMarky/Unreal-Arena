@@ -51,7 +51,7 @@ func DeathThrowWeapon(object projectile)
 }
 
 
-func OnDeathExtended(int iDmg, int iType, object projectile, bool headshot)
+func OnDeathExtended(int damage_amount, int iType, object projectile, bool headshot)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -104,8 +104,8 @@ func OnDeathExtended(int iDmg, int iType, object projectile, bool headshot)
 	// MoreGore aktiviert?
 	if (!MOD_NoBlood())
 	{
-		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(Abs(iDmg)));
-		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(Abs(iDmg)));
+		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(Abs(damage_amount)));
+		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(Abs(damage_amount)));
 		
 		if (headshot)
 		{
