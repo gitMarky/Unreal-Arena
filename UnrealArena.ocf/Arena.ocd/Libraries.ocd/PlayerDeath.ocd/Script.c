@@ -59,7 +59,9 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	DeathThrowWeapon(pProjectile);
 	
 	if (headshot)
+	{
 		pProjectile->DoEnergy(-1000, this);
+	}
 
 	var divisor = 1 + MOD_FastBullets();
 	
@@ -74,34 +76,29 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	
 	// In einem Fahrzeug? Rausschmeissen!
 	if (Contained()->~IsVehicle())
+	{
 		Contained()->~ExitPassenger(this);
-	
+	}
 
 	if (fBlastWeapon)
 	{
 		if (Inside(pProjectile->GetY() - GetY(), -6, 1))
-			bodyshot = 1;
+			bodyshot = true;
 		if (Inside(pProjectile->GetY() - GetY(), 1, 10))
-			feetshot = 1;
+			feetshot = true;
 	}
 	
 	// Projektil sehr schnell: zurückschleudern;
 	if (Abs(pProjectile->GetXDir()) > 140)
 	{
-		SetSpeed
-		(
-			GetXDir() + pProjectile->GetXDir() / (4 * divisor),
-			GetYDir() + pProjectile->GetYDir() / (4 * divisor)
-		);
+		SetSpeed(GetXDir() + pProjectile->GetXDir() / (4 * divisor),
+		         GetYDir() + pProjectile->GetYDir() / (4 * divisor));
 	}
 	else
 	{
 		
-		SetSpeed
-		(
-			GetXDir() + pProjectile->GetXDir() / (8 * divisor),
-			GetYDir() + pProjectile->GetYDir() / (8 * divisor)
-		);
+		SetSpeed(GetXDir() + pProjectile->GetXDir() / (8 * divisor),
+				 GetYDir() + pProjectile->GetYDir() / (8 * divisor));
 	}
 	
 	// MoreGore aktiviert?
@@ -125,28 +122,36 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	if (!GetDir())
 	{
 		if (pProjectile->GetX() > GetX())
+		{
 			iPhase = 1;
+		}
 		else if (pProjectile->GetX() < GetX())
+		{
 			iPhase = 2;
+		}
 	}
 	else
 	{
 		if (pProjectile->GetX() < GetX())
+		{
 			iPhase = 1;
+		}
 		else if (pProjectile->GetX() > GetX())
+		{
 			iPhase = 2;
+		}
 	}
 	
 
 	var cl_body, cl_head, cl_legs;
 	
-	cl_head = CreateObject(CLBD, 0, 0, -1);
-	cl_legs = CreateObject(CLBD, 0, 0, -1);
-	cl_body = CreateObject(CLBD, 0, 0, -1);
+	cl_head = CreateObject(CLBD, 0, 0, NO_OWNER);
+	cl_legs = CreateObject(CLBD, 0, 0, NO_OWNER);
+	cl_body = CreateObject(CLBD, 0, 0, NO_OWNER);
 	
-	SetPosition(GetX(), GetY(), cl_legs);
-	SetPosition(GetX(), GetY(), cl_body);
-	SetPosition(GetX(), GetY(), cl_head);
+	cl_legs->SetPosition(GetX(), GetY());
+	cl_body->SetPosition(GetX(), GetY());
+	cl_head->SetPosition(GetX(), GetY());
 	
 	cl_legs->~CreateCorps(this, 0, iPhase);
 	cl_body->~CreateCorps(cl_legs, "Body", iPhase);
@@ -157,7 +162,7 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	cl_legs->SetDir(GetDir());
 	
 	cl_legs->SetSpeed(GetXDir(), GetYDir());
-	SetSpeed();
+	SetSpeed(); // TODO: unknown what this is good for...
 	this.Visibility = VIS_None; // TODO: possibly not necessary anymore.
 	
 	// Flammen-Effekte auf die Leiche übertragen
@@ -193,33 +198,16 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 	{
 		
 		SetPosition(GetX(), GetY() - 5, cl_head);
-		SetSpeed
-		(
-			GetXDir() + pProjectile->GetXDir() / (3 * divisor),
-			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
-			cl_head
-		);
+		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_head);
 		cl_head->SetRDir((pProjectile->GetXDir() + pProjectile->GetYDir()) / (10 * divisor));
 		cl_head->~SetMaster();
 	}
 	if (bodyshot)
-	//if(!Random(3))
 	{
-		//cl_head->~SetMaster();
 		cl_body->~SetMaster();
 		deathcam_obj = cl_body;
-		SetSpeed
-		(
-			GetXDir() + pProjectile->GetXDir() / (3 * divisor),
-			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
-			cl_head
-		);
-		SetSpeed
-		(
-			GetXDir() + pProjectile->GetXDir() / (3 * divisor),
-			-Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),
-			cl_body
-		);
+		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_head);
+		SetSpeed(GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor), cl_body);
 		if (!MOD_NoBlood())
 		{
 			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), GetXDir() + pProjectile->GetXDir() / (3 * divisor), -Random(10) + GetYDir() + pProjectile->GetYDir() / (3 * divisor),);
@@ -244,17 +232,26 @@ func OnDeathExtended(int iDmg, int iType, object pProjectile, bool headshot)
 		}
 	}
 	
-	if (bodyshot && !Random(3))
-			DeathSound(Format("%s_medic", CrewGetVoice(this)));
-	if (feetshot && !Random(3))
-			DeathSound(Format("%s_cant_feel_my_legs", CrewGetVoice(this)));
+	var death_sound = nil;
+	if (!death_sound && bodyshot && !Random(3))
+	{
+		death_sound = Format("%s_medic", CrewGetVoice(this));
+	}
+	if (!death_sound && feetshot && !Random(3))
+	{
+		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice(this));
+	}
 	if (!headshot)
-		DeathSound();
+	{
+		DeathSound(death_sound);
+	}
 
 	// "Death-Cam" an
 	SetPlrView(GetOwner(), cl_body);
 	if (GetPlayerType(GetOwner()) == C4PT_User)
+	{
 		AddEffect("DeathCam", deathcam_obj, 200, 1, 0, Library_UA_PlayerDeath, GetOwner());
+	}
 }
 
 func CastGoreHeadshot()
