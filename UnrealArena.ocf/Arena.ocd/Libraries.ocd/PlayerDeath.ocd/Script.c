@@ -277,6 +277,8 @@ func OnDeathHandleCorpseLegacy()
 	GetCorpseData().is_corpse = true;
 	
 	if (Contained()) return;
+	
+	var CLBD = nil;
 
 	//------------------------------------------
 	// determine settings for effects
