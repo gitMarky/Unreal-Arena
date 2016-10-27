@@ -403,6 +403,16 @@ func OnDeathHandleCorpseLegacy()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Handling the corpse
+//
+// The concept is as follows:
+//
+// - the normal death animation is played for everything that is on the ground (i.e. legs and everything connected)
+// - the jump death animation is played for everything that flies lose (i.e. a severed head, or the player while he is jumping)
+// - the severed parts may rotate freely and have specific vertex layout
+// - the severed parts need an effect that draw-transforms them so that they appear to be rotating about their center of gravity
+// - the standard death animation parts may either not rotate, or rotate under the circumstance that there is an effect that updates their vertices
+//   * said effect would have to move the vertices to certain positions that match the current shape of the animation
+//   * the effect should move vertices towards the desired position and go pack one step if it gets stuck (a little ragdoll-like)
 
 
 /**
