@@ -32,27 +32,8 @@ func IsHeadshot(object projectile, int damage_type)
 }
 
 
-func GetCorpseData(object projectile, int damage_type)
+func GetCorpseData()
 {
-	if (projectile)
-	{
-		lib_player_death.corpse_headshot = IsHeadshot(projectile, damage_type);
-		
-		if (damage_type & DMG_Explosion)
-		{
-			if (Inside(projectile->GetY() - GetY(), -6, 1))
-			{
-				lib_player_death.corpse_blasted_body = true;
-			}
-			else if (Inside(projectile->GetY() - GetY(), 1, 10))
-			{
-				lib_player_death.corpse_blasted_legs = true;
-			}
-			
-			lib_player_death.corpse_blasted = true;
-		}
-	}
-	
 	return lib_player_death;
 }
 
@@ -88,16 +69,47 @@ func Death(int killed_by)
 	// Make him a corpse
 	if (!IsCorpse())
 	{
-		var corpse_data = GetCorpseData();
+		this->OnDeathDetermineCorpseData();
 		this->OnDeathExitVehicle();
 		this->OnDeathThrowWeapon();
-		this->OnDeathSound(corpse_data);
-		this->OnDeathHandleCorpse(0, this, corpse_data);
+		this->OnDeathSound();
+		this->OnDeathHandleCorpse(0, this);
 	}
 
 	// Custom death announcement?
 	DeathAnnounceExtended(GetOwner(), GetKiller());
 	RemoveObject();
+}
+
+
+/**
+ Determines the way the corpse will look.
+ 
+ @par projectile The object that caused the death.
+ @par damage_type The damage type that caused the death.
+ */
+func OnDeathDetermineCorpseData(object projectile, int damage_type)
+{
+	if (projectile)
+	{
+		lib_player_death.corpse_headshot = IsHeadshot(projectile, damage_type);
+		
+		if (damage_type & DMG_Explosion)
+		{
+			if (Inside(projectile->GetY() - GetY(), -6, 1))
+			{
+				lib_player_death.corpse_blasted_body = true;
+			}
+			else if (Inside(projectile->GetY() - GetY(), 1, 10))
+			{
+				lib_player_death.corpse_blasted_legs = true;
+			}
+			
+			lib_player_death.corpse_blasted = true;
+		}
+	}
+	
+	return lib_player_death;
 }
 
 
@@ -182,18 +194,18 @@ func OnDeathExitVehicle()
  
  @par corpse_data Contains information on how the corpse looks, which is important for certain effects.
  */
-func OnDeathSound(proplist corpse_data)
+func OnDeathSound()
 {
 	var death_sound = nil;
-	if (!death_sound && corpse_data.corpse_blasted_body && !Random(3))
+	if (!death_sound && GetCorpseData().corpse_blasted_body && !Random(3))
 	{
 		death_sound = Format("%s_medic", CrewGetVoice());
 	}
-	if (!death_sound && corpse_data.corpse_blasted_legs && !Random(3))
+	if (!death_sound && GetCorpseData().corpse_blasted_legs && !Random(3))
 	{
 		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice());
 	}
-	if (!corpse_data.corpse_headshot)
+	if (!GetCorpseData().corpse_headshot)
 	{
 		DeathSound(death_sound);
 	}
@@ -210,7 +222,7 @@ func OnDeathSound(proplist corpse_data)
  @par corpse_data Further information on how the corpse looks, for example,
                   whether the head was removed.
  */
-func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_data)
+func OnDeathHandleCorpse(int damage_amount, object projectile)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -279,7 +291,7 @@ func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_d
 	}
 	
 	 // TODO: this is somewhat stupid because it is overriden by the values below?
-	if (corpse_data.Blast)
+	if (GetCorpseData().Blast)
 	{
 		cl_legs->SetSpeed(RandomX(-5, +5) + projectile->GetXDir() / divisor,
 						  RandomX(-5, +5) + projectile->GetYDir() / divisor);
@@ -304,14 +316,14 @@ func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_d
 	
 	var ydir_variance = 10;
 	
-	if (corpse_data.corpse_headshot)
+	if (GetCorpseData().corpse_headshot)
 	{
 		cl_head->SetPosition(GetX(), GetY() - 5);
 		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_head->SetRDir(rdir_corpse);
 		cl_head->~SetMaster();
 	}
-	if (corpse_data.corpse_blasted_body)
+	if (GetCorpseData().corpse_blasted_body)
 	{
 		deathcam_obj = cl_body;
 		cl_body->~SetMaster();
@@ -326,7 +338,7 @@ func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_d
 		cl_body->SetRDir(rdir_corpse);
 		cl_head->SetRDir(rdir_corpse);
 	}
-	if (corpse_data.corpse_blasted_legs)
+	if (GetCorpseData().corpse_blasted_legs)
 	{
 		deathcam_obj = cl_body;
 		cl_body->~SetMaster();
