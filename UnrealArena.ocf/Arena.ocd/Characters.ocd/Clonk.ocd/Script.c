@@ -1,6 +1,7 @@
 #include Clonk
 #include Library_ModularAppearance
 #include Library_UA_PlayerDamage
+#include Library_UA_PlayerDeath
 
 local skin_gender;
 local skin_team;
