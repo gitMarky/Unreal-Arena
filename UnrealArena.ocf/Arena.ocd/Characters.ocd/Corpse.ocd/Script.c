@@ -40,8 +40,20 @@ func StartSplatter()
 
 func OverlayDeathAnimation(int slot, string animation1, string animation2)
 {
-	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 40, ANIM_Hold), Anim_Const(300));
-	PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 80, ANIM_Hold), Anim_Const(300));
+	if (animation1 == nil)
+	{
+		FatalError("You have to pass at least one animation");
+	}
+	
+	var weight = 500;
+	if (animation2) weight = 300;
+
+	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 40, ANIM_Hold), Anim_Const(weight));
+
+	if (animation2)
+	{
+		PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 80, ANIM_Hold), Anim_Const(weight));
+	}
 }
 
 func CopyAnimationPositionFrom(object target)
