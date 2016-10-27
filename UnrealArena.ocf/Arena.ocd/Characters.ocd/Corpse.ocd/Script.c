@@ -7,19 +7,21 @@ func Initialize()
 	SetAction("Be");
 }
 
+local animation_main;
+local animation_side;
+
 func StartSplatter(bool on_ground)
 {
-	var name, stand;
 	if (on_ground)
 	{
-		name = "Dead";
-		stand = nil;
+		animation_main = "Dead";
+		animation_side = nil;
 	}
 	else
 	{
 		var side = "L"; if (Random(2)) side = "R";
-		name = Format("JumpUp.%s", side);
-		stand = "Stand";
+		animation_main = Format("JumpUp.%s", side);
+		animation_side = "Stand";
 	}
 	
 	var death = false;
@@ -31,12 +33,12 @@ func StartSplatter(bool on_ground)
 		if (number == nil) continue;
 
 		death = true;
-		OverlayDeathAnimation(slot, name, stand);
+		OverlayDeathAnimation(slot, animation_main, animation_side);
 	}
 	
 	if (!death) // add the animation on the lowest slot, so that blending is not disturbed
 	{
-		OverlayDeathAnimation(CLONK_ANIM_SLOT_Movement, name, stand);
+		OverlayDeathAnimation(CLONK_ANIM_SLOT_Movement, animation_main, animation_side);
 	}
 	
 	// Update carried items
@@ -85,7 +87,7 @@ func CopyAnimationPositionFrom(object target)
 
 func Flinch(int duration)
 {
-	var stand = "Stand";
+	var stand = animation_side ?? animation_main ?? "Stand";
 	var duration = 20;
 	PlayAnimation(stand, CLONK_ANIM_SLOT_Movement, Anim_Linear(0, 0, GetAnimationLength(stand), duration ?? 2, ANIM_Remove));
 }
