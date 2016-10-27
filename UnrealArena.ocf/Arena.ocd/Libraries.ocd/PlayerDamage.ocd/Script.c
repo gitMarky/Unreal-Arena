@@ -18,13 +18,6 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	var hit_y = projectile->GetY() - GetY();
 	
 	Log("Damaged for %d at %d/%d", damage_amount, hit_x, hit_y);
-	
-
-// TODO
-//	if (projectile)
-//	{
-//		LastDamageWeapon(pProjectile->~GetWeaponID(), true);
-//	}
 		
 	DoGoreEffects(projectile, damage_amount, is_headshot);	
 
