@@ -1,8 +1,18 @@
 
 func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type)
 {
-	var is_headshot = false;
-	var remaining_health = GetEnergy() - damage_amount;
+	var is_headshot = this->~IsHeadshot(projectile, damage_type);
+	var remaining_health;
+	
+	if (is_headshot)
+	{
+		remaining_health = 0;
+		// TODO: bDeathHeadshot = true;
+	}
+	else
+	{
+		remaining_health = GetEnergy() - damage_amount;
+	}
 	
 	var hit_x = projectile->GetX() - GetX();
 	var hit_y = projectile->GetY() - GetY();
@@ -15,18 +25,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 //	{
 //		LastDamageWeapon(pProjectile->~GetWeaponID(), true);
 //	}
-	
-	// hit in the head?
-	if (damage_type & DMG_Headshot)
-	{
-		if (Inside(hit_x, -7, 7) && Inside(hit_y, -10, -6))
-		{
-			is_headshot = true;
-			remaining_health = 0;
-			// TODO: bDeathHeadshot = true;
-		}
-	}
-	
+		
 	DoGoreEffects(projectile, damage_amount, is_headshot);	
 
 	// blow the clonk away if he is alive and it was an explosion
@@ -43,9 +42,10 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	}
 	else
 	{
+		var corpse_data = this->~GetCorpseData();
 		this->~OnDeathExitVehicle();
 		this->~OnDeathThrowWeapon(projectile);
-		this->~OnDeathExtended(damage_amount, damage_type, projectile, is_headshot);
+		this->~OnDeathExtended(damage_amount, damage_type, projectile, corpse_data);
 		
 		// Kill him for sure
 		DoEnergy(-100000, false, FX_Call_DmgScript, projectile->GetController());

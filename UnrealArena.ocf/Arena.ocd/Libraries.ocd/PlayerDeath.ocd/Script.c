@@ -1,6 +1,7 @@
 
 local lib_player_death;
 
+
 func Initialize()
 {
 	_inherited(...);
@@ -14,6 +15,14 @@ func Initialize()
 func IsCorpse()
 {
 	return lib_player_death.is_corpse;
+}
+
+
+func IsHeadshot(object projectile, int damage_type)
+{
+	var hit_x = projectile->GetX() - GetX();
+	var hit_y = projectile->GetY() - GetY();
+	return (damage_type & DMG_Headshot) && Inside(hit_x, -7, 7) && Inside(hit_y, -10, -6);
 }
 
 
@@ -117,7 +126,35 @@ func OnDeathExitVehicle()
 }
 
 
-func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool headshot)
+func GetCorpseData(object projectile, int damage_type)
+{
+	var is_blast_weapon = false;
+	if (damage_type & DMG_Explosion)
+	{
+		is_blast_weapon = true;
+	}
+	
+	var bodyshot, feetshot;
+	
+	if (is_blast_weapon)
+	{
+		if (Inside(projectile->GetY() - GetY(), -6, 1))
+			bodyshot = true;
+		if (Inside(projectile->GetY() - GetY(), 1, 10))
+			feetshot = true;
+	}
+	
+	return {
+		Headshot = IsHeadshot(projectile, damage_type),
+		BlastBody = bodyshot,
+		BlastLegs = feetshot,
+		RipArmR = false,
+		RipArmL = false,
+	};
+}
+
+
+func OnDeathExtended(int damage_amount, int damage_type, object projectile, int corpse_data)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -129,23 +166,6 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 
 	var divisor = 1 + MOD_FastBullets();
 	
-	var is_blast_weapon = false;
-	if (damage_type & DMG_Explosion)
-	{
-		is_blast_weapon = true;
-		Log("BlastAttack");
-	}
-	
-	var bodyshot, feetshot;
-	
-
-	if (is_blast_weapon)
-	{
-		if (Inside(projectile->GetY() - GetY(), -6, 1))
-			bodyshot = true;
-		if (Inside(projectile->GetY() - GetY(), 1, 10))
-			feetshot = true;
-	}
 	
 	// Projektil sehr schnell: zurückschleudern;
 	if (Abs(projectile->GetXDir()) > 140)
@@ -203,7 +223,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	}
 	
 	 // TODO: this is somewhat stupid because it is overriden by the values below?
-	if (is_blast_weapon)
+	if (damage_type & DMG_Explosion)
 	{
 		cl_legs->SetSpeed(RandomX(-5, +5) + projectile->GetXDir() / divisor,
 						  RandomX(-5, +5) + projectile->GetYDir() / divisor);
@@ -228,14 +248,14 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	
 	var ydir_variance = 10;
 	
-	if (headshot)
+	if (corpse_data.Headshot)
 	{
 		cl_head->SetPosition(GetX(), GetY() - 5);
 		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_head->SetRDir(rdir_corpse);
 		cl_head->~SetMaster();
 	}
-	if (bodyshot)
+	if (corpse_data.BlastBody)
 	{
 		deathcam_obj = cl_body;
 		cl_body->~SetMaster();
@@ -250,7 +270,7 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 		cl_body->SetRDir(rdir_corpse);
 		cl_head->SetRDir(rdir_corpse);
 	}
-	if (feetshot)
+	if (corpse_data.BlastLegs)
 	{
 		deathcam_obj = cl_body;
 		cl_body->~SetMaster();
@@ -269,15 +289,15 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	// sound effects
 
 	var death_sound = nil;
-	if (!death_sound && bodyshot && !Random(3))
+	if (!death_sound && corpse_data.BlastBody && !Random(3))
 	{
 		death_sound = Format("%s_medic", CrewGetVoice(this));
 	}
-	if (!death_sound && feetshot && !Random(3))
+	if (!death_sound && corpse_data.BlastLegs && !Random(3))
 	{
 		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice(this));
 	}
-	if (!headshot)
+	if (!corpse_data.Headshot)
 	{
 		DeathSound(death_sound);
 	}
