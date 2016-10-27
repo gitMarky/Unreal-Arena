@@ -26,7 +26,58 @@ func IsHeadshot(object projectile, int damage_type)
 }
 
 
-protected func Death(int killed_by)
+func GetCorpseData(object projectile, int damage_type)
+{
+	var is_headshot = false, is_bodyshot = false, is_feetshot = false, is_blasted = false;
+
+	if (projectile)
+	{
+		is_headshot = IsHeadshot(projectile, damage_type);
+		
+		if (damage_type & DMG_Explosion)
+		{
+			if (Inside(projectile->GetY() - GetY(), -6, 1))
+			{
+				is_bodyshot = true;
+			}
+			else if (Inside(projectile->GetY() - GetY(), 1, 10))
+			{
+				is_feetshot = true;
+			}
+			
+			is_blasted = true;
+		}
+	}
+	
+	return {
+		Headshot = is_headshot,
+		Blast = is_blasted,
+		BlastBody = is_bodyshot,
+		BlastLegs = is_feetshot,
+		RipArmR = false,
+		RipArmL = false,
+	};
+}
+
+
+func DeathSound(string sound)
+{
+	if (IsCorpse()) return;
+
+	Sound(sound ?? Format("%s_death0*", CrewGetVoice()));
+}
+
+
+func CrewGetVoice()
+{
+	// TODO
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Death and events on death
+
+func Death(int killed_by)
 {
 	// Do not announce the death as usual!
 	this.silent_death = true;
@@ -129,38 +180,40 @@ func OnDeathExitVehicle()
 }
 
 
-func GetCorpseData(object projectile, int damage_type)
+/**
+ Handles the way sounds are played when the clonk dies.
+ 
+ @par corpse_data Contains information on how the corpse looks, which is important for certain effects.
+ */
+func OnDeathSound(proplist corpse_data)
 {
-	var is_headshot = false, is_bodyshot = false, is_feetshot = false;
-
-	if (projectile)
+	var death_sound = nil;
+	if (!death_sound && corpse_data.BlastBody && !Random(3))
 	{
-		is_headshot = IsHeadshot(projectile, damage_type);
-		
-		if (damage_type & DMG_Explosion)
-		{
-			if (Inside(projectile->GetY() - GetY(), -6, 1))
-			{
-				is_bodyshot = true;
-			}
-			else if (Inside(projectile->GetY() - GetY(), 1, 10))
-			{
-				is_feetshot = true;
-			}
-		}
+		death_sound = Format("%s_medic", CrewGetVoice());
 	}
-	
-	return {
-		Headshot = is_headshot,
-		BlastBody = is_bodyshot,
-		BlastLegs = is_feetshot,
-		RipArmR = false,
-		RipArmL = false,
-	};
+	if (!death_sound && corpse_data.BlastLegs && !Random(3))
+	{
+		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice());
+	}
+	if (!corpse_data.Headshot)
+	{
+		DeathSound(death_sound);
+	}
 }
 
 
-func OnDeathHandleCorpse(int damage_amount, int damage_type, object projectile, proplist corpse_data)
+/**
+ Creates a corpse effect and handles the way it looks, based on certain parameters.
+ 
+ @par damage_amount The amount of damage that lead to death.
+                    A higher value usually means that gore will fly further.
+ @par projectile The projectile that caused death. Will be important for the
+                 direction that the corpse flies.
+ @par corpse_data Further information on how the corpse looks, for example,
+                  whether the head was removed.
+ */
+func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_data)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -229,7 +282,7 @@ func OnDeathHandleCorpse(int damage_amount, int damage_type, object projectile, 
 	}
 	
 	 // TODO: this is somewhat stupid because it is overriden by the values below?
-	if (damage_type & DMG_Explosion)
+	if (corpse_data.Blast)
 	{
 		cl_legs->SetSpeed(RandomX(-5, +5) + projectile->GetXDir() / divisor,
 						  RandomX(-5, +5) + projectile->GetYDir() / divisor);
@@ -300,35 +353,4 @@ func OnDeathHandleCorpse(int damage_amount, int damage_type, object projectile, 
 	{
 		AddEffect("DeathCam", deathcam_obj, 200, 1, nil, Library_UA_PlayerDeath, GetOwner());
 	}
-}
-
-
-func OnDeathSound(proplist corpse_data)
-{
-	var death_sound = nil;
-	if (!death_sound && corpse_data.BlastBody && !Random(3))
-	{
-		death_sound = Format("%s_medic", CrewGetVoice());
-	}
-	if (!death_sound && corpse_data.BlastLegs && !Random(3))
-	{
-		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice());
-	}
-	if (!corpse_data.Headshot)
-	{
-		DeathSound(death_sound);
-	}
-}
-
-func DeathSound(string sound)
-{
-	if (IsCorpse()) return;
-
-	Sound(sound ?? Format("%s_death0*", CrewGetVoice()));
-}
-
-
-func CrewGetVoice()
-{
-	// TODO
 }
