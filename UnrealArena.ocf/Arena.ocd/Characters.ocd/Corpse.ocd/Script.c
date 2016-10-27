@@ -7,11 +7,20 @@ func Initialize()
 	SetAction("Be");
 }
 
-func StartSplatter()
+func StartSplatter(bool on_ground)
 {
-	var side = "L"; if (Random(2)) side = "R";
-	var name = Format("JumpUp.%s", side);
-	var stand = "Stand";
+	var name, stand;
+	if (on_ground)
+	{
+		name = "Dead";
+		stand = nil;
+	}
+	else
+	{
+		var side = "L"; if (Random(2)) side = "R";
+		name = Format("JumpUp.%s", side);
+		stand = "Stand";
+	}
 	
 	var death = false;
 	
