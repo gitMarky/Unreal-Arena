@@ -253,6 +253,16 @@ func OnDeathHandleCorpse()
 	GetCorpseData().is_corpse = true;
 	
 	if (Contained()) return;
+}
+
+
+// Outdated function, as a reference
+func OnDeathHandleCorpseLegacy()
+{
+	if (IsCorpse()) return;
+	GetCorpseData().is_corpse = true;
+	
+	if (Contained()) return;
 
 	//------------------------------------------
 	// determine settings for effects
@@ -395,6 +405,9 @@ func OnDeathHandleCorpse()
 // Handling the corpse
 
 
+/**
+ Creates a corpse. The corpse parts have to be assigned with
+ */
 func CreateCorpse()
 {
 	var corpse = CreateObject(UA_Clonk_Corpse, 0, 0, NO_OWNER);
