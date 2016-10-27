@@ -48,6 +48,7 @@ func GetSkinTextures()
            };
 }
 
+// TODO: Remove - this is great for testing, though
 func Splatter()
 {
 	DoSplatter(RemoveAppearance(0))->VertexSetupBody();
@@ -58,6 +59,7 @@ func Splatter()
 }
 
 
+// TODO: Remove - this is great for testing, though
 func DoSplatter(proplist skin)
 {
 	if (!skin) return;
