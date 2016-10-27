@@ -73,18 +73,31 @@ func Death(int killed_by)
 	if (GetAlive()) return;
 	
 	// Make him a corpse
-	if (!IsCorpse())
-	{
-		this->OnDeathDetermineCorpseData();
-		this->OnDeathExitVehicle();
-		this->OnDeathThrowWeapon();
-		this->OnDeathSound();
-		this->OnDeathHandleCorpse();
-	}
+	OnDeathBecomeCorpse();
 
 	// Custom death announcement?
 	DeathAnnounceExtended(GetOwner(), GetKiller());
 	RemoveObject();
+}
+
+
+/**
+ This is what happens when the player becomes a corpse.
+ 
+ @par projectile The object that caused death.
+ @par damage_amount The amount of damage that caused death.
+ @par damage_type The damage type that caused death.
+ */
+func OnDeathBecomeCorpse(object projectile, int damage_amount, int damage_type)
+{
+	if (!IsCorpse()) // Do this only if you are not yet a corpse, so that multiple hits per round, etc., cannot mess with the stats
+	{
+		this->OnDeathDetermineCorpseData(projectile, damage_amount, damage_type);
+		this->OnDeathExitVehicle();
+		this->OnDeathThrowWeapon();
+		this->OnDeathSound();
+		this->OnDeathHandleCorpse(); // this is where the player actually becomes a corpse
+	}
 }
 
 
