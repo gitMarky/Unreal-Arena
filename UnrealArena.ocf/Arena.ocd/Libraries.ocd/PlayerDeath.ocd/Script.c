@@ -40,8 +40,11 @@ protected func Death(int killed_by)
 	// Make him a corpse
 	if (!IsCorpse())
 	{
-		OnDeathThrowWeapon();
-		OnDeathExtended(0, DMG_Melee, this, false);
+		var corpse_data = GetCorpseData();
+		this->OnDeathExitVehicle();
+		this->OnDeathThrowWeapon();
+		this->OnDeathSound(corpse_data);
+		this->OnDeathExtended(0, DMG_Melee, this, corpse_data);
 	}
 
 	// Custom death announcement?
@@ -128,33 +131,36 @@ func OnDeathExitVehicle()
 
 func GetCorpseData(object projectile, int damage_type)
 {
-	var is_blast_weapon = false;
-	if (damage_type & DMG_Explosion)
+	var is_headshot = false, is_bodyshot = false, is_feetshot = false;
+
+	if (projectile)
 	{
-		is_blast_weapon = true;
-	}
-	
-	var bodyshot, feetshot;
-	
-	if (is_blast_weapon)
-	{
-		if (Inside(projectile->GetY() - GetY(), -6, 1))
-			bodyshot = true;
-		if (Inside(projectile->GetY() - GetY(), 1, 10))
-			feetshot = true;
+		is_headshot = IsHeadshot(projectile, damage_type);
+		
+		if (damage_type & DMG_Explosion)
+		{
+			if (Inside(projectile->GetY() - GetY(), -6, 1))
+			{
+				is_bodyshot = true;
+			}
+			else if (Inside(projectile->GetY() - GetY(), 1, 10))
+			{
+				is_feetshot = true;
+			}
+		}
 	}
 	
 	return {
-		Headshot = IsHeadshot(projectile, damage_type),
-		BlastBody = bodyshot,
-		BlastLegs = feetshot,
+		Headshot = is_headshot,
+		BlastBody = is_bodyshot,
+		BlastLegs = is_feetshot,
 		RipArmR = false,
 		RipArmL = false,
 	};
 }
 
 
-func OnDeathExtended(int damage_amount, int damage_type, object projectile, int corpse_data)
+func OnDeathExtended(int damage_amount, int damage_type, object projectile, proplist corpse_data)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
@@ -284,23 +290,6 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, int 
 			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		}
 	}
-	
-	//------------------------------------------
-	// sound effects
-
-	var death_sound = nil;
-	if (!death_sound && corpse_data.BlastBody && !Random(3))
-	{
-		death_sound = Format("%s_medic", CrewGetVoice(this));
-	}
-	if (!death_sound && corpse_data.BlastLegs && !Random(3))
-	{
-		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice(this));
-	}
-	if (!corpse_data.Headshot)
-	{
-		DeathSound(death_sound);
-	}
 
 	//------------------------------------------
 	// follow the corpse
@@ -314,10 +303,30 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, int 
 }
 
 
-func DeathSound()
+func OnDeathSound(proplist corpse_data)
 {
-	// TODO
+	var death_sound = nil;
+	if (!death_sound && corpse_data.BlastBody && !Random(3))
+	{
+		death_sound = Format("%s_medic", CrewGetVoice());
+	}
+	if (!death_sound && corpse_data.BlastLegs && !Random(3))
+	{
+		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice());
+	}
+	if (!corpse_data.Headshot)
+	{
+		DeathSound(death_sound);
+	}
 }
+
+func DeathSound(string sound)
+{
+	if (IsCorpse()) return;
+
+	Sound(sound ?? Format("%s_death0*", CrewGetVoice()));
+}
+
 
 func CrewGetVoice()
 {

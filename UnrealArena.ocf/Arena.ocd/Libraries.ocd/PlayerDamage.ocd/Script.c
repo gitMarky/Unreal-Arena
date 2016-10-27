@@ -45,6 +45,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 		var corpse_data = this->~GetCorpseData();
 		this->~OnDeathExitVehicle();
 		this->~OnDeathThrowWeapon(projectile);
+		this->~OnDeathSound(corpse_data);
 		this->~OnDeathExtended(damage_amount, damage_type, projectile, corpse_data);
 		
 		// Kill him for sure
