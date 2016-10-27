@@ -9,6 +9,7 @@ func Initialize()
 	lib_player_death = 
 	{
 		is_corpse = false,
+		on_ground = false,
 		corpse_headshot = false,
 		corpse_blasted = false,
 		corpse_blasted_body = false,
@@ -141,7 +142,12 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 		
 	}
 	
-	return lib_player_death;
+	if (GetContact(-1) & CNAT_Bottom)
+	{
+		GetCorpseData().on_ground = true;
+	}
+	
+	return GetCorpseData();
 }
 
 
@@ -249,10 +255,18 @@ func OnDeathSound()
  */
 func OnDeathHandleCorpse()
 {
+	// Use some safety here, so that the player does not become a corpse multiple times
 	if (IsCorpse()) return;
 	GetCorpseData().is_corpse = true;
 	
+	// This has no effect inside a building or vehicle
 	if (Contained()) return;
+	
+	// Handle the different death types; this will differentiate between headshots and so on later
+	if (true) // Standard death
+	{
+		HandleCorpseDefault();
+	}
 }
 
 
@@ -430,4 +444,27 @@ func CreateCorpse()
 	corpse->CopyAnimationPositionFrom(this);
 	//corpse->StartSplatter();
 	return corpse;
+}
+
+
+/**
+ The default death "animation".
+ */
+func HandleCorpseDefault()
+{
+	// Create the corpse
+	var corpse = CreateCorpse();
+	
+	// Copy the physics data
+	corpse->SetXDir(GetXDir());
+	corpse->SetYDir(GetYDir());
+	
+	// Copy the whole skin to the corpse
+	for (var slot = 0; slot < PLAYER_SKIN_SLOT_HEAD; ++slot)
+	{
+		corpse->AddAppearance(slot, this->RemoveAppearance(slot));
+	}
+	
+	// Start the animation
+	corpse->StartSplatter(GetCorpseData().on_ground);
 }
