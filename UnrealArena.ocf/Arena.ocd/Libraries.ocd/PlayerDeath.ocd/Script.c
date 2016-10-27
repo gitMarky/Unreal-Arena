@@ -205,7 +205,6 @@ func OnDeathThrowWeapon(object projectile)
 		weapon->SetSpeed(xdir, ydir);
 		weapon->SetRDir(rdir);
 		weapon->SetCategory(C4D_Vehicle); // the weapon should not hurt objects
-		//TODO: this should not be necessary Schedule("Disintegrate(0,20,50,-10)", 100, 0, weapon);
 	}
 	
 	var contents = FindObjects(Find_Container(this));
