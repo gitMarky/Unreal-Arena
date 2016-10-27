@@ -462,7 +462,7 @@ func HandleCorpseDefault()
 	corpse->SetYDir(GetYDir());
 	
 	// Copy the whole skin to the corpse
-	for (var slot = 0; slot < PLAYER_SKIN_SLOT_HEAD; ++slot)
+	for (var slot = 0; slot <= PLAYER_SKIN_SLOT_HEAD; ++slot)
 	{
 		corpse->AddAppearance(slot, this->RemoveAppearance(slot));
 	}
