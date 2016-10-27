@@ -5,6 +5,12 @@
 local skin_gender;
 local skin_team;
 
+static const PLAYER_SKIN_SLOT_BODY = 0;
+static const PLAYER_SKIN_SLOT_LEGS = 1;
+static const PLAYER_SKIN_SLOT_ARML = 2;
+static const PLAYER_SKIN_SLOT_ARMR = 3;
+static const PLAYER_SKIN_SLOT_HEAD = 4;
+
 func SetSkin(int new_skin)
 {
 	// Remember skin
@@ -28,11 +34,11 @@ func SetSkin(int new_skin)
 	var skins = GetSkinTextures();
 
 	// TODO: use the actual skin data instead of predefined strings
-	AddAppearance(0, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms]});
-	AddAppearance(1, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = ["gore_torso", skins.legs, skins.arms]});
-	AddAppearance(2, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
-	AddAppearance(3, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
-	AddAppearance(4, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.head]});
+	AddAppearance(PLAYER_SKIN_SLOT_BODY, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierBody", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms]});
+	AddAppearance(PLAYER_SKIN_SLOT_LEGS, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierLegs", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = ["gore_torso", skins.legs, skins.arms]});
+	AddAppearance(PLAYER_SKIN_SLOT_ARML, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmL", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
+	AddAppearance(PLAYER_SKIN_SLOT_ARMR, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierArmR", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.body, skins.arms, skins.head]});
+	AddAppearance(PLAYER_SKIN_SLOT_HEAD, new Skin_Definition { GraphicsDefinition = UA_Clonk_Skins, GraphicsName = "MSoldierHead", Flags = AM_DrawBefore | AM_MatchSkeleton, MeshMaterial = [skins.head]});
 
 	return skin;
 }
@@ -51,11 +57,11 @@ func GetSkinTextures()
 // TODO: Remove - this is great for testing, though
 func Splatter()
 {
-	DoSplatter(RemoveAppearance(0))->VertexSetupBody();
-	DoSplatter(RemoveAppearance(1))->VertexSetupLegs();
-	DoSplatter(RemoveAppearance(2))->VertexSetupArmL();
-	DoSplatter(RemoveAppearance(3))->VertexSetupArmR();
-	DoSplatter(RemoveAppearance(4))->VertexSetupHead();
+	DoSplatter(RemoveAppearance(PLAYER_SKIN_SLOT_BODY))->VertexSetupBody();
+	DoSplatter(RemoveAppearance(PLAYER_SKIN_SLOT_LEGS))->VertexSetupLegs();
+	DoSplatter(RemoveAppearance(PLAYER_SKIN_SLOT_ARML))->VertexSetupArmL();
+	DoSplatter(RemoveAppearance(PLAYER_SKIN_SLOT_ARMR))->VertexSetupArmR();
+	DoSplatter(RemoveAppearance(PLAYER_SKIN_SLOT_HEAD))->VertexSetupHead();
 }
 
 
