@@ -104,19 +104,25 @@ func OnDeathThrowWeapon(object projectile)
 }
 
 
+/**
+ Ejects the Clonk from an open vehicle. Closed vehicles, such as
+ a tank, are ignored.
+ */
+func OnDeathExitVehicle()
+{
+	if (Contained() && Contained()->~IsOpenVehicle())
+	{
+		Contained()->~ExitPassenger(this);
+	}
+}
+
+
 func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool headshot)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
 	
-	//------------------------------------------
-	// cleanup stuff
-	
-	// In einem Fahrzeug? Rausschmeissen!
-	if (Contained()->~IsVehicle())
-	{
-		Contained()->~ExitPassenger(this);
-	}
+	if (Contained()) return;
 
 	//------------------------------------------
 	// determine settings for effects
