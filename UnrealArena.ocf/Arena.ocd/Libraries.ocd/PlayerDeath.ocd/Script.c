@@ -44,7 +44,7 @@ protected func Death(int killed_by)
 		this->OnDeathExitVehicle();
 		this->OnDeathThrowWeapon();
 		this->OnDeathSound(corpse_data);
-		this->OnDeathExtended(0, DMG_Melee, this, corpse_data);
+		this->OnDeathHandleCorpse(0, DMG_Melee, this, corpse_data);
 	}
 
 	// Custom death announcement?
@@ -160,7 +160,7 @@ func GetCorpseData(object projectile, int damage_type)
 }
 
 
-func OnDeathExtended(int damage_amount, int damage_type, object projectile, proplist corpse_data)
+func OnDeathHandleCorpse(int damage_amount, int damage_type, object projectile, proplist corpse_data)
 {
 	if (IsCorpse()) return;
 	lib_player_death.is_corpse = true;
