@@ -9,6 +9,12 @@ func Initialize()
 	lib_player_death = 
 	{
 		is_corpse = false,
+		corpse_headshot = false,
+		corpse_blasted = false,
+		corpse_blasted_body = false,
+		corpse_blasted_legs = false,
+		corpse_lost_arm_r = false,
+		corpse_lost_arm_l = false,
 	};
 }
 
@@ -28,35 +34,26 @@ func IsHeadshot(object projectile, int damage_type)
 
 func GetCorpseData(object projectile, int damage_type)
 {
-	var is_headshot = false, is_bodyshot = false, is_feetshot = false, is_blasted = false;
-
 	if (projectile)
 	{
-		is_headshot = IsHeadshot(projectile, damage_type);
+		lib_player_death.corpse_headshot = IsHeadshot(projectile, damage_type);
 		
 		if (damage_type & DMG_Explosion)
 		{
 			if (Inside(projectile->GetY() - GetY(), -6, 1))
 			{
-				is_bodyshot = true;
+				lib_player_death.corpse_blasted_body = true;
 			}
 			else if (Inside(projectile->GetY() - GetY(), 1, 10))
 			{
-				is_feetshot = true;
+				lib_player_death.corpse_blasted_legs = true;
 			}
 			
-			is_blasted = true;
+			lib_player_death.corpse_blasted = true;
 		}
 	}
 	
-	return {
-		Headshot = is_headshot,
-		Blast = is_blasted,
-		BlastBody = is_bodyshot,
-		BlastLegs = is_feetshot,
-		RipArmR = false,
-		RipArmL = false,
-	};
+	return lib_player_death;
 }
 
 
@@ -95,7 +92,7 @@ func Death(int killed_by)
 		this->OnDeathExitVehicle();
 		this->OnDeathThrowWeapon();
 		this->OnDeathSound(corpse_data);
-		this->OnDeathHandleCorpse(0, DMG_Melee, this, corpse_data);
+		this->OnDeathHandleCorpse(0, this, corpse_data);
 	}
 
 	// Custom death announcement?
@@ -188,15 +185,15 @@ func OnDeathExitVehicle()
 func OnDeathSound(proplist corpse_data)
 {
 	var death_sound = nil;
-	if (!death_sound && corpse_data.BlastBody && !Random(3))
+	if (!death_sound && corpse_data.corpse_blasted_body && !Random(3))
 	{
 		death_sound = Format("%s_medic", CrewGetVoice());
 	}
-	if (!death_sound && corpse_data.BlastLegs && !Random(3))
+	if (!death_sound && corpse_data.corpse_blasted_legs && !Random(3))
 	{
 		death_sound = Format("%s_cant_feel_my_legs", CrewGetVoice());
 	}
-	if (!corpse_data.Headshot)
+	if (!corpse_data.corpse_headshot)
 	{
 		DeathSound(death_sound);
 	}
@@ -307,14 +304,14 @@ func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_d
 	
 	var ydir_variance = 10;
 	
-	if (corpse_data.Headshot)
+	if (corpse_data.corpse_headshot)
 	{
 		cl_head->SetPosition(GetX(), GetY() - 5);
 		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
 		cl_head->SetRDir(rdir_corpse);
 		cl_head->~SetMaster();
 	}
-	if (corpse_data.BlastBody)
+	if (corpse_data.corpse_blasted_body)
 	{
 		deathcam_obj = cl_body;
 		cl_body->~SetMaster();
@@ -329,7 +326,7 @@ func OnDeathHandleCorpse(int damage_amount, object projectile, proplist corpse_d
 		cl_body->SetRDir(rdir_corpse);
 		cl_head->SetRDir(rdir_corpse);
 	}
-	if (corpse_data.BlastLegs)
+	if (corpse_data.corpse_blasted_legs)
 	{
 		deathcam_obj = cl_body;
 		cl_body->~SetMaster();
