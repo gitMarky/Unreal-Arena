@@ -31,6 +31,7 @@ protected func Death(int killed_by)
 	// Make him a corpse
 	if (!IsCorpse())
 	{
+		OnDeathThrowWeapon();
 		OnDeathExtended(0, DMG_Melee, this, false);
 	}
 
@@ -73,7 +74,7 @@ func DeathAnnounceExtended(int plr, int killplr)
  
  @par projectile The projectile that hit the user.
  */
-func DeathThrowWeapon(object projectile)
+func OnDeathThrowWeapon(object projectile)
 {
 	var weapon = Contents();
 	if (weapon)
@@ -111,8 +112,6 @@ func OnDeathExtended(int damage_amount, int damage_type, object projectile, bool
 	//------------------------------------------
 	// cleanup stuff
 	
-	DeathThrowWeapon(projectile);
-
 	// In einem Fahrzeug? Rausschmeissen!
 	if (Contained()->~IsVehicle())
 	{

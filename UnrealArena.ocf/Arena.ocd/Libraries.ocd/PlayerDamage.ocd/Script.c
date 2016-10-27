@@ -43,6 +43,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	}
 	else
 	{
+		this->~OnDeathThrowWeapon(projectile);
 		this->~OnDeathExtended(damage_amount, damage_type, projectile, is_headshot);
 		
 		// Kill him for sure
