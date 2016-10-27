@@ -101,13 +101,13 @@ func Death(int killed_by)
 }
 
 
-func DeathAnnounceExtended(int plr, int killplr)
+func DeathAnnounceExtended(int player, int killed_by_player)
 {
 // TODO
 /*
 	if (GetEffect("NoAnnounce", this)) return;
 
-	if (killplr == NO_OWNER) return;
+	if (killed_by_player == NO_OWNER) return;
 	if ( bDeathHeadshot )
 	{
 		bDeathHeadshot = false;
@@ -115,16 +115,16 @@ func DeathAnnounceExtended(int plr, int killplr)
 	}
 
 	// suicide?
-	if(plr == killplr)
-		  HHKS->SKMsg(plr);
+	if(plr == killed_by_player)
+		  HHKS->SKMsg(player);
 	else
-		HHKS->KTMsg(killplr, plr, clonk->~LastDamageType(),clonk->~LastDamageWeapon());
+		HHKS->KTMsg(killed_by_player, player, clonk->~LastDamageType(),clonk->~LastDamageWeapon());
 
 
 	//Killstatistik.
 	//Zwar ungenau wenn mehrere Clonks eines Spielers im Spiel sind,
 	//aber wann ist das schon der Fall?
-	HHKS->KillStat(GetCursor(killplr),plr);
+	HHKS->KillStat(GetCursor(killed_by_player), player);
 */
 }
 
