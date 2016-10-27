@@ -42,11 +42,11 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	}
 	else
 	{
-		this->~OnDeathDetermineCorpseData(projectile, damage_type);
+		this->~OnDeathDetermineCorpseData(projectile, damage_amount, damage_type);
 		this->~OnDeathExitVehicle();
-		this->~OnDeathThrowWeapon(projectile);
+		this->~OnDeathThrowWeapon();
 		this->~OnDeathSound();
-		this->~OnDeathHandleCorpse(damage_amount, projectile);
+		this->~OnDeathHandleCorpse();
 		
 		// Kill him for sure
 		DoEnergy(-100000, false, FX_Call_DmgScript, projectile->GetController());

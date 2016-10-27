@@ -15,20 +15,26 @@ func Initialize()
 		corpse_blasted_legs = false,
 		corpse_lost_arm_r = false,
 		corpse_lost_arm_l = false,
+		damage_amount = 0,
+		damage_type = DMG_Suicide,
+		hit_x = 0,
+		hit_y = 0,
+		hit_xdir = 0,
+		hit_ydir = 0,
 	};
 }
 
 func IsCorpse()
 {
-	return lib_player_death.is_corpse;
+	return GetCorpseData().is_corpse;
 }
 
 
-func IsHeadshot(object projectile, int damage_type)
+func IsHeadshot()
 {
-	var hit_x = projectile->GetX() - GetX();
-	var hit_y = projectile->GetY() - GetY();
-	return (damage_type & DMG_Headshot) && Inside(hit_x, -7, 7) && Inside(hit_y, -10, -6);
+	return (GetCorpseData().damage_type & DMG_Headshot)
+	    && Inside(GetCorpseData().hit_x, -7, 7)
+	    && Inside(GetCorpseData().hit_y, -10, -6);
 }
 
 
@@ -73,7 +79,7 @@ func Death(int killed_by)
 		this->OnDeathExitVehicle();
 		this->OnDeathThrowWeapon();
 		this->OnDeathSound();
-		this->OnDeathHandleCorpse(0, this);
+		this->OnDeathHandleCorpse();
 	}
 
 	// Custom death announcement?
@@ -85,28 +91,41 @@ func Death(int killed_by)
 /**
  Determines the way the corpse will look.
  
- @par projectile The object that caused the death.
- @par damage_type The damage type that caused the death.
+ @par projectile The object that caused death.
+ @par damage_amount The amount of damage that caused death.
+ @par damage_type The damage type that caused death.
  */
-func OnDeathDetermineCorpseData(object projectile, int damage_type)
+func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage_type)
 {
 	if (projectile)
 	{
-		lib_player_death.corpse_headshot = IsHeadshot(projectile, damage_type);
+		// Get all basic info from the projectile first
+	
+		GetCorpseData().hit_x = projectile->GetX() - GetX();
+		GetCorpseData().hit_y = projectile->GetY() - GetY();
+		GetCorpseData().hit_xdir = projectile->GetXDir();
+		GetCorpseData().hit_ydir = projectile->GetYDir();
+		GetCorpseData().damage_amount = Abs(damage_amount);
+		GetCorpseData().damage_type = damage_type ?? DMG_Suicide;
+
+		// Determine advanced info
+		
+		GetCorpseData().corpse_headshot = IsHeadshot();
 		
 		if (damage_type & DMG_Explosion)
 		{
 			if (Inside(projectile->GetY() - GetY(), -6, 1))
 			{
-				lib_player_death.corpse_blasted_body = true;
+				GetCorpseData().corpse_blasted_body = true;
 			}
 			else if (Inside(projectile->GetY() - GetY(), 1, 10))
 			{
-				lib_player_death.corpse_blasted_legs = true;
+				GetCorpseData().corpse_blasted_legs = true;
 			}
 			
-			lib_player_death.corpse_blasted = true;
+			GetCorpseData().corpse_blasted = true;
 		}
+		
 	}
 	
 	return lib_player_death;
@@ -157,9 +176,9 @@ func OnDeathThrowWeapon(object projectile)
 		var rdir = RandomX(-5, 5);
 		if (projectile)
 		{
-			xdir += projectile->GetXDir() / 3;
-			ydir += projectile->GetYDir() / 3;
-			rdir += (projectile->GetXDir() + projectile->GetYDir()) / 10;
+			xdir += GetCorpseData().hit_xdir / 3;
+			ydir += GetCorpseData().hit_ydir / 3;
+			rdir += (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir) / 10;
 		}
 		xdir /= 2;
 		ydir /= 2;
@@ -214,18 +233,11 @@ func OnDeathSound()
 
 /**
  Creates a corpse effect and handles the way it looks, based on certain parameters.
- 
- @par damage_amount The amount of damage that lead to death.
-                    A higher value usually means that gore will fly further.
- @par projectile The projectile that caused death. Will be important for the
-                 direction that the corpse flies.
- @par corpse_data Further information on how the corpse looks, for example,
-                  whether the head was removed.
  */
-func OnDeathHandleCorpse(int damage_amount, object projectile)
+func OnDeathHandleCorpse()
 {
 	if (IsCorpse()) return;
-	lib_player_death.is_corpse = true;
+	GetCorpseData().is_corpse = true;
 	
 	if (Contained()) return;
 
@@ -236,30 +248,30 @@ func OnDeathHandleCorpse(int damage_amount, object projectile)
 	
 	
 	// Projektil sehr schnell: zurückschleudern;
-	if (Abs(projectile->GetXDir()) > 140)
+	if (Abs(GetCorpseData().hit_xdir) > 140)
 	{
-		SetSpeed(GetXDir() + projectile->GetXDir() / (4 * divisor),
-		         GetYDir() + projectile->GetYDir() / (4 * divisor));
+		SetSpeed(GetXDir() + GetCorpseData().hit_xdir / (4 * divisor),
+		         GetYDir() + GetCorpseData().hit_ydir / (4 * divisor));
 	}
 	else
 	{
 		
-		SetSpeed(GetXDir() + projectile->GetXDir() / (8 * divisor),
-				 GetYDir() + projectile->GetYDir() / (8 * divisor));
+		SetSpeed(GetXDir() + GetCorpseData().hit_xdir / (8 * divisor),
+				 GetYDir() + GetCorpseData().hit_ydir / (8 * divisor));
 	}
 	
 	// MoreGore aktiviert?
 	if (!MOD_NoBlood())
 	{
-		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(Abs(damage_amount)));
-		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(Abs(damage_amount)));
+		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(GetCorpseData().damage_amount));
+		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(GetCorpseData().damage_amount));
 		
 	}
 	
 	//------------------------------------------
 	// set up the corpse
 
-	var rdir_base = (projectile->GetXDir() + projectile->GetYDir());
+	var rdir_base = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir);
 
 	var cl_body, cl_head, cl_legs;
 	
@@ -293,8 +305,8 @@ func OnDeathHandleCorpse(int damage_amount, object projectile)
 	 // TODO: this is somewhat stupid because it is overriden by the values below?
 	if (GetCorpseData().Blast)
 	{
-		cl_legs->SetSpeed(RandomX(-5, +5) + projectile->GetXDir() / divisor,
-						  RandomX(-5, +5) + projectile->GetYDir() / divisor);
+		cl_legs->SetSpeed(RandomX(-5, +5) + GetCorpseData().hit_xdir / divisor,
+						  RandomX(-5, +5) + GetCorpseData().hit_ydir / divisor);
 		var rdir_legs = cl_legs->GetXDir() + cl_legs->GetYDir();
 		cl_legs->SetRDir(rdir_legs);
 		cl_head->SetRDir(rdir_legs / 2);
@@ -310,8 +322,8 @@ func OnDeathHandleCorpse(int damage_amount, object projectile)
 	/* Teile anpassen */
 	var deathcam_obj = cl_legs;
 	
-	var xdir_corpse = GetXDir() + projectile->GetXDir() / (3 * divisor);
-	var ydir_corpse = GetYDir() + projectile->GetYDir() / (3 * divisor);
+	var xdir_corpse = GetXDir() + GetCorpseData().hit_xdir / (3 * divisor);
+	var ydir_corpse = GetYDir() + GetCorpseData().hit_ydir / (3 * divisor);
 	var rdir_corpse = rdir_base / (10 * divisor);
 	
 	var ydir_variance = 10;
