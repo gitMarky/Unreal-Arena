@@ -205,6 +205,9 @@ func PlaySoundIdle(){}
 
 
 // contact and physics
+//
+// TODO: The looks could be improved greatly if the CNAT are set correctly and
+// - the RDir is updated if you contact bottom and have xdir; maybe calculate a vector and make it into angular speed?
 
 local ContactCalls = true;
 
