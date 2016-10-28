@@ -262,7 +262,11 @@ func OnDeathHandleCorpse()
 	if (Contained()) return;
 	
 	// Handle the different death types; this will differentiate between headshots and so on later
-	if (true) // Standard death
+	if (GetCorpseData().corpse_headshot)
+	{
+		HandleCorpseHeadshot();
+	}
+	else // Standard death
 	{
 		HandleCorpseDefault();
 	}
@@ -468,4 +472,40 @@ func HandleCorpseDefault()
 	
 	// Start the animation
 	corpse->StartSplatter(GetCorpseData().on_ground);
+}
+
+
+func HandleCorpseHeadshot()
+{
+	// Create the corpse
+	var corpse = CreateCorpse();
+	var head = CreateCorpse();
+	
+	// Copy the physics data
+	corpse->SetXDir(GetXDir());
+	corpse->SetYDir(GetYDir());
+	head->SetXDir(GetXDir());
+	head->SetYDir(GetYDir());
+	
+	// Copy the skin data for the body
+	for (var slot = 0; slot < PLAYER_SKIN_SLOT_HEAD; ++slot)
+	{
+		corpse->AddAppearance(slot, this->RemoveAppearance(slot));
+	}
+	
+	// Copy the skin data for the head
+	head->AddAppearance(0, this->RemoveAppearance(), PLAYER_SKIN_SLOT_HEAD);
+	
+	// Start the animation
+	corpse->StartSplatter(GetCorpseData().on_ground);
+	head->StartSplatter(false);
+	
+	// Additional physics
+	var divisor = 1 + MOD_FastBullets();
+	var xdir = GetCorpseData().hit_xdir / (3 * divisor);
+	var ydir = GetCorpseData().hit_ydir / (3 * divisor);
+	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir) / (10 * divisor);
+	
+	head->AddSpeed(xdir, ydir - Random(10));
+	head->SetRDir(rdir);
 }
