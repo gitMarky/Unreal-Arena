@@ -494,7 +494,7 @@ func HandleCorpseHeadshot()
 	}
 	
 	// Copy the skin data for the head
-	head->AddAppearance(0, this->RemoveAppearance(), PLAYER_SKIN_SLOT_HEAD);
+	head->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_HEAD));
 	
 	// Start the animation
 	corpse->StartSplatter(GetCorpseData().on_ground);
