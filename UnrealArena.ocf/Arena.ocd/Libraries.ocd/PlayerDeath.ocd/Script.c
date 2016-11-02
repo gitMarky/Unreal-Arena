@@ -493,9 +493,9 @@ func HandleCorpseDefault()
 	{
 		corpse->AddAppearance(slot, this->RemoveAppearance(slot));
 	}
-	
+
 	// Start the animation
-	corpse->StartSplatter(GetCorpseData().on_ground);
+	corpse->StartSplatter(1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir), GetCorpseData().on_ground);
 }
 
 
@@ -518,13 +518,13 @@ func HandleCorpseHeadshot()
 	head->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_HEAD));
 	
 	// Start the animation
-	corpse->StartSplatter(GetCorpseData().on_ground);
-	head->StartSplatter(false);
+	corpse->StartSplatter(1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir), GetCorpseData().on_ground);
+	head->StartSplatter(1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir), false);
 	
 	// Additional physics
 	var divisor = 1 + MOD_FastBullets();
 	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir) / (10 * divisor);
 	
-	head->AddSpeed(0, -Random(10) * 1000, 1000);
+	head->AddSpeed(0, -Random(20) * 100, 1000);
 	head->SetRDir(rdir);
 }
