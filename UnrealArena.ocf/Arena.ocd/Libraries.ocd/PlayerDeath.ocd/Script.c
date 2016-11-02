@@ -455,6 +455,30 @@ func CreateCorpse()
 }
 
 
+func HandleCorpsePhysics(array parts)
+{
+	var data = GetCorpseData().death_physics;
+
+	for (var part in parts)
+	{
+		var data = GetCorpseData().death_physics;
+	
+		// Copy the physics data
+		if (data)
+		{
+			part->SetXDir(data.XDir, data.Precision);
+			part->SetYDir(data.YDir, data.Precision);
+			part->SetRDir(data.RDir, data.Precision);
+		}
+		else
+		{
+			part->SetXDir(GetXDir());
+			part->SetYDir(GetYDir());
+		}
+	}
+}
+
+
 /**
  The default death "animation".
  */
@@ -462,20 +486,7 @@ func HandleCorpseDefault()
 {
 	// Create the corpse
 	var corpse = CreateCorpse();
-	var data = GetCorpseData().death_physics;
-
-	// Copy the physics data
-	if (data)
-	{
-		corpse->SetXDir(data.XDir, data.Precision);
-		corpse->SetYDir(data.YDir, data.Precision);
-		corpse->SetRDir(data.RDir, data.Precision);
-	}
-	else
-	{
-		corpse->SetXDir(GetXDir());
-		corpse->SetYDir(GetYDir());
-	}
+	HandleCorpsePhysics([corpse]);
 	
 	// Copy the whole skin to the corpse
 	for (var slot = 0; slot <= PLAYER_SKIN_SLOT_HEAD; ++slot)
@@ -493,26 +504,9 @@ func HandleCorpseHeadshot()
 	// Create the corpse
 	var corpse = CreateCorpse();
 	var head = CreateCorpse();
-	var data = GetCorpseData().death_physics;
 	
 	// Copy the physics data
-	if (data)
-	{
-		corpse->SetXDir(data.XDir, data.Precision);
-		corpse->SetYDir(data.YDir, data.Precision);
-		corpse->SetRDir(data.RDir, data.Precision);
-
-		head->SetXDir(data.XDir, data.Precision);
-		head->SetYDir(data.YDir, data.Precision);
-		head->SetRDir(data.RDir, data.Precision);
-	}
-	else
-	{
-		corpse->SetXDir(GetXDir());
-		corpse->SetYDir(GetYDir());
-		head->SetXDir(GetXDir());
-		head->SetYDir(GetYDir());
-	}
+	HandleCorpsePhysics([corpse, head]);
 
 	// Copy the skin data for the body
 	for (var slot = 0; slot < PLAYER_SKIN_SLOT_HEAD; ++slot)
@@ -531,6 +525,6 @@ func HandleCorpseHeadshot()
 	var divisor = 1 + MOD_FastBullets();
 	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir) / (10 * divisor);
 	
-	head->AddSpeed(0, -Random(10));
+	head->AddSpeed(0, -Random(10) * 1000, 1000);
 	head->SetRDir(rdir);
 }
