@@ -23,6 +23,7 @@ func Initialize()
 		hit_xdir = 0,
 		hit_ydir = 0,
 		death_physics = nil,
+		animation_speed = 1000,
 	};
 }
 
@@ -149,6 +150,8 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 	{
 		GetCorpseData().on_ground = true;
 	}
+	
+	GetCorpseData().animation_speed = 1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir);
 	
 	return GetCorpseData();
 }
@@ -495,7 +498,7 @@ func HandleCorpseDefault()
 	}
 
 	// Start the animation
-	corpse->StartSplatter(1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir), GetCorpseData().on_ground);
+	corpse->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
 }
 
 
@@ -518,8 +521,8 @@ func HandleCorpseHeadshot()
 	head->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_HEAD));
 	
 	// Start the animation
-	corpse->StartSplatter(1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir), GetCorpseData().on_ground);
-	head->StartSplatter(1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir), false);
+	corpse->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
+	head->StartSplatter(GetCorpseData().animation_speed, false);
 	
 	// Additional physics
 	var divisor = 1 + MOD_FastBullets();

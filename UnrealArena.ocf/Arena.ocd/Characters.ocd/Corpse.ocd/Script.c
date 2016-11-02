@@ -40,7 +40,7 @@ func StartSplatter(int animation_speed, bool on_ground)
 	
 	//var animation_duration = animation_length * Sqrt(100 / Max(1, GetGravity()));
 	var animation_duration = animation_length * Sqrt(10000 / Max(1, GetGravity())) / 10;
-	animation_duration = animation_speed * animation_duration / 1000;
+	animation_duration = Max(1, BoundBy(animation_speed, 0, 1000) * animation_duration / 1000);
 	
 	// Bsp: 20
 	// Gravity 100
