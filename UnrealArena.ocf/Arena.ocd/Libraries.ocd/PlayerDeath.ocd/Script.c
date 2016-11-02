@@ -22,6 +22,7 @@ func Initialize()
 		hit_y = 0,
 		hit_xdir = 0,
 		hit_ydir = 0,
+		death_physics = nil,
 	};
 }
 
@@ -139,6 +140,8 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 			
 			GetCorpseData().corpse_blasted = true;
 		}
+		
+		GetCorpseData().death_physics = Calc_ProjectileCollision(this, projectile, 0); // TODO: projectile individual collision data
 		
 	}
 	
@@ -459,10 +462,20 @@ func HandleCorpseDefault()
 {
 	// Create the corpse
 	var corpse = CreateCorpse();
-	
+	var data = GetCorpseData().death_physics;
+
 	// Copy the physics data
-	corpse->SetXDir(GetXDir());
-	corpse->SetYDir(GetYDir());
+	if (data)
+	{
+		corpse->SetXDir(data.XDir, data.Precision);
+		corpse->SetYDir(data.YDir, data.Precision);
+		corpse->SetRDir(data.RDir, data.Precision);
+	}
+	else
+	{
+		corpse->SetXDir(GetXDir());
+		corpse->SetYDir(GetYDir());
+	}
 	
 	// Copy the whole skin to the corpse
 	for (var slot = 0; slot <= PLAYER_SKIN_SLOT_HEAD; ++slot)
@@ -480,13 +493,27 @@ func HandleCorpseHeadshot()
 	// Create the corpse
 	var corpse = CreateCorpse();
 	var head = CreateCorpse();
+	var data = GetCorpseData().death_physics;
 	
 	// Copy the physics data
-	corpse->SetXDir(GetXDir());
-	corpse->SetYDir(GetYDir());
-	head->SetXDir(GetXDir());
-	head->SetYDir(GetYDir());
-	
+	if (data)
+	{
+		corpse->SetXDir(data.XDir, data.Precision);
+		corpse->SetYDir(data.YDir, data.Precision);
+		corpse->SetRDir(data.RDir, data.Precision);
+
+		head->SetXDir(data.XDir, data.Precision);
+		head->SetYDir(data.YDir, data.Precision);
+		head->SetRDir(data.RDir, data.Precision);
+	}
+	else
+	{
+		corpse->SetXDir(GetXDir());
+		corpse->SetYDir(GetYDir());
+		head->SetXDir(GetXDir());
+		head->SetYDir(GetYDir());
+	}
+
 	// Copy the skin data for the body
 	for (var slot = 0; slot < PLAYER_SKIN_SLOT_HEAD; ++slot)
 	{
@@ -502,10 +529,8 @@ func HandleCorpseHeadshot()
 	
 	// Additional physics
 	var divisor = 1 + MOD_FastBullets();
-	var xdir = GetCorpseData().hit_xdir / (3 * divisor);
-	var ydir = GetCorpseData().hit_ydir / (3 * divisor);
 	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir) / (10 * divisor);
 	
-	head->AddSpeed(xdir, ydir - Random(10));
+	head->AddSpeed(0, -Random(10));
 	head->SetRDir(rdir);
 }
