@@ -10,22 +10,45 @@ func Initialize()
 local animation_main;
 local animation_side;
 
-func StartSplatter(bool on_ground)
+
+/**
+ Starts the corpse effects.
+ 
+ @par animation_speed Linear value, where 1000 is the normal animation speed.
+                      The speed is scaled by the gravity value additionally,
+ @par on_ground If true, the corpse will play the normal death animation.
+ */
+func StartSplatter(int animation_speed, bool on_ground)
 {
+	var animation_length;
+
 	if (on_ground)
 	{
 		animation_main = "Dead";
 		animation_side = nil;
+		animation_length = 20;
 	}
 	else
 	{
 		var side = "L"; if (Random(2)) side = "R";
 		animation_main = Format("JumpUp.%s", side);
 		animation_side = "Stand";
+		animation_length = 40;
 	}
 	
 	var death = false;
 	
+	//var animation_duration = animation_length * Sqrt(100 / Max(1, GetGravity()));
+	var animation_duration = animation_length * Sqrt(10000 / Max(1, GetGravity())) / 10;
+	animation_duration = animation_speed * animation_duration / 1000;
+	
+	// Bsp: 20
+	// Gravity 100
+	// duration = 20 * sqrt(1); ...
+	// Gravity 50 => 20 * Sqrt (2) => 34
+	// Gravity 200 => 20 * Sqrt (100/200) = ...
+	// Gravity 200 => 20 * Sqrt(10000 / 200) = 20 * Sqrt (50) / 10
+
 	// Overlay death animations except for the death slot
 	for (var slot = 0; slot < CLONK_ANIM_SLOT_Death; ++slot)
 	{
@@ -33,12 +56,12 @@ func StartSplatter(bool on_ground)
 		if (number == nil) continue;
 
 		death = true;
-		OverlayDeathAnimation(slot, animation_main, animation_side);
+		OverlayDeathAnimation(slot, animation_duration, animation_main, animation_side);
 	}
 	
 	if (!death) // add the animation on the lowest slot, so that blending is not disturbed
 	{
-		OverlayDeathAnimation(CLONK_ANIM_SLOT_Movement, animation_main, animation_side);
+		OverlayDeathAnimation(CLONK_ANIM_SLOT_Movement, animation_duration, animation_main, animation_side);
 	}
 	
 	// Update carried items
@@ -49,7 +72,7 @@ func StartSplatter(bool on_ground)
 
 // animation stuff
 
-func OverlayDeathAnimation(int slot, string animation1, string animation2)
+func OverlayDeathAnimation(int slot, int animation_duration, string animation1, string animation2)
 {
 	if (animation1 == nil)
 	{
@@ -59,11 +82,13 @@ func OverlayDeathAnimation(int slot, string animation1, string animation2)
 	var weight = 500;
 	if (animation2) weight = 300;
 
-	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), 40, ANIM_Hold), Anim_Const(weight));
+	// Play the animations
+
+	PlayAnimation(animation1, slot, Anim_Linear(0, 0, GetAnimationLength(animation1), animation_duration, ANIM_Hold), Anim_Const(weight));
 
 	if (animation2)
 	{
-		PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), 80, ANIM_Hold), Anim_Const(weight));
+		PlayAnimation(animation2, slot, Anim_Linear(0, 0, GetAnimationLength(animation2), animation_duration * 2, ANIM_Hold), Anim_Const(weight));
 	}
 }
 
