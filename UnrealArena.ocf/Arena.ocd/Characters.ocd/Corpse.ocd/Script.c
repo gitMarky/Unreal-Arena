@@ -164,22 +164,25 @@ func VertexSetupBody()
 
 func VertexSetupHead()
 {
-	var permanent = 2;
-	SetVertex(1, VTX_Y, -9, permanent);
-	SetVertex(0, VTX_Y, -8, permanent);
-	SetVertex(2, VTX_Y, -7, permanent);
-
-	SetVertex(3, VTX_Y, -8, permanent);
-	SetVertex(4, VTX_Y, -8, permanent);
-	SetVertex(5, VTX_Y, -8, permanent);
-	SetVertex(6, VTX_Y, -8, permanent);
-	SetVertex(7, VTX_Y, -8, permanent);
-	SetVertex(8, VTX_Y, -8, permanent);
-
-	SetVertex(5, VTX_X, -2, permanent);
-	SetVertex(6, VTX_X, +2, permanent);
+	ChangeVertex(0, 0, -3, CNAT_Top);
+	ChangeVertex(1, 0, +3, CNAT_Bottom);
+	ChangeVertex(2, -3, 0, CNAT_Left);
+	ChangeVertex(3, +3, 0, CNAT_Right);
 	
-	ApplyOffset(0, 3000);
+	for (var i = 4; i < 9; ++i)
+	{
+		ChangeVertex(i, 0, 0, CNAT_Center);
+	}
+	
+	ApplyOffset(0, 7000);
+}
+
+
+func ChangeVertex(int index, int x, int y, int cnat)
+{
+	SetVertex(index, VTX_X, x, VTX_SetPermanentUpd);
+	SetVertex(index, VTX_Y, y, VTX_SetPermanentUpd);
+	SetVertex(index, VTX_CNAT, cnat, VTX_SetPermanentUpd);
 }
 
 func VertexSetupArmL()
@@ -215,7 +218,24 @@ func VertexSetupArm(int position)
 
 func ApplyOffset(int x, int y)
 {
+	MovePosition(-x, -y, 1000);
+	var fx = CreateEffect(FxApplyOffset, 1, 1);
+	fx.x = x; fx.y = y;
+	fx->Timer();
 }
+
+local FxApplyOffset = new Effect
+{
+	Timer = func ()
+	{
+		var r = Target->GetR();
+		var s_x = Sin(r, this.x);
+		var c_x = Cos(r, this.x);
+		var s_y = Sin(r, this.y);
+		var c_y = Cos(r, this.y);
+		Target->SetObjDrawTransform(1000, 0, c_x - s_y, 0, 1000, s_x + c_y);
+	},
+};
 
 func GetXDirection()
 {

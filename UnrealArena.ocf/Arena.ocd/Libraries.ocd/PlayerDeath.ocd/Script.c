@@ -523,6 +523,7 @@ func HandleCorpseHeadshot()
 	// Start the animation
 	corpse->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
 	head->StartSplatter(GetCorpseData().animation_speed, false);
+	head->VertexSetupHead();
 	
 	// Additional physics
 	var divisor = 1 + MOD_FastBullets();
