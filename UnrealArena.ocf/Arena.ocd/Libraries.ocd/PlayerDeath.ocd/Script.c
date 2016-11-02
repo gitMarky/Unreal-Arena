@@ -142,7 +142,7 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 			GetCorpseData().corpse_blasted = true;
 		}
 		
-		GetCorpseData().death_physics = Calc_ProjectileCollision(this, projectile, 0); // TODO: projectile individual collision data
+		GetCorpseData().death_physics = Calc_ProjectileCollision(this, projectile, BoundBy(projectile->~CorpsePhysicsElasticityConstant(), 0, 1000));
 		
 	}
 	

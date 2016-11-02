@@ -74,3 +74,6 @@ private func Reflect()
 		if (reflections <= 0) RemoveOnHit();
 	}
 }
+
+
+func CorpsePhysicsElasticityConstant(){ return 500;}

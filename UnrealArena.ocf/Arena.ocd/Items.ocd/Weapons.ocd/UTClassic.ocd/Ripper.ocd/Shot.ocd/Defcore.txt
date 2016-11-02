@@ -8,6 +8,7 @@ Offset=-3,-3
 Vertices=1
 VertexFriction=0
 VertexCNAT=8
+Mass=5
 Rotate=1
 Float=100000
 StretchGrowth=1
