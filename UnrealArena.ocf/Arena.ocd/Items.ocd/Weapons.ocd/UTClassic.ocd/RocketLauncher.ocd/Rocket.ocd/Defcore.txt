@@ -2,6 +2,7 @@
 id=Projectile_Rocket
 Version=6,0
 Category=C4D_Vehicle
+Mass=15
 Width=3
 Height=6
 Offset=-2,-3

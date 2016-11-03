@@ -2,6 +2,7 @@
 id=Projectile_FlakGrenade
 Version=6,0
 Category=C4D_Vehicle
+Mass=15
 Width=3
 Height=5
 Offset=-2,-3

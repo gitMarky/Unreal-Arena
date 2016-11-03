@@ -2,6 +2,7 @@
 id=Projectile_ShockBolt
 Version=6,0
 Category=C4D_Vehicle
+Mass=10
 Width=15
 Height=15
 Offset=-8,-8

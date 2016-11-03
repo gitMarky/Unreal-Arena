@@ -2,6 +2,7 @@
 id=Projectile_Plasma
 Version=6,0
 Category=C4D_Vehicle
+Mass=5
 Width=10
 Height=10
 Offset=-5,-5

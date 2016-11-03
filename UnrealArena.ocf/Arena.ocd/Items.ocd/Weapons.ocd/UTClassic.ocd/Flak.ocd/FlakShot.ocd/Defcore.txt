@@ -2,6 +2,7 @@
 id=Projectile_FlakShot
 Version=6,0
 Category=C4D_Vehicle
+Mass=2
 Width=3
 Height=3
 Offset=-2,-2

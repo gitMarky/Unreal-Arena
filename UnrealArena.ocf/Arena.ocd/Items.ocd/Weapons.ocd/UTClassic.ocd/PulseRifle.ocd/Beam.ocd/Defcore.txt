@@ -2,5 +2,6 @@
 id=Projectile_PlasmaBeam
 Version=6,0
 Category=C4D_Vehicle
+Mass=1
 Width=1
 Height=1

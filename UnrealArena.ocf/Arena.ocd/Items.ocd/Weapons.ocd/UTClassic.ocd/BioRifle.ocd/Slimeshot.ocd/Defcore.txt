@@ -2,6 +2,7 @@
 id=Projectile_SlimeShot
 Version=6,0
 Category=C4D_Vehicle
+Mass=10
 Width=6
 Height=6
 Offset=-3,-3
