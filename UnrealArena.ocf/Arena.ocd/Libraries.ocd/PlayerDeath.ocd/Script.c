@@ -151,7 +151,7 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 		GetCorpseData().on_ground = true;
 	}
 	
-	GetCorpseData().animation_speed = 1000 - Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir);
+	GetCorpseData().animation_speed = 1000 - 3 * Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir);
 	
 	return GetCorpseData();
 }
