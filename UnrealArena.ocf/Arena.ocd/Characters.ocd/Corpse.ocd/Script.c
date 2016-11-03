@@ -257,9 +257,18 @@ local FxInterpolateVertices = new Effect
 		this.old_index = 0;
 		this.new_index = 0;
 		
-		var vertices_x = [];
-		var vertices_y = [];
+		// DefCore vertices
+		var x_00 = [0,  0,  0, -2,  2, -4,  4, -2,  2];
+		var y_00 = [2, -7,  9, -3, -3,  2,  2,  6,  6];
+
+		// Dummy death vertices
+		var x_20 = [0,  0,  0, -4,  4, -8,  8, -4,  4];
+		var y_20 = [7,  5,  9,  6,  6,  7,  7,  8,  8];
 		
+		var vertices_x = [x_00, x_20];
+		var vertices_y = [y_00, x_20];
+		
+		// Save to effect
 		this.target_vertices = [vertices_x, vertices_y];
 		this.actual_vertices = [vertices_x[0], vertices_y[0]];
 	}
