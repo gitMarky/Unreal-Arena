@@ -1,6 +1,8 @@
 #include Library_ModularAppearance
 #include Clonk_Animations
 
+static const ANIM_SLOT_Min = 1;
+
 func Initialize()
 {
 	_inherited(...);
@@ -9,7 +11,8 @@ func Initialize()
 
 local animation_main;
 local animation_side;
-
+local animation_slot;
+local is_dismembered = false;
 
 /**
  Starts the corpse effects.
@@ -27,6 +30,7 @@ func StartSplatter(int animation_speed, bool on_ground)
 		animation_main = "Dead";
 		animation_side = nil;
 		animation_length = 20;
+		CreateEffect(FxInterpolateVertices, 1, 1);
 	}
 	else
 	{
@@ -59,10 +63,10 @@ func StartSplatter(int animation_speed, bool on_ground)
 		OverlayDeathAnimation(slot, animation_duration, animation_main, animation_side);
 	}
 	
-	if (!death) // add the animation on the lowest slot, so that blending is not disturbed
-	{
-		OverlayDeathAnimation(CLONK_ANIM_SLOT_Movement, animation_duration, animation_main, animation_side);
-	}
+	//if (!death) // add the animation on the lowest slot, so that blending is not disturbed
+	//{
+		OverlayDeathAnimation(ANIM_SLOT_Min, animation_duration, animation_main, animation_side);
+	//}
 	
 	// Update carried items
 	UpdateAttach();
@@ -164,6 +168,8 @@ func VertexSetupBody()
 
 func VertexSetupHead()
 {
+	is_dismembered = true;
+
 	ChangeVertex(0, 0, -3, CNAT_Top);
 	ChangeVertex(1, 0, +3, CNAT_Bottom);
 	ChangeVertex(2, -3, 0, CNAT_Left);
@@ -242,6 +248,84 @@ func GetXDirection()
 	return -1 + 2 * GetDir();
 }
 
+local FxInterpolateVertices = new Effect
+{
+	Start = func (bool temp)
+	{
+		if (temp) return;
+		
+		this.old_index = 0;
+		this.new_index = 0;
+		
+		var vertices_x = [];
+		var vertices_y = [];
+		
+		this.target_vertices = [vertices_x, vertices_y];
+		this.actual_vertices = [vertices_x[0], vertices_y[0]];
+	}
+
+	SetVertexPos = func(int v, int x, int y)
+	{
+		x *= this.Target->GetXDirection();
+		this.Target->SetVertex(v, VTX_X, x, VTX_SetPermanentUpd);
+		this.Target->SetVertex(v, VTX_Y, y, VTX_SetPermanentUpd);
+		this.actual_vertices[VTX_X][v] = x;
+		this.actual_vertices[VTX_Y][v] = y;
+	},
+
+	InterpolateVertex = func (int v, array target_x, array target_y, array actual_x, array actual_y)
+	{
+		// Cycle through interpolated positions, beginning at the furthest away position
+		// => Go back slowly until you are, at worst, at the previous position
+		var max_dist = 5;
+		for (var dist = max_dist; dist >= 0; --dist)
+		{
+			var x = dist * target_x[v] + (max_dist - dist) * actual_x[v];
+			var y = dist * target_y[v] + (max_dist - dist) * actual_y[v];
+
+			SetVertexPos(v, x, y);
+			
+			if (!this.Target->Stuck())
+			{
+				break;
+			}
+		}
+	},
+
+	Timer = func()
+	{
+		// Get data
+		var number = this.Target->GetRootAnimation(ANIM_SLOT_Min);
+		var pos = this.Target->GetAnimationPosition(number);
+		var max = this.Target->GetAnimationLength(target->GetAnimationName(number));
+		
+		// Update array indices for interpolation
+		this.old_index = this.new_index;
+		this.new_index = pos * this.target_vertices / max;
+
+		var target_x = this.target_vertices[VTX_X][this.new_index];
+		var target_y = this.target_vertices[VTX_Y][this.new_index];
+		var actual_x = this.actual_vertices[VTX_X];
+		var actual_y = this.actual_vertices[VTX_Y];
+		
+		var stuck_before = this.Target->Stuck();
+		
+		for (var v = 0; v < Target->GetVertexNum(); ++v)
+		{
+			// If you are stuck anyway just update the vertex position, cannot get so much worse
+			if (stuck_before)
+			{
+				SetVertexPos(v, target_x[v], target_y[v]);
+			}
+			// Try going towards a vertex position where you are not stuck
+			else
+			{
+				InterpolateVertex(v, target_x, target_y, actual_x, actual_y);
+			}
+		}
+	}
+};
+
 // override functions that are expected by clonk animations
 
 func IsWalking(){ return false;}
@@ -278,12 +362,12 @@ func ContactRight()
 
 func BouncePhysics()
 {
-	//if(!dismembered) return(0);
+	//if(!is_dismembered) return(0);
 	if (!GetXDir() && !GetYDir()) return;
 
 	SetRDir(-(3 * GetRDir()) / 2);
 
-//	if(dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
+//	if(is_dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
 
 	return true;
 }
