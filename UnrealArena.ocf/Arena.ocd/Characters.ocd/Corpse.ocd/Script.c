@@ -266,7 +266,7 @@ local FxInterpolateVertices = new Effect
 		var y_20 = [7,  5,  9,  6,  6,  7,  7,  8,  8];
 		
 		var vertices_x = [x_00, x_20];
-		var vertices_y = [y_00, x_20];
+		var vertices_y = [y_00, y_20];
 		
 		// Save to effect
 		this.target_vertices = [vertices_x, vertices_y];
@@ -292,6 +292,8 @@ local FxInterpolateVertices = new Effect
 		{
 			var x = dist * target_x[v] + (max_dist - dist) * actual_x[v];
 			var y = dist * target_y[v] + (max_dist - dist) * actual_y[v];
+			
+			x /= max_dist; y /= max_dist;
 
 			SetVertexPos(v, x, y);
 			
