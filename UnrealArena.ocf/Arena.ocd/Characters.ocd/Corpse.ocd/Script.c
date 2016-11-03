@@ -270,7 +270,8 @@ local FxInterpolateVertices = new Effect
 		
 		// Save to effect
 		this.target_vertices = [vertices_x, vertices_y];
-		this.actual_vertices = [vertices_x[0], vertices_y[0]];
+		this.actual_vertices = [[0,  0,  0, -2,  2, -4,  4, -2,  2],
+		                        [2, -7,  9, -3, -3,  2,  2,  6,  6]];
 	},
 
 	SetVertexPos = func(int v, int x, int y)
