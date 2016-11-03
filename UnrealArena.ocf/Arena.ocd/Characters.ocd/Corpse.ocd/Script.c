@@ -271,7 +271,7 @@ local FxInterpolateVertices = new Effect
 		// Save to effect
 		this.target_vertices = [vertices_x, vertices_y];
 		this.actual_vertices = [vertices_x[0], vertices_y[0]];
-	}
+	},
 
 	SetVertexPos = func(int v, int x, int y)
 	{
@@ -306,11 +306,11 @@ local FxInterpolateVertices = new Effect
 		// Get data
 		var number = this.Target->GetRootAnimation(ANIM_SLOT_Min);
 		var pos = this.Target->GetAnimationPosition(number);
-		var max = this.Target->GetAnimationLength(target->GetAnimationName(number));
+		var max = this.Target->GetAnimationLength(this.Target->GetAnimationName(number));
 		
 		// Update array indices for interpolation
 		this.old_index = this.new_index;
-		this.new_index = pos * this.target_vertices / max;
+		this.new_index = pos * Max(0, GetLength(this.target_vertices[VTX_X]) - 1) / max;
 
 		var target_x = this.target_vertices[VTX_X][this.new_index];
 		var target_y = this.target_vertices[VTX_Y][this.new_index];
