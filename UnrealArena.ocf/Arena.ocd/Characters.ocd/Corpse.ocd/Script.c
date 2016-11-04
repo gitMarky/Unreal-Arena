@@ -401,12 +401,16 @@ func ContactRight()
 	return BouncePhysics();
 }
 
-func BouncePhysics()
+func BouncePhysics(boolean allow_bounce)
 {
-	//if(!is_dismembered) return(0);
 	if (!GetXDir() && !GetYDir()) return;
 
-	SetRDir(-(3 * GetRDir()) / 2);
+	// Bounce not so often
+	if (!GetEffect("IntNoBounce", this) && (is_dismembered || allow_bounce))
+	{
+		SetRDir(-(3 * GetRDir()) / 2);
+		AddEffect("IntNoBounce", this, 1, 20, this);)
+	}
 
 //	if(is_dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
 
@@ -419,7 +423,7 @@ protected func Hit(int dx, int dy)
 	{
 		SetYDir(dy / -4, 100);
 	}
-	
+
 	Flinch();
-	BouncePhysics();
+	BouncePhysics(true);
 }
