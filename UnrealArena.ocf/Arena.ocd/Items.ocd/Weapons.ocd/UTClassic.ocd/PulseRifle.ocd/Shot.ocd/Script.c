@@ -35,7 +35,7 @@ Travel = {
 	X = 0, Y = 0, Wdt = 10, Hgt = 10,
 	NextAction = "Travel",
 	PhaseCall = "Travelling",
-	Sound = "Weapon::Classic::PulseFly",
+	Sound = "Weapon::Classic::pulse-fly",
 },
 
 };
