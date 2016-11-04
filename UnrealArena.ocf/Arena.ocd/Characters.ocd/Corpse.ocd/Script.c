@@ -13,6 +13,8 @@ local animation_main;
 local animation_side;
 local animation_slot;
 local is_dismembered = false;
+local angle_stable = 0;
+local angle_prohibited = [-80, 80];
 
 /**
  Starts the corpse effects.
@@ -31,6 +33,7 @@ func StartSplatter(int animation_speed, bool on_ground)
 		animation_side = nil;
 		animation_length = 20;
 		CreateEffect(FxInterpolateVertices, 1, 1);
+		angle_stable = 0; // TODO: interpolation again
 	}
 	else
 	{
@@ -38,6 +41,7 @@ func StartSplatter(int animation_speed, bool on_ground)
 		animation_main = Format("JumpUp.%s", side);
 		animation_side = "Stand";
 		animation_length = 40;
+		angle_stable = 90;
 	}
 	
 	var death = false;
@@ -72,6 +76,9 @@ func StartSplatter(int animation_speed, bool on_ground)
 	UpdateAttach();
 	// Set proper turn type
 	SetTurnType(1);
+	
+	// Stabilize the corpse
+	CreateEffect(FxStabilize, 1, 1);
 }
 
 // animation stuff
@@ -248,6 +255,36 @@ func GetXDirection()
 	return -1 + 2 * GetDir();
 }
 
+local FxStabilize = new Effect
+{
+	Timer = func()
+	{
+		if (this.Target.is_dismembered) return FX_Execute_Kill;
+	
+		var rdir = this.Target->GetRDir();
+		var angle = Normalize(this.Target->GetR(), -180);
+		var angle_stable = this.Target.angle_stable;
+		if (angle < 0) angle_stable *= -1;
+
+		var diff = angle_stable - angle;
+
+		if (this.Target->GetContact(-1))
+		{
+			var rdir_add = Sin(diff, 10); // TODO: find real value
+			
+			var factor = 1;
+			
+			if (Inside(angle, Normalize(angle_stable + this.Target.angle_prohibited[0], -180), Normalize(angle_stable + this.Target.angle_prohibited[1], -180)))
+			{
+				factor = 0;
+			}
+
+			this.Target->SetRDir(factor * rdir + rdir_add / 2); // TODO: check if this is correct
+		}
+	}
+};
+
+
 local FxInterpolateVertices = new Effect
 {
 	Start = func (bool temp)
@@ -401,7 +438,7 @@ func ContactRight()
 	return BouncePhysics();
 }
 
-func BouncePhysics(boolean allow_bounce)
+func BouncePhysics(bool allow_bounce)
 {
 	if (!GetXDir() && !GetYDir()) return;
 
@@ -409,7 +446,7 @@ func BouncePhysics(boolean allow_bounce)
 	if (!GetEffect("IntNoBounce", this) && (is_dismembered || allow_bounce))
 	{
 		SetRDir(-(3 * GetRDir()) / 2);
-		AddEffect("IntNoBounce", this, 1, 20, this);)
+		AddEffect("IntNoBounce", this, 1, 20, this);
 	}
 
 //	if(is_dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
