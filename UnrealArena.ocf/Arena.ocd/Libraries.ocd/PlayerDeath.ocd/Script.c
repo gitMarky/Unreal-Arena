@@ -471,7 +471,7 @@ func HandleCorpsePhysics(array parts)
 		{
 			part->SetXDir(data.XDir, data.Precision);
 			part->SetYDir(data.YDir, data.Precision);
-			part->SetRDir(data.RDir, data.Precision);
+			part->SetRDir(5 * data.RDir, data.Precision);
 		}
 		else
 		{
