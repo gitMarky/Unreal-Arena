@@ -100,3 +100,6 @@ Travel = {
 	PhaseCall = "Travelling",
 },
 };
+
+
+func CorpsePhysicsElasticityConstant(){ return 1000;}

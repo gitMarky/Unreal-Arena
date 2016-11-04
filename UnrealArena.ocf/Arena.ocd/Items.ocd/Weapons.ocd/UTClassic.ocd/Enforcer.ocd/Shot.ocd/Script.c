@@ -32,3 +32,7 @@ private func TrailColor(int time)
 	
 	return RGBa(255, value, value, value);
 }
+
+
+func CorpsePhysicsElasticityConstant(){ return 200;}
+

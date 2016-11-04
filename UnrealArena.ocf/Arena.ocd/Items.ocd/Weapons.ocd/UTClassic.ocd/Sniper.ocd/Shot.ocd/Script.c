@@ -26,3 +26,7 @@ public func OnHitScan(int x_start, int y_start, int x_end, int y_end)
 		 ->Color(RGBa(255, 200, 0))
 		 ->Activate();
 }
+
+
+func CorpsePhysicsElasticityConstant(){ return 800;}
+

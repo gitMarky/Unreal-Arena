@@ -59,3 +59,6 @@ protected func Travelling()
 }
 
 local ContactCalls = true;
+
+
+func CorpsePhysicsElasticityConstant(){ return 200;}

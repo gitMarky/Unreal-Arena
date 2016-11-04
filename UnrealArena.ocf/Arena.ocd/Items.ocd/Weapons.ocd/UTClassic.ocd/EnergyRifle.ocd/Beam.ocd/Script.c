@@ -53,3 +53,7 @@ public func OnHitScan(int x_start, int y_start, int x_end, int y_end)
 		 ->Color(GetProjectileColor())
 		 ->Activate();
 }
+
+
+func CorpsePhysicsElasticityConstant(){ return 1000;}
+

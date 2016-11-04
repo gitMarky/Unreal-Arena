@@ -225,3 +225,6 @@ local ActMap = {
 		StartCall = "Sticking",
 	},
 };
+
+
+func CorpsePhysicsElasticityConstant(){ return 0;}
