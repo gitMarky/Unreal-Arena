@@ -47,7 +47,7 @@ func StartSplatter(int animation_speed, bool on_ground)
 	var death = false;
 	
 	//var animation_duration = animation_length * Sqrt(100 / Max(1, GetGravity()));
-	var animation_duration = animation_length * Sqrt(10000 / Max(1, GetGravity())) / 10;
+	var animation_duration = animation_length * Sqrt(20 / Max(1, GetGravity()));
 	animation_duration = Max(1, BoundBy(animation_speed, 0, 1000) * animation_duration / 1000);
 	
 	// Bsp: 20
@@ -123,6 +123,8 @@ func CopyAnimationPositionFrom(object target)
 
 func Flinch(int duration)
 {
+	if (animation_main == "Dead") return;
+
 	var stand = animation_side ?? animation_main ?? "Stand";
 	var duration = 20;
 	PlayAnimation(stand, CLONK_ANIM_SLOT_Movement, Anim_Linear(0, 0, GetAnimationLength(stand), duration ?? 2, ANIM_Remove));
@@ -296,7 +298,7 @@ local FxInterpolateVertices = new Effect
 		
 		// DefCore vertices
 		var x_00 = [0,  0,  0, -2,  2, -4,  4, -2,  2];
-		var y_00 = [2, -7,  9, -3, -3,  2,  2,  6,  6];
+		var y_00 = [2, -7,  8, -3, -3,  2,  2,  6,  6];
 
 		// Transitions
 		var x_02 = [0,  0,  0, -2,  2, -4,  3, -2,  2];
@@ -337,7 +339,7 @@ local FxInterpolateVertices = new Effect
 		// Save to effect
 		this.target_vertices = [vertices_x, vertices_y];
 		this.actual_vertices = [[0,  0,  0, -2,  2, -4,  4, -2,  2],
-		                        [2, -7,  9, -3, -3,  2,  2,  6,  6]];
+		                        [2, -7,  8, -3, -3,  2,  2,  6,  6]];
 	},
 
 	SetVertexPos = func(int v, int x, int y)
@@ -441,7 +443,7 @@ func ContactRight()
 func BouncePhysics(bool allow_bounce)
 {
 	if (!GetXDir() && !GetYDir()) return;
-
+	
 	// Bounce not so often
 	if (!GetEffect("IntNoBounce", this) && (is_dismembered || allow_bounce))
 	{
