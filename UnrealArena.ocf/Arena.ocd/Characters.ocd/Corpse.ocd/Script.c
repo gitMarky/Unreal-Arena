@@ -79,6 +79,7 @@ func StartSplatter(int animation_speed, bool on_ground)
 	
 	// Stabilize the corpse
 	CreateEffect(FxStabilize, 1, 1);
+	CreateEffect(FxDisintegrate, 1, 1);
 }
 
 // animation stuff
@@ -257,9 +258,22 @@ func GetXDirection()
 	return -1 + 2 * GetDir();
 }
 
+local FxDisintegrate = new Effect
+{
+	Timer = func (int time)
+	{
+		if (time > 200)
+		{
+			if (this.Target) this.Target->Disintegrate(20, 50, -5, true);
+			
+			return FX_Execute_Kill;
+		}
+	}
+};
+
 local FxStabilize = new Effect
 {
-	Timer = func()
+	Timer = func ()
 	{
 		if (this.Target.is_dismembered) return FX_Execute_Kill;
 	

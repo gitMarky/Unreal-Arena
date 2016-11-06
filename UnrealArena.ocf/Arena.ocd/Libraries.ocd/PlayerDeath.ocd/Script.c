@@ -452,6 +452,7 @@ func CreateCorpse()
 	//corpse->SetRDir((-1 + 2 * Random(2)) * RandomX(5, 15));
 	corpse->SetDir(GetDir());
 	corpse->SetPhase(GetPhase());
+	corpse->SetColor(GetColor());
 	corpse->CopyAnimationPositionFrom(this);
 	//corpse->StartSplatter();
 	return corpse;
