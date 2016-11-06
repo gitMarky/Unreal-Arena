@@ -58,6 +58,9 @@ global func Calc_ProjectileCollision(object body1, object body2, int elasticity)
 
 	var angular_velocity = tangential_component * precision / Max(1, length);
 
+	//Log("Body1 = %d/%d, Body2 = %d/%d", v_x_b1, v_y_b1, v_x_b2, v_y_b2);
+	//Log("Resulting velocity = %d/%d %d", v_x, v_y, angular_velocity);
+
 	return { XDir = v_x, YDir = v_y, RDir = angular_velocity, Precision = precision};
 }
 
