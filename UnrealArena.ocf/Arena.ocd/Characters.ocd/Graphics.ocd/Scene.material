@@ -68,14 +68,30 @@ material m_soldier_legs
             specular 0.5 0.5 0.5 1.0 12.5
             emissive 0.0 0.0 0.0 1.0
 
-            texture_unit 
-            {
-                texture m_soldier_none_legs.jpg
-                tex_address_mode wrap
-                scale 1.0 1.0
-                colour_op modulate
-            }
-        }
+			texture_unit overlay
+			{
+				texture m_soldier_none_legs_ovrl.png
+				tex_address_mode wrap
+				filtering trilinear
+				colour_op_ex modulate src_texture src_player_colour
+				// take alpha from texture only, ignore player alpha
+				alpha_op_ex source1 src_texture src_player_colour
+			}
+			texture_unit base
+			{
+				texture m_soldier_none_legs.jpg
+				tex_address_mode wrap
+				filtering trilinear
+				colour_op_ex blend_current_alpha src_current src_texture
+				// Don't blend alpha, to make sure we have full intensity at the base/overlay border region
+				alpha_op_ex add src_current src_texture
+			}
+			texture_unit light
+			{
+				colour_op_ex modulate src_current src_diffuse
+				alpha_op_ex modulate src_current src_diffuse
+			}
+		}
     }
 }
 
