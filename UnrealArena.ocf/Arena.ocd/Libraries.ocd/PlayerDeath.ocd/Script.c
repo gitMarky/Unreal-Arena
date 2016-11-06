@@ -33,11 +33,14 @@ func IsCorpse()
 }
 
 
-func IsHeadshot()
+func IsHeadshot(object projectile, int damage_type)
 {
-	return (GetCorpseData().damage_type & DMG_Headshot)
-	    && Inside(GetCorpseData().hit_x, -7, 7)
-	    && Inside(GetCorpseData().hit_y, -10, -6);
+    var hit_x = projectile->GetX() - GetX();
+    var hit_y = projectile->GetY() - GetY();
+
+	return (damage_type & DMG_Headshot)
+	    && Inside(hit_x, -7, 7)
+	    && Inside(hit_y, -10, -6);
 }
 
 
@@ -99,6 +102,7 @@ func OnDeathBecomeCorpse(object projectile, int damage_amount, int damage_type)
 		this->OnDeathExitVehicle();
 		this->OnDeathThrowWeapon();
 		this->OnDeathSound();
+		this->OnDeathGoreEffects();
 		this->OnDeathHandleCorpse(); // this is where the player actually becomes a corpse
 	}
 }
@@ -126,8 +130,8 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 
 		// Determine advanced info
 		
-		GetCorpseData().corpse_headshot = IsHeadshot();
-		
+		GetCorpseData().corpse_headshot = IsHeadshot(projectile, damage_type);
+
 		if (damage_type & DMG_Explosion)
 		{
 			if (Inside(projectile->GetY() - GetY(), -6, 1))
@@ -256,6 +260,26 @@ func OnDeathSound()
 
 
 /**
+ Handles all gore effects when the player dies.
+ */
+func OnDeathGoreEffects()
+{
+	if (IsCorpse()) return;
+
+	EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(GetCorpseData().damage_amount));
+	EffectCastGore(MOD_MoreGore() / 3, 60 + Random(GetCorpseData().damage_amount));
+	
+	if (GetCorpseData().corpse_headshot)
+	{
+		for (var amount = MOD_MoreGore(); amount > 0; amount -= 2)
+		{
+			EffectGoreChunk(0, -5, RandomX(-10, 10) + GetXDir() / 5, RandomX(-10, -35) + GetYDir() / 5);
+		}
+	}
+}
+
+
+/**
  Creates a corpse effect and handles the way it looks, based on certain parameters.
  */
 func OnDeathHandleCorpse()
@@ -307,15 +331,7 @@ func OnDeathHandleCorpseLegacy()
 		SetSpeed(GetXDir() + GetCorpseData().hit_xdir / (8 * divisor),
 				 GetYDir() + GetCorpseData().hit_ydir / (8 * divisor));
 	}
-	
-	// MoreGore aktiviert?
-	if (!MOD_NoBlood())
-	{
-		EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(GetCorpseData().damage_amount));
-		EffectCastGore(MOD_MoreGore() / 3, 60 + Random(GetCorpseData().damage_amount));
 		
-	}
-	
 	//------------------------------------------
 	// set up the corpse
 
@@ -376,13 +392,6 @@ func OnDeathHandleCorpseLegacy()
 	
 	var ydir_variance = 10;
 	
-	if (GetCorpseData().corpse_headshot)
-	{
-		cl_head->SetPosition(GetX(), GetY() - 5);
-		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
-		cl_head->SetRDir(rdir_corpse);
-		cl_head->~SetMaster();
-	}
 	if (GetCorpseData().corpse_blasted_body)
 	{
 		deathcam_obj = cl_body;
