@@ -13,7 +13,7 @@ global func Particles_UA_Blood(colors)
 	{
 		Size = PV_Linear(PV_Random(1, 4), 0),
 	    ForceY = GetGravity(),
-		Stretch = PV_Speed(1000, 500),
+		Stretch = PV_Speed(1000, 750),
 		Rotation = PV_Direction(),
 		OnCollision = PC_Die(),
 		CollisionVertex = 500,
