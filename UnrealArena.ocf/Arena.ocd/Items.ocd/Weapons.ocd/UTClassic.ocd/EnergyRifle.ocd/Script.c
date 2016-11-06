@@ -37,7 +37,7 @@ local firemode_primary	=
 	damage_type = 		DMG_Energy,	
 
 	projectile_id = 		Projectile_ShockBeam,
-	projectile_speed = 		500,
+	projectile_speed = 		300,
 	projectile_range = 		PROJECTILE_Range_Sniper,
 	projectile_distance = 	16,
 	projectile_offset_y = 	-3,
