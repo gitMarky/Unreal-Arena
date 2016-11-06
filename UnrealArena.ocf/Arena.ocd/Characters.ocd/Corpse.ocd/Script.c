@@ -12,7 +12,6 @@ func Initialize()
 local animation_main;
 local animation_side;
 local animation_slot;
-local is_dismembered = false;
 local angle_stable = 0;
 local angle_prohibited = [-80, 80];
 
@@ -178,8 +177,6 @@ func VertexSetupBody()
 
 func VertexSetupHead()
 {
-	is_dismembered = true;
-
 	ChangeVertex(0, 0, -3, CNAT_Top);
 	ChangeVertex(1, 0, +3, CNAT_Bottom);
 	ChangeVertex(2, -3, 0, CNAT_Left);
@@ -191,6 +188,8 @@ func VertexSetupHead()
 	}
 	
 	ApplyOffset(0, 7000);
+	
+	CreateEffect(FxDismembered, 1, 1);
 }
 
 
@@ -258,6 +257,29 @@ func GetXDirection()
 	return -1 + 2 * GetDir();
 }
 
+
+func IsDismembered()
+{
+	var fx = GetEffect("FxDismembered", this);
+	if (fx)
+	{
+		return fx.Time;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+local FxDismembered = new Effect
+{
+	Timer = func (int time)
+	{
+		if (time < 50) this.Target->EffectBloodSpray(1);
+	},
+};
+
+
 local FxDisintegrate = new Effect
 {
 	Timer = func (int time)
@@ -270,6 +292,7 @@ local FxDisintegrate = new Effect
 		}
 	}
 };
+
 
 local FxStabilize = new Effect
 {
@@ -459,13 +482,16 @@ func BouncePhysics(bool allow_bounce)
 	if (!GetXDir() && !GetYDir()) return;
 	
 	// Bounce not so often
-	if (!GetEffect("IntNoBounce", this) && (is_dismembered || allow_bounce))
+	if (!GetEffect("IntNoBounce", this) && (IsDismembered() || allow_bounce))
 	{
 		SetRDir(-(3 * GetRDir()) / 2);
 		AddEffect("IntNoBounce", this, 1, 20, this);
-	}
 
-//	if(is_dismembered<90) CastParticles("Blood",12,30,0,0,10,40,BloodFXColor(type)[0],BloodFXColor(type)[1] );
+		if (IsDismembered() < 90)
+		{
+			EffectBloodSpray(12, BoundBy(30 * Distance(GetXDir(), GetYDir()) / 200, 5, 30));
+		}
+	}
 
 	return true;
 }
