@@ -33,9 +33,9 @@ protected func OnPlayerRelaunch(int plr)
 
 protected func CreateSpawnPoints()
 {
-	var timer_weapons = 10;
-	var timer_items = 10;
-	
+	var timer_weapons = 10 * 36;
+	var timer_items = 10 * 36;
+
 	
 	// spawn point templates
 	var weapon_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_ASMD)->SetDescription("$WeaponBaseFront$");
