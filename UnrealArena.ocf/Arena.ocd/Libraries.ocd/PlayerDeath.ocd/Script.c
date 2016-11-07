@@ -296,6 +296,10 @@ func OnDeathHandleCorpse()
 	{
 		HandleCorpseHeadshot();
 	}
+	else if (GetCorpseData().corpse_blasted)
+	{
+		HandleCorpseBlasted();
+	}
 	else // Standard death
 	{
 		HandleCorpseDefault();
@@ -442,7 +446,7 @@ func HandleCorpseHeadshot()
 }
 
 
-func HandleCorpseBodyBlasted()
+func HandleCorpseBlasted()
 {
 	// Create the corpse
 	var legs = CreateCorpse();
