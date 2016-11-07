@@ -2,6 +2,8 @@
 #include Library_ModularAppearance
 #include Library_UA_PlayerDamage
 #include Library_UA_PlayerDeath
+#include Library_AmmoManager
+
 
 local skin_gender;
 local skin_team;
@@ -110,4 +112,19 @@ func OverlayDeathAnimation(int slot)
 {
 	var animation = "Dead";
 	PlayAnimation(animation, slot, Anim_Linear(0, 0, GetAnimationLength(animation), 20, ANIM_Hold), Anim_Linear(0, 0, 1000, 10, ANIM_Remove));
+}
+
+
+public func GetAmmoSource(id ammo)
+{
+	// redundant at the moment, but it should avoid problems in the future
+	// when real ammo counts are implemented 
+	if (IsInstaGibConfigured())
+	{
+		return AMMO_Source_Infinite;
+	}
+	else
+	{
+		return AMMO_Source_Infinite;
+	}
 }
