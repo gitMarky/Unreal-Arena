@@ -515,34 +515,58 @@ func HandleCorpseBodyBlasted()
 	// Create the corpse
 	var legs = CreateCorpse();
 	var body = CreateCorpse();
+	var parts = [legs, body];
+	
+	var arml, armr;
+	if (GetCorpseData().corpse_lost_arm_l)
+	{
+		arml = CreateCorpse();
+		arml->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_ARML));
+		arml->VertexSetupArmL();
+		parts = PushBack(parts, arml);
+	}
+	if (GetCorpseData().corpse_lost_arm_r)
+	{
+		armr = CreateCorpse();
+		armr->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_ARMR));
+		armr->VertexSetupArmR();
+		parts = PushBack(parts, armr);
+	}
 	
 	// Copy the physics data
-	HandleCorpsePhysics([legs, body]);
+	HandleCorpsePhysics(parts);
 
-	// Copy the skin data for the body
+	// Copy the skin data
 	for (var slot = PLAYER_SKIN_SLOT_BODY; slot <= PLAYER_SKIN_SLOT_HEAD; ++slot)
 	{
+		if (slot == PLAYER_SKIN_SLOT_ARML && GetCorpseData().corpse_lost_arm_l) continue;
+		if (slot == PLAYER_SKIN_SLOT_ARMR && GetCorpseData().corpse_lost_arm_r) continue;
+	
 		body->AddAppearance(slot, this->RemoveAppearance(slot));
 	}
 	
-	// Copy the skin data for the head
 	legs->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_LEGS));
-	
+
 	// Start the animation
-	legs->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
-	body->StartSplatter(GetCorpseData().animation_speed, false);
 	body->VertexSetupBody();
 	body->VertexSetupLegs();
+	legs->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
+	body->StartSplatter(GetCorpseData().animation_speed, false);
+	if (arml) arml->StartSplatter(GetCorpseData().animation_speed, false);
+	if (armr) armr->StartSplatter(GetCorpseData().animation_speed, false);
 
 	// Additional physics
 	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir);
 	legs->AddSpeed(RandomX(-5, +5), RandomX(-5, +5));
 	legs->SetRDir(rdir);
-	
+		
 	var xdir_corpse = GetCorpseData().death_physics.XDir;
 	var ydir_corpse = GetCorpseData().death_physics.YDir;
 	var ydir_variance = 10;
-	
+
+	if (arml) arml->AddSpeed(RandomX(-5, 5), -Random(ydir_variance));
+	if (armr) armr->AddSpeed(RandomX(-5, 5), -Random(ydir_variance));
+
 	// Gore effects?
 	if (GetCorpseData().corpse_blasted_body)
 	{
