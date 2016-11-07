@@ -137,10 +137,14 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 			if (Inside(projectile->GetY() - GetY(), -6, 1))
 			{
 				GetCorpseData().corpse_blasted_body = true;
+				GetCorpseData().corpse_lost_arm_l = !Random(4);
+				GetCorpseData().corpse_lost_arm_r = !Random(4);
 			}
 			else if (Inside(projectile->GetY() - GetY(), 1, 10))
 			{
 				GetCorpseData().corpse_blasted_legs = true;
+				GetCorpseData().corpse_lost_arm_l = !Random(12);
+				GetCorpseData().corpse_lost_arm_r = !Random(12);
 			}
 			
 			GetCorpseData().corpse_blasted = true;
