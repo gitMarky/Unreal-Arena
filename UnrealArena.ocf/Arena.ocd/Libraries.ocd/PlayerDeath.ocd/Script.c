@@ -463,14 +463,14 @@ func HandleCorpseBlasted()
 		arml = CreateCorpse();
 		arml->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_ARML));
 		arml->VertexSetupArmL();
-		parts = PushBack(parts, arml);
+		PushBack(parts, arml);
 	}
 	if (GetCorpseData().corpse_lost_arm_r)
 	{
 		armr = CreateCorpse();
 		armr->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_ARMR));
 		armr->VertexSetupArmR();
-		parts = PushBack(parts, armr);
+		PushBack(parts, armr);
 	}
 	
 	// Copy the physics data
