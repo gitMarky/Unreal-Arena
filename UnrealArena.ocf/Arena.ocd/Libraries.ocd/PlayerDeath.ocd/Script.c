@@ -311,53 +311,8 @@ func OnDeathHandleCorpseLegacy()
 	
 	if (Contained()) return;
 	
-	var CLBD = nil;
+	var cl_legs = nil;
 
-	//------------------------------------------
-	// determine settings for effects
-
-	var divisor = 1 + MOD_FastBullets();
-	
-	
-	// Projektil sehr schnell: zurückschleudern;
-	if (Abs(GetCorpseData().hit_xdir) > 140)
-	{
-		SetSpeed(GetXDir() + GetCorpseData().hit_xdir / (4 * divisor),
-		         GetYDir() + GetCorpseData().hit_ydir / (4 * divisor));
-	}
-	else
-	{
-		
-		SetSpeed(GetXDir() + GetCorpseData().hit_xdir / (8 * divisor),
-				 GetYDir() + GetCorpseData().hit_ydir / (8 * divisor));
-	}
-		
-	//------------------------------------------
-	// set up the corpse
-
-	var rdir_base = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir);
-
-	var cl_body, cl_head, cl_legs;
-	
-	cl_head = CreateObject(CLBD, 0, 0, NO_OWNER);
-	cl_legs = CreateObject(CLBD, 0, 0, NO_OWNER);
-	cl_body = CreateObject(CLBD, 0, 0, NO_OWNER);
-	
-	cl_legs->SetPosition(GetX(), GetY());
-	cl_body->SetPosition(GetX(), GetY());
-	cl_head->SetPosition(GetX(), GetY());
-	
-	cl_legs->~CreateCorps(this, nil);
-	cl_body->~CreateCorps(cl_legs, "Body");
-	cl_head->~CreateCorps(cl_body, "Head");
-	cl_legs->~SetMaster();
-	cl_body->SetDir(GetDir());
-	cl_head->SetDir(GetDir());
-	cl_legs->SetDir(GetDir());
-	
-	cl_legs->SetSpeed(GetXDir(), GetYDir());
-	SetSpeed(); // TODO: unknown what this is good for...
-	this.Visibility = VIS_None; // TODO: possibly not necessary anymore.
 	
 	// Flammen-Effekte auf die Leiche übertragen
 	var flame, flames = FindObjects(Find_ID(Effect_BlazingFlame), Find_Action("Hover"), Find_ActionTarget(this));
@@ -366,37 +321,14 @@ func OnDeathHandleCorpseLegacy()
 		flame->~SetMaster(cl_legs);
 	}
 	
-	 // TODO: this is somewhat stupid because it is overriden by the values below?
-	if (GetCorpseData().Blast)
-	{
-		cl_legs->SetSpeed(RandomX(-5, +5) + GetCorpseData().hit_xdir / divisor,
-						  RandomX(-5, +5) + GetCorpseData().hit_ydir / divisor);
-		var rdir_legs = cl_legs->GetXDir() + cl_legs->GetYDir();
-		cl_legs->SetRDir(rdir_legs);
-		cl_head->SetRDir(rdir_legs / 2);
-		cl_body->SetRDir(rdir_legs / 2);
-	}
-	else
-	{
-		cl_legs->SetRDir(rdir_base / (30 * divisor));
-		cl_head->SetRDir(rdir_base / (50 * divisor));
-		cl_body->SetRDir(rdir_base / (50 * divisor));
-	}
-	
 	/* Teile anpassen */
 	var deathcam_obj = cl_legs;
-	
-	var xdir_corpse = GetXDir() + GetCorpseData().hit_xdir / (3 * divisor);
-	var ydir_corpse = GetYDir() + GetCorpseData().hit_ydir / (3 * divisor);
-	var rdir_corpse = rdir_base / (10 * divisor);
-	
-	var ydir_variance = 10;
 	
 	//------------------------------------------
 	// follow the corpse
 
 	// "Death-Cam" an
-	SetPlrView(GetOwner(), cl_body);
+	SetPlrView(GetOwner(), deathcam_obj);
 	if (GetPlayerType(GetOwner()) == C4PT_User)
 	{
 		AddEffect("DeathCam", deathcam_obj, 200, 1, nil, Library_UA_PlayerDeath, GetOwner());
