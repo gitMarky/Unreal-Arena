@@ -6,8 +6,8 @@
 local skin_gender;
 local skin_team;
 
-static const PLAYER_SKIN_SLOT_BODY = 0;
-static const PLAYER_SKIN_SLOT_LEGS = 1;
+static const PLAYER_SKIN_SLOT_LEGS = 0;
+static const PLAYER_SKIN_SLOT_BODY = 1;
 static const PLAYER_SKIN_SLOT_ARML = 2;
 static const PLAYER_SKIN_SLOT_ARMR = 3;
 static const PLAYER_SKIN_SLOT_HEAD = 4;

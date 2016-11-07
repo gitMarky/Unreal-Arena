@@ -392,36 +392,6 @@ func OnDeathHandleCorpseLegacy()
 	
 	var ydir_variance = 10;
 	
-	if (GetCorpseData().corpse_blasted_body)
-	{
-		deathcam_obj = cl_body;
-		cl_body->~SetMaster();
-		cl_head->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
-		cl_body->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
-		if (!MOD_NoBlood())
-		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
-		}
-		cl_body->SetRDir(rdir_corpse);
-		cl_head->SetRDir(rdir_corpse);
-	}
-	if (GetCorpseData().corpse_blasted_legs)
-	{
-		deathcam_obj = cl_body;
-		cl_body->~SetMaster();
-		cl_legs->SetSpeed(xdir_corpse, ydir_corpse - Random(ydir_variance));
-		cl_legs->SetRDir(rdir_corpse);
-		
-		if (!MOD_NoBlood())
-		{
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
-			EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
-		}
-	}
-
 	//------------------------------------------
 	// follow the corpse
 
@@ -537,4 +507,59 @@ func HandleCorpseHeadshot()
 	
 	head->AddSpeed(0, -Random(20) * 100, 1000);
 	head->SetRDir(rdir);
+}
+
+
+func HandleCorpseBodyBlasted()
+{
+	// Create the corpse
+	var legs = CreateCorpse();
+	var body = CreateCorpse();
+	
+	// Copy the physics data
+	HandleCorpsePhysics([legs, body]);
+
+	// Copy the skin data for the body
+	for (var slot = PLAYER_SKIN_SLOT_BODY; slot <= PLAYER_SKIN_SLOT_HEAD; ++slot)
+	{
+		body->AddAppearance(slot, this->RemoveAppearance(slot));
+	}
+	
+	// Copy the skin data for the head
+	legs->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_LEGS));
+	
+	// Start the animation
+	legs->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
+	body->StartSplatter(GetCorpseData().animation_speed, false);
+	body->VertexSetupBody();
+	body->VertexSetupLegs();
+
+	// Additional physics
+	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir);
+	legs->AddSpeed(RandomX(-5, +5), RandomX(-5, +5));
+	legs->SetRDir(rdir);
+	
+	var xdir_corpse = GetCorpseData().death_physics.XDir;
+	var ydir_corpse = GetCorpseData().death_physics.YDir;
+	var ydir_variance = 10;
+	
+	// Gore effects?
+	if (GetCorpseData().corpse_blasted_body)
+	{
+		// TODO deathcam_obj = cl_body;
+		body->AddSpeed(0, -Random(ydir_variance));
+
+		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+	}
+	if (GetCorpseData().corpse_blasted_legs)
+	{
+		// TODO deathcam_obj = cl_body;
+		legs->AddSpeed(0, -Random(ydir_variance));
+		
+		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
+	}
 }
