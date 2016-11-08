@@ -5,7 +5,7 @@ public func Launch(int angle, proplist deviation)
 	this.is_launched = true;
 	RemoveOnHit();
 
-	SetController(user->GetController());
+	if (user) SetController(user->GetController());
 	
 	var precision = 100;
 	

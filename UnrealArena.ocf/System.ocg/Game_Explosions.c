@@ -82,15 +82,16 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 		var explosion = CreateObject(Projectile_Explosion, RandomX(-5, 5), RandomX(-10, 10));
 
 		var precision = 1000;
+		var dist = Distance(l_x, l_y, target->GetX(), target->GetY());
 		var angle = Angle(GetX(precision), GetY(precision), target->GetX(precision), target->GetY(precision), precision);
-		var speed = level * 2 - ObjectDistance(target, this);
+		var speed = level * 2 - dist;
 		
 		target->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision));
 
-		var percent = Sin(BoundBy(90 * (level - ObjectDistance(explosion, target)) / level, 0, 90), 100);
-		
-		explosion->Weapon(this->~GetWeaponID() ?? this);
-		explosion->Shooter(this->~GetShooter() ?? this);
+		var percent = Sin(BoundBy(90 * (level - dist) / level, 0, 90), 100);
+
+		//explosion->Weapon(nil); // TODO
+		//explosion->Shooter(nil); // TODO
 		explosion->DamageAmount(percent * damage_level / 100);
 		explosion->Velocity(speed);
 		explosion->DamageType(DMG_Explosion);
