@@ -59,9 +59,12 @@ global func BlastObjectInContainer(object container, int cause_plr, int damage_l
 		container->BlastObject(damage_level, cause_plr);
 		if (!container)
 			return true; // Container could be removed in the meanwhile.
-		for (target in FindObjects(Find_Container(container), Find_Layer(layer), Find_Exclude(prev_container))) 
-			if (target)
-				target->BlastObject(damage_level, cause_plr);
+		for (target in FindObjects(Find_Container(container), Find_Layer(layer), Find_Exclude(prev_container)))
+		{
+			if (!target) continue;
+
+			target->BlastObject(damage_level, cause_plr);
+		}
 	}
 }
 
@@ -82,6 +85,8 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 		var angle = Angle(GetX(precision), GetY(precision), target->GetX(precision), target->GetY(precision), precision);
 		var speed = level * 2 - ObjectDistance(target, this);
 		
+		target->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision));
+
 		var percent = Sin(BoundBy(90 * (level - ObjectDistance(explosion, target)) / level, 0, 90), 100);
 		
 		explosion->Weapon(this->~GetWeaponID() ?? this);
@@ -90,10 +95,10 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 		explosion->Velocity(speed);
 		explosion->DamageType(DMG_Explosion);
 		explosion->HitScan();
-		explosion->Launch(angle);
+		explosion->Launch(angle); // does not actually launch it, just does the configuration
 		explosion->HitObject(target, true);
 		
 		// somehow not removed
-		if (explosion) ScheduleCall(explosion, explosion.RemoveObject, 1, 0);
+		if (explosion) explosion->RemoveObject();
 	}
 }
