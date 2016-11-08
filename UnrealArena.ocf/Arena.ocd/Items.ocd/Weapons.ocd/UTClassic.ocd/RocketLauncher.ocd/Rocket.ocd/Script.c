@@ -56,6 +56,12 @@ public func Detonate()
 }
 
 
+public func DoDamageObject(object target)
+{
+	// do nothing, because the explosion handles everything
+}
+
+
 public func ExplosionEffect(int level, int x, int y, int smoothness)
 {
 	ExplosionEffectSmoke(level, x, y, smoothness);

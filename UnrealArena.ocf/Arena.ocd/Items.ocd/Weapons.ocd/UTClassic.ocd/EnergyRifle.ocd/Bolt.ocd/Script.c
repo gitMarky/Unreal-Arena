@@ -37,12 +37,12 @@ public func OnHit(int damage, int damage_type, object projectile, id weapon)
 
 public func OnHitObject(object target)
 {
-	Detonate();
+	Detonate(false);
 }
 
 public func OnHitLandscape()
 {
-	Detonate();
+	Detonate(false);
 }
 
 private func Detonate(bool large)
@@ -50,6 +50,11 @@ private func Detonate(bool large)
 	Sound("Weapon::Classic::shock-exp");
 	var factor = (1 + large);
 	Explode(20 * factor, true, damage * factor);
+}
+
+public func DoDamageObject(object target)
+{
+	// do nothing, because the explosion handles everything
 }
 
 public func ExplosionEffect(int level, int x, int y, int smoothness)
