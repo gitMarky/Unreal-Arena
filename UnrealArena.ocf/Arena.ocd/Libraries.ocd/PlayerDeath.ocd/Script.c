@@ -511,7 +511,6 @@ func HandleCorpseBlasted()
 	if (GetCorpseData().corpse_blasted_body)
 	{
 		// TODO deathcam_obj = cl_body;
-		body->AddSpeed(0, -Random(ydir_variance));
 
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
@@ -520,10 +519,13 @@ func HandleCorpseBlasted()
 	if (GetCorpseData().corpse_blasted_legs)
 	{
 		// TODO deathcam_obj = cl_body;
-		legs->AddSpeed(0, -Random(ydir_variance));
 		
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 	}
+
+	// Separate the parts visibly
+	body->AddSpeed(0, -Random(ydir_variance) - 5);
+	legs->AddSpeed(RandomX(-5, 5), +Random(ydir_variance));
 }
