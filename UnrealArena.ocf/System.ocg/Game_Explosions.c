@@ -24,7 +24,7 @@
 //
 //	var self = this;
 //
-//	var help = CreateObject(Projectile_Explosion, RandomX(-5, 5), RandomX(-10, 10), caused_by);
+//	var explosion = CreateObject(Projectile_Explosion, RandomX(-5, 5), RandomX(-10, 10), caused_by);
 //
 //}
 
@@ -59,56 +59,41 @@ global func BlastObjectInContainer(object container, int cause_plr, int damage_l
 		container->BlastObject(damage_level, cause_plr);
 		if (!container)
 			return true; // Container could be removed in the meanwhile.
-		for (obj in FindObjects(Find_Container(container), Find_Layer(layer), Find_Exclude(prev_container))) 
-			if (obj)
-				obj->BlastObject(damage_level, cause_plr);
+		for (target in FindObjects(Find_Container(container), Find_Layer(layer), Find_Exclude(prev_container))) 
+			if (target)
+				target->BlastObject(damage_level, cause_plr);
 	}
 }
 
 
 global func BlastObjectNoContainer(int x, int y, int level, object container, int cause_plr, int damage_level, object layer, object prev_container)
 {
-	var obj;
-	
 	// Coordinates are always supplied globally, convert to local coordinates.
 	var l_x = x - GetX(), l_y = y - GetY();
 
 	// Damage objects in radius.
-	for (var obj in FindObjects(Find_Distance(level, l_x, l_y), Find_NoContainer(), Find_Layer(layer), Find_Exclude(prev_container))) 
+	for (var target in FindObjects(Find_Distance(level, l_x, l_y), Find_NoContainer(), Find_Layer(layer), Find_Exclude(prev_container))) 
 	{
-		if (!obj) continue;
+		if (!target) continue;
 
-		var help = CreateObject(Projectile_Explosion, RandomX(-5, 5), RandomX(-10, 10));
+		var explosion = CreateObject(Projectile_Explosion, RandomX(-5, 5), RandomX(-10, 10));
+
+		var precision = 1000;
+		var angle = Angle(GetX(precision), GetY(precision), target->GetX(precision), target->GetY(precision), precision);
+		var speed = level * 2 - ObjectDistance(target, this);
 		
-		var iAngle, iSpeed;
-		var explo = GetExplosionSpeed(this, obj, level);
-		obj->SetSpeed(explo[0], explo[1]);
-
-		iAngle = Angle(0, 0, explo[0], explo[1]);
-		iSpeed = Distance(0, 0, explo[0], explo[1]);
-
-		var percent = Sin(BoundBy(90 * (level - ObjectDistance(help, obj)) / level, 0, 90), 100);
-
-		help->DamageAmount(percent * damage_level / 100);
-		help->Velocity(iSpeed);
-		help->DamageType(DMG_Explosion);
-		help->HitScan();
-		// help->Launch(angle);
-		help->HitObject(obj, true);
+		var percent = Sin(BoundBy(90 * (level - ObjectDistance(explosion, target)) / level, 0, 90), 100);
+		
+		explosion->Weapon(this->~GetWeaponID() ?? this);
+		explosion->Shooter(this->~GetShooter() ?? this);
+		explosion->DamageAmount(percent * damage_level / 100);
+		explosion->Velocity(speed);
+		explosion->DamageType(DMG_Explosion);
+		explosion->HitScan();
+		explosion->Launch(angle);
+		explosion->HitObject(target, true);
 		
 		// somehow not removed
-		if (help) ScheduleCall(help, help.RemoveObject, 1, 0);
+		if (explosion) ScheduleCall(explosion, explosion.RemoveObject, 1, 0);
 	}
-}
-
-global func GetExplosionSpeed(pCauser, pObj, iRadius)
-{
-	var x, y;
-
-	if (pCauser->GetX() < pObj->GetX()) x = pCauser->GetX() - pObj->GetX() + iRadius * 2;
-	if (pCauser->GetX() > pObj->GetX())	x = pCauser->GetX() - pObj->GetX() - iRadius * 2;
-	if (pCauser->GetY() < pObj->GetY())	y = pCauser->GetY() - pObj->GetY() + iRadius * 2;
-	if (pCauser->GetY() > pObj->GetY())	y = pCauser->GetY() - pObj->GetY() - iRadius * 2;
-	
-	return [x, y];
 }
