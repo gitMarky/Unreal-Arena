@@ -506,3 +506,20 @@ protected func Hit(int dx, int dy)
 	Flinch();
 	BouncePhysics(true);
 }
+
+/**
+ Can be hit by explosions only.
+ */
+func IsProjectileTarget(object projectile, object shooter)
+{
+	if (MOD_NoBlood()) return false;
+	return projectile->GetID() == Projectile_Explosion;
+}
+
+func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type)
+{
+	if (IsDisintegrating()) return;
+	EffectCastGore(10, 30 + damage_amount / 4, 0, 3);
+	EffectBloodSpray(damage_amount * 6, 30);
+	RemoveObject();
+}
