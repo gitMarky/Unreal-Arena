@@ -75,7 +75,12 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 	var l_x = x - GetX(), l_y = y - GetY();
 
 	// Damage objects in radius.
-	for (var target in FindObjects(Find_Distance(level, l_x, l_y), Find_NoContainer(), Find_Layer(layer), Find_Exclude(prev_container))) 
+	var targets = FindObjects(Find_Distance(level, l_x, l_y), Find_NoContainer(), Find_Layer(layer), Find_Exclude(prev_container));
+	var mass = level * level;
+	var target_count = BoundBy(GetLength(targets), 2, 20);
+	mass /= target_count;
+	Log("Explosion mass is %d", mass);
+	for (var target in targets) 
 	{
 		if (!target) continue;
 
@@ -86,19 +91,23 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 		var angle = Angle(GetX(precision), GetY(precision), target->GetX(precision), target->GetY(precision), precision);
 		var speed = level * 2 - dist;
 		
-		target->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision));
+		var lift = - Sqrt(level);
+
+		target->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision) + lift);
 
 		var percent = Sin(BoundBy(90 * (level - dist) / level, 0, 90), 100);
 
 		//explosion->Weapon(nil); // TODO
 		//explosion->Shooter(nil); // TODO
+		explosion->SetMass(mass);
 		explosion->DamageAmount(percent * damage_level / 100);
+		explosion->Lift(lift);
 		explosion->Velocity(speed);
 		explosion->DamageType(DMG_Explosion);
 		explosion->HitScan();
 		explosion->Launch(angle); // does not actually launch it, just does the configuration
 		explosion->HitObject(target, true);
-		
+
 		// somehow not removed
 		if (explosion) explosion->RemoveObject();
 	}

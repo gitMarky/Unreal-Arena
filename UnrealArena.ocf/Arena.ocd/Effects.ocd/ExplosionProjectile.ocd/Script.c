@@ -1,5 +1,7 @@
 #include Library_Projectile
 
+local lift = 0;
+
 public func Launch(int angle, proplist deviation)
 {
 	this.is_launched = true;
@@ -38,5 +40,15 @@ public func Launch(int angle, proplist deviation)
 	}
 }
 
+func Lift(int value)
+{
+	lift = value;
+	return this;
+}
 
 func CorpsePhysicsElasticityConstant(){ return 1000;}
+
+func GetYDir(int precision)
+{
+	return _inherited(precision) + precision * lift / 10;
+}
