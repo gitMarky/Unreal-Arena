@@ -71,6 +71,7 @@ global func BlastObjectInContainer(object container, int cause_plr, int damage_l
 
 global func BlastObjectNoContainer(int x, int y, int level, object container, int cause_plr, int damage_level, object layer, object prev_container)
 {
+	var precision = 1000;
 	// Coordinates are always supplied globally, convert to local coordinates.
 	var l_x = x - GetX(), l_y = y - GetY();
 
@@ -86,14 +87,19 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 
 		var explosion = CreateObject(Projectile_Explosion, RandomX(-5, 5), RandomX(-10, 10));
 
-		var precision = 1000;
-		var dist = Distance(l_x, l_y, target->GetX(), target->GetY());
-		var angle = Angle(GetX(precision), GetY(precision), target->GetX(precision), target->GetY(precision), precision);
+		var dist = Distance(l_x, l_y, target->GetX() - GetX(), target->GetY() - GetY());
+		var angle = Angle(l_x * precision, l_y * precision, target->GetX(precision) - GetX(precision), target->GetY(precision) - GetY(precision), precision);
 		var speed = level * 2 - dist;
-		
+
 		var lift = - Sqrt(level);
 
-		target->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision) + lift);
+		explosion->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision) + lift);
+		var data = Calc_ProjectileCollision(target, explosion, explosion->CorpsePhysicsElasticityConstant());
+		target->SetXDir(data.XDir, data.Precision);
+		target->SetYDir(data.YDir + data.Precision * lift / 10, data.Precision);
+		target->SetRDir(data.RDir, data.Precision);
+
+		//target->SetSpeed(Sin(angle, speed, precision), -Cos(angle, speed, precision) + lift);
 
 		var percent = Sin(BoundBy(90 * (level - dist) / level, 0, 90), 100);
 
