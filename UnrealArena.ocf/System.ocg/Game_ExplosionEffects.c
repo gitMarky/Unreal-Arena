@@ -72,11 +72,11 @@ global func ExplosionEffectBlast(int level, int x, int y, int smoothness)
 		rot = Random(360);
 		rrd = Random(rad);
 
-		CreateParticle("Magic", x + Sin(rot, rrd), y - Cos(rot, rrd), Sin(rot, 5), -Cos(rot, 5), PV_Random(45, 55), Particles_FxExplosion_Blast(size, col_center));
+		CreateParticle("Magic", x + Sin(rot, rrd), y - Cos(rot, rrd), Sin(rot, 5), -Cos(rot, 5), PV_Random(10, 25), Particles_FxExplosion_Blast(size, col_center));
 	}
 
 	// this was the same for all explosions, so let's leave it that way for now
-	CreateParticle("Magic", x, y, 0, 0, PV_Random(18, 22), Particles_FxExplosion_Blast(size, RGBa(220 - Random(30), 255, 0, 80 + Random(50))));
+	CreateParticle("Magic", x, y, 0, 0, PV_Random(6, 12), Particles_FxExplosion_Blast(size, RGBa(220 - Random(30), 255, 0, 80 + Random(50))));
 
 	for (var i = 0; i < shock; i++)
 	{
@@ -92,7 +92,7 @@ global func ExplosionEffectBlast(int level, int x, int y, int smoothness)
 		particle.Size = PV_Linear(RandomX(8, 12), 2);
 		particle.Stretch = PV_Speed(1000, 200);
 
-		CreateParticle("Magic", x, y, Sin(angle, speed), -Cos(angle, speed), PV_Random(23, 28), particle);
+		CreateParticle("Magic", x, y, Sin(angle, speed), -Cos(angle, speed), PV_Random(5, 15), particle);
 	}
 
 	// temporary light effect
