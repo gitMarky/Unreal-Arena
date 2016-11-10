@@ -1,0 +1,3 @@
+Name=Thigh Pads
+Description=Gives 50 armor points.
+

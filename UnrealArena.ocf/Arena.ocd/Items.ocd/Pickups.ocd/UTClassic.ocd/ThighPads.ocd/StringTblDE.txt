@@ -1,0 +1,3 @@
+Name=Beinschützer
+Description=Gibt 50 Rüstungspunkte.
+
