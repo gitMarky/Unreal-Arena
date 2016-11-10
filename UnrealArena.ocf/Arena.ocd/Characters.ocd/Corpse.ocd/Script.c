@@ -7,6 +7,7 @@ func Initialize()
 {
 	_inherited(...);
 	SetAction("Be");
+	vertex_adjust = [0, 0];
 }
 
 local animation_main;
@@ -14,6 +15,7 @@ local animation_side;
 local animation_slot;
 local angle_stable = 0;
 local angle_prohibited = [-80, 80];
+local vertex_adjust;
 
 /**
  Starts the corpse effects.
@@ -233,7 +235,12 @@ func VertexSetupArm(int position)
 
 func ApplyOffset(int x, int y)
 {
-	MovePosition(-x, -y, 1000);
+	var precision = 1000;
+
+	MovePosition(-x, -y, precision);
+	vertex_adjust[VTX_X] = -x / precision;
+	vertex_adjust[VTX_Y] = -y / precision;
+	
 	var fx = CreateEffect(FxApplyOffset, 1, 1);
 	fx.x = x; fx.y = y;
 	fx->Timer();
@@ -390,6 +397,8 @@ local FxInterpolateVertices = new Effect
 
 	InterpolateVertex = func (int v, array target_x, array target_y, array actual_x, array actual_y)
 	{
+		var y_adjust = this.Target.vertex_adjust[VTX_Y];
+		
 		// Cycle through interpolated positions, beginning at the furthest away position
 		// => Go back slowly until you are, at worst, at the previous position
 		var max_dist = 5;
@@ -400,7 +409,7 @@ local FxInterpolateVertices = new Effect
 			
 			x /= max_dist; y /= max_dist;
 
-			SetVertexPos(v, x, y);
+			SetVertexPos(v, x, y + y_adjust);
 			
 			if (!this.Target->Stuck())
 			{
