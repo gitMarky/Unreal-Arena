@@ -7,11 +7,11 @@ func Hit()
 {
 	if (blood_type == "Machine")
 	{
-		Sound("Hit*");
+		Sound("Hits::Materials::Metal::LightMetalHit?");
 	}
 	else
 	{
-		Sound("gibP*");
+		Sound("Gib::gibP?");
 	}
 }
 
