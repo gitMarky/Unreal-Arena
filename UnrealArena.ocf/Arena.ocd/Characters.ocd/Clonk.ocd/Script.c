@@ -5,6 +5,8 @@
 #include Library_AmmoManager
 
 
+local MaxEnergy = 100000;
+
 local skin_gender;
 local skin_team;
 
