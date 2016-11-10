@@ -58,34 +58,6 @@ global func BloodFXColor(string szType)
 	return [RGBa(255, 0, 0, 40), RGBa(200, 0, 0, 160)];
 }
 
-func OnDmg(int iDmg, int iType)
-{
-	var armor = GetUTArmor(this);
-	var shield = GetUTShield(this);
-	var dmg = iDmg;
-	
-	// zuerst vom Schild abziehen
-	shield = Min(shield, dmg);
-	DoUTShield(-shield);
-	dmg -= shield;
-	if (shield)
-		Sound("FieldHit*");
-	
-	// jetzt von der Rüstung,
-	// die fängt aber nur halben Schaden!
-	armor = Min(armor, dmg);
-	DoUTArmor(-armor);
-	dmg -= armor / 2;
-	if (armor)
-		Sound("ArmorHit*");
-	
-	// Prozent des gefangenen Schadens angeben
-	var res = (iDmg - dmg) * 100 / iDmg;
-	return res;
-}
-
-
-
 func Hurt()
 {
 	Sound(Format("%s_hit*", CrewGetVoice(this)));

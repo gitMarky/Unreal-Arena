@@ -1,5 +1,6 @@
 #include Clonk
 #include Library_ModularAppearance
+#include Library_UA_Armor
 #include Library_UA_PlayerDamage
 #include Library_UA_PlayerDeath
 #include Library_AmmoManager

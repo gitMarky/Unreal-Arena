@@ -1,4 +1,34 @@
 
+func ModifyWeaponDamageShooter(int damage, int damage_type, int engine_damage_type)
+{
+	// Subtract damage from shield first
+	var absorbed_by_shield = Min(this->~GetUTShield(), damage);
+	this->~DoUTShield(-absorbed_by_shield);
+	damage -= absorbed_by_shield;
+
+	if (absorbed_by_shield)
+	{
+		Sound("Character::FieldHit?");
+	}
+
+	// Do not handle armor anymore if everything was caught by the shield
+	if (!damage) return damage;
+	
+	// Subtract damage from armor now;
+	// Armor absorbs only half of the damage though!
+	var absorbed_by_armor = Min(this->~GetUTArmor(), damage);
+	this->~DoUTArmor(-absorbed_by_armor);
+	damage -= absorbed_by_armor / 2;
+
+	if (absorbed_by_armor)
+	{
+		Sound("Character::ArmorHit?");
+	}
+
+	return damage;
+}
+
+
 func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type)
 {
 	var is_headshot = this->~IsHeadshot(projectile, damage_type);
@@ -98,3 +128,5 @@ func CastGoreHeadshot()
 {
 	EffectGoreChunk(0, -7, RandomX(-10, +10) + GetXDir() / 5, RandomX(-10, -35) + GetYDir() / 5 - 10);
 }
+
+
