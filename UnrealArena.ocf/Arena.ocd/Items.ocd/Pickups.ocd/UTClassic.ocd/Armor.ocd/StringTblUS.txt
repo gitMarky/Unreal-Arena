@@ -1,0 +1,3 @@
+Name=Armor
+Description=Gives you 100 armor points.
+

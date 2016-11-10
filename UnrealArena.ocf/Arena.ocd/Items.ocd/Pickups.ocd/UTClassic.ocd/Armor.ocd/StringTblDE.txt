@@ -1,0 +1,3 @@
+Name=Rüstung
+Description=Gibt 100 Rüstungspunkte.
+

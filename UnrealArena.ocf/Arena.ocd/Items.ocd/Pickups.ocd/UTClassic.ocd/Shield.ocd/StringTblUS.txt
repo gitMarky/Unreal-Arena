@@ -1,0 +1,3 @@
+Name=Shieldbelt
+Description=Prevents injuries.
+
