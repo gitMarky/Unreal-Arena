@@ -380,8 +380,6 @@ func HandleCorpsePhysics(array parts)
 
 	for (var part in parts)
 	{
-		var data = GetCorpseData().death_physics;
-	
 		// Copy the physics data
 		if (data)
 		{
@@ -456,7 +454,7 @@ func HandleCorpseBlasted()
 	var legs = CreateCorpse();
 	var body = CreateCorpse();
 	var parts = [legs, body];
-	
+
 	var arml, armr;
 	if (GetCorpseData().corpse_lost_arm_l)
 	{
@@ -489,23 +487,23 @@ func HandleCorpseBlasted()
 
 	// Start the animation
 	body->VertexSetupBody();
-	body->VertexSetupLegs();
+	legs->VertexSetupLegs();
 	legs->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
 	body->StartSplatter(GetCorpseData().animation_speed, false);
 	if (arml) arml->StartSplatter(GetCorpseData().animation_speed, false);
 	if (armr) armr->StartSplatter(GetCorpseData().animation_speed, false);
 
 	// Additional physics
+	var ydir_variance = 5;
 	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir);
-	legs->AddSpeed(RandomX(-5, +5), RandomX(-5, +5));
 	legs->SetRDir(rdir);
-		
+	body->AddSpeed(RandomX(-5, 5), -Random(ydir_variance));
+	legs->AddSpeed(RandomX(-5, 5), 0);	
+	if (arml) arml->AddSpeed(RandomX(-5, 5), -Random(ydir_variance) - ydir_variance);
+	if (armr) armr->AddSpeed(RandomX(-5, 5), -Random(ydir_variance) - ydir_variance);
+
 	var xdir_corpse = GetCorpseData().death_physics.XDir;
 	var ydir_corpse = GetCorpseData().death_physics.YDir;
-	var ydir_variance = 10;
-
-	if (arml) arml->AddSpeed(RandomX(-5, 5), -Random(ydir_variance));
-	if (armr) armr->AddSpeed(RandomX(-5, 5), -Random(ydir_variance));
 
 	// Gore effects?
 	if (GetCorpseData().corpse_blasted_body)
@@ -524,8 +522,4 @@ func HandleCorpseBlasted()
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 	}
-
-	// Separate the parts visibly
-	body->AddSpeed(0, -Random(ydir_variance) - 5);
-	legs->AddSpeed(RandomX(-5, 5), +Random(ydir_variance));
 }
