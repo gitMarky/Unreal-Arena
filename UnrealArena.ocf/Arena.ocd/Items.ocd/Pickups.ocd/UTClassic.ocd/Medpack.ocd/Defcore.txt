@@ -1,5 +1,5 @@
 [DefCore]
-id=Pickup_UT99_Health
+id=Pickup_UT99_HealthPack
 Version=7,0
 Category=C4D_Object
 Width=12
