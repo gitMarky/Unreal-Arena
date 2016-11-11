@@ -1,4 +1,4 @@
 [DefCore]
-id=Library_UA_Armor
+id=Library_UA_PlayerStats
 Version=7,0
 Category=C4D_StaticBack

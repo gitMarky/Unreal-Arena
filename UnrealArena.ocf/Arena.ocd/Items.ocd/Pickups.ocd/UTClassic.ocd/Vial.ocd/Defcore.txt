@@ -1,0 +1,13 @@
+[DefCore]
+id=Pickup_UT99_HealthVial
+Version=7,0
+Category=C4D_Object
+Width=12
+Height=12
+Offset=-6,-6
+Value=10
+Mass=5
+Picture=12,0,64,64
+Vertices=1
+VertexY=4
+VertexFriction=20
