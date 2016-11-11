@@ -4,11 +4,6 @@ func IsPickup()
 }
 
 
-func OnCollection(object player)
-{
-	return this->PickupEffect(player);
-}
-
 func Entrance(object container)
 {
 	if (container->~IsSpawnPoint()) return;
@@ -16,7 +11,8 @@ func Entrance(object container)
 	SetPosition();
 	SetCategory(C4D_StaticBack);
 	this.Visibility = VIS_None;
-	ScheduleCall(this, this.RemoveObject, 1);
+	this->PickupEffect(container);
+	RemoveObject();
 }
 
 
