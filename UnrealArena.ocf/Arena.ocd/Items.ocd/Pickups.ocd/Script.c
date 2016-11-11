@@ -6,7 +6,7 @@ func IsPickup()
 
 func OnCollection(object player)
 {
-	return this->PickupEffect(player));
+	return this->PickupEffect(player);
 }
 
 func Entrance(object container)
