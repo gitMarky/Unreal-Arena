@@ -43,3 +43,21 @@ public func Initialize()
 	AddFiremode(firemode_secondary);
 	ChangeFiremode(firemode_primary);
 }
+
+
+func IsShooterWeapon(){return true;}
+
+
+func IsReadyToUse(object user)
+{
+	var other_weapons = FindObjects(Find_Container(user), Find_Exclude(this), Find_Func("IsShooterWeapon"));
+	
+	var can_use = _inherited(...);
+
+	for (var weapon in other_weapons)
+	{
+		can_use = can_use && weapon->~IsReadyToFire();
+	}
+
+	return can_use;
+}
