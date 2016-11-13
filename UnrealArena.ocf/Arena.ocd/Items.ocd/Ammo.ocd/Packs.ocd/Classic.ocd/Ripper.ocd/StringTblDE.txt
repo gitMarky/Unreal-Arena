@@ -1,0 +1,2 @@
+Name=Razor Pack
+Description=Gestapelte geschärfte Scheiben.

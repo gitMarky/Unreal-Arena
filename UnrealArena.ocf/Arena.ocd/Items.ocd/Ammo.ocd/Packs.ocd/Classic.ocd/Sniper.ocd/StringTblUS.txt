@@ -1,0 +1,2 @@
+Name=High precision projectiles
+Description=Insert into a sniper rifle, please. Thanks.

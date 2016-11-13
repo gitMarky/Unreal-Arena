@@ -1,0 +1,2 @@
+Name=Munitionsgurt
+Description=Wenns mal wieder länger dauert.

@@ -1,0 +1,2 @@
+Name=Magazine
+Description=A simple pistol magazine.

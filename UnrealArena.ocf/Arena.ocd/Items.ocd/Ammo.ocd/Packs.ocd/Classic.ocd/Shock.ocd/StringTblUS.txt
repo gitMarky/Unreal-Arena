@@ -1,0 +1,2 @@
+Name=Energy cell
+Description=This cell accumulates energy.

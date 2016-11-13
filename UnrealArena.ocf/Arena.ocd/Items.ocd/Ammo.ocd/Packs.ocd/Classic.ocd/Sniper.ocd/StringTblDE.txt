@@ -1,0 +1,2 @@
+Name=Präzisionsgeschosse
+Description=Bitte in ein Scharfschützengewehr stecken. Danke.

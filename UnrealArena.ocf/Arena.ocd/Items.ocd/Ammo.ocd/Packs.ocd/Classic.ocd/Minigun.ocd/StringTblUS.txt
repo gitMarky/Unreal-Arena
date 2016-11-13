@@ -1,0 +1,2 @@
+Name=Ammo belt
+Description=For when it takes a little more time.
