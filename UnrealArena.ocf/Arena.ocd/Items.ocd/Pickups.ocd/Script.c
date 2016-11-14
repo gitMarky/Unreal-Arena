@@ -4,15 +4,22 @@ func IsPickup()
 }
 
 
-func Entrance(object container)
+func RejectEntrance(object container)
 {
-	if (container->~IsSpawnPoint()) return;
-	Exit();
-	SetPosition();
-	SetCategory(C4D_StaticBack);
-	this.Visibility = VIS_None;
-	this->PickupEffect(container);
-	RemoveObject();
+	// always enter spawn points
+	if (container->~IsSpawnPoint())
+	{
+		return false;
+	}
+	else // do not enter
+	{
+		// but remove if you cause an effect on the guy
+		if (this->PickupEffect(container));
+		{
+			RemoveObject();
+		}
+		return true;
+	}
 }
 
 
