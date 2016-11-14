@@ -1,5 +1,5 @@
 [DefCore]
-id=Ammo_Pack_UT99_Shock
+id=Ammo_Pack_UT99_EnergyRifle
 Version=7,0
 Category=C4D_Object
 Width=12

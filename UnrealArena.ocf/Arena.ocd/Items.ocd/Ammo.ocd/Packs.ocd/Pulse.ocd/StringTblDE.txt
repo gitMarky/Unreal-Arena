@@ -1,0 +1,3 @@
+Name=Plasmazelle
+Description=Diese Zelle speichert Plasma.
+

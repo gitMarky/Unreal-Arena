@@ -1,0 +1,3 @@
+Name=Plasma cell
+Description=This cell contains plasma.
+

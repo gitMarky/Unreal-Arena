@@ -9,6 +9,13 @@ WeaponBaseRoof=Basis Sniper oben
 WeaponBaseTunnel=Basis Tunnel
 WeaponSuper=Superwaffe
 
+AmmoBaseFront=Munition Basis vorne
+AmmoBaseBack=Munition Basis hinten
+AmmoBaseFloor1=Munition Basis mitte
+AmmoBaseFloor2=Munition Basis Sniper mitte
+AmmoBaseRoof=Munition Basis Sniper oben
+AmmoBaseTunnel=Munition Basis Tunnel
+
 ExtraBaseRoof=Extra Sniper oben
 
 HealthSmall=Health Vial

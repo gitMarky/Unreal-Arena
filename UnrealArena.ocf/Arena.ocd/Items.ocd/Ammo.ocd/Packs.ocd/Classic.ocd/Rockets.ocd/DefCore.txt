@@ -1,5 +1,5 @@
 [DefCore]
-id=Ammo_Pack_UT99_Rockets
+id=Ammo_Pack_UT99_RocketLauncher
 Version=7,0
 Category=C4D_Object
 Width=12

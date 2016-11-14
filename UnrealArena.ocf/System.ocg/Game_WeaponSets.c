@@ -20,6 +20,16 @@ local weapon_set_ut_classic = {
 	weapon_flakcannon = Weapon_UT99_Flak,
 	weapon_rocketlauncher = Weapon_UT99_RocketLauncher,
 	weapon_sniperrifle = Weapon_UT99_Sniper,
+	ammo_chainsaw = nil,
+	ammo_enforcer = Ammo_Pack_UT99_Enforcer,
+	ammo_biorifle = Ammo_Pack_UT99_BioRifle,
+	ammo_asmd = Ammo_Pack_UT99_EnergyRifle,
+	ammo_pulserifle = Ammo_Pack_PulseRifle,
+	ammo_ripper = Ammo_Pack_UT99_Ripper,
+	ammo_minigun = Ammo_Pack_UT99_Minigun,
+	ammo_flakcannon = Ammo_Pack_Flak,
+	ammo_rocketlauncher = Ammo_Pack_UT99_RocketLauncher,
+	ammo_sniperrifle = Ammo_Pack_UT99_Sniper,
 	weapon_superweapon = Weapon_UT99_Redeemer,
 	item_healthvial = Pickup_UT99_HealthVial,
 	item_healthpack = Pickup_UT99_HealthPack,
@@ -53,6 +63,16 @@ private func GetWeaponSet(proplist info)
 	var weapon_rocketlauncher = {};
 	var weapon_sniperrifle = {};
 	var weapon_superweapon = {};
+	var ammo_chainsaw = {};
+	var ammo_enforcer = {};
+	var ammo_biorifle = {};
+	var ammo_asmd = {};
+	var ammo_pulserifle = {};
+	var ammo_ripper = {};
+	var ammo_minigun = {};
+	var ammo_flakcannon = {};
+	var ammo_rocketlauncher = {};
+	var ammo_sniperrifle = {};
 	var item_healthvial = {};
 	var item_healthpack = {};
 	var item_healthkeg = {};
@@ -75,7 +95,18 @@ private func GetWeaponSet(proplist info)
 	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_rocketlauncher, weapon_rocketlauncher);
 	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_sniperrifle, weapon_sniperrifle);
 	SetProperty(GAMECONFIG_Proplist_Def, info.weapon_superweapon, weapon_superweapon);
-	
+
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_chainsaw, ammo_chainsaw);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_enforcer, ammo_enforcer);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_biorifle, ammo_biorifle);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_asmd, ammo_asmd);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_pulserifle, ammo_pulserifle);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_ripper, ammo_ripper);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_minigun, ammo_minigun);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_flakcannon, ammo_flakcannon);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_rocketlauncher, ammo_rocketlauncher);
+	SetProperty(GAMECONFIG_Proplist_Def, info.ammo_sniperrifle, ammo_sniperrifle);
+
 	SetProperty(GAMECONFIG_Proplist_Def, info.item_healthvial, item_healthvial);
     SetProperty(GAMECONFIG_Proplist_Def, info.item_healthpack, item_healthpack);
     SetProperty(GAMECONFIG_Proplist_Def, info.item_healthkeg, item_healthkeg);
@@ -97,8 +128,19 @@ private func GetWeaponSet(proplist info)
     SetProperty(SPAWN_Weapon_FlakCannon, weapon_flakcannon, items);
     SetProperty(SPAWN_Weapon_RocketLauncher, weapon_rocketlauncher, items);
     SetProperty(SPAWN_Weapon_SniperRifle, weapon_sniperrifle, items);
-    
+
     SetProperty(SPAWN_Superweapon, weapon_superweapon, items);
+
+    SetProperty(SPAWN_Ammo_Chainsaw, ammo_chainsaw, items);
+    SetProperty(SPAWN_Ammo_Enforcer, ammo_enforcer, items);
+    SetProperty(SPAWN_Ammo_BioRifle, ammo_biorifle, items);
+    SetProperty(SPAWN_Ammo_ASMD, ammo_asmd, items);
+    SetProperty(SPAWN_Ammo_PulseRifle, ammo_pulserifle, items);
+    SetProperty(SPAWN_Ammo_Ripper, ammo_ripper, items);
+    SetProperty(SPAWN_Ammo_Minigun, ammo_minigun, items);
+    SetProperty(SPAWN_Ammo_FlakCannon, ammo_flakcannon, items);
+    SetProperty(SPAWN_Ammo_RocketLauncher, ammo_rocketlauncher, items);
+    SetProperty(SPAWN_Ammo_SniperRifle, ammo_sniperrifle, items);
 
     SetProperty(SPAWN_Item_HealthVial, item_healthvial, items);
     SetProperty(SPAWN_Item_HealthPack, item_healthpack, items);

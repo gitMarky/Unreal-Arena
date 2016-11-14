@@ -1,10 +1,10 @@
 [DefCore]
-id=Ammo_Pack_UT99_BioRifle
+id=Ammo_Pack_PulseRifle
 Version=7,0
 Category=C4D_Object
 Width=12
 Height=12
-Offset=-4,-4
+Offset=-6,-6
 Mass=5
 Picture=12,0,64,64
 Vertices=1

@@ -9,6 +9,17 @@ static const SPAWN_Weapon_FlakCannon = "weapon_slot_08";
 static const SPAWN_Weapon_RocketLauncher = "weapon_slot_09";
 static const SPAWN_Weapon_SniperRifle = "weapon_slot_10";
 
+static const SPAWN_Ammo_Chainsaw = "ammo_slot_01";
+static const SPAWN_Ammo_Enforcer = "ammo_slot_02";
+static const SPAWN_Ammo_BioRifle = "ammo_slot_03";
+static const SPAWN_Ammo_ASMD = "ammo_slot_04";
+static const SPAWN_Ammo_PulseRifle = "ammo_slot_05";
+static const SPAWN_Ammo_Ripper = "ammo_slot_06";
+static const SPAWN_Ammo_Minigun = "ammo_slot_07";
+static const SPAWN_Ammo_FlakCannon = "ammo_slot_08";
+static const SPAWN_Ammo_RocketLauncher = "ammo_slot_09";
+static const SPAWN_Ammo_SniperRifle = "ammo_slot_10";
+
 static const SPAWN_Item_HealthVial = "item_slot_01";
 static const SPAWN_Item_HealthPack = "item_slot_02";
 static const SPAWN_Item_HealthKeg = "item_slot_03";
