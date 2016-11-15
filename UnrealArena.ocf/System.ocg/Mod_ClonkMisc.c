@@ -15,7 +15,7 @@ func Recruitment()
 	
 	if (GetPlayerType(GetOwner()) == C4PT_Script)
 	{
-		AI->AddAI(this);
+		BotAI->AddAI(this);
 	}
 
 	return _inherited(...);
