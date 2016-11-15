@@ -44,20 +44,20 @@ public func GetAggroLevel()
 {
   var effect = GetEffect("Aggro", this);
   if(!effect) return;
-  return(EffectVar(0, this, effect));
+  return(effect.var0);
 }
 
 // Setzt sofort das Angriffsziel
 public func SetAggroTarget(object pTarget)
 {
   if(GetAggroLevel() == Aggro_Nothing) return;
-  EffectVar(1, this, GetEffect("Aggro", this)) = pTarget;
+  GetEffect("Aggro", this).var1 = pTarget;
   return(1);
 }
 
 public func GetAggroTarget()
 {
-  return(EffectVar(1, this, GetEffect("Aggro", this)));
+  return(GetEffect("Aggro", this).var1);
 }
 
 
@@ -404,7 +404,7 @@ public func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 	// Wir kommen von > 2
 	var target;
 	if(GetAggroLevel() >= 2 && iLevel < 2)
-		if(target = EffectVar(1, this, GetEffect("Aggro", this)))
+		if(target = GetEffect("Aggro", this).var1)
 			if(GetMacroCommand(1, 1) == target)
 			{
 				FinishMacroCommand(1,0,1);
@@ -415,20 +415,20 @@ public func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 	// 1, 2 und 3
 	var effect = GetEffect("Aggro", this);
 	if(!effect) effect = AddEffect("Aggro", this, 50, 20, this); // Timer war 10;
-	EffectVar(0, this, effect) = iLevel;
+	effect.var0 = iLevel;
 	// Parameter
 	// iDist, Default = 500
 	if(!iDist)
 		iDist = 500;
-	EffectVar(2, this, effect) = iDist;
+	effect.var2 = iDist;
 	// iX und iY, Default = GetX() & GetY()
 	if(!iX && !iY && iLevel == 3)
 	{
 		iX = GetX();
 		iY = GetY();
 	}
-	EffectVar(3, this, effect) = iX;
-	EffectVar(4, this, effect) = iY;
+	effect.var3 = iX;
+	effect.var4 = iY;
 	return 1;
 }
 
@@ -910,13 +910,13 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 		DropArrayItem(pCurrent, aSet);
 
 		var pNext = 0;
-		var pathcount = (pCurrent->WAYP::GetPathCount());
+		var pathcount = (pCurrent->WAYP->GetPathCount());
 		var iCurrent = GetArrayItemPosition(pCurrent,aNodes);
 
 		// alle Nachbarknoten des besten Knotens nach kürzeren Wegen absuchen
 		for(var i=0; i<pathcount; ++i)
 		{
-			pNext = (pCurrent->WAYP::GetPathTarget(i));
+			pNext = (pCurrent->WAYP->GetPathTarget(i));
 			var iNext = GetArrayItemPosition(pNext,aNodes);
 
 			if(!Check4Jetpack(pCurrent,i,fJetpack,jetp,ammoload))
@@ -1161,6 +1161,5 @@ public func UTBotAIAimAt( object target, int xmod, int ymod )
 		DoMouseAiming(tx, ty);
 		return angle;
 	}
-
 }
 
