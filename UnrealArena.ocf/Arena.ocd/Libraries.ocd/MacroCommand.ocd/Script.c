@@ -22,7 +22,7 @@ public func SetMacroCommand(object pCallback, string szCommand, object pTarget, 
   if(!szCommand) return();
   if(szCommand ne "MoveTo" && szCommand ne "Follow" && szCommand ne "Wait" && szCommand ne "None")
   {
-    ErrorLog("Unknown macro command: %s", szCommand);
+    FatalError(Format("Unknown macro command: %s", szCommand));
     return();
   }
   // Parameter evtl. vorbearbeiten oder besondere Checks
@@ -35,7 +35,7 @@ public func SetMacroCommand(object pCallback, string szCommand, object pTarget, 
   if(szCommand eq "Follow")
     if(!pTarget)
     {
-      ErrorLog("Too few arguments for FOLLOW (no target object)");
+      FatalError("Too few arguments for FOLLOW (no target object)");;
       return();
     }
   // Aktuelle Beschäftigung beenden
@@ -114,7 +114,7 @@ public func AppendMacroCommand(object pCallback, string szCommand, object pTarge
   if(!szCommand) return();
   if(szCommand ne "MoveTo" && szCommand ne "Follow" && szCommand ne "Wait" && szCommand ne "None")
   {
-    ErrorLog("Unknown macro command: %s", szCommand);
+    FatalError(Format("Unknown macro command: %s", szCommand));
     return();
   }
   // Parameter evtl. vorbearbeiten oder besondere Checks
@@ -127,7 +127,7 @@ public func AppendMacroCommand(object pCallback, string szCommand, object pTarge
   if(szCommand eq "Follow")
     if(!pTarget)
     {
-      ErrorLog("Too few arguments for FOLLOW (no target object)");
+      FatalError("Too few arguments for FOLLOW (no target object)");;
       return();
     }
   // Befehl eintragen

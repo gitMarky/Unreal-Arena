@@ -1,4 +1,5 @@
 #include AI
+#include Library_MacroCommand
 
 
 func AddAI(object clonk)
