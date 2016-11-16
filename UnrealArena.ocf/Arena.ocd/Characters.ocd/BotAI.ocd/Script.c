@@ -74,7 +74,7 @@ public func SearchWeapon(int iAggro)
       	// Einsammelbar?
     		if(pSpawn->CheckCollect(GetOwner(),this))
         	// Hinlaufen
-        	return(SetMacroCommand(0, "MoveTo", pSpawn, 0,0,0, iAggro));
+        	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
 }
 
 // Sucht nach Munition und läuft dorthin
@@ -87,7 +87,7 @@ public func SearchAmmo(int iAggro)
     	// Einsammelbar?
     	if(pSpawn->CheckCollect(GetOwner(),this))
       	// Hinlaufen (wir sind gutgläubig und denken, dass wir die auch brauchen)
-      	return(SetMacroCommand(0, "MoveTo", pSpawn, 0,0,0, iAggro));
+      	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
 }
 
 
@@ -162,7 +162,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
 		else
 		  iEff.var0 = COMD_Left;
     Jump();
-    ScheduleCall(0, "JumpStart", 1, 1, true);
+    ScheduleCall(nil, "JumpStart", 1, 1, true);
 
     SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
@@ -170,7 +170,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
   if(flag == Path_Lift)
   {
     // Wir suchen den Lift und warten oder betreten ihn
-    LiftControl(0, ObjectNumber(pCurrentWp), ObjectNumber(pNextWp));
+    LiftControl(nil, ObjectNumber(pCurrentWp), ObjectNumber(pNextWp));
     return(AddSpecialCommands(pCurrentWp, path));
   }
   // Unbekanntes flag, MoveTo versuchen
@@ -191,7 +191,7 @@ protected func JumppadCheck(object pTargetWp, int iNextStep)
   // Schauen, ob wir näher an pNextWp dran sind
   if(ObjectDistance(pTargetWp) > ObjectDistance(pNextWp))
     // Wegpunkt wird übersprungen
-    return(MacroComMoveToStep(0, iNextStep));
+    return(MacroComMoveToStep(nil, iNextStep));
   // Weiterlaufen
   ScheduleCall(this, "JumppadCheck", 5, 0, pTargetWp, iNextStep);
 }
@@ -313,8 +313,8 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
     // Liftplatten befehligen
     lift->~ControlCommand("MoveTo",0, Object(pNextWp)->GetX());
     // Warten
-    AddCommand("Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
-    AddCommand("Wait", 0,0,0,0,0, 15);
+    AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+    AddCommand("Wait", nil,0,0,nil,0, 15);
     return(1);
   }
   // Liftplatte suchen
@@ -327,14 +327,14 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
   // Lift nah genug? -> Einsteigen
   if(ObjectDistance(lift) <= 50)
   {
-    AddCommand("Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
+    AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
     AddCommand("Grab", lift);
     return(1);
   }
   // Warten
-  AddCommand("Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
+  AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
 
-  AddCommand("Wait", 0,0,0,0,0, 15);
+  AddCommand("Wait", nil,0,0,nil,0, 15);
   return(1);
 }
 
@@ -342,7 +342,7 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 protected func AddSpecialCommands(object pCurrentWp, int path)
 {
   if(!(pCurrentWp->GetArriveCommandCount(path))) return;
-  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1,command ; i > -1 ; i--)
+  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1; i > -1 ; i--)
     AddCommand(pCurrentWp->GetArriveCommand(path, i, 0, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 1, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 2, 0, this),
@@ -520,7 +520,7 @@ public func FxAggroFire(object pTarget, int no)
 		if(Contained()->~HandleAggro(this, level, target, dist, x, y))
 			return(1);
 		else
-			return(AddCommand(this, "Exit", 0,0,0,0,0,0,0, C4CMD_SilentSub));
+			return(AddCommand("Exit", nil,0,0,nil,0,0,0, C4CMD_SilentSub));
 	}
 
 	// Zu weit von der Wachposition entfernt?
@@ -533,7 +533,7 @@ public func FxAggroFire(object pTarget, int no)
 				FinishMacroCommand(1,0,1);
 				FinishMacroCommand(1);
 			}
-			AddMacroCommand(0, "MoveTo", 0, x,y, 0, level);
+			AddMacroCommand(nil, "MoveTo", 0, x,y, 0, level);
 			no.var1 = 0;
 		//			Message("@Returning to guarded position", this);
 			return;
@@ -628,8 +628,8 @@ public func FxAggroFire(object pTarget, int no)
 			if(GetMacroCommand(0) != "Follow" || GetMacroCommand(0,1) != target)
 			{
 				DebugLog("FxAggroFire - Adding Follow command","aggro");
-				AddMacroCommand(0, "MoveTo", 0, GetX(),GetY(), 0, level);
-				AddMacroCommand(0, "Follow", target, 0, 0, 0, level);
+				AddMacroCommand(nil, "MoveTo", nil, GetX(),GetY(), 0, level);
+				AddMacroCommand(nil, "Follow", target, 0, 0, 0, level);
 			}
 
 
@@ -685,7 +685,7 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 
 	}
 
-	if(selection) ShiftContents( this, 0, GetID(selection) );
+	if(selection) ShiftContents(false, GetID(selection));
 
 	//ActionCheck();
 
@@ -1042,8 +1042,8 @@ public func UTBotAICalcAimAngle( object obj, object gun, int xmod, int ymod)
 		// Position des Ziels
 		x1 = prec*GetX(obj);
 		y1 = prec*GetY(obj);
-		v1x = GetXDir(obj,prec);
-		v1y = GetYDir(obj,prec);
+		v1x = obj->GetXDir(prec);
+		v1y = obj->GetYDir(prec);
 		v1 = Distance(v1x,v1y); // Betrag der Geschwindigket
 
 		// Objekt fällt ballistisch?
