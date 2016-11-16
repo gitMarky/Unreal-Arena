@@ -26,16 +26,16 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 		return;
 	}
 	// Parameter evtl. vorbearbeiten oder besondere Checks
-	if (szCommand eq "MoveTo")
+	if (szCommand == "MoveTo")
 		if (pTarget)
 		{
 			iX = pTarget->GetX();
 			iY = pTarget->GetY();
 		}
-	if (szCommand eq "Follow")
+	if (szCommand == "Follow")
 		if (!pTarget)
 		{
-			FatalError("Too few arguments for FOLLOW (no target object)");;
+			FatalError("Too few arguments for FOLLOW (no target object)");
 			return;
 		}
 	// Aktuelle Beschäftigung beenden
@@ -118,16 +118,16 @@ func AppendMacroCommand(object pCallback, string szCommand, object pTarget, int 
 		return;
 	}
 	// Parameter evtl. vorbearbeiten oder besondere Checks
-	if (szCommand eq "MoveTo")
+	if (szCommand == "MoveTo")
 		if (pTarget)
 		{
 			iX = pTarget->GetX();
 			iY = pTarget->GetY();
 		}
-	if (szCommand eq "Follow")
+	if (szCommand == "Follow")
 		if (!pTarget)
 		{
-			FatalError("Too few arguments for FOLLOW (no target object)");;
+			FatalError("Too few arguments for FOLLOW (no target object)");
 			return;
 		}
 	// Befehl eintragen
@@ -317,7 +317,7 @@ func MacroComFollow(bool fStarted)
 		{
 			DebugLog(Format("%s #%d: MacroComFollow new MoveTo", GetName(), ObjectNumber()), "MacroComFollow");
 			// MoveTo löschen
-			if (GetMacroCommand() eq "MoveTo") RemoveMacroCommand();
+			if (GetMacroCommand() == "MoveTo") RemoveMacroCommand();
 			// Neues Kommando setzen
 			AddMacroCommand(nil, "MoveTo", GetMacroCommand(0, 1), 0, 0, 0, GetMacroCommand(0, 6));
 		}
@@ -813,7 +813,7 @@ func StartJetpack(int iDir)
 func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 {
 	// Fässt den Lift schon an?
-	if (GetAction() eq "Push")
+	if (GetAction() == "Push")
 	{
 		var lift = GetActionTarget();
 		if (!lift) return;
