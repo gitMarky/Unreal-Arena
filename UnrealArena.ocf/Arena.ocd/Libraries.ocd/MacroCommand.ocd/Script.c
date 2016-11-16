@@ -1,11 +1,3 @@
-static const WAYP = nil;
-static const JTPK = nil;
-static const GBRB = nil;
-
-global func Debug(string type)
-{
-	return false;
-}
 
 /* KI-Zeugs */
 
@@ -943,7 +935,7 @@ public func FxAggroTimer(object pTarget, int no)
   // Wir haben ein Ziel?
   if(no.var1) { EffectCall(this, no, "Fire"); return(1); }
   // Zielen beenden
-  if(this->~IsAiming()) StopAiming();
+  if(this->~IsAiming()) this->~StopAiming();
 //  Message("@No target", this);
   // Ziel suchen
   var dir = GetDir()*2-1;
@@ -999,7 +991,7 @@ public func FxAggroFire(object pTarget, int no)
     else
       return(AddCommand(this, "Exit", 0,0,0,0,0,0,0, C4CMD_SilentSub));
   }
-  if(IsRiding())
+  if(this->~IsRiding())
   {
     if(GetActionTarget()->~HandleAggro(this, level, target, dist, x, y))
       return(1);
@@ -1033,13 +1025,13 @@ public func FxAggroFire(object pTarget, int no)
   
   // Ziel irgendwie weg?
   // (Pathfree wurde schon gecheckt)
-  if(!CheckTarget(target,this,maxdist,0,0,true))
+  if(!this->~CheckTarget(target,this,maxdist,0,0,true))
     {
       no.var1 = 0;
       if(no.var0 == 2)
         ClearMacroCommands();
       if(this->~IsAiming())
-        StopAiming();
+        this->~StopAiming();
       return();
     }
   // Ich hab nix? °-°
@@ -1095,27 +1087,27 @@ public func FxAggroFire(object pTarget, int no)
         if(Contents()->GetBotData(BOT_Ballistic))
           ty -= 15;
 		
-		DoMouseAiming(tx, ty);
+		this->~DoMouseAiming(tx, ty);
       }
     }
     else
       if(this->~IsAiming())
-        StopAiming();
+        this->~StopAiming();
   }
 	if(this->~IsAiming() && !this->~CheckAmmo(Contents()->GetFMData(FM_AmmoID), Contents()->GetFMData(FM_AmmoLoad), Contents(), this))
-	 	StopAiming();
+	 	this->~StopAiming();
  }
  
    // Gut. Feuern wir bereits?
   if(Contents()->IsRecharging() || Contents()->IsShooting()) return();
  
   // Feuer!
-  if(maxdist != 300 && pathfree) Control2Contents("ControlThrow");
+  if(maxdist != 300 && pathfree) this->~Control2Contents("ControlThrow");
 //  Message("@My target: %s @%d/%d with level %d", this, target->GetName(), target->GetX(), target->GetY(), level);
   // Stufe 2 - verfolgen!
   if(no.var0 >= 2)
-    if(GetMacroCommand(1) ne "Follow" || GetMacroCommand(1, 1) != target)
-      if(GetMacroCommand(0) ne "Follow" || GetMacroCommand(0,1) != target)
+    if(GetMacroCommand(1) != "Follow" || GetMacroCommand(1, 1) != target)
+      if(GetMacroCommand(0) != "Follow" || GetMacroCommand(0,1) != target)
       {
         DebugLog("FxAggroFire - Adding Follow command","aggro");
         AddMacroCommand(0, "MoveTo", 0, GetX(),GetY(), 0, level);
@@ -1146,7 +1138,7 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
       if(iLevel == 1 || !WildcardMatch(GetAction(), "*Walk*"))
         continue;
     // Keine Munition dafür?
-    if(!(obj->GetCharge()) && !GetAmmo(obj->GetFMData(FM_AmmoID, mode)))
+    if(!(obj->GetCharge()) && !this->~GetAmmo(obj->GetFMData(FM_AmmoID, mode)))
       continue;
     // EMP nur gegen Maschinen
     if(obj->GetBotData(BOT_EMP, mode))
@@ -1358,7 +1350,7 @@ public func CheckInventory()
       // BR-Hack
     if(Contents()->GetID() == GBRB)
     {
-      BombingRunBomb();
+      this->~BombingRunBomb();
       break;
     }
     // Wenn man etwas hardcoden möchte, dann einfach die Funktion AI_Inventory im Objekt erstellen und true zurückgeben
@@ -1373,7 +1365,7 @@ public func CheckInventory()
       // Die KI braucht kein Licht und keine doppelten Dinge
 	  // Kontext der Auskommentierung: http://cppp.tyron.at/bugtrack.php?shbug=833
 	  // KI legt Taschenlampen an damit Spieler sie in der Dunkelheit sehen können
-      if(/*obj->GetGearType() == GEAR_Light || */HasGear(obj->GetGearType()))
+      if(/*obj->GetGearType() == GEAR_Light || */this->~HasGear(obj->GetGearType()))
       {
         DropObject(obj);
         continue;
