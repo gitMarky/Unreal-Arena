@@ -53,7 +53,7 @@ public func SetAggroTarget(object pTarget)
 {
   if(GetAggroLevel() == Aggro_Nothing) return;
   GetEffect("Aggro", this).var1 = pTarget;
-  return(1);
+  return 1;
 }
 
 public func GetAggroTarget()
@@ -72,9 +72,9 @@ public func SearchWeapon(int iAggro)
       // Die haben wir auch noch nicht?
       if(!FindContents(pSpawn->Contents()->GetID()))
       	// Einsammelbar?
-    		if(pSpawn->CheckCollect(GetOwner(),this))
+    		if(pSpawn->CheckCollect(GetOwner(), this))
         	// Hinlaufen
-        	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
+        	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0, 0, 0, iAggro));
 }
 
 // Sucht nach Munition und läuft dorthin
@@ -85,9 +85,9 @@ public func SearchAmmo(int iAggro)
     // Da ist Munition drin?
     if(pSpawn -> Contents() ->~ IsAmmo())
     	// Einsammelbar?
-    	if(pSpawn->CheckCollect(GetOwner(),this))
+    	if(pSpawn->CheckCollect(GetOwner(), this))
       	// Hinlaufen (wir sind gutgläubig und denken, dass wir die auch brauchen)
-      	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
+      	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0, 0, 0, iAggro));
 }
 
 
@@ -212,7 +212,7 @@ protected func ClimbLadder()
 
 
   // Wegpunkt oben? früher abspringen.
-  if(Inside(GetY()-targety,5,15) && Abs(GetX()-targetx) < 30)
+  if(Inside(GetY()-targety, 5, 15) && Abs(GetX()-targetx) < 30)
   {
     var comd = GetComDir();
     if(targetx < GetX())
@@ -302,11 +302,11 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
     if(ObjectDistance(Object(pNextWp)) <= 50)
       return(AddCommand("MoveTo", Object(pNextWp)));
     // Liftplatten befehligen
-    lift->~ControlCommand("MoveTo",0, Object(pNextWp)->GetX());
+    lift->~ControlCommand("MoveTo", 0, Object(pNextWp)->GetX());
     // Warten
-    AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
-    AddCommand("Wait", nil,0,0,nil,0, 15);
-    return(1);
+    AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
+    AddCommand("Wait", nil, 0, 0, nil, 0, 15);
+    return 1;
   }
   // Liftplatte suchen
   var x1 = Object(pCurrentWp)->GetX();
@@ -318,15 +318,15 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
   // Lift nah genug? -> Einsteigen
   if(ObjectDistance(lift) <= 50)
   {
-    AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+    AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
     AddCommand("Grab", lift);
-    return(1);
+    return 1;
   }
   // Warten
-  AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+  AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
 
-  AddCommand("Wait", nil,0,0,nil,0, 15);
-  return(1);
+  AddCommand("Wait", nil, 0, 0, nil, 0, 15);
+  return 1;
 }
 
 // Alles was der Wegpunkt als ArriveCommand hat
@@ -349,7 +349,7 @@ private func FindWaypoint(int iX, int iY)
   var wp;
   for (wp in FindObjects(Find_ID(WAYP), Find_AtPoint(iX, iY))) {
     if(PathFree(iX, iY, wp->GetX(), wp->GetY()) || GBackSolid(wp->GetX(), wp->GetY()))
-      return(wp);
+      return wp;
   }
   // Nix gefunden
   return;
@@ -364,9 +364,7 @@ private func FindWaypoint(int iX, int iY)
 /*-- Neues Script --*/
 
 
-//global func BotSkill( i ){ if( i==-1) return(ObjectCount(_MGD));	return(Min(i,ObjectCount(_MGD)));}
-//global func BotSkill( i ){ if( i==-1) return(15);	return(Min(i,15));}
-global func BotSkill( i ){ if( i==-1) return(20);	return(Min(i,20));}
+global func BotSkill( i ){ if( i==-1) return 20;	return(Min(i, 20));}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Überladenes Hazard-Zeug
@@ -384,7 +382,7 @@ public func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 		if(target = GetEffect("Aggro", this).var1)
 			if(GetMacroCommand(1, 1) == target)
 			{
-				FinishMacroCommand(1,0,1);
+				FinishMacroCommand(1, 0, 1);
 				FinishMacroCommand(1);
 			}
 	// 0
@@ -446,7 +444,7 @@ public func FxAggroTimer(object pTarget, int no )
 	if(Contents())
 		weaprange = Contents()->~GetBotData(BOT_Range);
 
-	target = UTBotAIFindEnemy(this,Max(400,weaprange));//GetTarget(90*dir, 160);
+	target = UTBotAIFindEnemy(this, Max(400, weaprange));
 
 	if(!target)
 	{
@@ -490,21 +488,18 @@ public func FxAggroFire(object pTarget, int no)
 	if(Contained())
 	{
 		if(Contained()->~HandleAggro(this, level, target, dist, x, y))
-			return(1);
+			return 1;
 		else
-			return(AddCommand("Exit", nil,0,0,nil,0,0,0, C4CMD_SilentSub));
+			return(AddCommand("Exit", nil, 0, 0, nil, 0, 0, 0, C4CMD_SilentSub));
 	}
 
 	// Ziel irgendwie weg?
 	// (Pathfree wurde schon gecheckt)
-	if(!this->~CheckTarget(target,this,Max(dist,weaprange),0,0,true))
+	if(!this->~CheckTarget(target, this, Max(dist, weaprange), 0, 0, true))
 	{
 			no.var1 = 0;
 			if(no.var0 == 2)
 				ClearMacroCommands();
-			// Hier zielt man eh immer!!
-			//if(this->~IsAiming())
-			//	StopAiming();
 			if(Contents()) Contents()->~StopAutoFire();
 			return;
 	}
@@ -531,7 +526,7 @@ public func FxAggroFire(object pTarget, int no)
 	var pWeapon = Contents();
 
 	 // Gut. Feuern wir bereits?
-	if(pWeapon->IsRecharging() /* || pWeapon->IsShooting()*/) return;
+	if(pWeapon->IsRecharging()) return;
 
 	// Er schießt nicht immer, wenn er kann
 	var efficiency = pWeapon->~GetBotData( BOT_Rating );
@@ -543,10 +538,10 @@ public func FxAggroFire(object pTarget, int no)
 	// Stufe 2 - verfolgen!
 	if(no.var0 >= 2)
 		if(GetMacroCommand(1) != "Follow" || GetMacroCommand(1, 1) != target)
-			if(GetMacroCommand(0) != "Follow" || GetMacroCommand(0,1) != target)
+			if(GetMacroCommand(0) != "Follow" || GetMacroCommand(0, 1) != target)
 			{
 				DebugLog("FxAggroFire - Adding Follow command","aggro");
-				AddMacroCommand(nil, "MoveTo", nil, GetX(),GetY(), 0, level);
+				AddMacroCommand(nil, "MoveTo", nil, GetX(), GetY(), 0, level);
 				AddMacroCommand(nil, "Follow", target, 0, 0, 0, level);
 			}
 
@@ -562,13 +557,13 @@ public func FxAggroFire(object pTarget, int no)
 	}
 
 
-	if( Inside( ObjectDistance( pTarget ), pWeapon->~GetBotData(BOT_RangeMin,2) , pWeapon->~GetBotData(BOT_Range,2) ) )
+	if( Inside( ObjectDistance( pTarget ), pWeapon->~GetBotData(BOT_RangeMin, 2) , pWeapon->~GetBotData(BOT_Range, 2) ) )
 	{
-		UTBotAIFire( pWeapon,2);
+		UTBotAIFire( pWeapon, 2);
 	}
 	else
 	{
-		UTBotAIFire( pWeapon,1);
+		UTBotAIFire( pWeapon, 1);
 	}
 
 	return;
@@ -576,7 +571,6 @@ public func FxAggroFire(object pTarget, int no)
 
 // Wenn iLevel = 1 (Aggro_Shoot) werden keine Waffen mit FM_Aim ausgewählt
 public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
-//public func FindBestWeapon( object pTarget )
 {
 	var arsenal, distance, selection, i, prio;
 
@@ -597,8 +591,6 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 	}
 
 	if(selection) ShiftContents(false, GetID(selection));
-
-	//ActionCheck();
 
 	return( Contents() );
 }
@@ -631,7 +623,7 @@ public func GetPrefDmgType(object pTarget)
 	if(pTarget->~OnDmg(DMG_Bio) < min)
 		type = DMG_Bio;
 
-	return(type);
+	return type;
 }
 
 
@@ -685,15 +677,15 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 			if(iBest == -1 || dist < iBest )
 			{
 				iBest = dist;
-				DebugLog("Least Distance = %d (Obj %d)","dijkstra",iBest,ObjectNumber(aSet[i]));
+				DebugLog("Least Distance = %d (Obj %d)","dijkstra", iBest, ObjectNumber(aSet[i]));
 			}
 		}
 		for( pNode in aSet )
 		{
 			if( aDistance[GetIndexOf(aNodes, pNode)] == iBest )
-					PushBack(pNode,aBest);
+					PushBack(pNode, aBest);
 		}
-		DebugLog("Best Nodes: %v","dijkstra",aBest);
+		DebugLog("Best Nodes: %v","dijkstra", aBest);
 		pCurrent = aBest[Random(GetLength(aBest))];
 
 		if(!pCurrent) break;
@@ -710,16 +702,16 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 			pNext = (pCurrent->WAYP->GetPathTarget(i));
 			var iNext = GetIndexOf(aNodes, pNext);
 
-			if(!Check4Jetpack(pCurrent,i,fJetpack,jetp,ammoload))
+			if(!Check4Jetpack(pCurrent, i, fJetpack, jetp, ammoload))
 			{
-				DebugLog("   Checking Path %d - Waypoint %d: Needs Jetpack","dijkstra",i,ObjectNumber(pNext));
+				DebugLog("   Checking Path %d - Waypoint %d: Needs Jetpack","dijkstra", i, ObjectNumber(pNext));
 				continue;
 			}
 
 
 			// jetzt die Distanz updaten
 			var distnew = aDistance[iCurrent] + pCurrent->~GetPathLengthWP(i);
-			DebugLog("   Checking Path %d - Waypoint %d: new %d, old %d","dijkstra",i,ObjectNumber(pNext), distnew, aDistance[iNext]);
+			DebugLog("   Checking Path %d - Waypoint %d: new %d, old %d","dijkstra", i, ObjectNumber(pNext), distnew, aDistance[iNext]);
 
 			if( aDistance[iNext] < 0 ||
 			    aDistance[iNext] > distnew)
@@ -745,46 +737,13 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 	pCurrent = pEnd;
 	while( pCurrent = aPrev[GetIndexOf(aNodes, pCurrent)])
 	{
-		PushFront(pCurrent,bPath);
+		PushFront(pCurrent, bPath);
 	}
 
 	return bPath;
 }
 
 
-// Bots haben nie geschossen. Komischerweise bringt das includieren dieser Funktion,
-// dass sie schießen. Komisch deshalb, weil sie ja schon im Script enthalten ist.
-/*public func GetTarget(int iAngle, int iMaxAngle, int iRange)
-{
-	// Parameter zurechtstutzen
-	while(iAngle<0) iAngle+=360;
-	while(iAngle>360) iAngle-=360;
-	if(!iMaxAngle) iMaxAngle = 0;
-	if(!iRange) iRange = 350;
-
-	// Landschaft durchsuchen
-	// es wird nur auf Lebewesen gezielt
-	var targets = FindTargets(this, iRange, iMaxAngle, iAngle, false);
-	var target;
-
-	// nächstes Ziel finden...
-	for(var t in targets)
-	{
-		if(!target)
-		{
-			target = t;
-			continue;
-		}
-		if(ObjectDistance(t) < ObjectDistance(target))
-		{
-			target = t;
-			break;
-		}
-	}
-
-	if(target) DebugLog("Target is %s","hazard",GetName(target));
-	return(target);
-}*/
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Eigenes Zeug, braucht man nicht für Hazard
@@ -814,27 +773,21 @@ public func UTBotAICalcAimAngle( object obj, object gun, int xmod, int ymod)
 
 	// fliegt gerade oder ist hitscan?
 	if(!(gun->~GetFMData(FM_Hitscan)))
-	//if(gun->~BotInfoInstantHit())
 	{
-		 angle=Angle(GetX(),GetY(),GetX(obj)+xmod,GetY(obj)+ymod);
+		 angle=Angle(GetX(), GetY(), GetX(obj)+xmod, GetY(obj)+ymod);
 		 angle=angle-Random(skill+1)+skill/2;
 		 return angle;
 	 }
-	 /*
-	 angle=Angle(GetX(),GetY(),GetX(obj)+GetXDir(obj)/2,GetY(obj)+GetYDir(obj)/2);
-	 skill=0;//;
-	 angle=angle-Random(skill+1)+skill/2;
-	 */
 
 		var prec = 1000;
-		var t, x1,y1,x2,y2,v1x,v1y,v2x,v2y,v1,v2,f1,f2;
+		var t, x1, y1, x2, y2, v1x, v1y, v2x, v2y, v1, v2, f1, f2;
 
 		// Position des Ziels
 		x1 = prec*GetX(obj);
 		y1 = prec*GetY(obj);
 		v1x = obj->GetXDir(prec);
 		v1y = obj->GetYDir(prec);
-		v1 = Distance(v1x,v1y); // Betrag der Geschwindigket
+		v1 = Distance(v1x, v1y); // Betrag der Geschwindigket
 
 		// Objekt fällt ballistisch?
 		//if(GetProcedure(obj) == "FLOAT" || GetProcedure(obj) == "SWIM")
@@ -864,7 +817,7 @@ public func UTBotAICalcAimAngle( object obj, object gun, int xmod, int ymod)
 		//										* Summe der Dreieckskanten im K-Sys, wenn f1 = f2 = 1
 		//										* der Mittelwert davon, sonst
 
-		var dist1 = Distance(x1,y1,x2,y2);
+		var dist1 = Distance(x1, y1, x2, y2);
 		var dist2 = ( (2-f1-f2)*dist1 + (f1+f2)*(Abs(x2-x1)+Abs(y2-y1)) )/2;
 
 		t= (dist1 + dist2)/(2*(v1+v2));
@@ -873,7 +826,7 @@ public func UTBotAICalcAimAngle( object obj, object gun, int xmod, int ymod)
 		v2x = -(-t*v1x +x2-x1)/t;
 		v2y = -(-t*v1y +y2-y1 + (t*t*(f2-f1)*prec*GetGravity())/1000)/t;
 
-		angle = Angle(0,0,v2x,v2y);
+		angle = Angle(0, 0, v2x, v2y);
 		angle=angle-Random(skill+1)+skill/2;
 		return angle;
 }
@@ -883,24 +836,21 @@ public func UTBotAIFindDodgeBullet()
 {
 	var obj;
 
-	var bullets = FindObjects( Find_InRect(-180,-60,360,120), Find_Func( "IsBullet" ) );
+	var bullets = FindObjects( Find_InRect(-180,-60, 360, 120), Find_Func( "IsBullet" ) );
 
 	for( obj in bullets )
 	{
-		if(this->~CheckEnemy(obj,this)) return obj;
-		//if(GameCall("TeamPlay")) if(ObjectCall((obj->~BulletCounter()),"GetTeam")!=GetTeam()) return(obj);
-		//if(GameCall("TeamPlay")) if(( GetPlayerTeam(GetOwner(obj->~BulletCounter())) )!=GetTeam()) return(obj);
-		//if((obj->~BulletOwner())!=this) return(obj);
+		if(this->~CheckEnemy(obj, this)) return obj;
 	}
 
-	return(0);
+	return 0;
 }
 
 public func UTBotAIFindEnemy( object pExclude, int iRadius)
 {
 	var obj;
 
-	var enemy = this->~UTBotAIFindEnemies(pExclude,iRadius,false);
+	var enemy = this->~UTBotAIFindEnemies(pExclude, iRadius, false);
 
 	for( obj in enemy )
 	{
@@ -935,8 +885,8 @@ public func UTBotAIAimAt( object target, int xmod, int ymod )
 	{
 		var angle = UTBotAICalcAimAngle( target, Contents(), xmod, ymod);
 
-		var tx = GetX()+Sin(angle,1000);
-		var ty = GetY()-Cos(angle,1000);
+		var tx = GetX()+Sin(angle, 1000);
+		var ty = GetY()-Cos(angle, 1000);
 
 		if (!this.crosshair) this->~InitCrosshair();
 
