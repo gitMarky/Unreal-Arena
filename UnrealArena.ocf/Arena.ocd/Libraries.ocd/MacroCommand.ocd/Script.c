@@ -39,7 +39,7 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 			return();
 		}
 	// Aktuelle Beschäftigung beenden
-	var currCom = GetMacroCommand(0,0);
+	var currCom = GetMacroCommand(0, 0);
 	if (currCom)
 	{
 		ClearScheduleCall(this, Format("MacroCom%s", currCom));
@@ -69,7 +69,7 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 	else
 	{
 		ClearMacroCommands();
-		if (iAggro != -1) SetAggroLevel(iAggro,0,0,0,"SetMacroCommand");
+		if (iAggro != -1) SetAggroLevel(iAggro, 0, 0, 0,"SetMacroCommand");
 	}
 	return(1);
 }
@@ -80,7 +80,7 @@ func AddMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 	// Befehlsliste zwischenspeichern
 	var aComs = aMacroCommandList;
 	// Und leeren
-	var currCom = GetMacroCommand(0,0);
+	var currCom = GetMacroCommand(0, 0);
 	if (currCom)
 	{
 		ClearScheduleCall(this, Format("MacroCom%s", currCom));
@@ -201,16 +201,16 @@ func ClearMacroCommands()
 func MacroComMoveTo()
 {
 	// Erstes Kommando ist gar nicht MoveTo?
-	if (GetMacroCommand(0,0) != "MoveTo") return();
-	// Kein Ziel? (bewirkt, dass der Clonk nicht nach 0,0 laufen kann!)
-	if (!GetMacroCommand(0,2) && !GetMacroCommand(0,3))
-		if (!GetMacroCommand(0,4))
+	if (GetMacroCommand(0, 0) != "MoveTo") return();
+	// Kein Ziel? (bewirkt, dass der Clonk nicht nach 0, 0 laufen kann!)
+	if (!GetMacroCommand(0, 2) && !GetMacroCommand(0, 3))
+		if (!GetMacroCommand(0, 4))
 			return(MacroComSuccessFailed(0, Macro_MoveToNoTarget));
 	// Pfad suchen
 	aPath = CreateArray();
 	var start, end;
 	start = FindWaypoint(GetX(), GetY());
-	end = FindWaypoint(GetMacroCommand(0,2), GetMacroCommand(0,3));
+	end = FindWaypoint(GetMacroCommand(0, 2), GetMacroCommand(0, 3));
 	if (!start || !end) return(MacroComSuccessFailed(0, Macro_NoPath));
 	aPath = FindPath(start, end, true);
 	// Kein Pfad konnte gefunden werden?
@@ -236,7 +236,7 @@ func MacroComMoveTo()
 	// Spezialhack: reitet!
 	if (this->~IsRiding()) SetAction("Walk");
 	SetCommand("MoveTo", aPath[0]);
-	AppendCommand("Call", this, 1,0, nil,0, "MacroComMoveToStep");
+	AppendCommand("Call", this, 1, 0, nil, 0, "MacroComMoveToStep");
 	// Automatischer Abbruch
 	ScheduleCall(this, "MacroComSuccessFailed", 500, 0, 0, Macro_PathImpossible);
 	// Falls Startwegpunkt = Jumppadpunkt
@@ -244,21 +244,21 @@ func MacroComMoveTo()
 		ScheduleCall(this, "JumppadCheck", 5, 0, aPath[1], 2);
 	// Aggrolevel
 	if (GetMacroCommand(0, 6) != -1)
-		SetAggroLevel(GetMacroCommand(0, 6),0,0,0,"MacroComMoveTo");
+		SetAggroLevel(GetMacroCommand(0, 6), 0, 0, 0,"MacroComMoveTo");
 	//Log("%s #%d: MacroComMoveTo", GetName(), ObjectNumber());
 }
 
 func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 {
 	// Erstes Kommando ist gar nicht MoveTo?
-	if (GetMacroCommand(0,0) != "MoveTo") return();
+	if (GetMacroCommand(0, 0) != "MoveTo") return();
 	// Wird haben das Ende des Pfades erreicht?
 	if (GetLength(aPath) == iStep)
 	{//Log("%s #%d: MacroComMoveTo finished", GetName(), ObjectNumber());
 		// Zum Ziel laufen und beenden
-		var x = GetMacroCommand(0,2), y = GetMacroCommand(0,3);
-		SetCommand("MoveTo", nil, x,y);
-		AppendCommand("Call", this, 0,0,nil,0, "MacroComSuccess");
+		var x = GetMacroCommand(0, 2), y = GetMacroCommand(0, 3);
+		SetCommand("MoveTo", nil, x, y);
+		AppendCommand("Call", this, 0, 0, nil, 0, "MacroComSuccess");
 		return(1);
 	}
 	// Aus irgendeinem Grund ist kein Wegpunkt da?
@@ -266,7 +266,7 @@ func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 	if (!aPath[iStep-1]) return(MacroComSuccessFailed(0, Macro_PathBroken));
 	// Nächsten Wegpunkt begehen
 	MoveAlongPath(aPath[iStep-1], aPath[iStep], iStep+1);
-	AppendCommand("Call", this, iStep+1,0,nil,0, "MacroComMoveToStep");
+	AppendCommand("Call", this, iStep+1, 0, nil, 0, "MacroComMoveToStep");
 	// Automatischer Abbruch
 	ClearScheduleCall(this, "MacroComSuccessFailed");
 	// 200 Frames pro 100 Pixel Abstand sind angesetzt
@@ -279,7 +279,7 @@ func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 func MacroComMoveToStepFailed() // MoveTo-Schritt fehlgeschlagen
 {//Log("%s #%d: MacroComMoveToStepFailed", GetName(), ObjectNumber());
 	// Erstes Kommando ist gar nicht MoveTo?
-	if (GetMacroCommand(0,0) != "MoveTo") return();
+	if (GetMacroCommand(0, 0) != "MoveTo") return();
 	// Fehlschlag auf ganzer Linie
 	MacroComSuccessFailed(0, Macro_PathImpossible);
 	return(1);
@@ -299,7 +299,7 @@ func MacroComFollow(bool fStarted)
 		// Wir haben kein MoveTo mehr? Dann sind wir angekommen (wir starten einfach neu)
 		if (GetMacroCommand() != "MoveTo") return(MacroComFollow());
 		// Unser Ziel ist irgendwie weg?
-		if (!GetMacroCommand(1,1))
+		if (!GetMacroCommand(1, 1))
 		{
 			DebugLog(Format("%s #%d: MacroComFollow target lost", GetName(), ObjectNumber()), "MacroComFollow");
 			// MoveTo löschen
@@ -308,10 +308,10 @@ func MacroComFollow(bool fStarted)
 			return(MacroComSuccessFailed(0, Macro_FollowTargetLost));
 		}
 		// Schauen, ob unser Bewegungsziel noch ok ist
-		var x,y,target;
-		x = GetMacroCommand(0,2);
-		y = GetMacroCommand(0,3);
-		target = GetMacroCommand(0,1);
+		var x, y, target;
+		x = GetMacroCommand(0, 2);
+		y = GetMacroCommand(0, 3);
+		target = GetMacroCommand(0, 1);
 		// Distanz > 30 Pixel?
 		if (Distance(AbsX(x), AbsY(y), AbsX(target->GetX()), AbsY(target->GetY())) > 30)
 		{
@@ -319,21 +319,21 @@ func MacroComFollow(bool fStarted)
 			// MoveTo löschen
 			if (GetMacroCommand() eq "MoveTo") RemoveMacroCommand();
 			// Neues Kommando setzen
-			AddMacroCommand(nil, "MoveTo", GetMacroCommand(0,1), 0, 0, 0, GetMacroCommand(0,6));
+			AddMacroCommand(nil, "MoveTo", GetMacroCommand(0, 1), 0, 0, 0, GetMacroCommand(0, 6));
 		}
 		// Follow Weiterlaufen lassen
 		return(ScheduleCall(this, "MacroComFollow", 30, 0, true));
 	}
 	DebugLog(Format("%s #%d: MacroComFollow started", GetName(), ObjectNumber()), "MacroComFollow");
 	// Erstes Kommando ist gar nicht Follow?
-	if (GetMacroCommand(0,0) != "Follow") return();
+	if (GetMacroCommand(0, 0) != "Follow") return();
 	// Kein Ziel? -> Fehlschlag
-	if (!GetMacroCommand(0,1))
+	if (!GetMacroCommand(0, 1))
 		return(MacroComSuccessFailed());
 	// Wir sind dem Ziel noch nicht nahe genug?
-	if (ObjectDistance(GetMacroCommand(0,1)) > 30)
+	if (ObjectDistance(GetMacroCommand(0, 1)) > 30)
 		// Follow bedeutet viele MoveTos -> loslaufen bitte
-		AddMacroCommand(nil, "MoveTo", GetMacroCommand(0,1), 0, 0, 0, GetMacroCommand(0, 6));
+		AddMacroCommand(nil, "MoveTo", GetMacroCommand(0, 1), 0, 0, 0, GetMacroCommand(0, 6));
 	// Aggrolevel
 	//if (GetMacroCommand(0, 6) != -1)
 		//SetAggroLevel(GetMacroCommand(0, 6));
@@ -345,15 +345,15 @@ func MacroComFollow(bool fStarted)
 func MacroComWait(bool fEnd)
 {
 	// Erstes Kommando ist gar nicht Wait?
-	if (GetMacroCommand(0,0) != "Wait") return();
+	if (GetMacroCommand(0, 0) != "Wait") return();
 	// Beenden?
 	if (fEnd)
 		return(MacroComSuccess(0));
 	// Aggrolevel
 	if (GetMacroCommand(0, 6) != -1)
-		SetAggroLevel(GetMacroCommand(0, 6),0,0,0,"MacroComWait");
+		SetAggroLevel(GetMacroCommand(0, 6), 0, 0, 0,"MacroComWait");
 	// Dann warten wir jetzt eine Runde
-	return(ScheduleCall(this, "MacroComWait", GetMacroCommand(0,4), 0, true));
+	return(ScheduleCall(this, "MacroComWait", GetMacroCommand(0, 4), 0, true));
 }
 
 /* Makro-Funktionen */
@@ -484,7 +484,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		// ansonsten...
 		var cx = GetX(pCurrent);
 		var cy = GetY(pCurrent);
-		var cangle = Angle(cx,cy,ex,ey);
+		var cangle = Angle(cx, cy, ex, ey);
 
 		var pNext = 0;
 		var pathcount = (pCurrent->WAYP->GetPathCount());
@@ -497,7 +497,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		for (var i=0; i<pathcount; ++i) {
 			pNext = (pCurrent->WAYP->GetPathTarget(i));
 
-			if (!Check4Jetpack(pCurrent,i,fJetpack,jetp,ammoload))
+			if (!Check4Jetpack(pCurrent, i, fJetpack, jetp, ammoload))
 				continue;
 
 			// Fuer die richtige Richtung zaehlt nicht der Winkel des naechsten Knotens, sondern
@@ -508,7 +508,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				// Endknoten? Wir brauchen nicht weiteriterieren
 				if (pNext == pEnd) break;
 				// für den gedachten Pfad muss noch gecheckt werden, ob da nicht Jetpack benötigt wird
-				var check = Check4Jetpack(pNext,0,fJetpack,jetp+jetpgedacht,ammoload);
+				var check = Check4Jetpack(pNext, 0, fJetpack, jetp+jetpgedacht, ammoload);
 				if (check)
 					pNext = (pNext->WAYP->GetPathTarget(0));
 				if (check == 2)
@@ -525,7 +525,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			// ansonsten
 			var nx = GetX(pNext);
 			var ny = GetY(pNext);
-			var nangle = Angle(cx,cy,nx,ny);
+			var nangle = Angle(cx, cy, nx, ny);
  
 			// diffangle: Nimmt Werte von 0 (genau richtig) bis 180 (genau falsch) an
 			var diffangle = Abs(Normalize(nangle-cangle,-180));
@@ -559,10 +559,10 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			else if (neutral) { str = "neutral"; dbg = neutral; }
 			else { str = "bad"; dbg = bad; }
 			if (dbg>1) {
-				DebugLog("	Choosing path from %s...","waypoints",str);
+				DebugLog("	Choosing path from %s...","waypoints", str);
 				for (var d = 0; d<dbg; ++d) {
 					wayp = (pCurrent->WAYP->GetPathTarget(aBest[d]));
-					DebugLog("	waypoint (%d), angle %d","waypoints",ObjectNumber(wayp),Abs(Normalize(Angle(GetX(pCurrent),GetY(pCurrent),GetX(wayp),GetY(wayp))-cangle,-180)));
+					DebugLog("	waypoint (%d), angle %d","waypoints", ObjectNumber(wayp), Abs(Normalize(Angle(GetX(pCurrent), GetY(pCurrent), GetX(wayp), GetY(wayp))-cangle,-180)));
 				}
 			}
 		}
@@ -583,17 +583,17 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		if (pCurrent->WAYP->GetPathJetpack(chosenone))
 			jetp += ammoload;
 
-		DebugLog("Next %s waypoint (%d), angle %d","waypoints",str,ObjectNumber(pNext),Abs(Normalize(Angle(GetX(pCurrent),GetY(pCurrent),GetX(pNext),GetY(pNext))-cangle,-180)));
+		DebugLog("Next %s waypoint (%d), angle %d","waypoints", str, ObjectNumber(pNext), Abs(Normalize(Angle(GetX(pCurrent), GetY(pCurrent), GetX(pNext), GetY(pNext))-cangle,-180)));
 
 		// Fertig
 		if (pNext == pEnd) {
-			DebugLog("Success: Complete path consists of %d waypoints.","waypoints",GetLength(aWaypoints));
+			DebugLog("Success: Complete path consists of %d waypoints.","waypoints", GetLength(aWaypoints));
 		}		
 
 		// kommt bei naechster Iteration ins Array
 		pCurrent = pNext;
 	}
-	DebugLog("Failure: No path found after %d iterations.","waypoints",iterationLimit);
+	DebugLog("Failure: No path found after %d iterations.","waypoints", iterationLimit);
 	return(false);
 }
 
@@ -731,7 +731,7 @@ func ClimbLadder()
 	
 	
 	// Wegpunkt oben? früher abspringen.
-	if (Inside(GetY()-targety,5,15) && Abs(GetX()-targetx) < 30)
+	if (Inside(GetY()-targety, 5, 15) && Abs(GetX()-targetx) < 30)
 	{
 		var comd = GetComDir();
 		if (targetx < GetX())
@@ -821,10 +821,10 @@ func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 		if (ObjectDistance(Object(pNextWp)) <= 50)
 			return(AddCommand("MoveTo", Object(pNextWp)));
 		// Liftplatten befehligen
-		lift->~ControlCommand("MoveTo",0, Object(pNextWp)->GetX());
+		lift->~ControlCommand("MoveTo", 0, Object(pNextWp)->GetX());
 		// Warten
-		AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
-		AddCommand("Wait", nil,0,0,nil,0, 15);
+		AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
+		AddCommand("Wait", nil, 0, 0, nil, 0, 15);
 		return(1);
 	}
 	// Liftplatte suchen
@@ -837,14 +837,14 @@ func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 	// Lift nah genug? -> Einsteigen
 	if (ObjectDistance(lift) <= 50)
 	{
-		AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+		AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
 		AddCommand("Grab", lift);
 		return(1);
 	}
 	// Warten
-	AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+	AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
 	
-	AddCommand("Wait", nil,0,0,nil,0, 15);
+	AddCommand("Wait", nil, 0, 0, nil, 0, 15);
 	return(1);
 }
 
@@ -885,7 +885,7 @@ func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 		if (target = GetEffect("Aggro", this).var1)
 			if (GetMacroCommand(1, 1) == target)
 			{
-				FinishMacroCommand(1,0,1);
+				FinishMacroCommand(1, 0, 1);
 				FinishMacroCommand(1);
 			}
 	// 0
@@ -987,7 +987,7 @@ func FxAggroFire(object pTarget, int no)
 		if (Contained()->~HandleAggro(this, level, target, dist, x, y))
 			return(1);
 		else
-			return(AddCommand("Exit", nil,0,0,nil,0,0,0, C4CMD_SilentSub));
+			return(AddCommand("Exit", nil, 0, 0, nil, 0, 0, 0, C4CMD_SilentSub));
 	}
 	if (this->~IsRiding())
 	{
@@ -1003,10 +1003,10 @@ func FxAggroFire(object pTarget, int no)
 		{
 			if (GetMacroCommand(1, 1) == target)
 			{
-				FinishMacroCommand(1,0,1);
+				FinishMacroCommand(1, 0, 1);
 				FinishMacroCommand(1);
 			}
-			AddMacroCommand(nil, "MoveTo", nil, x,y, 0, level);
+			AddMacroCommand(nil, "MoveTo", nil, x, y, 0, level);
 			no.var1 = 0;
 		//			Message("@Returning to guarded position", this);
 			return();
@@ -1023,7 +1023,7 @@ func FxAggroFire(object pTarget, int no)
 	
 	// Ziel irgendwie weg?
 	// (Pathfree wurde schon gecheckt)
-	if (!this->~CheckTarget(target,this,maxdist,0,0,true))
+	if (!this->~CheckTarget(target, this, maxdist, 0, 0, true))
 		{
 			no.var1 = 0;
 			if (no.var0 == 2)
@@ -1105,10 +1105,10 @@ func FxAggroFire(object pTarget, int no)
 	// Stufe 2 - verfolgen!
 	if (no.var0 >= 2)
 		if (GetMacroCommand(1) != "Follow" || GetMacroCommand(1, 1) != target)
-			if (GetMacroCommand(0) != "Follow" || GetMacroCommand(0,1) != target)
+			if (GetMacroCommand(0) != "Follow" || GetMacroCommand(0, 1) != target)
 			{
 				DebugLog("FxAggroFire - Adding Follow command","aggro");
-				AddMacroCommand(nil, "MoveTo", nil, GetX(),GetY(), 0, level);
+				AddMacroCommand(nil, "MoveTo", nil, GetX(), GetY(), 0, level);
 				AddMacroCommand(nil, "Follow", target, 0, 0, 0, level);
 			}
 }
@@ -1123,7 +1123,7 @@ func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 	// Bevorzugten Schadenstyp bestimmen
 	var preftype = GetPrefDmgType(pTarget), type;
 	// Alle durchgehen und passende prüfen
-	for (var i=0,obj,fav,mode,favmode ; obj = Contents(i) ; mode++)
+	for (var i=0, obj, fav, mode, favmode ; obj = Contents(i) ; mode++)
 	{
 		// Nix Waffe
 		if (!(obj->~IsWeapon())) { i++; mode = -1; continue; }
@@ -1215,7 +1215,7 @@ func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 		if (favmode && favmode != fav->GetFireMode())
 			fav->SetFireMode(favmode);
 	if (ContentsCount() == 1) return(1);
-	return(ShiftContents(false,fav->GetID()));
+	return(ShiftContents(false, fav->GetID()));
 }
 
 func GetPrefDmgType(object pTarget)
@@ -1258,9 +1258,9 @@ func SearchWeapon(int iAggro)
 			// Die haben wir auch noch nicht?
 			if (!FindContents(pSpawn->Contents()->GetID()))
 				// Einsammelbar?
-				if (pSpawn->CheckCollect(GetOwner(),this))
+				if (pSpawn->CheckCollect(GetOwner(), this))
 					// Hinlaufen
-					return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
+					return(SetMacroCommand(nil, "MoveTo", pSpawn, 0, 0, 0, iAggro));
 }
 
 // Sucht nach Munition und läuft dorthin
@@ -1271,9 +1271,9 @@ func SearchAmmo(int iAggro)
 		// Da ist Munition drin?
 		if (pSpawn -> Contents() ->~ IsAmmo())
 			// Einsammelbar?
-			if (pSpawn->CheckCollect(GetOwner(),this))
+			if (pSpawn->CheckCollect(GetOwner(), this))
 				// Hinlaufen (wir sind gutgläubig und denken, dass wir die auch brauchen)
-				return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
+				return(SetMacroCommand(nil, "MoveTo", pSpawn, 0, 0, 0, iAggro));
 }
 
 /* Waffenbehandlung wenn nicht im Kampf */
@@ -1343,7 +1343,7 @@ func CheckIdleWeapon()
 // Inventar behandeln
 func CheckInventory()
 {
-	for (var i=0,obj ; obj = Contents(i) ; i++)
+	for (var i=0, obj ; obj = Contents(i) ; i++)
 	{
 			// BR-Hack
 		if (Contents()->GetID() == GBRB)
@@ -1422,7 +1422,7 @@ func PlaceMine(object pObj)
 // Waffe suchen, die man upgraden kann
 func GetUpgradeableWeapon(object pObj)
 {
-	for (var i=0,obj ; obj = Contents(i) ; i++)
+	for (var i=0, obj ; obj = Contents(i) ; i++)
 		if (obj->~IsUpgradeable(pObj->GetID()))
 			return(obj);
 }
@@ -1446,7 +1446,7 @@ func ActivateAmmo(object pObj)
 func GetRandomDroneWeapon()
 {
 	var aWps = CreateArray();
-	for (var i=0,obj ; obj = Contents(i) ; i++)
+	for (var i=0, obj ; obj = Contents(i) ; i++)
 		if (obj->~IsWeapon())
 			if (obj->GetFMData(FM_Aim)<=0)
 				aWps[GetLength(aWps)] = obj;
