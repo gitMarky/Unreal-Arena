@@ -43,7 +43,7 @@ public func SetMacroCommand(object pCallback, string szCommand, object pTarget, 
   if(currCom)
   {
     ClearScheduleCall(this, Format("MacroCom%s", currCom));
-    SetCommand(this, "None");
+    SetCommand("None");
     SetComDir(COMD_Stop);
   }
   // Liste löschen
@@ -84,7 +84,7 @@ public func AddMacroCommand(object pCallback, string szCommand, object pTarget, 
   if(currCom)
   {
     ClearScheduleCall(this, Format("MacroCom%s", currCom));
-    SetCommand(this, "None");
+    SetCommand("None");
     SetComDir(COMD_Stop);
   }
   aMacroCommandList = CreateArray();
@@ -235,8 +235,8 @@ protected func MacroComMoveTo()
   // In Bewegung setzen (der erste Wegpunkt sollte durch MoveTo erreichbar sein, wenn nicht -> doof
   // Spezialhack: reitet!
   if(this->~IsRiding()) SetAction("Walk");
-  SetCommand(this, "MoveTo", aPath[0]);
-  AppendCommand(this, "Call", this, 1,0,0,0, "MacroComMoveToStep");
+  SetCommand("MoveTo", aPath[0]);
+  AppendCommand("Call", this, 1,0, nil,0, "MacroComMoveToStep");
   // Automatischer Abbruch
   ScheduleCall(this, "MacroComSuccessFailed", 500, 0, 0, Macro_PathImpossible);
   // Falls Startwegpunkt = Jumppadpunkt
@@ -257,8 +257,8 @@ protected func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
   {//Log("%s #%d: MacroComMoveTo finished", GetName(), ObjectNumber());
     // Zum Ziel laufen und beenden
     var x = GetMacroCommand(0,2), y = GetMacroCommand(0,3);
-    SetCommand(this, "MoveTo", 0, x,y);
-    AppendCommand(this, "Call", this, 0,0,0,0, "MacroComSuccess");
+    SetCommand("MoveTo", nil, x,y);
+    AppendCommand("Call", this, 0,0,nil,0, "MacroComSuccess");
     return(1);
   }
   // Aus irgendeinem Grund ist kein Wegpunkt da?
@@ -266,7 +266,7 @@ protected func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
   if(!aPath[iStep-1]) return(MacroComSuccessFailed(0, Macro_PathBroken));
   // Nächsten Wegpunkt begehen
   MoveAlongPath(aPath[iStep-1], aPath[iStep], iStep+1);
-  AppendCommand(this, "Call", this, iStep+1,0,0,0, "MacroComMoveToStep");
+  AppendCommand("Call", this, iStep+1,0,nil,0, "MacroComMoveToStep");
   // Automatischer Abbruch
   ClearScheduleCall(this, "MacroComSuccessFailed");
   // 200 Frames pro 100 Pixel Abstand sind angesetzt
@@ -319,7 +319,7 @@ protected func MacroComFollow(bool fStarted)
       // MoveTo löschen
       if(GetMacroCommand() eq "MoveTo") RemoveMacroCommand();
       // Neues Kommando setzen
-      AddMacroCommand(0, "MoveTo", GetMacroCommand(0,1), 0, 0, 0, GetMacroCommand(0,6));
+      AddMacroCommand(nil, "MoveTo", GetMacroCommand(0,1), 0, 0, 0, GetMacroCommand(0,6));
     }
     // Follow Weiterlaufen lassen
     return(ScheduleCall(this, "MacroComFollow", 30, 0, true));
@@ -333,7 +333,7 @@ protected func MacroComFollow(bool fStarted)
   // Wir sind dem Ziel noch nicht nahe genug?
   if(ObjectDistance(GetMacroCommand(0,1)) > 30)
     // Follow bedeutet viele MoveTos -> loslaufen bitte
-    AddMacroCommand(0, "MoveTo", GetMacroCommand(0,1), 0, 0, 0, GetMacroCommand(0, 6));
+    AddMacroCommand(nil, "MoveTo", GetMacroCommand(0,1), 0, 0, 0, GetMacroCommand(0, 6));
   // Aggrolevel
   //if(GetMacroCommand(0, 6) != -1)
     //SetAggroLevel(GetMacroCommand(0, 6));
@@ -400,7 +400,7 @@ protected func MacroComSuccessFailed(int iCommand, int iReason)
   if(callback) callback->~OnMacroCommandFailed(this, iReason);
   // Kommando aus der Liste entfernen
   RemoveMacroCommand(iCommand);
-  if(!iCommand) SetCommand(this, "None");
+  if(!iCommand) SetCommand("None");
   // Evtl. Weg löschen
   aPath = CreateArray();
   // Nächstes Kommando starten
@@ -647,7 +647,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
   if(flag == Path_MoveTo)
   {
     // Hinlaufen
-    SetCommand(this, "MoveTo", pNextWp);
+    SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
   }
   if(flag == Path_Jump)
@@ -657,7 +657,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
     if(dir < 0) dir = 0;
     SetDir(dir);
     Jump();
-    SetCommand(this, "MoveTo", pNextWp);
+    SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
   }
   if(flag == Path_Backflip)
@@ -672,19 +672,19 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
 		else
 		  iEff.var0 = COMD_Left;
     Jump();
-    ScheduleCall(0, "JumpStart", 1, 1, true);
+    ScheduleCall(this, "JumpStart", 1, 1, true);
 
-    SetCommand(this, "MoveTo", pNextWp);
+    SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
   }
   if(flag == Path_Lift)
   {
     // Wir suchen den Lift und warten oder betreten ihn
-    LiftControl(0, ObjectNumber(pCurrentWp), ObjectNumber(pNextWp));
+    LiftControl(nil, ObjectNumber(pCurrentWp), ObjectNumber(pNextWp));
     return(AddSpecialCommands(pCurrentWp, path));
   }
   // Unbekanntes flag, MoveTo versuchen
-  SetCommand(this, "MoveTo", pNextWp);
+  SetCommand("MoveTo", pNextWp);
   return(AddSpecialCommands(pCurrentWp, path));
 }
 
@@ -701,7 +701,7 @@ protected func JumppadCheck(object pTargetWp, int iNextStep)
   // Schauen, ob wir näher an pNextWp dran sind
   if(ObjectDistance(pTargetWp) > ObjectDistance(pNextWp))
     // Wegpunkt wird übersprungen
-    return(MacroComMoveToStep(0, iNextStep));
+    return(MacroComMoveToStep(nil, iNextStep));
   // Weiterlaufen
   ScheduleCall(this, "JumppadCheck", 5, 0, pTargetWp, iNextStep);
 }
@@ -819,12 +819,12 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
     if(!lift) return();
     // Nah genug am Ziel? Absteigen
     if(ObjectDistance(Object(pNextWp)) <= 50)
-      return(AddCommand(this, "MoveTo", Object(pNextWp)));
+      return(AddCommand("MoveTo", Object(pNextWp)));
     // Liftplatten befehligen
     lift->~ControlCommand("MoveTo",0, Object(pNextWp)->GetX());
     // Warten
-    AddCommand(this, "Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
-    AddCommand(this, "Wait", 0,0,0,0,0, 15);
+    AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+    AddCommand("Wait", nil,0,0,nil,0, 15);
     return(1);
   }
   // Liftplatte suchen
@@ -837,14 +837,14 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
   // Lift nah genug? -> Einsteigen
   if(ObjectDistance(lift) <= 50)
   {
-    AddCommand(this, "Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
-    AddCommand(this, "Grab", lift);
+    AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
+    AddCommand("Grab", lift);
     return(1);
   }
   // Warten
-  AddCommand(this, "Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
+  AddCommand("Call", this, pCurrentWp, pNextWp, nil,0, "LiftControl");
   
-  AddCommand(this, "Wait", 0,0,0,0,0, 15);
+  AddCommand("Wait", nil,0,0,nil,0, 15);
   return(1);
 }
 
@@ -852,8 +852,8 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 protected func AddSpecialCommands(object pCurrentWp, int path)
 {
   if(!(pCurrentWp->GetArriveCommandCount(path))) return;
-  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1,command ; i > -1 ; i--)
-    AddCommand(this, pCurrentWp->GetArriveCommand(path, i, 0, 0, this),
+  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1, command ; i > -1 ; i--)
+    AddCommand(pCurrentWp->GetArriveCommand(path, i, 0, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 1, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 2, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 3, 0, this),
@@ -989,7 +989,7 @@ public func FxAggroFire(object pTarget, int no)
     if(Contained()->~HandleAggro(this, level, target, dist, x, y))
       return(1);
     else
-      return(AddCommand(this, "Exit", 0,0,0,0,0,0,0, C4CMD_SilentSub));
+      return(AddCommand("Exit", nil,0,0,nil,0,0,0, C4CMD_SilentSub));
   }
   if(this->~IsRiding())
   {
@@ -1008,7 +1008,7 @@ public func FxAggroFire(object pTarget, int no)
         FinishMacroCommand(1,0,1);
         FinishMacroCommand(1);
       }
-      AddMacroCommand(0, "MoveTo", 0, x,y, 0, level);
+      AddMacroCommand(nil, "MoveTo", nil, x,y, 0, level);
       no.var1 = 0;
 	  //      Message("@Returning to guarded position", this);
       return();
@@ -1110,8 +1110,8 @@ public func FxAggroFire(object pTarget, int no)
       if(GetMacroCommand(0) != "Follow" || GetMacroCommand(0,1) != target)
       {
         DebugLog("FxAggroFire - Adding Follow command","aggro");
-        AddMacroCommand(0, "MoveTo", 0, GetX(),GetY(), 0, level);
-        AddMacroCommand(0, "Follow", target, 0, 0, 0, level);
+        AddMacroCommand(nil, "MoveTo", nil, GetX(),GetY(), 0, level);
+        AddMacroCommand(nil, "Follow", target, 0, 0, 0, level);
       }
 }
 
@@ -1217,7 +1217,7 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
     if(favmode && favmode != fav->GetFireMode())
       fav->SetFireMode(favmode);
   if(ContentsCount() == 1) return(1);
-  return(ShiftContents(0,0,fav->GetID()));
+  return(ShiftContents(false,fav->GetID()));
 }
 
 public func GetPrefDmgType(object pTarget)
@@ -1262,7 +1262,7 @@ public func SearchWeapon(int iAggro)
       	// Einsammelbar?
     		if(pSpawn->CheckCollect(GetOwner(),this))
         	// Hinlaufen
-        	return(SetMacroCommand(0, "MoveTo", pSpawn, 0,0,0, iAggro));
+        	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
 }
 
 // Sucht nach Munition und läuft dorthin
@@ -1275,7 +1275,7 @@ public func SearchAmmo(int iAggro)
     	// Einsammelbar?
     	if(pSpawn->CheckCollect(GetOwner(),this))
       	// Hinlaufen (wir sind gutgläubig und denken, dass wir die auch brauchen)
-      	return(SetMacroCommand(0, "MoveTo", pSpawn, 0,0,0, iAggro));
+      	return(SetMacroCommand(nil, "MoveTo", pSpawn, 0,0,0, iAggro));
 }
 
 /* Waffenbehandlung wenn nicht im Kampf */
@@ -1331,7 +1331,7 @@ public func CheckIdleWeapon()
   // Nix gefunden
   if(!Contents(i)) return();
   // Aha! Waffe wechseln!
-  ShiftContents(this, 0, obj->GetID());
+  ShiftContents(false, obj->GetID());
   // Feuermodus wechseln
   obj->SetFireMode(mode);
   // Und Muni reinhauen
@@ -1403,7 +1403,7 @@ public func CheckInventory()
 // Objekt fallen lassen (verzögert, damit die Schleife nicht durcheinander kommt
 public func DropObject(object pObj)
 {
-  Schedule(Format("Exit(Object(%d), 0, 10);", ObjectNumber(pObj)), 1, 0, this);
+  Schedule(this, Format("Exit(Object(%d), 0, 10);", ObjectNumber(pObj)), 1, 0, this);
   // Nicht wieder einsammeln
   var effect = AddEffect("CollectionException", pObj, 1, 36);
   effect.var0 = this;
