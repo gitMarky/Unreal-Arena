@@ -137,7 +137,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
   if(flag == Path_MoveTo)
   {
     // Hinlaufen
-    SetCommand(this, "MoveTo", pNextWp);
+    SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
   }
   if(flag == Path_Jump)
@@ -147,7 +147,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
     if(dir < 0) dir = 0;
     SetDir(dir);
     Jump();
-    SetCommand(this, "MoveTo", pNextWp);
+    SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
   }
   if(flag == Path_Backflip)
@@ -158,13 +158,13 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
     SetDir(!dir);
     var iEff = AddEffect("ControlStack", this, 110, 5, this);
 		if(GetDir() == DIR_Left)
-		  EffectVar(0, this, iEff) = COMD_Right;
+		  iEff.var0 = COMD_Right;
 		else
-		  EffectVar(0, this, iEff) = COMD_Left;
+		  iEff.var0 = COMD_Left;
     Jump();
     ScheduleCall(0, "JumpStart", 1, 1, true);
 
-    SetCommand(this, "MoveTo", pNextWp);
+    SetCommand("MoveTo", pNextWp);
     return(AddSpecialCommands(pCurrentWp, path));
   }
   if(flag == Path_Lift)
@@ -174,7 +174,7 @@ private func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
     return(AddSpecialCommands(pCurrentWp, path));
   }
   // Unbekanntes flag, MoveTo versuchen
-  SetCommand(this, "MoveTo", pNextWp);
+  SetCommand("MoveTo", pNextWp);
   return(AddSpecialCommands(pCurrentWp, path));
 }
 
@@ -208,9 +208,9 @@ protected func ClimbLadder()
   /*
   if(GetActTime() > 5) {
     if(targetx < GetX() && GetDir() != DIR_Right)
-      ControlLadder("ControlLeft");
+      this->~ControlLadder("ControlLeft");
     if(targetx > GetX() && GetDir() != DIR_Left)
-      ControlLadder("ControlRight");
+      this->~ControlLadder("ControlRight");
   }
   */
 
@@ -226,13 +226,13 @@ protected func ClimbLadder()
     var comd = GetComDir();
     if(targetx < GetX())
     {
-    	ControlLadder("ControlLeft");
+    	this->~ControlLadder("ControlLeft");
     	if(GetDir() == DIR_Left)
     	  SetComDir(comd);
    	}
     if(targetx > GetX())
     {
-    	ControlLadder("ControlRight");
+    	this->~ControlLadder("ControlRight");
     	if(GetDir() == DIR_Right)
     	  SetComDir(comd);
    	}
@@ -257,13 +257,13 @@ protected func ClimbLadder()
     var comd = GetComDir();
     if(targetx < GetX())
     {
-    	ControlLadder("ControlLeft");
+    	this->~ControlLadder("ControlLeft");
     	if(GetDir() == DIR_Left)
     	  SetComDir(comd);
    	}
     if(targetx > GetX())
     {
-    	ControlLadder("ControlRight");
+    	this->~ControlLadder("ControlRight");
     	if(GetDir() == DIR_Right)
     	  SetComDir(comd);
    	}
@@ -275,7 +275,7 @@ protected func ClimbLadder()
 protected func StartJetpack(int iDir)
 {
   // Kein Jetpack mehr? oO
-  var jetpack = HasJetpack();
+  var jetpack = this->~HasJetpack();
   if(!jetpack) return;
   // Richtung zünden
   if(iDir == Jetpack_Left) // Links
@@ -309,32 +309,32 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
     if(!lift) return;
     // Nah genug am Ziel? Absteigen
     if(ObjectDistance(Object(pNextWp)) <= 50)
-      return(AddCommand(this, "MoveTo", Object(pNextWp)));
+      return(AddCommand("MoveTo", Object(pNextWp)));
     // Liftplatten befehligen
     lift->~ControlCommand("MoveTo",0, Object(pNextWp)->GetX());
     // Warten
-    AddCommand(this, "Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
-    AddCommand(this, "Wait", 0,0,0,0,0, 15);
+    AddCommand("Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
+    AddCommand("Wait", 0,0,0,0,0, 15);
     return(1);
   }
   // Liftplatte suchen
   var x1 = Object(pCurrentWp)->GetX();
   var x2 = Object(pNextWp)->GetX();
   if(x1 > x2) { x1 = x2; x2 = Object(pCurrentWp)->GetX(); }
-  var lift = FindObject2(Find_Func("IsLift"), Find_InRect(AbsX(x1), -25, x2-x1, 50));
+  var lift = FindObject(Find_Func("IsLift"), Find_InRect(AbsX(x1), -25, x2-x1, 50));
   // Kein Lift? -> Fehlschlag
   if(!lift) return(MacroComSuccessFailed(0, Macro_PathBroken));
   // Lift nah genug? -> Einsteigen
   if(ObjectDistance(lift) <= 50)
   {
-    AddCommand(this, "Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
-    AddCommand(this, "Grab", lift);
+    AddCommand("Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
+    AddCommand("Grab", lift);
     return(1);
   }
   // Warten
-  AddCommand(this, "Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
+  AddCommand("Call", this, pCurrentWp, pNextWp, 0,0, "LiftControl");
 
-  AddCommand(this, "Wait", 0,0,0,0,0, 15);
+  AddCommand("Wait", 0,0,0,0,0, 15);
   return(1);
 }
 
@@ -343,7 +343,7 @@ protected func AddSpecialCommands(object pCurrentWp, int path)
 {
   if(!(pCurrentWp->GetArriveCommandCount(path))) return;
   for(var i= pCurrentWp->GetArriveCommandCount(path) - 1,command ; i > -1 ; i--)
-    AddCommand(this, pCurrentWp->GetArriveCommand(path, i, 0, 0, this),
+    AddCommand(pCurrentWp->GetArriveCommand(path, i, 0, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 1, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 2, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 3, 0, this),
@@ -356,7 +356,7 @@ protected func AddSpecialCommands(object pCurrentWp, int path)
 private func FindWaypoint(int iX, int iY)
 {
   var wp;
-  while(wp = FindObject(WAYP, AbsX(iX), AbsY(iY), -1, -1, 0,0,0,0, wp)) {
+  for (wp in FindObjects(Find_ID(WAYP), Find_AtPoint(iX, iY))) {
     if(PathFree(iX, iY, wp->GetX(), wp->GetY()) || GBackSolid(wp->GetX(), wp->GetY()))
       return(wp);
   }
@@ -387,7 +387,7 @@ global func BotSkill( i ){ if( i==-1) return(20);	return(Min(i,20));}
 {
   if(!(pCurrentWp->GetArriveCommandCount(path))) return;
   for(var i= pCurrentWp->GetArriveCommandCount(path) - 1,command ; i > -1 ; i--)
-    AddCommand(this(), pCurrentWp->GetArriveCommand(path, i),
+    AddCommand(this, pCurrentWp->GetArriveCommand(path, i),
                        pCurrentWp->GetArriveCommand(path, i, 1),
                        pCurrentWp->GetArriveCommand(path, i, 2),
                        pCurrentWp->GetArriveCommand(path, i, 3),
@@ -439,7 +439,7 @@ public func FxAggroTimer(object pTarget, int no )
 {
 	// Doppelsprung ausführen, wenn sinnvoll
 	if( WildcardMatch( GetAction(),"Jump*")) if(GBackSolid(-20+GetDir()*40))
-		ControlUp();
+		this->~ControlUp();
 
 	// Je schlechter der Botskill, desto öfter machen wir hier Pause
 	if(Random(8-BotSkill(7))) return;
@@ -447,7 +447,7 @@ public func FxAggroTimer(object pTarget, int no )
 	// Kugeln ausweichen
 	UTBotAIDodgeBullets();
 
-	var target = EffectVar(1,this,no);
+	var target = no.var1;
 
 	if(target && !PathFree(GetX(), GetY(), target->GetX(), target->GetY()))
 		target = 0;
@@ -457,7 +457,7 @@ public func FxAggroTimer(object pTarget, int no )
 	{
 		EffectCall(this, no, "Fire");
 		// ein Ausweichsprung
-		if(ObjectDistance( EffectVar(1,this,no) ) < 25 && CheckEnemy(EffectVar(1,this,no), this, false)) UTBotAIDodgeJump();
+		if(ObjectDistance( no.var1 ) < 25 && this->~CheckEnemy(no.var1, this, false)) UTBotAIDodgeJump();
 		return;
 	}
 	else
@@ -476,22 +476,22 @@ public func FxAggroTimer(object pTarget, int no )
 	{
 		// Nichts gefunden :(
 		// -> Bescheid geben!
-		if(EffectVar(99, this, no))
+		if(no.var99)
 		{
 			if(Contained())
 				Contained()->~HandleAggroFinished(this);
-			else if(IsRiding())
+			else if(this->~IsRiding())
 				GetActionTarget()->~HandleAggroFinished(this);
 
-			EffectVar(99, this, no);
+			no.var99;
 		}
 		// -> Waffen durchchecken
 		//CheckIdleWeapon();
 		return;
 	}
 	// Super
-	EffectVar(1, this, no) = target;
-	EffectVar(99,this, no) = true; // wir haben ein Ziel \o/}
+	no.var1 = target;
+	no.var99 = true; // wir haben ein Ziel \o/}
 }
 
 public func FxAggroFire(object pTarget, int no)
@@ -501,12 +501,12 @@ public func FxAggroFire(object pTarget, int no)
 		// Nichts tun :C
 		return;
 	// Nichts tun, wenn gerade verhindert
-	if(!ReadyToFire()) return;
-	var y = EffectVar(4, this(), no);
-	var x = EffectVar(3, this(), no);
-	var dist = EffectVar(2, this(), no);
-	var target = EffectVar(1, this(), no);
-	var level = EffectVar(0, this(), no);
+	if(!this->~ReadyToFire()) return;
+	var y = no.var4;
+	var x = no.var3;
+	var dist = no.var2;
+	var target = no.var1;
+	var level = no.var0;
 	var pathfree = true;
 	var weaprange = 0;
 
@@ -517,10 +517,10 @@ public func FxAggroFire(object pTarget, int no)
 	// Fahrzeugsteuerung
 	if(Contained())
 	{
-		if(Contained()->~HandleAggro(this(), level, target, dist, x, y))
+		if(Contained()->~HandleAggro(this, level, target, dist, x, y))
 			return(1);
 		else
-			return(AddCommand(this(), "Exit", 0,0,0,0,0,0,0, C4CMD_SilentSub));
+			return(AddCommand(this, "Exit", 0,0,0,0,0,0,0, C4CMD_SilentSub));
 	}
 
 	// Zu weit von der Wachposition entfernt?
@@ -534,8 +534,8 @@ public func FxAggroFire(object pTarget, int no)
 				FinishMacroCommand(1);
 			}
 			AddMacroCommand(0, "MoveTo", 0, x,y, 0, level);
-			EffectVar(1, this(), no) = 0;
-		//			Message("@Returning to guarded position", this());
+			no.var1 = 0;
+		//			Message("@Returning to guarded position", this);
 			return;
 		}
 	}
@@ -551,13 +551,13 @@ public func FxAggroFire(object pTarget, int no)
 
 	// Ziel irgendwie weg?
 	// (Pathfree wurde schon gecheckt)
-	if(!CheckTarget(target,this,Max(dist,weaprange),0,0,true))
+	if(!this->~CheckTarget(target,this,Max(dist,weaprange),0,0,true))
 	{
-			EffectVar(1, this(), no) = 0;
-			if(EffectVar(0, this(), no) == 2)
+			no.var1 = 0;
+			if(no.var0 == 2)
 				ClearMacroCommands();
 			// Hier zielt man eh immer!!
-			//if(IsAiming())
+			//if(this->~IsAiming())
 			//	StopAiming();
 			if(Contents()) Contents()->~StopAutoFire();
 			return;
@@ -570,9 +570,9 @@ public func FxAggroFire(object pTarget, int no)
 			// Bei Aggro_Follow können wir von unserem Pfade weg. D.h. eine Waffe und/oder Munition muss her
 			if(GetAggroLevel() == Aggro_Follow)
 			{
-//			Message("@Searching for weapons / ammo", this());
+//			Message("@Searching for weapons / ammo", this);
 				// Waffen auffrischen?
-				if(CustomContentsCount("IsWeapon") <= 1)
+				if(this->~CustomContentsCount("IsWeapon") <= 1)
 					return(SearchWeapon(Aggro_Shoot));
 				// Munition auffrischen
 				return(SearchAmmo(Aggro_Shoot));
@@ -585,13 +585,13 @@ public func FxAggroFire(object pTarget, int no)
 	// Zielen, muss auch mal sein
 	// IsAiming ist er fast immer, wenn er schießen kann, also passt das schon ;)
 	// INFO: die Berechnung ist gut, hier aber noch nicht angebracht!!
-	/*if((!GetCommand() && !GetMacroCommand()) || level != 1 || IsAiming())
+	/*if((!GetCommand() && !GetMacroCommand()) || level != 1 || this->~IsAiming())
 	{
 		if(pathfree && Contents()->GetBotData(BOT_Range) > 20) // Weg frei und keine Nahkampfwaffe?
 		{
 			var angle = UTBotAICalcAimAngle( target, Contents());
 
-				if(IsAiming())
+				if(this->~IsAiming())
 				{
 
 					var tx = GetX()+Sin(angle,1000);//target->GetX();
@@ -621,9 +621,9 @@ public func FxAggroFire(object pTarget, int no)
 	//if(pathfree)
 	//if(Contents()->~GetBotData(BOT_Range) <= ObjectDistance(target))
 	//	Control2Contents("ControlThrow");
-	//	Message("@My target: %s @%d/%d with level %d", this(), target->GetName(), target->GetX(), target->GetY(), level);
+	//	Message("@My target: %s @%d/%d with level %d", this, target->GetName(), target->GetX(), target->GetY(), level);
 	// Stufe 2 - verfolgen!
-	if(EffectVar(0, this(), no) >= 2)
+	if(no.var0 >= 2)
 		if(GetMacroCommand(1) != "Follow" || GetMacroCommand(1, 1) != target)
 			if(GetMacroCommand(0) != "Follow" || GetMacroCommand(0,1) != target)
 			{
@@ -633,7 +633,7 @@ public func FxAggroFire(object pTarget, int no)
 			}
 
 
-	//if((!GetCommand() && !GetMacroCommand()) || level != 1 || IsAiming())
+	//if((!GetCommand() && !GetMacroCommand()) || level != 1 || this->~IsAiming())
 	//{
 		//if( pWeapon->GetBotData(BOT_Range) > 20) // Weg frei und keine Nahkampfwaffe?
 		//{
@@ -685,7 +685,7 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 
 	}
 
-	if(selection) ShiftContents( this(), 0, GetID(selection) );
+	if(selection) ShiftContents( this, 0, GetID(selection) );
 
 	//ActionCheck();
 
@@ -870,14 +870,14 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 	var aSet = [];		 // Suchmenge
 
 	var jetp = 0;
-	var ammoload = DefinitionCall(JTPK,"GetFMData",FM_AmmoLoad);
+	var ammoload = JTPK->GetFMData(FM_AmmoLoad);
 
 	// Initialisierung: Startpunkt in die Knotenmenge, Label ist 0
 	aNodes = FindObjects(Find_ID(WAYP));
 	aSet = aNodes;
 	for(var i=0; i<GetLength(aNodes); i++)
 		aDistance[i]=-1;
-	aDistance[GetArrayItemPosition(pCurrent,aNodes)] = 0;
+	aDistance[GetIndexOf(aNodes, pCurrent)] = 0;
 
 	// jetzt der eigentliche Algorithmus
 	var bEnd = false;
@@ -889,7 +889,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 		// besten Knoten auswählen
 		for( pNode in aSet)
 		{
-			var dist = aDistance[GetArrayItemPosition(pNode,aNodes)];
+			var dist = aDistance[GetIndexOf(aNodes, pNode)];
 			//var dist = aDistance[i];
 			if(dist < 0) continue;
 			if(iBest == -1 || dist < iBest )
@@ -900,7 +900,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 		}
 		for( pNode in aSet )
 		{
-			if( aDistance[GetArrayItemPosition(pNode,aNodes)] == iBest )
+			if( aDistance[GetIndexOf(aNodes, pNode)] == iBest )
 					PushBack(pNode,aBest);
 		}
 		DebugLog("Best Nodes: %v","dijkstra",aBest);
@@ -908,17 +908,17 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 
 		if(!pCurrent) break;
 
-		DropArrayItem(pCurrent, aSet);
+		RemoveArrayValue(aSet, pCurrent);
 
 		var pNext = 0;
 		var pathcount = (pCurrent->WAYP->GetPathCount());
-		var iCurrent = GetArrayItemPosition(pCurrent,aNodes);
+		var iCurrent = GetIndexOf(aNodes, pCurrent);
 
 		// alle Nachbarknoten des besten Knotens nach kürzeren Wegen absuchen
 		for(var i=0; i<pathcount; ++i)
 		{
 			pNext = (pCurrent->WAYP->GetPathTarget(i));
-			var iNext = GetArrayItemPosition(pNext,aNodes);
+			var iNext = GetIndexOf(aNodes, pNext);
 
 			if(!Check4Jetpack(pCurrent,i,fJetpack,jetp,ammoload))
 			{
@@ -953,7 +953,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 	// Jetzt den Weg aufbauen
 	aPath=[pEnd];
 	pCurrent = pEnd;
-	while( pCurrent = aPrev[GetArrayItemPosition(pCurrent,aNodes)])
+	while( pCurrent = aPrev[GetIndexOf(aNodes, pCurrent)])
 	{
 		PushFront(pCurrent,aPath);
 	}
@@ -1012,7 +1012,7 @@ public func UTBotAIDodgeBullets()
 public func UTBotAIDodgeJump()
 {
 	if(GetProcedure() == "FLIGHT")
-		ControlUp();
+		this->~ControlUp();
 	else
 		Jump();
 }
@@ -1106,10 +1106,10 @@ public func UTBotAIFindDodgeBullet()
 
 	for( obj in bullets )
 	{
-		if(CheckEnemy(obj,this)) return obj;
+		if(this->~CheckEnemy(obj,this)) return obj;
 		//if(GameCall("TeamPlay")) if(ObjectCall((obj->~BulletCounter()),"GetTeam")!=GetTeam()) return(obj);
 		//if(GameCall("TeamPlay")) if(( GetPlayerTeam(GetOwner(obj->~BulletCounter())) )!=GetTeam()) return(obj);
-		//if((obj->~BulletOwner())!=this()) return(obj);
+		//if((obj->~BulletOwner())!=this) return(obj);
 	}
 
 	return(0);
@@ -1119,7 +1119,7 @@ public func UTBotAIFindEnemy( object pExclude, int iRadius)
 {
 	var obj;
 
-	var enemy = UTBotAIFindEnemies(pExclude,iRadius,false);
+	var enemy = this->~UTBotAIFindEnemies(pExclude,iRadius,false);
 
 	for( obj in enemy )
 	{
@@ -1150,16 +1150,16 @@ public func UTBotAIAdjustDir( object target )
 
 public func UTBotAIAimAt( object target, int xmod, int ymod )
 {
-	if(IsAiming())
+	if(this->~IsAiming())
 	{
 		var angle = UTBotAICalcAimAngle( target, Contents(), xmod, ymod);
 
 		var tx = GetX()+Sin(angle,1000);//target->GetX();
 		var ty = GetY()-Cos(angle,1000);//target->GetY();
 
-		if (!crosshair) InitCrosshair();
+		if (!this.crosshair) this->~InitCrosshair();
 
-		DoMouseAiming(tx, ty);
+		this->~DoMouseAiming(tx, ty);
 		return angle;
 	}
 }

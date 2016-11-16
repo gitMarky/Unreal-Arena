@@ -24,6 +24,15 @@ static const FM_Icon      =11;  // Icon das im Schussmodimenü angezeigt wird
 
 static const FM_Damage    =12;  // Schaden, den der Schussmodus anrichtet
 
+static const FM_Hitscan = 13;
+static const FM_Ballistic = 13;
+static const FM_ProjSpeed = 13;
+static const BOT_Priority = 13;
+static const BOT_Override = 13;
+static const BOT_RangeMin = 13;
+static const BOT_RangeMax = 13;
+static const BOT_Rating = 13;
+
 static const FM_Error     =-1;  // Für auftretende Fehler
 
 // Bot-Konstanten für Feuermodi
