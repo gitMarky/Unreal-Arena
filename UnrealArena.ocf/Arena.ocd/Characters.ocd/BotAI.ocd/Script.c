@@ -205,15 +205,6 @@ protected func ClimbLadder()
   var targetx = GetCommand(this, 2);
   var targety = GetCommand(this, 3);
 
-  /*
-  if(GetActTime() > 5) {
-    if(targetx < GetX() && GetDir() != DIR_Right)
-      this->~ControlLadder("ControlLeft");
-    if(targetx > GetX() && GetDir() != DIR_Left)
-      this->~ControlLadder("ControlRight");
-  }
-  */
-
   if(targety < GetY()) SetComDir(COMD_Up);
   if(targety > GetY()) SetComDir(COMD_Down);
 
@@ -382,25 +373,10 @@ global func BotSkill( i ){ if( i==-1) return(20);	return(Min(i,20));}
 // die Wegfindung kann man z.B. auch für das normale Hazard verwenden
 
 
-// Alles was der Wegpunkt als ArriveCommand hat
-/*protected func AddSpecialCommands(object pCurrentWp, int path)
-{
-  if(!(pCurrentWp->GetArriveCommandCount(path))) return;
-  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1,command ; i > -1 ; i--)
-    AddCommand(this, pCurrentWp->GetArriveCommand(path, i),
-                       pCurrentWp->GetArriveCommand(path, i, 1),
-                       pCurrentWp->GetArriveCommand(path, i, 2),
-                       pCurrentWp->GetArriveCommand(path, i, 3),
-                       pCurrentWp->GetArriveCommand(path, i, 4), 0,
-                       pCurrentWp->GetArriveCommand(path, i, 5));
-}*/
-
 
 // Hier wurde nur der Timer geändert
 public func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 {
-	//	if(GetOwner() < -1) Message("@SetAggroLevel: %d: %s", this, iLevel, text);
-	// > 3
 	if(iLevel > 3) return;
 	// Wir kommen von > 2
 	var target;
@@ -482,11 +458,8 @@ public func FxAggroTimer(object pTarget, int no )
 				Contained()->~HandleAggroFinished(this);
 			else if(this->~IsRiding())
 				GetActionTarget()->~HandleAggroFinished(this);
-
-			no.var99;
 		}
 		// -> Waffen durchchecken
-		//CheckIdleWeapon();
 		return;
 	}
 	// Super
@@ -507,7 +480,6 @@ public func FxAggroFire(object pTarget, int no)
 	var dist = no.var2;
 	var target = no.var1;
 	var level = no.var0;
-	var pathfree = true;
 	var weaprange = 0;
 
 	if(Contents())
@@ -522,32 +494,6 @@ public func FxAggroFire(object pTarget, int no)
 		else
 			return(AddCommand("Exit", nil,0,0,nil,0,0,0, C4CMD_SilentSub));
 	}
-
-	// Zu weit von der Wachposition entfernt?
-	/*if(level == 3)
-	{
-		if(Distance(GetX(), GetY(), x, y) > dist)
-		{
-			if(GetMacroCommand(1, 1) == target)
-			{
-				FinishMacroCommand(1,0,1);
-				FinishMacroCommand(1);
-			}
-			AddMacroCommand(nil, "MoveTo", 0, x,y, 0, level);
-			no.var1 = 0;
-		//			Message("@Returning to guarded position", this);
-			return;
-		}
-	}
-
-	var maxdist = dist;
-	if(!PathFree(GetX(), GetY(), target->GetX(), target->GetY()))
-	{
-		if(level == 1) maxdist = 0;
-		if(level >= 2) maxdist = dist/2;
-		pathfree = false;
-	}
-	*/
 
 	// Ziel irgendwie weg?
 	// (Pathfree wurde schon gecheckt)
@@ -570,7 +516,6 @@ public func FxAggroFire(object pTarget, int no)
 			// Bei Aggro_Follow können wir von unserem Pfade weg. D.h. eine Waffe und/oder Munition muss her
 			if(GetAggroLevel() == Aggro_Follow)
 			{
-//			Message("@Searching for weapons / ammo", this);
 				// Waffen auffrischen?
 				if(this->~CustomContentsCount("IsWeapon") <= 1)
 					return(SearchWeapon(Aggro_Shoot));
@@ -582,28 +527,6 @@ public func FxAggroFire(object pTarget, int no)
 	}
 	// Stufe 1 - nur in die grobe Richtung ballern, lieber nicht anhalten oder sowas
 
-	// Zielen, muss auch mal sein
-	// IsAiming ist er fast immer, wenn er schießen kann, also passt das schon ;)
-	// INFO: die Berechnung ist gut, hier aber noch nicht angebracht!!
-	/*if((!GetCommand() && !GetMacroCommand()) || level != 1 || this->~IsAiming())
-	{
-		if(pathfree && Contents()->GetBotData(BOT_Range) > 20) // Weg frei und keine Nahkampfwaffe?
-		{
-			var angle = UTBotAICalcAimAngle( target, Contents());
-
-				if(this->~IsAiming())
-				{
-
-					var tx = GetX()+Sin(angle,1000);//target->GetX();
-					var ty = GetY()-Cos(angle,1000);//target->GetY();
-
-					//if(Contents()->GetBotData(BOT_Ballistic))
-					//	ty -= 15;
-
-					DoMouseAiming(tx, ty);
-				}
-		}
-	}*/
 
 	var pWeapon = Contents();
 
@@ -617,11 +540,6 @@ public func FxAggroFire(object pTarget, int no)
 	UTBotAIAdjustDir( target );
 
 	// Feuer!
-	//if(maxdist != 300 && pathfree)
-	//if(pathfree)
-	//if(Contents()->~GetBotData(BOT_Range) <= ObjectDistance(target))
-	//	Control2Contents("ControlThrow");
-	//	Message("@My target: %s @%d/%d with level %d", this, target->GetName(), target->GetX(), target->GetY(), level);
 	// Stufe 2 - verfolgen!
 	if(no.var0 >= 2)
 		if(GetMacroCommand(1) != "Follow" || GetMacroCommand(1, 1) != target)
@@ -633,19 +551,12 @@ public func FxAggroFire(object pTarget, int no)
 			}
 
 
-	//if((!GetCommand() && !GetMacroCommand()) || level != 1 || this->~IsAiming())
-	//{
-		//if( pWeapon->GetBotData(BOT_Range) > 20) // Weg frei und keine Nahkampfwaffe?
-		//{
 
 	UTBotAIAimAt(target);
-		//}
-	//}
 	// Waffe benutzen
 	var override = pWeapon->~GetBotData(BOT_Override);
 	if( override )
 	{
-		//EffectCall(this, no, override, pTarget,pWeapon);
 		pWeapon->~UTBotAIUse( this, target );
 		return;
 	}
@@ -691,127 +602,6 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 
 	return( Contents() );
 }
-/*
-// Wenn iLevel = 1 (Aggro_Shoot) werden keine Waffen mit FM_Aim ausgewählt
-public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
-{
-	// Entfernung zum Ziel
-	var dist = ObjectDistance(pTarget);
-	// Keine Waffen in Inventar?
-	if(!CustomContentsCount("IsWeapon")) return;
-	// Bevorzugten Schadenstyp bestimmen
-	var preftype = GetPrefDmgType(pTarget), type;
-	// Alle durchgehen und passende prüfen
-	for(var i=0,obj,fav,mode,favmode ; obj = Contents(i) ; mode++)
-	{
-		// Nix Waffe
-		if(!(obj->~IsWeapon())) { i++; mode = -1; continue; }
-		// Feuermodus
-		if(mode && !fFireModes) { i++; mode = -1; continue; }
-		if(!(obj->GetFMData(FM_Name, mode))) { i++; mode = -1; continue; }
-		if(mode == obj->GetFireMode() && mode) continue;
-		// Nix gut
-		// man kann immer und überall schießen!!
-		//if(obj->GetFMData(FM_Aim, mode)>0)
-		//	if(iLevel == 1 || !WildcardMatch(GetAction(), "*Walk*"))
-		//		continue;
-		// Keine Munition dafür?
-		if(!(obj->GetCharge()) && !GetAmmo(obj->GetFMData(FM_AmmoID, mode)))
-			continue;
-		// EMP nur gegen Maschinen
-		if(obj->GetBotData(BOT_EMP, mode))
-			if(!(pTarget->~IsMachine()))
-				continue;
-		// Kein Favorit bisher?
-		if(!fav)
-		{
-			fav = obj;
-			type = fav->GetBotData(BOT_DmgType, mode);
-			favmode = mode;
-		}
-		else
-		{
-			// Favorit hat nicht genug Reichweite
-			if(fav->GetBotData(BOT_Range, favmode) < dist)
-			{
-				// Neue Waffe hat mehr
-				if(obj->GetBotData(BOT_Range, mode) > dist)
-				{
-					fav = obj;
-					type = obj->GetBotData(BOT_DmgType, mode);
-					favmode = mode;
-				}
-			}
-			else if(fav->GetBotData(BOT_RangeMin, favmode) > dist)
-			{
-					// Neue Waffe hat mehr
-					if(obj->GetBotData(BOT_RangeMin, mode) < dist)
-					{
-						fav = obj;
-						type = obj->GetBotData(BOT_DmgType, mode);
-						favmode = mode;
-					}
-			}
-			else
-			{
-				// Favorit hat genug Reichweite -> nur wechseln, wenn Schadenstyp besser
-				if(pTarget->~OnDmg(obj->GetBotData(BOT_DmgType, mode)) < pTarget->~OnDmg(type) &&
-					// Allerdings darf die Waffe nicht zu schwach sein
-					fav->GetBotData(BOT_Power, favmode)-1 <= obj->GetBotData(BOT_Power, mode) &&
-					// Und das gleiche nochmal mit Priorität!
-					fav->GetBotData(BOT_Priority, favmode)-1 <= obj->GetBotData(BOT_Priority, mode))
-				{
-					// Neuer Favorit
-					fav = obj;
-					type = fav->GetBotData(BOT_DmgType);
-					favmode = mode;
-				}
-				else
-				{
-					// Stärke der neuen Waffe ist größer oder Favorit ist ein Langlader
-					if(fav->GetBotData(BOT_Power, favmode) < obj->GetBotData(BOT_Power, mode) ||
-						 (fav->GetBotData(BOT_Priority, favmode) < obj->GetBotData(BOT_Priority, mode)) ||
-						 (fav->GetBotData(BOT_Power, favmode) == BOT_Power_LongLoad && (fav->IsReloading() || !(fav->GetCharge()))))
-					{
-						// Waffe hat keine extralange Nachladezeit
-						if(obj->GetBotData(BOT_Power, mode) != BOT_Power_LongLoad)
-						{
-							// Neuer Favorit
-							fav = obj;
-							type = fav->GetBotData(BOT_DmgType);
-							favmode = mode;
-						}
-						// Waffe sollte nicht nachladen und nicht leer sein
-						else if(obj->GetCharge() != 0 && !(obj->IsReloading()))
-							{
-								// Neuer Favorit
-								fav = obj;
-								type = fav->GetBotData(BOT_DmgType);
-								favmode = mode;
-							}
-					}
-				}
-			}
-			// Reichweite passt
-			if(fav->GetBotData(BOT_Range, favmode) >= dist)
-			if(fav->GetBotData(BOT_RangeMin, favmode) <= dist)
-				// Schadenstyp auch, hier geht es jetzt logisch zu ^^
-				if(preftype & type)
-					// Stärke auch
-						if(fav->GetBotData(BOT_Power, favmode) >= BOT_Power_3)
-							break;
-		}
-	}
-	// Auswählen
-	if(!fav) return;
-	// Feuermodus wechseln?
-	if(fFireModes)
-		if(favmode && favmode != fav->GetFireMode())
-			fav->SetFireMode(favmode);
-	if(ContentsCount() == 1) return 1;
-	return(ShiftContents(0,0,fav->GetID()));
-}
-*/
 
 
 public func GetPrefDmgType(object pTarget)
@@ -866,7 +656,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 						 // eine geringere "Distanz" haben, weil sie den Clonk schneller
 						 // ans Ziel bringen
 	var aPrev = [];		 // die Vorgänger, daraus bauen wir einen Pfad zusammen
-	var aPath = [];		 // aNodes hilft nur für die Nachbarschaft, aPath ist der gewählte Pfad
+	var bPath = [];		 // aNodes hilft nur für die Nachbarschaft, bPath ist der gewählte Pfad
 	var aSet = [];		 // Suchmenge
 
 	var jetp = 0;
@@ -884,7 +674,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 	while(GetLength(aSet)&&(!bEnd))
 	{
 
-		var aBest = [], pBest, pNode, iBest = -1;
+		var aBest = [], pNode, iBest = -1;
 
 		// besten Knoten auswählen
 		for( pNode in aSet)
@@ -951,14 +741,14 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 	if(!bEnd) return false;
 
 	// Jetzt den Weg aufbauen
-	aPath=[pEnd];
+	bPath=[pEnd];
 	pCurrent = pEnd;
 	while( pCurrent = aPrev[GetIndexOf(aNodes, pCurrent)])
 	{
-		PushFront(pCurrent,aPath);
+		PushFront(pCurrent,bPath);
 	}
 
-	return aPath;
+	return bPath;
 }
 
 
@@ -1079,20 +869,11 @@ public func UTBotAICalcAimAngle( object obj, object gun, int xmod, int ymod)
 
 		t= (dist1 + dist2)/(2*(v1+v2));
 		t= dist2 /(v1+v2);
-		var t2= BoundBy(t - gun->~GetFMData(FM_Ballistic),0,t);
-
-		//local shitter;
-		//if(!shitter) Log("Flugzeit t = %d, Distanz %d, %d, %d, V %d",t,dist1,dist2,(dist1+dist2)/2,v1+v2);
-		//if(!shitter) Log("Flugzeit t = %d, f1 %d f2 %d, f2-f1 %d add = %d",t,f1,f2,f2-f1,(t*t*(f2-f1)*GetGravity())/100);
 
 		v2x = -(-t*v1x +x2-x1)/t;
 		v2y = -(-t*v1y +y2-y1 + (t*t*(f2-f1)*prec*GetGravity())/1000)/t;
 
-
-		//if(!shitter) Log("Flugzeit t = %d, vx %d vy %d",t,v2x,v2y);
-
 		angle = Angle(0,0,v2x,v2y);
-		//shitter = 1;
 		angle=angle-Random(skill+1)+skill/2;
 		return angle;
 }
@@ -1154,8 +935,8 @@ public func UTBotAIAimAt( object target, int xmod, int ymod )
 	{
 		var angle = UTBotAICalcAimAngle( target, Contents(), xmod, ymod);
 
-		var tx = GetX()+Sin(angle,1000);//target->GetX();
-		var ty = GetY()-Cos(angle,1000);//target->GetY();
+		var tx = GetX()+Sin(angle,1000);
+		var ty = GetY()-Cos(angle,1000);
 
 		if (!this.crosshair) this->~InitCrosshair();
 
