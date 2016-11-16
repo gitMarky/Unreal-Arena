@@ -20,7 +20,7 @@ public func SetMacroCommand(object pCallback, string szCommand, object pTarget, 
 {
   // kein ordentlicher Befehl -> nichts tun
   if(!szCommand) return();
-  if(szCommand ne "MoveTo" && szCommand ne "Follow" && szCommand ne "Wait" && szCommand ne "None")
+  if(szCommand != "MoveTo" && szCommand != "Follow" && szCommand != "Wait" && szCommand != "None")
   {
     FatalError(Format("Unknown macro command: %s", szCommand));
     return();
@@ -112,7 +112,7 @@ public func AppendMacroCommand(object pCallback, string szCommand, object pTarge
 {
   // kein ordentlicher Befehl -> nichts tun
   if(!szCommand) return();
-  if(szCommand ne "MoveTo" && szCommand ne "Follow" && szCommand ne "Wait" && szCommand ne "None")
+  if(szCommand != "MoveTo" && szCommand != "Follow" && szCommand != "Wait" && szCommand != "None")
   {
     FatalError(Format("Unknown macro command: %s", szCommand));
     return();
@@ -201,7 +201,7 @@ public func ClearMacroCommands()
 protected func MacroComMoveTo()
 {
   // Erstes Kommando ist gar nicht MoveTo?
-  if(GetMacroCommand(0,0) ne "MoveTo") return();
+  if(GetMacroCommand(0,0) != "MoveTo") return();
   // Kein Ziel? (bewirkt, dass der Clonk nicht nach 0,0 laufen kann!)
   if(!GetMacroCommand(0,2) && !GetMacroCommand(0,3))
     if(!GetMacroCommand(0,4))
@@ -251,7 +251,7 @@ protected func MacroComMoveTo()
 protected func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 {
   // Erstes Kommando ist gar nicht MoveTo?
-  if(GetMacroCommand(0,0) ne "MoveTo") return();
+  if(GetMacroCommand(0,0) != "MoveTo") return();
   // Wird haben das Ende des Pfades erreicht?
   if(GetLength(aPath) == iStep)
   {//Log("%s #%d: MacroComMoveTo finished", GetName(), ObjectNumber());
@@ -279,7 +279,7 @@ protected func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 protected func MacroComMoveToStepFailed() // MoveTo-Schritt fehlgeschlagen
 {//Log("%s #%d: MacroComMoveToStepFailed", GetName(), ObjectNumber());
   // Erstes Kommando ist gar nicht MoveTo?
-  if(GetMacroCommand(0,0) ne "MoveTo") return();
+  if(GetMacroCommand(0,0) != "MoveTo") return();
   // Fehlschlag auf ganzer Linie
   MacroComSuccessFailed(0, Macro_PathImpossible);
   return(1);
@@ -293,11 +293,11 @@ protected func MacroComFollow(bool fStarted)
   {
     DebugLog(Format("%s #%d: MacroComFollow timer", GetName(), ObjectNumber()), "MacroComFollow");
     // Prüfen, ob an der Stelle iPos in der Kette "Follow" steht
-    if(GetMacroCommand(1) ne "Follow" && GetMacroCommand(0) ne "Follow")
+    if(GetMacroCommand(1) != "Follow" && GetMacroCommand(0) != "Follow")
       // Steht nicht da, ergo muss sich ein anderes Kommando reingeschaltet haben -> nichts tun
       return();
     // Wir haben kein MoveTo mehr? Dann sind wir angekommen (wir starten einfach neu)
-    if(GetMacroCommand() ne "MoveTo") return(MacroComFollow());
+    if(GetMacroCommand() != "MoveTo") return(MacroComFollow());
     // Unser Ziel ist irgendwie weg?
     if(!GetMacroCommand(1,1))
     {
@@ -326,7 +326,7 @@ protected func MacroComFollow(bool fStarted)
   }
   DebugLog(Format("%s #%d: MacroComFollow started", GetName(), ObjectNumber()), "MacroComFollow");
   // Erstes Kommando ist gar nicht Follow?
-  if(GetMacroCommand(0,0) ne "Follow") return();
+  if(GetMacroCommand(0,0) != "Follow") return();
   // Kein Ziel? -> Fehlschlag
   if(!GetMacroCommand(0,1))
     return(MacroComSuccessFailed());
@@ -345,7 +345,7 @@ protected func MacroComFollow(bool fStarted)
 protected func MacroComWait(bool fEnd)
 {
   // Erstes Kommando ist gar nicht Wait?
-  if(GetMacroCommand(0,0) ne "Wait") return();
+  if(GetMacroCommand(0,0) != "Wait") return();
   // Beenden?
   if(fEnd)
     return(MacroComSuccess(0));
@@ -710,7 +710,7 @@ protected func ClimbLadder()
 {
   if(!GetMacroCommand() && !GetCommand()) return();
   // Testen, ob wir noch klettern
-  if(GetAction() ne "ScaleLadder") return();
+  if(GetAction() != "ScaleLadder") return();
   // Feststellen, ob nach oben oder unten
   var targetx = GetCommand(this, 2);
   var targety = GetCommand(this, 3);
