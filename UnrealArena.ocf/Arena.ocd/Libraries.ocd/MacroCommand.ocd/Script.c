@@ -1,3 +1,11 @@
+static const WAYP = nil;
+static const JTPK = nil;
+static const GBRB = nil;
+
+global func Debug(string type)
+{
+	return false;
+}
 
 /* KI-Zeugs */
 
@@ -157,7 +165,7 @@ public func GetMacroCommand(int iCommandNum, int iElement)
   // An der Stelle gibt es nichts?
   if(iCommandNum < 0 || GetLength(aMacroCommandList) <= iCommandNum) return();
   // Element zurückgeben
-  return(EffectVar(iElement, this, aMacroCommandList[iCommandNum]));
+  return aMacroCommandList[iCommandNum][Format("var%d", iElement)];
 }
 
 // Beenden (wenn, dann nur extern gebraucht)
@@ -234,7 +242,7 @@ protected func MacroComMoveTo()
   }
   // In Bewegung setzen (der erste Wegpunkt sollte durch MoveTo erreichbar sein, wenn nicht -> doof
   // Spezialhack: reitet!
-  if(IsRiding()) SetAction("Walk");
+  if(this->~IsRiding()) SetAction("Walk");
   SetCommand(this, "MoveTo", aPath[0]);
   AppendCommand(this, "Call", this, 1,0,0,0, "MacroComMoveToStep");
   // Automatischer Abbruch
@@ -380,7 +388,7 @@ protected func MacroComSuccess(iCommand, int iCmd2)
 protected func MacroComTumble()
 {//Log("%s #%d: MacroComTumble", GetName(), ObjectNumber());
   MacroComSuccessFailed(0, Macro_PathImpossible);
-  CheckStuck();
+  this->~CheckStuck();
 }
 
 // Fehlercodes:
@@ -471,7 +479,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
   var aWaypoints = CreateArray();
   
   var jetp = 0;
-  var ammoload = DefinitionCall(JTPK,"GetFMData",FM_AmmoLoad);
+  var ammoload = JTPK->GetFMData(FM_AmmoLoad);
 
   for(var j=0; j< iterationLimit; ++j) {
 
@@ -601,7 +609,7 @@ public func FindPath(object pStart, object pEnd, bool fJetpack)
 private func FindWaypoint(int iX, int iY)
 {
   var wp;
-  while(wp = FindObject(WAYP, AbsX(iX), AbsY(iY), -1, -1, 0,0,0,0, wp)) {
+  for (wp in FindObjects(Find_ID(WAYP), Find_AtPoint(iX, iY))) {
     if(PathFree(iX, iY, wp->GetX(), wp->GetY()) || GBackSolid(wp->GetX(), wp->GetY()))
       return(wp);
   }
@@ -617,7 +625,7 @@ private func Check4Jetpack(object pCurrent, int path, bool fJetpack, int jetp, i
     return(1);
   // ansonsten Vorbedingungen checken
   if(fJetpack)
-    if(HasJetpack())
+    if(this->~HasJetpack())
       //if(ammoload <= GetAmmo(GSAM)-jetp)
         return(2);
   return(0);
@@ -718,9 +726,9 @@ protected func ClimbLadder()
   /*
   if(GetActTime() > 5) {
     if(targetx < GetX() && GetDir() != DIR_Right)
-      ControlLadder("ControlLeft");
+      this->~ControlLadder("ControlLeft");
     if(targetx > GetX() && GetDir() != DIR_Left)
-      ControlLadder("ControlRight");
+      this->~ControlLadder("ControlRight");
   }
   */
   
@@ -736,13 +744,13 @@ protected func ClimbLadder()
     var comd = GetComDir();
     if(targetx < GetX())
     {
-    	ControlLadder("ControlLeft");
+    	this->~ControlLadder("ControlLeft");
     	if(GetDir() == DIR_Left)
     	  SetComDir(comd);
    	}
     if(targetx > GetX())
     {
-    	ControlLadder("ControlRight");
+    	this->~ControlLadder("ControlRight");
     	if(GetDir() == DIR_Right)
     	  SetComDir(comd);
    	}
@@ -767,13 +775,13 @@ protected func ClimbLadder()
     var comd = GetComDir();
     if(targetx < GetX())
     {
-    	ControlLadder("ControlLeft");
+    	this->~ControlLadder("ControlLeft");
     	if(GetDir() == DIR_Left)
     	  SetComDir(comd);
    	}
     if(targetx > GetX())
     {
-    	ControlLadder("ControlRight");
+    	this->~ControlLadder("ControlRight");
     	if(GetDir() == DIR_Right)
     	  SetComDir(comd);
    	}
@@ -785,7 +793,7 @@ protected func ClimbLadder()
 protected func StartJetpack(int iDir)
 {
   // Kein Jetpack mehr? oO
-  var jetpack = HasJetpack();
+  var jetpack = this->~HasJetpack();
   if(!jetpack) return();
   // Richtung zünden
   if(iDir == Jetpack_Left) // Links
@@ -831,7 +839,7 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
   var x1 = Object(pCurrentWp)->GetX();
   var x2 = Object(pNextWp)->GetX();
   if(x1 > x2) { x1 = x2; x2 = Object(pCurrentWp)->GetX(); }
-  var lift = FindObject2(Find_Func("IsLift"), Find_InRect(AbsX(x1), -25, x2-x1, 50));
+  var lift = FindObject(Find_Func("IsLift"), Find_InRect(AbsX(x1), -25, x2-x1, 50));
   // Kein Lift? -> Fehlschlag
   if(!lift) return(MacroComSuccessFailed(0, Macro_PathBroken));
   // Lift nah genug? -> Einsteigen
@@ -882,7 +890,7 @@ public func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
   // Wir kommen von > 2
   var target;
   if(GetAggroLevel() >= 2 && iLevel < 2)
-    if(target = EffectVar(1, this, GetEffect("Aggro", this)))
+    if(target = GetEffect("Aggro", this).var1)
       if(GetMacroCommand(1, 1) == target)
       {
         FinishMacroCommand(1,0,1);
@@ -921,13 +929,13 @@ public func GetAggroLevel()
 public func SetAggroTarget(object pTarget)
 {
   if(GetAggroLevel() == Aggro_Nothing) return();
-  EffectVar(1, this, GetEffect("Aggro", this)) = pTarget;
+  GetEffect("Aggro", this).var1 = pTarget;
   return(1);
 }
 
 public func GetAggroTarget()
 {
-  return(EffectVar(1, this, GetEffect("Aggro", this)));
+  return(GetEffect("Aggro", this).var1);
 }
 
 public func FxAggroTimer(object pTarget, int no)
@@ -935,29 +943,29 @@ public func FxAggroTimer(object pTarget, int no)
   // Wir haben ein Ziel?
   if(no.var1) { EffectCall(this, no, "Fire"); return(1); }
   // Zielen beenden
-  if(IsAiming()) StopAiming();
+  if(this->~IsAiming()) StopAiming();
 //  Message("@No target", this);
   // Ziel suchen
   var dir = GetDir()*2-1;
   // Vorne
-  var target = GetTarget(90*dir, 90);
+  var target = this->~GetTarget(90*dir, 90);
   // Hinten
   if(!target)
     if((!GetCommand() && !GetMacroCommand()) || no.var0 != 1)
-      target = GetTarget(-90*dir, 90);
+      target = this->~GetTarget(-90*dir, 90);
   // Gefunden?
   if(!target)
   {
     // Nichts gefunden :(
     // -> Bescheid geben!
-    if(EffectVar(99, this, no))
+    if(no.var99)
     {
       if(Contained())
         Contained()->~HandleAggroFinished(this);
-      else if(IsRiding())
+      else if(this->~IsRiding())
         GetActionTarget()->~HandleAggroFinished(this);
       
-      EffectVar(99, this, no);
+      no.var99;
     }
     // -> Waffen durchchecken
     CheckIdleWeapon();
@@ -965,7 +973,7 @@ public func FxAggroTimer(object pTarget, int no)
   }
   // Super
   no.var1 = target;
-  EffectVar(99,this, no) = true; // wir haben ein Ziel \o/
+  no.var99 = true; // wir haben ein Ziel \o/
 }
 
 public func FxAggroFire(object pTarget, int no)
@@ -975,7 +983,7 @@ public func FxAggroFire(object pTarget, int no)
     // Nichts tun :C
     return();
   // Nichts tun, wenn gerade verhindert
-  if(!ReadyToFire()) return();
+  if(!this->~ReadyToFire()) return();
   var y = no.var4;
   var x = no.var3;
   var dist = no.var2;
@@ -1030,7 +1038,7 @@ public func FxAggroFire(object pTarget, int no)
       no.var1 = 0;
       if(no.var0 == 2)
         ClearMacroCommands();
-      if(IsAiming())
+      if(this->~IsAiming())
         StopAiming();
       return();
     }
@@ -1046,7 +1054,7 @@ public func FxAggroFire(object pTarget, int no)
       {
 //      Message("@Searching for weapons / ammo", this);
         // Waffen auffrischen?
-        if(CustomContentsCount("IsWeapon") <= 1)
+        if(this->~CustomContentsCount("IsWeapon") <= 1)
           return(SearchWeapon(Aggro_Shoot));
         // Munition auffrischen
         return(SearchAmmo(Aggro_Shoot));
@@ -1069,7 +1077,7 @@ public func FxAggroFire(object pTarget, int no)
   }
 
   // Zielen, muss auch mal sein
- if((!GetCommand() && !GetMacroCommand()) || level != 1 || IsAiming())
+ if((!GetCommand() && !GetMacroCommand()) || level != 1 || this->~IsAiming())
  {
   if(pathfree && Contents()->GetBotData(BOT_Range) > 30) // Weg frei und keine Nahkampfwaffe?
   {
@@ -1077,8 +1085,8 @@ public func FxAggroFire(object pTarget, int no)
     if(((!Inside(angle, 70, 120) && !Inside(angle, 250, 290)) || Contents()->GetFMData(FM_Aim)>0)
          && maxdist != 300 && ObjectDistance(target) < 300)
     {
-      if(!IsAiming()) StartSquatAiming();
-      if(IsAiming())
+      if(!this->~IsAiming()) this->~StartSquatAiming();
+      if(this->~IsAiming())
       {
 	  
 	    var tx = target->GetX();
@@ -1091,10 +1099,10 @@ public func FxAggroFire(object pTarget, int no)
       }
     }
     else
-      if(IsAiming())
+      if(this->~IsAiming())
         StopAiming();
   }
-	if(IsAiming() && !CheckAmmo(Contents()->GetFMData(FM_AmmoID), Contents()->GetFMData(FM_AmmoLoad), Contents(), this))
+	if(this->~IsAiming() && !this->~CheckAmmo(Contents()->GetFMData(FM_AmmoID), Contents()->GetFMData(FM_AmmoLoad), Contents(), this))
 	 	StopAiming();
  }
  
@@ -1121,7 +1129,7 @@ public func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
   // Entfernung zum Ziel
   var dist = ObjectDistance(pTarget);
   // Keine Waffen in Inventar?
-  if(!CustomContentsCount("IsWeapon")) return();
+  if(!this->~CustomContentsCount("IsWeapon")) return();
   // Bevorzugten Schadenstyp bestimmen
   var preftype = GetPrefDmgType(pTarget), type;
   // Alle durchgehen und passende prüfen
@@ -1286,7 +1294,7 @@ public func CheckIdleWeapon()
     // Hack - mit BR-Bombe tut er gar nichts
     if(Contents()->GetID() == GBRB) return;
   // Keine Waffen im Inventar
-  if(!CustomContentsCount("IsWeapon")) return();
+  if(!this->~CustomContentsCount("IsWeapon")) return();
   // nachladende Waffe in der Hand
   if(Contents()->~IsWeapon())
     if(Contents()->IsReloading())
@@ -1318,14 +1326,14 @@ public func CheckIdleWeapon()
     // EMP-Modi erstmal nicht laden
     if(obj->GetBotData(BOT_EMP, mode)) continue;
     // Waffe ist nachladbar
-    if(CheckAmmo(obj->GetFMData(FM_AmmoID, mode), obj->GetFMData(FM_AmmoLoad, mode) - obj->GetAmmo(obj->GetFMData(FM_AmmoID, mode))))
+    if(this->~CheckAmmo(obj->GetFMData(FM_AmmoID, mode), obj->GetFMData(FM_AmmoLoad, mode) - obj->GetAmmo(obj->GetFMData(FM_AmmoID, mode))))
     {
       mode = obj->GetFireMode();
       break;
     }
     // Nächsten Feuermodus prüfen
     if(mode == obj->GetFireMode()) continue;
-    if(CheckAmmo(obj->GetFMData(FM_AmmoID, mode), obj->GetFMData(FM_AmmoLoad, mode)))
+    if(this->~CheckAmmo(obj->GetFMData(FM_AmmoID, mode), obj->GetFMData(FM_AmmoLoad, mode)))
       break;
   }
   // Nix gefunden
@@ -1406,7 +1414,7 @@ public func DropObject(object pObj)
   Schedule(Format("Exit(Object(%d), 0, 10);", ObjectNumber(pObj)), 1, 0, this);
   // Nicht wieder einsammeln
   var effect = AddEffect("CollectionException", pObj, 1, 36);
-  EffectVar(0, pObj, effect) = this;
+  effect.var0 = this;
 }
 
 // Ausrüstung anlegen (verzögert, damit die Schleife nicht durcheinander kommt
