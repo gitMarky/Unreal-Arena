@@ -419,14 +419,14 @@ private func RemoveMacroCommand(int iCommand)
     iEff = GetEffect("MacroCommand", this, i);
     if(iEff == aMacroCommandList[iCommand])
     {
-      RemoveEffect("MacroCommand", this, i);
+      RemoveEffect(nil, this, iEff);
       continue;
     }
     if(GetEffect("MacroCommandLocked", this)) continue;
     for(var mac in aMacroCommandList)
       if(mac == iEff)
         checked = true;
-    if(!checked) RemoveEffect("MacroCommand", this, i, true);
+    if(!checked) RemoveEffect(nil, this, iEff, true);
     checked = false;
   }
 /*  if(RemoveEffect(0, this, aMacroCommandList[iCommand]))
@@ -852,7 +852,7 @@ protected func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 protected func AddSpecialCommands(object pCurrentWp, int path)
 {
   if(!(pCurrentWp->GetArriveCommandCount(path))) return;
-  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1, command ; i > -1 ; i--)
+  for(var i= pCurrentWp->GetArriveCommandCount(path) - 1; i > -1 ; i--)
     AddCommand(pCurrentWp->GetArriveCommand(path, i, 0, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 1, 0, this),
                        pCurrentWp->GetArriveCommand(path, i, 2, 0, this),
@@ -956,8 +956,6 @@ public func FxAggroTimer(object pTarget, int no)
         Contained()->~HandleAggroFinished(this);
       else if(this->~IsRiding())
         GetActionTarget()->~HandleAggroFinished(this);
-      
-      no.var99;
     }
     // -> Waffen durchchecken
     CheckIdleWeapon();
@@ -1292,7 +1290,7 @@ public func CheckIdleWeapon()
     if(Contents()->IsReloading())
       return();
   // Inventar nach Waffe durchsuchen, die man Nachladen könnte
-  for(var i=0, mode=1, obj, favmode ; obj = Contents(i) ; mode++)
+  for(var i=0, mode=1, obj; obj = Contents(i) ; mode++)
   {
     // Keine Waffe
     if(!(obj->~IsWeapon()))
