@@ -817,12 +817,10 @@ func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
 func JumppadCheck(object pTargetWp, int iNextStep)
 {
 	// Pfad hat sich irgendwie geändert
-	if (GetLength(aPath) <= iNextStep)
-		return;
+	if (GetLength(aPath) <= iNextStep) return;
 	var pNextWp = aPath[iNextStep];
 	// Feststellen, ob pTargetWp immernoch unser Bewegungsziel ist
-	if (aPath[iNextStep - 1] != pTargetWp)
-		return;
+	if (aPath[iNextStep - 1] != pTargetWp) return;
 	// Schauen, ob wir näher an pNextWp dran sind
 	if (ObjectDistance(pTargetWp) > ObjectDistance(pNextWp))
 		// Wegpunkt wird übersprungen
@@ -831,6 +829,7 @@ func JumppadCheck(object pTargetWp, int iNextStep)
 	ScheduleCall(this, "JumppadCheck", 5, 0, pTargetWp, iNextStep);
 }
 
+// DUPLICATE
 func ClimbLadder()
 {
 	if (!GetMacroCommand() && !GetCommand())
@@ -841,15 +840,7 @@ func ClimbLadder()
 	// Feststellen, ob nach oben oder unten
 	var targetx = GetCommand(this, 2);
 	var targety = GetCommand(this, 3);
-	
-	/*
-	if (GetActTime() > 5) {
-		if (targetx < GetX() && GetDir() != DIR_Right)
-			this->~ControlLadder("ControlLeft");
-		if (targetx > GetX() && GetDir() != DIR_Left)
-			this->~ControlLadder("ControlRight");
-	}
-	*/
+
 	
 	if (targety < GetY())
 		SetComDir(COMD_Up);
@@ -1059,16 +1050,14 @@ func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 func GetAggroLevel()
 {
 	var effect = GetEffect("Aggro", this);
-	if (!effect)
-		return;
+	if (!effect) return;
 	return effect.var0;
 }
 
 // Setzt sofort das Angriffsziel
 func SetAggroTarget(object pTarget)
 {
-	if (GetAggroLevel() == Aggro_Nothing)
-		return;
+	if (GetAggroLevel() == Aggro_Nothing) return;
 	GetEffect("Aggro", this).var1 = pTarget;
 	return 1;
 }
