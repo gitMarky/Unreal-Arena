@@ -32,12 +32,14 @@ func TransferAmmoFromTo(object pack, object container)
 {
 	if (container->~IsAmmoManager())
 	{
-		var transferrable = AmmoID()->MaxAmmo() - container->~GetAmmo(AmmoID());
+		var ammo_id = pack->AmmoID();
+		var ammo_count = pack->AmmoCount();
+		var transferrable = ammo_id->MaxAmmo() - container->~GetAmmo(ammo_id);
 
 		// Fill up, but only if not full already
 		if (transferrable > 0)
 		{
-			return container->DoAmmo(AmmoID(), Min(transferrable, AmmoCount()));
+			return container->DoAmmo(ammo_id, Min(transferrable, ammo_count));
 		}		
 	}
 	return 0;
