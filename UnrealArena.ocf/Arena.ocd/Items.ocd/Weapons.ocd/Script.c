@@ -61,3 +61,37 @@ func IsReadyToUse(object user)
 
 	return can_use;
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Weapon as ammo
+
+public func IsAmmoPacket() { return this->~IsDeparted(); } // only if the weapon has left the user
+public func AmmoID()       { return GetFiremode().ammo_id; }
+public func AmmoCount()    { return 10; } // TODO: this is probably weapon-specific
+
+
+public func RejectEntrance(object into)
+{
+	if (into->~IsAmmoManager())
+	{
+		var other = FindObjects(Find_ID(this->GetID()), Find_Container(into), Find_Exclude(this));
+
+		if (GetLength(other) <= 0) // this weapon is not in the inventory yet? -> collect normally
+		{
+			return false;
+		}
+		else if (this->IsAmmoPacket()) // he already has such a weapon -> collect only as ammo
+		{
+			if (Ammo_Pack->TransferAmmoFromTo(this, into))
+			{
+				RemoveObject();
+			}
+		}
+
+		return true;
+	}	
+	
+	return false;
+}

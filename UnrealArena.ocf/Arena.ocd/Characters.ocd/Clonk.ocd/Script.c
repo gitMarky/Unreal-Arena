@@ -128,6 +128,6 @@ public func GetAmmoSource(id ammo)
 	}
 	else
 	{
-		return AMMO_Source_Infinite;
+		return AMMO_Source_Local;
 	}
 }

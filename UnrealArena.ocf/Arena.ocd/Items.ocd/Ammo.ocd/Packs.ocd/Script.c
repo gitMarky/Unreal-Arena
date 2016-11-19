@@ -14,26 +14,34 @@ public func RejectEntrance(object into)
 {
 	if (into->~IsAmmoManager() || into->~IsSpawnPoint())
 	{
-		if (into->~IsAmmoManager())
+		if (TransferAmmoFromTo(this, into) > 0)
 		{
-			var transferrable = AmmoID()->MaxAmmo() - into->~GetAmmo(AmmoID());
-			
-			// Fill up, but only if not full already
-			if (transferrable <= 0)
-			{
-				return false;
-			}
-		
-			into->DoAmmo(AmmoID(), Min(transferrable, AmmoCount()));
 			RemoveObject();
+			return true;
 		}
+		else if (into->~IsAmmoManager())
+		{
+			return true;
+		}
+	}
 
-		return true;
-	}	
-	
 	return false;
 }
 
+func TransferAmmoFromTo(object pack, object container)
+{
+	if (container->~IsAmmoManager())
+	{
+		var transferrable = AmmoID()->MaxAmmo() - container->~GetAmmo(AmmoID());
+
+		// Fill up, but only if not full already
+		if (transferrable > 0)
+		{
+			return container->DoAmmo(AmmoID(), Min(transferrable, AmmoCount()));
+		}		
+	}
+	return 0;
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //

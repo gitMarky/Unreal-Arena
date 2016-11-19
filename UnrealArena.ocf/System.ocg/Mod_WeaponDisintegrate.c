@@ -7,12 +7,18 @@
 
 public func Departure(object container)
 {
-	if (!GetEffect("IntDisintegration", this))
+	if (!IsDeparted())
 	{
 		AddEffect("IntDisintegration", this, 1, 1, this);
 	}
 
 	_inherited(container);
+}
+
+
+public func IsDeparted()
+{
+	return GetEffect("IntDisintegration", this);
 }
 
 
