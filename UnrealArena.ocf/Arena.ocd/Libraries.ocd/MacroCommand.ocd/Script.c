@@ -518,8 +518,8 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 	// maximale Iterationen fuer Wegfindung (abhaengig von Anzahl Wegpunkte)
 	var iterationLimit = ObjectCount(WAYP);
 	
-	var ex = GetX(pEnd);
-	var ey = GetY(pEnd);
+	var ex = pEnd->GetX();
+	var ey = pEnd->GetY();
 	
 	var pCurrent = pStart;
 	
@@ -538,8 +538,8 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			return aWaypoints;
 		
 		// ansonsten...
-		var cx = GetX(pCurrent);
-		var cy = GetY(pCurrent);
+		var cx = pCurrent->GetX();
+		var cy = pCurrent->GetY();
 		var cangle = Angle(cx, cy, ex, ey);
 		
 		var pNext = 0;
@@ -552,7 +552,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		// alle Nachbarknoten...
 		for (var i = 0; i < pathcount; ++i)
 		{
-			pNext = (pCurrent->WAYP->GetPathTarget(i));
+			pNext = (pCurrent->GetPathTarget(i));
 			
 			if (!Check4Jetpack(pCurrent, i, fJetpack, jetp, ammoload))
 				continue;
@@ -561,7 +561,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			// wenn pNext nur einen Nachfolger hat, zaehlt die Richtung in die der Nachfolger geht
 			// (was rekursiv fortsetzbar ist)
 			var jetpgedacht = 0;
-			while ((pNext->WAYP->GetPathCount()) == 1)
+			while ((pNext->GetPathCount()) == 1)
 			{
 				// Endknoten? Wir brauchen nicht weiteriterieren
 				if (pNext == pEnd)
@@ -569,7 +569,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				// für den gedachten Pfad muss noch gecheckt werden, ob da nicht Jetpack benötigt wird
 				var check = Check4Jetpack(pNext, 0, fJetpack, jetp + jetpgedacht, ammoload);
 				if (check)
-					pNext = (pNext->WAYP->GetPathTarget(0));
+					pNext = (pNext->GetPathTarget(0));
 				if (check == 2)
 					jetpgedacht += ammoload;
 			}
@@ -583,8 +583,8 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			}
 			
 			// ansonsten
-			var nx = GetX(pNext);
-			var ny = GetY(pNext);
+			var nx = pNext->GetX();
+			var ny = pNext->GetY();
 			var nangle = Angle(cx, cy, nx, ny);
 			
 			// diffangle: Nimmt Werte von 0 (genau richtig) bis 180 (genau falsch) an
@@ -639,7 +639,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				DebugLog("	Choosing path from %s...", "waypoints", str);
 				for (var d = 0; d < dbg; ++d)
 				{
-					wayp = (pCurrent->WAYP->GetPathTarget(aBest[d]));
+					wayp = (pCurrent->GetPathTarget(aBest[d]));
 					DebugLog
 					(
 						"	waypoint (%d), angle %d",
@@ -647,7 +647,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 						wayp->ObjectNumber(),
 						Abs
 						(
-							Normalize(Angle(GetX(pCurrent), GetY(pCurrent), GetX(wayp), GetY(wayp)) - cangle, -180)
+							Normalize(Angle(pCurrent->GetX(), pCurrent->GetY(), wayp->GetX(), wayp->GetY()) - cangle, -180)
 						)
 					);
 				}
@@ -674,10 +674,10 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			return false;
 		}
 		// ansonsten ok
-		pNext = (pCurrent->WAYP->GetPathTarget(chosenone));
+		pNext = (pCurrent->GetPathTarget(chosenone));
 		
 		// geschätzter Benzinverbrauch bei Jetpack hochzählen
-		if (pCurrent->WAYP->GetPathJetpack(chosenone))
+		if (pCurrent->GetPathJetpack(chosenone))
 			jetp += ammoload;
 		
 		DebugLog
@@ -688,7 +688,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			pNext->ObjectNumber(),
 			Abs
 			(
-				Normalize(Angle(GetX(pCurrent), GetY(pCurrent), GetX(pNext), GetY(pNext)) - cangle, -180)
+				Normalize(Angle(pCurrent->GetX(), pCurrent->GetY(), pNext->GetX(), pNext->GetY()) - cangle, -180)
 			)
 		);
 		
@@ -838,8 +838,8 @@ func ClimbLadder()
 	if (GetAction() != "ScaleLadder")
 		return;
 	// Feststellen, ob nach oben oder unten
-	var targetx = GetCommand(this, 2);
-	var targety = GetCommand(this, 3);
+	var targetx = GetCommand(2);
+	var targety = GetCommand(3);
 
 	
 	if (targety < GetY())
@@ -945,7 +945,7 @@ func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 		if (ObjectDistance(Object(pNextWp)) <= 50)
 			return AddCommand("MoveTo", Object(pNextWp));
 		// Liftplatten befehligen
-		lift->~ControlCommand("MoveTo", 0, Object(pNextWp)->GetX());
+		lift->~ControlCommand("MoveTo", nil, Object(pNextWp)->GetX());
 		// Warten
 		AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
 		AddCommand("Wait", nil, 0, 0, nil, 0, 15);
@@ -1067,7 +1067,7 @@ func GetAggroTarget()
 	return GetEffect("Aggro", this).var1;
 }
 
-func FxAggroTimer(object pTarget, int no)
+func FxAggroTimer(object pTarget, proplist no)
 {
 	// Wir haben ein Ziel?
 	if (no.var1)
@@ -1108,10 +1108,10 @@ func FxAggroTimer(object pTarget, int no)
 	no.var99 = true; // wir haben ein Ziel \o/
 }
 
-func FxAggroFire(object pTarget, int no)
+func FxAggroFire(object pTarget, proplist no)
 {
 	// Zusatzhack: BR-Bombe!
-	if (GetID(Contents()) == GBRB)
+	if (Contents()->GetID() == GBRB)
 		// Nichts tun :C
 		return;
 	// Nichts tun, wenn gerade verhindert
@@ -1579,7 +1579,7 @@ func CheckInventory()
 // Objekt fallen lassen (verzögert, damit die Schleife nicht durcheinander kommt
 func DropObject(object pObj)
 {
-	Schedule(this, Format("Exit(Object(%d), 0, 10);", pObj->ObjectNumber()), 1, 0, this);
+	Schedule(this, Format("Exit(Object(%d), 0, 10);", pObj->ObjectNumber()), 1, 0);
 	// Nicht wieder einsammeln
 	var effect = AddEffect("CollectionException", pObj, 1, 36);
 	effect.var0 = this;

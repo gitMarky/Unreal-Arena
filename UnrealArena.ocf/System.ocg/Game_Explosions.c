@@ -59,7 +59,7 @@ global func BlastObjectInContainer(object container, int cause_plr, int damage_l
 		container->BlastObject(damage_level, cause_plr);
 		if (!container)
 			return true; // Container could be removed in the meanwhile.
-		for (target in FindObjects(Find_Container(container), Find_Layer(layer), Find_Exclude(prev_container)))
+		for (var target in FindObjects(Find_Container(container), Find_Layer(layer), Find_Exclude(prev_container)))
 		{
 			if (!target) continue;
 

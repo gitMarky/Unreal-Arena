@@ -81,7 +81,7 @@ func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 
 
 
-func FxAggroTimer(object pTarget, int no)
+func FxAggroTimer(object pTarget, proplist no)
 {
 	// Doppelsprung ausführen, wenn sinnvoll
 	if (WildcardMatch(GetAction(), "Jump*"))
@@ -141,10 +141,10 @@ func FxAggroTimer(object pTarget, int no)
 	no.var99 = true; // wir haben ein Ziel \o/}
 }
 
-func FxAggroFire(object pTarget, int no)
+func FxAggroFire(object pTarget, proplist no)
 {
 	// Zusatzhack: BR-Bombe!
-	if (GetID(Contents()) == GBRB)
+	if (Contents()->GetID() == GBRB)
 		// Nichts tun :C
 		return;
 	// Nichts tun, wenn gerade verhindert
@@ -276,7 +276,7 @@ func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 	}
 	
 	if (selection)
-		ShiftContents(false, GetID(selection));
+		ShiftContents(false, selection->GetID());
 	return Contents();
 }
 
@@ -363,7 +363,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			if (iBest == -1 || dist < iBest)
 			{
 				iBest = dist;
-				DebugLog("Least Distance = %d (Obj %d)", "dijkstra", iBest, ObjectNumber(aSet[i]));
+				DebugLog("Least Distance = %d (Obj %d)", "dijkstra", iBest, aSet[i]->ObjectNumber());
 			}
 		}
 		for (pNode in aSet) 
@@ -385,7 +385,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		// alle Nachbarknoten des besten Knotens nach kürzeren Wegen absuchen
 		for (var i = 0; i < pathcount; ++i)
 		{
-			pNext = (pCurrent->WAYP->GetPathTarget(i));
+			pNext = (pCurrent->GetPathTarget(i));
 			var iNext = GetIndexOf(aNodes, pNext);
 			
 			if (!Check4Jetpack(pCurrent, i, fJetpack, jetp, ammoload))
@@ -476,7 +476,7 @@ func UTBotAICalcAimAngle(object obj, object gun, int xmod, int ymod)
 	// fliegt gerade oder ist hitscan?
 	if (!(gun->~GetFMData(FM_Hitscan)))
 	{
-		angle = Angle(GetX(), GetY(), GetX(obj) + xmod, GetY(obj) + ymod);
+		angle = Angle(GetX(), GetY(), obj->GetX() + xmod, obj->GetY() + ymod);
 		angle = angle - Random(skill + 1) + skill / 2;
 		return angle;
 	}
@@ -485,18 +485,18 @@ func UTBotAICalcAimAngle(object obj, object gun, int xmod, int ymod)
 	var t, x1, y1, x2, y2, v1x, v1y, v2x, v2y, v1, v2, f1, f2;
 	
 	// Position des Ziels
-	x1 = prec * GetX(obj);
-	y1 = prec * GetY(obj);
+	x1 = prec * obj->GetX();
+	y1 = prec * obj->GetY();
 	v1x = obj->GetXDir(prec);
 	v1y = obj->GetYDir(prec);
 	v1 = Distance(v1x, v1y); // Betrag der Geschwindigket
 	
 	// Objekt fällt ballistisch?
-	//if(GetProcedure(obj) == "FLOAT" || GetProcedure(obj) == "SWIM")
+	//if(obj->GetProcedure() == "FLOAT" || obj->GetProcedure() == "SWIM")
 	//	f1 = 0;
 	//else
 	//	f1 = 1;
-	if (GetProcedure(obj) == "FLIGHT" || GetProcedure(obj) == "NONE" || GetProcedure(obj) == "TUMBLE")
+	if (obj->GetProcedure() == "FLIGHT" || obj->GetProcedure() == "NONE" || obj->GetProcedure() == "TUMBLE")
 		f1 = 1;
 	else
 		f1 = 0;

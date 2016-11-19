@@ -320,7 +320,7 @@ local FxStabilize = new Effect
 			
 			var factor = 1;
 
-			if (Inside(angle, Normalize(angle_desired + this.Target.angle_prohibited[0], -180), Normalize(angle_stable + this.Target.angle_prohibited[1], -180)))
+			if (Inside(angle, Normalize(angle_desired + this.Target.angle_prohibited[0], -180), Normalize(angle_desired + this.Target.angle_prohibited[1], -180)))
 			{
 				factor = 0;
 			}

@@ -82,11 +82,6 @@ local weapon_properties =
 		gfx_offset_y = -2,
 };
 
-local animation_set = {
-		AimMode        = AIM_Position, // The aiming animation is done by adjusting the animation position to fit the angle
-		AnimationAim   = "CrossbowAimArms",
-	};
-
 public func FireSound(object user, proplist firemode)
 {
 	Sound(firemode.sound);
