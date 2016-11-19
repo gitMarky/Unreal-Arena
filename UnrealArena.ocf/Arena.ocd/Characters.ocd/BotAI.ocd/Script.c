@@ -21,25 +21,6 @@ func Execute(proplist fx, int time)
 	return;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//
-// legacy code below: App-ClonkHazAggro.c
-
-
-/*-- Importiert benötigtes Zeug aus dem Hazardclonk --*/
-
-/* KI-Kampf */
-
-// Setzt einen bestimmten Aggro-Wert für den Clonk
-// 0 - keinerlei eigenmächtiges Handeln
-// 1 - schießen auf Feinde, ohne dabei vom aktuellen Kommando abzuweichen
-// 2 - auf Feinde wird geschossen und sie werden über kurze Strecken verfolgt
-// 3 - Position (iX, iY) bewachen und dabei nur iDist weit weglaufen (wenn Feind verfolgt werden)
-// Konstanten:
-static const Aggro_Nothing = 0;
-static const Aggro_Shoot   = 1;
-static const Aggro_Follow  = 2;
-static const Aggro_Guard   = 3;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -398,7 +379,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		RemoveArrayValue(aSet, pCurrent);
 		
 		var pNext = 0;
-		var pathcount = pCurrent->WAYP->GetPathCount();
+		var pathcount = pCurrent->GetPathCount();
 		var iCurrent = GetIndexOf(aNodes, pCurrent);
 		
 		// alle Nachbarknoten des besten Knotens nach kürzeren Wegen absuchen
@@ -414,7 +395,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 					"   Checking Path %d - Waypoint %d: Needs Jetpack",
 					"dijkstra",
 					i,
-					ObjectNumber(pNext)
+					pNext->ObjectNumber()
 				);
 				continue;
 			}
@@ -427,7 +408,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				"   Checking Path %d - Waypoint %d: new %d, old %d",
 				"dijkstra",
 				i,
-				ObjectNumber(pNext),
+				pNext->ObjectNumber(),
 				distnew,
 				aDistance[iNext]
 			);

@@ -64,7 +64,7 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 	ClearScheduleCall(this, "MacroCommandMoveTo");
 	ClearScheduleCall(this, "MacroCommandFollow");
 	ClearScheduleCall(this, "MacroCommandWait");
-	//Log("%s #%d: SetMacroCom: '%s' %d/%d Target: %s #%d", GetName(), ObjectNumber(), szCommand, iX, iY, GetName(pTarget), ObjectNumber(pTarget));
+	//Log("%s #%d: SetMacroCom: '%s' %d/%d Target: %s #%d", GetName(), ObjectNumber(), szCommand, iX, iY, GetName(pTarget), pTarget->ObjectNumber());
 	if (szCommand != "None")
 		ScheduleCall(this, Format("MacroCom%s", szCommand), 1);
 	else
@@ -220,7 +220,7 @@ func MacroComMoveTo()
 	end = FindWaypoint(GetMacroCommand(0, 2), GetMacroCommand(0, 3));
 	if (!start || !end)
 		return MacroComSuccessFailed(0, Macro_NoPath);
-	aPath = FindPath(start, end, true);
+	aPath = this->FindPath(start, end, true);
 	// Kein Pfad konnte gefunden werden?
 	if (!aPath)
 		return MacroComSuccessFailed(0, Macro_NoPath);
@@ -543,7 +543,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		var cangle = Angle(cx, cy, ex, ey);
 		
 		var pNext = 0;
-		var pathcount = pCurrent->WAYP->GetPathCount();
+		var pathcount = pCurrent->GetPathCount();
 		var aBest = CreateArray();
 		var good = 0;
 		var neutral = 0;
@@ -644,7 +644,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 					(
 						"	waypoint (%d), angle %d",
 						"waypoints",
-						ObjectNumber(wayp),
+						wayp->ObjectNumber(),
 						Abs
 						(
 							Normalize(Angle(GetX(pCurrent), GetY(pCurrent), GetX(wayp), GetY(wayp)) - cangle, -180)
@@ -685,7 +685,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			"Next %s waypoint (%d), angle %d",
 			"waypoints",
 			str,
-			ObjectNumber(pNext),
+			pNext->ObjectNumber(),
 			Abs
 			(
 				Normalize(Angle(GetX(pCurrent), GetY(pCurrent), GetX(pNext), GetY(pNext)) - cangle, -180)
@@ -727,7 +727,7 @@ func FindWaypoint(int iX, int iY)
 func Check4Jetpack(object pCurrent, int path, bool fJetpack, int jetp, int ammoload)
 {
 	// kein Jetpackpath... dann ist ja gut
-	if (!(pCurrent->WAYP->GetPathJetpack(path)))
+	if (!(pCurrent->GetPathJetpack(path)))
 		return 1;
 	// ansonsten Vorbedingungen checken
 	if (fJetpack)
@@ -804,7 +804,7 @@ func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
 	if (flag == Path_Lift)
 	{
 		// Wir suchen den Lift und warten oder betreten ihn
-		LiftControl(nil, ObjectNumber(pCurrentWp), ObjectNumber(pNextWp));
+		LiftControl(nil, pCurrentWp->ObjectNumber(), pNextWp->ObjectNumber());
 		return AddSpecialCommands(pCurrentWp, path);
 	}
 	// Unbekanntes flag, MoveTo versuchen
@@ -1579,7 +1579,7 @@ func CheckInventory()
 // Objekt fallen lassen (verzögert, damit die Schleife nicht durcheinander kommt
 func DropObject(object pObj)
 {
-	Schedule(this, Format("Exit(Object(%d), 0, 10);", ObjectNumber(pObj)), 1, 0, this);
+	Schedule(this, Format("Exit(Object(%d), 0, 10);", pObj->ObjectNumber()), 1, 0, this);
 	// Nicht wieder einsammeln
 	var effect = AddEffect("CollectionException", pObj, 1, 36);
 	effect.var0 = this;

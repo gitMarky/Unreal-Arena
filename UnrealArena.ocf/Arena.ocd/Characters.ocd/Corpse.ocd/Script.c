@@ -309,18 +309,18 @@ local FxStabilize = new Effect
 	
 		var rdir = this.Target->GetRDir();
 		var angle = Normalize(this.Target->GetR(), -180);
-		var angle_stable = this.Target.angle_stable;
-		if (angle < 0) angle_stable *= -1;
+		var angle_desired = this.Target.angle_stable;
+		if (angle < 0) angle_desired *= -1;
 
-		var diff = angle_stable - angle;
+		var diff = angle_desired - angle;
 
 		if (this.Target->GetContact(-1))
 		{
 			var rdir_add = Sin(diff, 10); // TODO: find real value
 			
 			var factor = 1;
-			
-			if (Inside(angle, Normalize(angle_stable + this.Target.angle_prohibited[0], -180), Normalize(angle_stable + this.Target.angle_prohibited[1], -180)))
+
+			if (Inside(angle, Normalize(angle_desired + this.Target.angle_prohibited[0], -180), Normalize(angle_stable + this.Target.angle_prohibited[1], -180)))
 			{
 				factor = 0;
 			}
