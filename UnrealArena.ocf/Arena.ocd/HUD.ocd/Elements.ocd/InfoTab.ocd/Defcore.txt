@@ -1,0 +1,7 @@
+[DefCore]
+id=GUI_UA_InfoTab
+Category=C4D_StaticBack
+Width=106
+Height=42
+Offset=0,0
+Picture=0,0,106,42

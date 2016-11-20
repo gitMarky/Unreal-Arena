@@ -1,0 +1,7 @@
+[DefCore]
+id=GUI_UA_WeaponTab
+Category=C4D_StaticBack
+Width=120
+Height=80
+Offset=0,0
+Picture=0,0,120,80
