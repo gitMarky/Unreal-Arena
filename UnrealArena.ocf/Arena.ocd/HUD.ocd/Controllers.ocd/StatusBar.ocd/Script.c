@@ -10,17 +10,16 @@ local crew_gui_menu;
 local crew_gui_id;
 local crew_bars;
 
-static const GUI_Controller_StatusBar_MarginLeft = 1;
-static const GUI_Controller_StatusBar_MarginTop = 80;
+static const GUI_Controller_StatusBar_MarginLeft = 0;
+static const GUI_Controller_StatusBar_MarginTop = 800;
 
 
 /* GUI creation */
 
 // For custom HUD graphics overload the following function as deemed fit.
 
-func AssembleCrewBar()
+func AssembleStatusBar()
 {
-	var x = ;
 	return
 	{
 		Target = this,
@@ -28,7 +27,7 @@ func AssembleCrewBar()
 		Style = GUI_Multiple | GUI_NoCrop | GUI_IgnoreMouse,
 		ElementHealthBar = AssembleCrewBar(0, "Health"),
 		ElementArmorBar = AssembleCrewBar(1, "Armor"),
-		ElementShieldBar = AssembleCrewBar(2, Shield),
+		ElementShieldBar = AssembleCrewBar(2, "Shield"),
 	};
 }
 
@@ -37,7 +36,7 @@ func AssembleCrewBar()
 private func Construction()
 {
 	crew_bars = [];
-	crew_gui_menu = AssembleCrewBar();
+	crew_gui_menu = AssembleStatusBar();
 	crew_gui_id = GuiOpen(crew_gui_menu);
 	
 	return _inherited(...);
@@ -124,26 +123,30 @@ private func UpdateCrewDisplay()
 // The bar is not shown until ShowCrewBar() is called. Bars will appear in order of creation.
 private func AssembleCrewBar(int slot_nr, string icon_name)
 {
-	var tab_width = 10;
-	var tab_height = 5;
+	var tab_width = 100;
+	var tab_height = 50;
 
 	var info_tab = {
 		Target = this,
-		Left = ToEmString(GUI_Controller_StatusBar_MarginLeft),
-		Right = ToEmString(GUI_Controller_StatusBar_MarginLeft + tab_width),
-		Top = ToEmString(GUI_Controller_StatusBar_MarginTop - slot_nr * tab_height),
-		Bottom = ToEmString(GUI_Controller_StatusBar_MarginTop - (slot_nr - 1) * tab_height),
+		Left = ToPercentString(GUI_Controller_StatusBar_MarginLeft),
+		Right = ToPercentString(GUI_Controller_StatusBar_MarginLeft + tab_width),
+		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop - slot_nr * tab_height),
+		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop - (slot_nr - 1) * tab_height),
 		Symbol = GUI_UA_InfoTab,
 		GraphicsName = nil,
 		ElementHex = {
 			Target = this,
 			Symbol = GUI_UA_InfoTab,
 			GraphicsName = "Hex",
+			Priority = 1,
+			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
 		},
 		ElementIcon = {
 			Target = this,
 			Symbol = GUI_UA_InfoTab,
 			GraphicsName = icon_name,
+			Priority = 2,
+			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
 		},
 	};
 
