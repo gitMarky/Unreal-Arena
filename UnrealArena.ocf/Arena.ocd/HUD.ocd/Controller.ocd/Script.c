@@ -21,6 +21,7 @@
 // Include the different subsystems of the HUD. They all handle their part
 // themselves via overloading of callbacks.
 #include GUI_Controller_InventoryBar
+#include GUI_Controller_UA_StatusBar
 #include GUI_Controller_Goal
 
 // All elements visible to HUD owner only - so NO_OWNER on sub-elements can be used to make them invisible temporarily.
@@ -99,12 +100,12 @@ public func Reset()
 	else
 	{
 		// Definition call: Reset for all players
-		RemoveAll(Find_ID(GUI_Controller));
+		RemoveAll(Find_ID(GUI_Controller_UA));
 		var plr;
 		for (var i=0; i<GetPlayerCount(C4PT_User); ++i)
 		{
 			var plr = GetPlayerByIndex(i, C4PT_User), cursor;
-			var controller = CreateObject(GUI_Controller, 0,0, plr);
+			var controller = CreateObject(GUI_Controller_UA, 0,0, plr);
 			if (cursor = GetCursor(plr)) controller->OnCrewSelection(cursor);
 		}
 	}

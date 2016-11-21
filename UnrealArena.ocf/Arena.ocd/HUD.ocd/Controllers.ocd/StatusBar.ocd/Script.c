@@ -10,6 +10,9 @@ local crew_gui_menu;
 local crew_gui_id;
 local crew_bars;
 
+static const GUI_Controller_StatusBar_MarginLeft = 1;
+static const GUI_Controller_StatusBar_MarginTop = 80;
+
 
 /* GUI creation */
 
@@ -17,11 +20,15 @@ local crew_bars;
 
 func AssembleCrewBar()
 {
+	var x = ;
 	return
 	{
 		Target = this,
 		ID = 1,
 		Style = GUI_Multiple | GUI_NoCrop | GUI_IgnoreMouse,
+		ElementHealthBar = AssembleCrewBar(0, "Health"),
+		ElementArmorBar = AssembleCrewBar(1, "Armor"),
+		ElementShieldBar = AssembleCrewBar(2, Shield),
 	};
 }
 
@@ -115,64 +122,32 @@ private func UpdateCrewDisplay()
 
 // Adds a new bar to the portrait.
 // The bar is not shown until ShowCrewBar() is called. Bars will appear in order of creation.
-private func AddCrewBar(int foreground, int background)
+private func AssembleCrewBar(int slot_nr, string icon_name)
 {
-	if (!crew_gui_id) return;
-	if (!foreground) return;
-	if (!background) background = RGB(40, 40, 40);
+	var tab_width = 10;
+	var tab_height = 5;
 
-	var y_begin = GUI_Controller_CrewBar_CursorMargin + GUI_Controller_CrewBar_CursorSize;
-	var y_end = y_begin + GUI_Controller_CrewBar_BarSize;
-
-	var new_bar = 
-	{
-		ID = 100 + GetLength(crew_bars),
-		shown = false
-	};
-	PushBack(crew_bars, new_bar);
-
-	// Will display the bar at the left screen border
-
-	var crew_gui_bar_name = Format("bar%d", new_bar.ID);
-	crew_gui_menu.cursor[crew_gui_bar_name] =
-	{
+	var info_tab = {
 		Target = this,
-		Player = NO_OWNER,
-		Style = GUI_NoCrop,
-		ID = new_bar.ID,
-		Left = "0%",
-		Right = Format("0%%%s", ToEmString(GUI_Controller_CrewBar_CursorSize)),
-		Top = ToEmString(y_begin),
-		Bottom = ToEmString(y_end),
-		BackgroundColor = background,
-		Priority = 3,
-		fill =
-		{
+		Left = ToEmString(GUI_Controller_StatusBar_MarginLeft),
+		Right = ToEmString(GUI_Controller_StatusBar_MarginLeft + tab_width),
+		Top = ToEmString(GUI_Controller_StatusBar_MarginTop - slot_nr * tab_height),
+		Bottom = ToEmString(GUI_Controller_StatusBar_MarginTop - (slot_nr - 1) * tab_height),
+		Symbol = GUI_UA_InfoTab,
+		GraphicsName = nil,
+		ElementHex = {
 			Target = this,
-			Left = "0%",
-			Margin = ["0em", "0.1em"],
-			BackgroundColor = foreground,
-			Priority = 4
+			Symbol = GUI_UA_InfoTab,
+			GraphicsName = "Hex",
 		},
-		text =
-		{
+		ElementIcon = {
 			Target = this,
-			Top = "-0.5em",
-			Bottom = "0.5em",
-			Style = GUI_TextHCenter | GUI_TextVCenter,
-			Text = "",
-			Priority = 5
-		}
+			Symbol = GUI_UA_InfoTab,
+			GraphicsName = icon_name,
+		},
 	};
 
-	GuiUpdate(crew_gui_menu, crew_gui_id);
-	
-	// Prevent further calls to GuiUpdate on the main panel from overwriting values in the bars with their defaults
-	crew_gui_menu.cursor[crew_gui_bar_name] = nil;
-	
-	UpdateCrewDisplay();
-
-	return GetLength(crew_bars)-1;
+	return info_tab;
 }
 
 // Shows the bar that was saved in crew_bars[bar]
