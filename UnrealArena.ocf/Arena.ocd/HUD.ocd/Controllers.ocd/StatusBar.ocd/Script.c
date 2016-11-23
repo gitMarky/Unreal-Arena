@@ -25,9 +25,10 @@ func AssembleStatusBar()
 		Target = this,
 		ID = 1,
 		Style = GUI_Multiple | GUI_NoCrop | GUI_IgnoreMouse,
-		ElementHealthBar = AssembleCrewBar(0, "Health"),
-		ElementArmorBar = AssembleCrewBar(1, "Armor"),
-		ElementShieldBar = AssembleCrewBar(2, "Shield"),
+		ElementAmmoBar = AssembleCrewBar(0, "BarAmmo"),
+		ElementHealthBar = AssembleCrewBar(1, "BarHealth"),
+		ElementArmorBar = AssembleCrewBar(2, "BarArmor"),
+		ElementShieldBar = AssembleCrewBar(3, "BarShield"),
 	};
 }
 
@@ -125,28 +126,33 @@ private func AssembleCrewBar(int slot_nr, string icon_name)
 {
 	var tab_width = 100;
 	var tab_height = 50;
+	var offset_y = (-slot_nr) * 4 * tab_height / 3;
 
 	var info_tab = {
 		Target = this,
 		Left = ToPercentString(GUI_Controller_StatusBar_MarginLeft),
 		Right = ToPercentString(GUI_Controller_StatusBar_MarginLeft + tab_width),
-		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop - slot_nr * tab_height),
-		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop - (slot_nr - 1) * tab_height),
+		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y),
+		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y + tab_height),
 		Symbol = GUI_UA_InfoTab,
 		GraphicsName = nil,
 		ElementHex = {
 			Target = this,
+			Style = GUI_NoCrop,
+			Priority = 2,
 			Symbol = GUI_UA_InfoTab,
 			GraphicsName = "Hex",
-			Priority = 1,
-			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
+//			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
+			Left = ToPercentString(0), Right = ToPercentString(1000), Top = ToPercentString(0), Bottom = ToPercentString(1000),
 		},
 		ElementIcon = {
 			Target = this,
+			Style = GUI_NoCrop,
+			Priority = 3,
 			Symbol = GUI_UA_InfoTab,
 			GraphicsName = icon_name,
-			Priority = 2,
-			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
+//			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
+			Left = ToPercentString(0), Right = ToPercentString(1000), Top = ToPercentString(0), Bottom = ToPercentString(1000),
 		},
 	};
 
