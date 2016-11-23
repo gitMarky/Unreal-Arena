@@ -124,9 +124,10 @@ private func UpdateCrewDisplay()
 // The bar is not shown until ShowCrewBar() is called. Bars will appear in order of creation.
 private func AssembleCrewBar(int slot_nr, string icon_name)
 {
-	var tab_width = 100;
-	var tab_height = 50;
-	var offset_y = (-slot_nr) * 4 * tab_height / 3;
+	var tab_width = 150; //100;
+	var tab_height = tab_width / 2; //50;
+//	var offset_y = (-slot_nr) * 4 * tab_height / 3;
+	var offset_y = (-slot_nr) * (tab_height + 65);
 
 	var info_tab = {
 		Target = this,
@@ -164,10 +165,10 @@ private func AssembleCrewBar(int slot_nr, string icon_name)
 
 func AssembleDigit(int dimension)
 {
-	var width = 120;
-	var height = 400;
-	var diff_x = 130;
-	var position_x = 700 - dimension * diff_x;
+	var width = 150;
+	var height = 520;
+	var diff_x = 170;
+	var position_x = 750 - dimension * diff_x;
 	var position_y = 500 - height / 2;
 	return {
 		Target = this,
