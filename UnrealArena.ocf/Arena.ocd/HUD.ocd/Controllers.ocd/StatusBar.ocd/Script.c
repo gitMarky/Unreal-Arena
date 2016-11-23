@@ -154,9 +154,36 @@ private func AssembleCrewBar(int slot_nr, string icon_name)
 //			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
 			Left = ToPercentString(0), Right = ToPercentString(1000), Top = ToPercentString(0), Bottom = ToPercentString(1000),
 		},
+		Element001 = AssembleDigit(0),
+		Element010 = AssembleDigit(1),
+		Element100 = AssembleDigit(2),
 	};
 
 	return info_tab;
+}
+
+func AssembleDigit(int dimension)
+{
+	var width = 120;
+	var height = 400;
+	var diff_x = 130;
+	var position_x = 700 - dimension * diff_x;
+	var position_y = 500 - height / 2;
+	return {
+		Target = this,
+		Style = GUI_NoCrop,
+		Symbol = GUI_UA_Number,
+		GraphicsName = nil,
+		Priority = 4 + dimension,
+		Left = ToPercentString(position_x), Right = ToPercentString(position_x + width),
+		Top = ToPercentString(position_y), Bottom = ToPercentString(position_y + height), 
+		Digit = {
+			Target = this,
+			Style = GUI_NoCrop,
+			Symbol = GUI_UA_Number,
+			GraphicsName = "Number0",
+		},
+	};
 }
 
 // Shows the bar that was saved in crew_bars[bar]
