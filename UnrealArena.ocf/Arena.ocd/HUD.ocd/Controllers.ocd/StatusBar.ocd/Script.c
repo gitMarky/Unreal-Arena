@@ -124,6 +124,17 @@ private func UpdateStatusBarDisplay()
 		HideStatusBar(gui_status_bar_menu.ElementShieldBar);
 		HideStatusBar(gui_status_bar_menu.ElementHealthBar);
 	}
+	else
+	{
+		ShowStatusBar(gui_status_bar_menu.ElementAmmoBar);
+		ShowStatusBar(gui_status_bar_menu.ElementArmorBar);
+		ShowStatusBar(gui_status_bar_menu.ElementShieldBar);
+		ShowStatusBar(gui_status_bar_menu.ElementHealthBar);
+		
+		StatusBarSetValue(gui_status_bar_menu.ElementHealthBar, cursor->GetEnergy());
+		StatusBarSetValue(gui_status_bar_menu.ElementArmorBar, cursor->~GetUTArmor());
+		StatusBarSetValue(gui_status_bar_menu.ElementShieldBar, cursor->GetUTShield());
+	}
 }
 
 /* Bars (health, breath, ...) */
