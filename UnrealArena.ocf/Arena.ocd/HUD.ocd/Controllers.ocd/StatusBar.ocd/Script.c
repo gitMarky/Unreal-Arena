@@ -8,7 +8,7 @@
 
 local gui_status_bar_menu;
 local gui_status_bar_id;
-local crew_bars;
+local gui_status_bars;
 
 static const GUI_Controller_StatusBar_MarginLeft = 0;
 static const GUI_Controller_StatusBar_MarginTop = 800;
@@ -25,10 +25,10 @@ func AssembleStatusBar()
 		Target = this,
 		ID = 1,
 		Style = GUI_Multiple | GUI_NoCrop | GUI_IgnoreMouse,
-		ElementAmmoBar = AssembleCrewBar(0, "BarAmmo"),
-		ElementHealthBar = AssembleCrewBar(1, "BarHealth"),
-		ElementArmorBar = AssembleCrewBar(2, "BarArmor"),
-		ElementShieldBar = AssembleCrewBar(3, "BarShield"),
+		ElementAmmoBar = AssembleStatusBar(0, "BarAmmo"),
+		ElementHealthBar = AssembleStatusBar(1, "BarHealth"),
+		ElementArmorBar = AssembleStatusBar(2, "BarArmor"),
+		ElementShieldBar = AssembleStatusBar(3, "BarShield"),
 	};
 }
 
@@ -36,7 +36,7 @@ func AssembleStatusBar()
 
 private func Construction()
 {
-	crew_bars = [];
+	gui_status_bars = [];
 	gui_status_bar_menu = AssembleStatusBar();
 	gui_status_bar_id = GuiOpen(gui_status_bar_menu);
 	
@@ -55,49 +55,49 @@ private func Destruction()
 
 public func OnCrewRecruitment(object clonk, int plr)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, plr, ...);
 }
 
 public func OnCrewDeRecruitment(object clonk, int plr)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, plr, ...);
 }
 
 public func OnCrewDeath(object clonk, int killer)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, killer, ...);
 }
 
 public func OnCrewDestruction(object clonk)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, ...);
 }
 
 public func OnCrewDisabled(object clonk)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, ...);
 }
 
 public func OnCrewEnabled(object clonk)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, ...);
 }
 
 public func OnCrewSelection(object clonk, bool unselect)
 {
-	UpdateCrewDisplay();
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, unselect, ...);
 }
@@ -113,7 +113,7 @@ public func OnCrewHealthChange(object clonk, int change, int cause, int caused_b
 
 
 // Update everything
-private func UpdateCrewDisplay()
+private func UpdateStatusBarDisplay()
 {
 	var cursor = GetCursor(GetOwner());
 }
@@ -122,7 +122,7 @@ private func UpdateCrewDisplay()
 
 // Adds a new bar to the portrait.
 // The bar is not shown until ShowCrewBar() is called. Bars will appear in order of creation.
-private func AssembleCrewBar(int slot_nr, string icon_name)
+private func AssembleStatusBar(int slot_nr, string icon_name)
 {
 	var tab_width = 150; //100;
 	var tab_height = tab_width / 2; //50;
@@ -155,15 +155,15 @@ private func AssembleCrewBar(int slot_nr, string icon_name)
 //			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
 			Left = ToPercentString(0), Right = ToPercentString(1000), Top = ToPercentString(0), Bottom = ToPercentString(1000),
 		},
-		Element001 = AssembleDigit(0),
-		Element010 = AssembleDigit(1),
-		Element100 = AssembleDigit(2),
+		Element001 = AssembleStatusBarDigit(0),
+		Element010 = AssembleStatusBarDigit(1),
+		Element100 = AssembleStatusBarDigit(2),
 	};
 
 	return info_tab;
 }
 
-func AssembleDigit(int dimension)
+func AssembleStatusBarDigit(int dimension)
 {
 	var width = 150;
 	var height = 520;
@@ -187,11 +187,11 @@ func AssembleDigit(int dimension)
 	};
 }
 
-// Shows the bar that was saved in crew_bars[bar]
+// Shows the bar that was saved in gui_status_bars[bar]
 private func ShowCrewBar(int bar)
 {
-	if (!crew_bars[bar]) return;
-	if (crew_bars[bar].shown) return;
+	if (!gui_status_bars[bar]) return;
+	if (gui_status_bars[bar].shown) return;
 	if (GetOwner() == NO_OWNER) return;
 
 	// Bars at left side of the screen
@@ -200,52 +200,38 @@ private func ShowCrewBar(int bar)
 	var i = 0;
 	while (i < bar)
 	{
-		if (crew_bars[i] && crew_bars[i].shown)
+		if (gui_status_bars[i] && gui_status_bars[i].shown)
 			top += GUI_Controller_CrewBar_BarSize + GUI_Controller_CrewBar_BarMargin;
 		i++;
 	}
 	var bottom = ToEmString(top + GUI_Controller_CrewBar_BarSize);
 	top = ToEmString(top);
 
-	crew_bars[bar].shown = GuiUpdate({ Player = GetOwner(), Top = top, Bottom = bottom }, gui_status_bar_id, crew_bars[bar].ID, this);
+	gui_status_bars[bar].shown = GuiUpdate({ Player = GetOwner(), Top = top, Bottom = bottom }, gui_status_bar_id, gui_status_bars[bar].ID, this);
 }
 
-// Sets the fill status of the bar. value is between 0 and 1000
-// Shows text_val before the bar if given
-private func SetCrewBarValue(int bar, int value, int text_val)
-{
-	if (!crew_bars[bar]) return;
-	value = BoundBy(value, 0, 1000);
-	var plr = GetOwner();
-	var bar_text = "";
-	if (text_val) bar_text = Format("<c dddd00>%d</c>", text_val);
-	// Displaying the fill with Top = 100% creates an unwanted scrollbar
-	//if (value == 0) plr = NO_OWNER;
 
-	GuiUpdate({ fill = { Player = plr, Right = ToPercentString(value) }, text = { Text = bar_text } }, gui_status_bar_id, crew_bars[bar].ID, this);
-}
-
-// Hides the bar that was saved in crew_bars[bar]
+// Hides the bar that was saved in gui_status_bars[bar]
 private func HideCrewBar(int bar)
 {
-	if (!crew_bars[bar]) return;
-	if (!crew_bars[bar].shown) return;
+	if (!gui_status_bars[bar]) return;
+	if (!gui_status_bars[bar].shown) return;
 
-	GuiUpdate({ Player = NO_OWNER }, gui_status_bar_id, crew_bars[bar].ID, this);
-	crew_bars[bar].shown = false;
+	GuiUpdate({ Player = NO_OWNER }, gui_status_bar_id, gui_status_bars[bar].ID, this);
+	gui_status_bars[bar].shown = false;
 
 	// Update position of all following bars
-	for (var i = bar; i < GetLength(crew_bars); i++)
-		if (crew_bars[i].shown)
+	for (var i = bar; i < GetLength(gui_status_bars); i++)
+		if (gui_status_bars[i].shown)
 		{
-			crew_bars[i].shown = false;
+			gui_status_bars[i].shown = false;
 			ShowCrewBar(i);
 		}
 }
 
 /* Crew indices */
 
-public func SetNumbers(proplist info_tab, int value)
+public func StatusBarSetValue(proplist info_tab, int value)
 {
 	var value100 = 0, value010 = 0, value001 = 0;
 
@@ -259,6 +245,4 @@ public func SetNumbers(proplist info_tab, int value)
 
 	GuiUpdate(gui_status_bar_menu, gui_status_bar_id);
 }
-
-
 
