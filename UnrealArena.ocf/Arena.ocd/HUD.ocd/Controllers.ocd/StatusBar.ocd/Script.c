@@ -18,7 +18,7 @@ static const GUI_Controller_StatusBar_MarginTop = 800;
 
 // For custom HUD graphics overload the following function as deemed fit.
 
-func AssembleStatusBar()
+func AssembleStatusBarMenu()
 {
 	return
 	{
@@ -37,7 +37,7 @@ func AssembleStatusBar()
 private func Construction()
 {
 	gui_status_bars = [];
-	gui_status_bar_menu = AssembleStatusBar();
+	gui_status_bar_menu = AssembleStatusBarMenu();
 	gui_status_bar_id = GuiOpen(gui_status_bar_menu);
 	
 	return _inherited(...);
@@ -187,47 +187,25 @@ func AssembleStatusBarDigit(int dimension)
 	};
 }
 
-// Shows the bar that was saved in gui_status_bars[bar]
-private func ShowCrewBar(int bar)
+
+private func ShowStatusBar(proplist info_tab)
 {
-	if (!gui_status_bars[bar]) return;
-	if (gui_status_bars[bar].shown) return;
 	if (GetOwner() == NO_OWNER) return;
+	if (info_tab.Player == GetOwner()) return;
 
-	// Bars at left side of the screen
-
-	var top = GUI_Controller_CrewBar_CursorMargin + GUI_Controller_CrewBar_CursorSize;
-	var i = 0;
-	while (i < bar)
-	{
-		if (gui_status_bars[i] && gui_status_bars[i].shown)
-			top += GUI_Controller_CrewBar_BarSize + GUI_Controller_CrewBar_BarMargin;
-		i++;
-	}
-	var bottom = ToEmString(top + GUI_Controller_CrewBar_BarSize);
-	top = ToEmString(top);
-
-	gui_status_bars[bar].shown = GuiUpdate({ Player = GetOwner(), Top = top, Bottom = bottom }, gui_status_bar_id, gui_status_bars[bar].ID, this);
+	info_tab.Player = GetOwner();
+	GuiUpdate(gui_status_bar_menu, gui_status_bar_id);
 }
 
 
-// Hides the bar that was saved in gui_status_bars[bar]
-private func HideCrewBar(int bar)
+private func HideStatusBar(proplist info_tab)
 {
-	if (!gui_status_bars[bar]) return;
-	if (!gui_status_bars[bar].shown) return;
+	if (info_tab.Player == NO_OWNER) return;
 
-	GuiUpdate({ Player = NO_OWNER }, gui_status_bar_id, gui_status_bars[bar].ID, this);
-	gui_status_bars[bar].shown = false;
-
-	// Update position of all following bars
-	for (var i = bar; i < GetLength(gui_status_bars); i++)
-		if (gui_status_bars[i].shown)
-		{
-			gui_status_bars[i].shown = false;
-			ShowCrewBar(i);
-		}
+	info_tab.Player = NO_OWNER;
+	GuiUpdate(gui_status_bar_menu, gui_status_bar_id);
 }
+
 
 /* Crew indices */
 
