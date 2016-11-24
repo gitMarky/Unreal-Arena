@@ -116,6 +116,14 @@ public func OnCrewHealthChange(object clonk, int change, int cause, int caused_b
 private func UpdateStatusBarDisplay()
 {
 	var cursor = GetCursor(GetOwner());
+	
+	if (!cursor)
+	{
+		HideStatusBar(gui_status_bar_menu.ElementAmmoBar);
+		HideStatusBar(gui_status_bar_menu.ElementArmorBar);
+		HideStatusBar(gui_status_bar_menu.ElementShieldBar);
+		HideStatusBar(gui_status_bar_menu.ElementHealthBar);
+	}
 }
 
 /* Bars (health, breath, ...) */
