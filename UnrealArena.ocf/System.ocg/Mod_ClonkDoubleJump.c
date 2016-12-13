@@ -13,7 +13,7 @@ public func ControlJump()
 		return true;
 	}
 
-	return _inherited();
+	return _inherited(...);
 }
 
 // Called when CON_Left/Right/Up/Down controls are issued/released

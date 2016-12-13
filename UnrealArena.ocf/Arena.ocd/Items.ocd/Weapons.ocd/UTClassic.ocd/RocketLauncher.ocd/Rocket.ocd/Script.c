@@ -72,7 +72,7 @@ protected func Travelling()
 {
 	var self = this;
 	
-	_inherited();
+	_inherited(...);
 	
 	if (self)
 	{
@@ -92,7 +92,7 @@ protected func ControlSpeed()
 {
 	if (!is_grenade)
 	{
-		_inherited();
+		_inherited(...);
 	}
 }
 

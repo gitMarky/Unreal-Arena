@@ -47,7 +47,7 @@ protected func Travelling()
 {
 	var self = this;
 	
-	_inherited();
+	_inherited(...);
 	
 	if (self && GetActTime() < 10)
 	{

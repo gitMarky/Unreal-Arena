@@ -52,7 +52,7 @@ func IsReadyToUse(object user)
 {
 	var other_weapons = FindObjects(Find_Container(user), Find_Exclude(this), Find_Func("IsShooterWeapon"));
 	
-	var can_use = _inherited(...);
+	var can_use = _inherited(user, ...);
 
 	for (var weapon in other_weapons)
 	{

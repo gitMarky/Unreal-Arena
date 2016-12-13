@@ -20,7 +20,7 @@ private func HitEffect()
 public func OnHitLandscape()
 {
 	Sound("Weapon::Classic::pulse-exp");
-	_inherited();
+	_inherited(...);
 }
 
 

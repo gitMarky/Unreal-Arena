@@ -88,7 +88,7 @@ private func Initialize()
 {
 	projectiles_loaded = {};
 	ClearProjectiles();
-	_inherited();
+	_inherited(...);
 }
 
 private func LoadProjectiles(proplist firemode)
