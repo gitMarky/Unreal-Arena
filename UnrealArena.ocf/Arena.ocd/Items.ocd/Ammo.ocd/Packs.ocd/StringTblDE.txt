@@ -1,5 +1,5 @@
 Name=Munitionspack
-Description=Diese Kiste enth‰lt 100 Projektilmunition.
+Description=Diese Kiste enth√§lt 100 Projektilmunition.
 
 NotMoreAmmo=Kann nicht noch mehr|{{%i}} aufbewahren!
 Collected=%dx {{%i}} aufgenommen.

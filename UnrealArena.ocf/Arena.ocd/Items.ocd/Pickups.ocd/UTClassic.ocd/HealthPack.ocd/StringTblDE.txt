@@ -1,3 +1,3 @@
 Name=Medipack
-Description=Gibt 20 HP zurück.
+Description=Gibt 20 HP zurÃ¼ck.
 

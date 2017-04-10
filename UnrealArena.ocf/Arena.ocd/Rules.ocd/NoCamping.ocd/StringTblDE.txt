@@ -1,7 +1,7 @@
 Name=Kein Camping
-Description=Ist diese Regel aktiviert, werden "Camper", also Leute, die längere Zeit an der selben Stelle hocken, bestraft.
+Description=Ist diese Regel aktiviert, werden "Camper", also Leute, die lÃ¤ngere Zeit an der selben Stelle hocken, bestraft.
 
-Intro=Anti-Camping-Regel aktiviert. Achtung, 'Kein Camping'-Regel im Regelmenü aktivieren, um sich selbst als AFK zu markieren!
+Intro=Anti-Camping-Regel aktiviert. Achtung, 'Kein Camping'-Regel im RegelmenÃ¼ aktivieren, um sich selbst als AFK zu markieren!
 CampingAlert=Achtung!|Du wurdest als Camper identifiziert!
 Back=Wieder an der Tastatur
 AFK=Nicht an der Tastatur

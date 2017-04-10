@@ -322,7 +322,7 @@ func OnDeathHandleCorpseLegacy()
 	var cl_legs = nil;
 
 	
-	// Flammen-Effekte auf die Leiche übertragen
+	// Flammen-Effekte auf die Leiche Ã¼bertragen
 	var flame, flames = FindObjects(Find_ID(Effect_BlazingFlame), Find_Action("Hover"), Find_ActionTarget(this));
 	for (flame in flames) 
 	{

@@ -37,7 +37,7 @@ global func BotSkill(i)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Überladenes Hazard-Zeug
-// die Wegfindung kann man z.B. auch für das normale Hazard verwenden
+// die Wegfindung kann man z.B. auch fÃ¼r das normale Hazard verwenden
 
 
 

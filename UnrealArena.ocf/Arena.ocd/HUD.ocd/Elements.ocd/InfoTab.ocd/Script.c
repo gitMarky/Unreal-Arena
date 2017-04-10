@@ -10,7 +10,7 @@ public func SetHUDElement(object pHUD, string szAction)
 
 	SetCategory(C4D_Vehicle|C4D_Parallax|C4D_Foreground|C4D_MouseIgnore|C4D_IgnoreFoW);
 
-	SetVisibility(VIS_Owner); 	// Nur für den Besitzer sichtbar
+	SetVisibility(VIS_Owner); 	// Nur fÃ¼r den Besitzer sichtbar
 	SetAction( szAction ); 		// Anzeige-Action setzen
 
 	SetOwner(GetOwner(pHUD));

@@ -1,2 +1,2 @@
-Name=Präzisionsgeschosse
-Description=Bitte in ein Scharfschützengewehr stecken. Danke.
+Name=PrÃ¤zisionsgeschosse
+Description=Bitte in ein ScharfschÃ¼tzengewehr stecken. Danke.

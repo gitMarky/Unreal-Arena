@@ -1,2 +1,2 @@
 Name=Flak Cannon
-Description=Klassifikation: Schwere Schrapnell-Waffe||Modus 1: Die Flak Cannon verschießt weißglühende Metallsplitter.|Modus 2: Feuert eine Splittergranate.||Tips: Die Flak Cannon ist auf kurze Distanz besonders nützlich.
+Description=Klassifikation: Schwere Schrapnell-Waffe||Modus 1: Die Flak Cannon verschieÃŸt weiÃŸglÃ¼hende Metallsplitter.|Modus 2: Feuert eine Splittergranate.||Tips: Die Flak Cannon ist auf kurze Distanz besonders nÃ¼tzlich.

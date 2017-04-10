@@ -1,2 +1,2 @@
-Name=Pr‰zisionsgewehr
-Description=Klassifikation: Langstreckenwaffe|Modus 1: Feuert extrem schnelle Projektile, sofortiger Tod bei Kopfschuss. Niedrige Genauigkeit.|Modus 2: Zielen mit dem Zielfernrohr sorgt f¸r extreme Pr‰zision auch auf grˆﬂere Entfernungen.|Tips: Es wird mal wieder Zeit zu Campen ;)
+Name=Pr√§zisionsgewehr
+Description=Klassifikation: Langstreckenwaffe|Modus 1: Feuert extrem schnelle Projektile, sofortiger Tod bei Kopfschuss. Niedrige Genauigkeit.|Modus 2: Zielen mit dem Zielfernrohr sorgt f√ºr extreme Pr√§zision auch auf gr√∂√üere Entfernungen.|Tips: Es wird mal wieder Zeit zu Campen ;)

@@ -1,3 +1,3 @@
 Name=Keg o' Health
-Description=Gibt 100 HP zurück, bis zu maximal 200 HP.
+Description=Gibt 100 HP zurÃ¼ck, bis zu maximal 200 HP.
 

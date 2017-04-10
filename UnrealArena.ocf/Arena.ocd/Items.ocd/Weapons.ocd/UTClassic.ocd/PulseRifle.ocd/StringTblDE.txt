@@ -1,2 +1,2 @@
 Name=Pulse Gun
-Description=Klassifikation: Plasmagewehr|Modus 1: Verschieﬂt schnelle Plasmaprojektile bei hoher Feuerrate.|Modus 2: Bildet eine Plasmalanze, welche die Gegner durchbohrt.|Tips: Der Plasmastrahl tˆtet Gegner in Sekunden.
+Description=Klassifikation: Plasmagewehr|Modus 1: Verschie√üt schnelle Plasmaprojektile bei hoher Feuerrate.|Modus 2: Bildet eine Plasmalanze, welche die Gegner durchbohrt.|Tips: Der Plasmastrahl t√∂tet Gegner in Sekunden.

@@ -1,2 +1,2 @@
 Name=Raketenwerfer
-Description=Klassifikation: Schwerger‰t|Modus 1: Verschieﬂt Raketen. Mit [Spezial 3] kˆnnen bis zu 6 Raketen auf einmal geladen werden.|Modus 2: Schleudert die Projektile als Granaten nach vorne. Kann ebenfalls aufgeladen werden.|Tips: Das Laden kann abgebrochen werden. Sobald 6 Projektile geladen sind, feuert der Raketenwerfer automatisch.
+Description=Klassifikation: Schwerger√§t|Modus 1: Verschie√üt Raketen. Mit [Spezial 3] k√∂nnen bis zu 6 Raketen auf einmal geladen werden.|Modus 2: Schleudert die Projektile als Granaten nach vorne. Kann ebenfalls aufgeladen werden.|Tips: Das Laden kann abgebrochen werden. Sobald 6 Projektile geladen sind, feuert der Raketenwerfer automatisch.

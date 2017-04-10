@@ -1,2 +1,2 @@
 Name=Default-Script
-Description=Ein standardisiertes Scenarioscript für dieses Spiel.
+Description=Ein standardisiertes Scenarioscript fÃ¼r dieses Spiel.

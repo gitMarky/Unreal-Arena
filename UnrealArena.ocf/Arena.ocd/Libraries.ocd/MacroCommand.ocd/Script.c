@@ -7,7 +7,7 @@
 // 1: Zielobjekt (objekt)
 // 2: Ziel-X (int)
 // 3: Ziel-Y (int)
-// 4: Verzögerung (int)
+// 4: VerzÃ¶gerung (int)
 // 5: Callbackobjekt (object)
 // 6: Aggrolevel
 local aMacroCommandList;
