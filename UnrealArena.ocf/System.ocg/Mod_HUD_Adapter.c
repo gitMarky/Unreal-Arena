@@ -12,3 +12,27 @@ func GetHUDController()
 		HUDcontroller = CreateObject(GUI_Controller_UA, AbsX(0), AbsY(0), plr);
 	return HUDcontroller;
 }
+
+protected func OnEnergyChange(int change, int cause, int caused_by)
+{
+	Log("*** OnEnergyChange: %d %d %d", change, cause, caused_by);
+	return _inherited(change, cause, caused_by, ...);
+}
+
+
+
+private func OnShieldChange(int change, int cause, int caused_by)
+{
+	if (HUDcontroller)
+		HUDcontroller->~OnCrewShieldChange(this, change, cause, caused_by);
+	return _inherited(change, cause, caused_by, ...);
+
+}
+
+private func OnArmorChange(int change, int cause, int caused_by)
+{
+	if (HUDcontroller)
+		HUDcontroller->~OnCrewArmorChange(this, change, cause, caused_by);
+	return _inherited(change, cause, caused_by, ...);
+
+}

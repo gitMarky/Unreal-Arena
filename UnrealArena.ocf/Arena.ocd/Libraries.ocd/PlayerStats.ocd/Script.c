@@ -46,7 +46,7 @@ func GetUTExtraHealth()
 }
 
 
-func DoUTExtraHealth(int change)
+func DoUTExtraHealth(int change, int cause, int caused_by)
 {
 	lib_stats.ExtraHealth = BoundBy(lib_stats.ExtraHealth + change, 0, UA_HEALTH_MAX);
 
