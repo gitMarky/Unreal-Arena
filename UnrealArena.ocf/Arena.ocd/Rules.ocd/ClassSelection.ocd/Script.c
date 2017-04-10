@@ -1,7 +1,7 @@
 /*-- No Blood --*/
 
-#include Library_ConfigurableRule
-
+//#include Library_ConfigurableRule
+//
 //public func GameConfigConflictingRules()
 //{
 //	return [Rule_InstaGib];
