@@ -48,7 +48,7 @@ public func Initialize()
 func IsShooterWeapon(){return true;}
 
 
-func IsReadyToUse(object user)
+func IsWeaponReadyToUse(object user)
 {
 	var other_weapons = FindObjects(Find_Container(user), Find_Exclude(this), Find_Func("IsShooterWeapon"));
 	
