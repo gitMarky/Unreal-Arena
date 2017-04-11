@@ -128,7 +128,6 @@ func Flinch(int duration)
 	if (animation_main == "Dead") return;
 
 	var stand = animation_side ?? animation_main ?? "Stand";
-	var duration = 20;
 	PlayAnimation(stand, CLONK_ANIM_SLOT_Movement, Anim_Linear(0, 0, GetAnimationLength(stand), duration ?? 2, ANIM_Remove));
 }
 

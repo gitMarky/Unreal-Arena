@@ -16,29 +16,28 @@ global func GetGoalHUDEx(player)
 {
 	if(player <= -1) return;
 
-	var bar = FindObjectOwner(3HUD,player);
+	var bar = FindObject(Find_ID(GUI_UA_HUD), Find_Owner(player));
 
-	if( !g_bChooserFinished ) bar=0;
+	if (!GameConfiguration().configuration_finished) bar=0;
 
 	return bar;
 }
 
-global func CreateHUD( obj )
+global func CreateHUD(obj)
 {
-	if( !obj ) return;
-	var hud;
-	if( hud = FindObjectOwner(_HUD,GetOwner(obj)))
+	if (!obj) return;
+	var hud = FindObject(Find_ID(GUI_UA_HUD), obj->GetOwner());
+	if (hud)
 	{
-		LocalN("pCommandObj",hud)=obj;
+		hud.pCommandObj = obj;
 		return;
 	}
 
 
-	var menu = CreateObject( _HUD,0,0,-1);
+	var menu = CreateObject(GUI_UA_HUD, 0, 0, NO_OWNER);
 
-	SetPosition( 0, 0, menu);
-
-	menu->~AttachHUD( obj );
+	menu->SetPosition(0, 0);
+	menu->~AttachHUD(obj);
 
 
 	return menu;
@@ -52,17 +51,17 @@ global func FindHUD( plr )
 	}
 	else if(GetType(plr) == C4V_C4Object)
 	{
-		plr = GetOwner(plr);
+		plr = plr->GetOwner();
 	}
 	else return 0;
-	return FindObjectOwner(_HUD,plr);
+	return FindObject(Find_ID(GUI_UA_HUD), Find_Owner(plr));
 }
 
 
-public func AttachHUD( object pObj )
+public func AttachHUD(object pObj)
 {
-	if(!pObj) return RemoveObject();
-	SetOwner(GetOwner(pObj));
+	if (!pObj) return RemoveObject();
+	SetOwner(pObj->GetOwner());
 
 	pCommandObj = pObj;
 
@@ -70,10 +69,9 @@ public func AttachHUD( object pObj )
 
 	//CreateWeaponTabs();
 
-	ScheduleCall(this,"CreateWeaponTabs",5);
-	ScheduleCall(this,"UpdateInfoTabs",5);
-	AddEffect("ShowArmor",this,50,1,this);
-
+	ScheduleCall(this, "CreateWeaponTabs", 5);
+	ScheduleCall(this, "UpdateInfoTabs", 5);
+	AddEffect("ShowArmor", this, 50, 1, this);
 }
 
 protected func Destruction()
@@ -84,53 +82,47 @@ protected func Destruction()
 	ClearScheduleCall();
 
 	var tab;
-	for( tab in aWeaponTabs ) RemoveObject(tab);
-	if (pInfoHealth) RemoveObject(pInfoHealth);
-	if (pInfoArmor) RemoveObject(pInfoArmor);
-	if (pInfoShield) RemoveObject(pInfoShield);
-	if (pInfoAmmo) RemoveObject(pInfoAmmo);
+	for( tab in aWeaponTabs ) tab->RemoveObject();
+	if (pInfoHealth) pInfoHealth->RemoveObject();
+	if (pInfoArmor)  pInfoArmor ->RemoveObject();
+	if (pInfoShield) pInfoShield->RemoveObject();
+	if (pInfoAmmo)   pInfoAmmo  ->RemoveObject();
 }
 
 public func CreateWeaponTabs()
 {
-	ScheduleCall(this,"CreateWeaponTabs",5);
+	ScheduleCall(this, "CreateWeaponTabs", 5);
 	var tab, bActive;
 	// altes Zeug loeschen
-	for( tab in aWeaponTabs ) if(tab) RemoveObject(tab);
+	for( tab in aWeaponTabs ) if(tab) tab->RemoveObject();
 
 	if (!pCommandObj) return;
 
 	// Inventar rueckaerts durchgehen
-	var inventory = pCommandObj->~GetInventory();//FindObjects( Find_Container(pCommandObj));
+	var inventory = pCommandObj->~GetInventory();
 
-	if(!inventory) return;
+	if (!inventory) return;
 
 	var x, xi=60, xa=90;
 
 
-	//x = -50;
 	x = 20;
 
 	for(var i=0; i<GetLength(inventory); i++)
-	//for(var i=GetLength(inventory)-1; i>=0; i--)
 	{
 		if(!inventory[i]) continue;
 		//Log("Did inventory %d",i);
-		if(Contents(0,pCommandObj) == inventory[i])
+		if(pCommandObj->Contents(0) == inventory[i])
 		{
-			//x-=xa;
 			bActive = true;
-			//x+=xa;
 		}
 		else
 		{
-			//x-=xi;
 			bActive = false;
-			//x+=xi;
 		}
 
 
-		tab = CreateObject(_HWT,0,0,-1);
+		tab = CreateObject(GUI_UA_WeaponTab,0,0,-1);
 
 		tab->AttachToHUD(this,x,-50-30,inventory[i],bActive);
 		PushBack(tab,aWeaponTabs);//aWeaponTabs[GetLength(inventory)-1-i]=tab;
@@ -145,11 +137,11 @@ public func CreateWeaponTabs()
 public func UpdateInfoTabs()
 {
 	ScheduleCall(this,"UpdateInfoTabs",5);
-	var tab, bActive;
-	// altes Zeug l�schen
+	var tab;
+	// altes Zeug loeschen
 	//for( tab in aInfoTabs ) if(tab) RemoveObject(tab);
 
-	var x, fVert, fHor;
+	var fVert, fHor;
 
 	fVert = HUD_bVert;
 	fHor = !HUD_bVert;
@@ -158,36 +150,36 @@ public func UpdateInfoTabs()
 
 	if(!pInfoAmmo)
 	{
-		tab = CreateObject(_HIT,0,0,-1);
+		tab = CreateObject(GUI_UA_InfoTab,0,0,-1);
 
-		tab->AttachToHUD(this,10,-145*fVert -40*fHor,0,false,"Ammo");
+		tab->AttachToHUD(this,10,-145*fVert -40*fHor, nil,false,"Ammo");
 		pInfoAmmo = tab;
 		//iTabs++;
 	}
 
 	if(!pInfoHealth)
 	{
-		tab = CreateObject(_HIT,0,0,-1);
+		tab = CreateObject(GUI_UA_InfoTab,0,0,-1);
 
-		tab->AttachToHUD(this,10,-145-40*fVert -40*fHor,0,false,"Health");
+		tab->AttachToHUD(this,10,-145-40*fVert -40*fHor, nil,false,"Health");
 		pInfoHealth = tab;
 		//iTabs++;
 	}
 
 	if(!pInfoArmor)
 	{
-		tab = CreateObject(_HIT,0,0,-1);
+		tab = CreateObject(GUI_UA_InfoTab,0,0,-1);
 
-		tab->AttachToHUD(this,10 +85*fHor,-145-80*fVert -40*fHor,0,true,"Armor");
+		tab->AttachToHUD(this,10 +85*fHor,-145-80*fVert -40*fHor, nil,true,"Armor");
 		pInfoArmor = tab;
 		//iTabs++;
 	}
 
 	if(!pInfoShield)
 	{
-		tab = CreateObject(_HIT,0,0,-1);
+		tab = CreateObject(GUI_UA_InfoTab,0,0,-1);
 
-		tab->AttachToHUD(this,10 +170*fHor,(-145-120)*fVert -40*fHor,0,false,"Shield");
+		tab->AttachToHUD(this,10 +170*fHor,(-145-120)*fVert -40*fHor, nil,false,"Shield");
 		pInfoShield = tab;
 	}
 }
@@ -202,10 +194,9 @@ public func FxShowArmorTimer( target, nr, time)
 	fVert = HUD_bVert;
 	fHor = !HUD_bVert;
 
-	//PlayerMessage(GetOwner(target),Format("Shield %d|Armor %d|Health %d",GetUTShield(target),GetUTArmor(target),GetEnergy(target)));
 	if( pInfoAmmo )
 	{
-		var weap = Contents(0,pCommandObj);
+		var weap = pCommandObj->Contents(0);
 		var ammoid, ammo;
 		if(!weap || !(weap->~IsWeapon()))
 		{
@@ -222,36 +213,36 @@ public func FxShowArmorTimer( target, nr, time)
 		pInfoAmmo->~UpdateVal(ammo);
 	}
 	if( pInfoHealth )
-		pInfoHealth->~UpdateVal(GetEnergy(pCommandObj));
+		pInfoHealth->~UpdateVal(pCommandObj->GetEnergy());
 
 	if( pInfoArmor )
 	{
-		val = GetUTArmor(pCommandObj);
+		val = pCommandObj->~GetUTArmor();
 		pInfoArmor->~UpdateVal(val);
 		pInfoArmor->~SetPosition(10,(-145-80)*fVert -40*fHor);
 		if(!val)
 		{
-			SetVisibility(VIS_None,pInfoArmor);
+			pInfoArmor.Visibility = VIS_None;
 		}
 		else
 		{
-			SetVisibility(VIS_Owner,pInfoArmor);
+			pInfoArmor.Visibility = VIS_Owner;
 			iTabs++;
 		}
 
 	}
 	if( pInfoShield )
 	{
-		val = GetUTShield(pCommandObj);
+		val = pCommandObj->~GetUTShield();
 		pInfoShield->~UpdateVal(val);
 		pInfoShield->~SetPosition(10,(-145-80-40*iTabs)*fVert -40*fHor);
 		if(!val)
 		{
-			SetVisibility(VIS_None,pInfoShield);
+			pInfoShield.Visibility = VIS_None;
 		}
 		else
 		{
-			SetVisibility(VIS_Owner,pInfoShield);
+			pInfoShield.Visibility = VIS_Owner;
 			iTabs++;
 		}
 
@@ -302,7 +293,7 @@ global func HUDMessage( string szMessage, iPlr )
 
 public func MessageFeed( string szMessage )
 {
-	var obj = CreateObject(_HWT,0,0,-1);
+	var obj = CreateObject(GUI_UA_WeaponTab,0,0,-1);
 
 	obj->~HUDDisplayMessage( this, szMessage );
 	PushFront(obj,aMessages);
@@ -313,7 +304,8 @@ public func MessageFeed( string szMessage )
 public func SortMessages()
 {
 	var i = 0;
-	for( obj in aMessages )
+	var obj;
+	for(obj in aMessages)
 	{
 		if(!obj) continue;
 
@@ -334,4 +326,3 @@ public func SortMessages()
 // properties
 
 local Name = "$Name$";
-local Description = "$Description$";

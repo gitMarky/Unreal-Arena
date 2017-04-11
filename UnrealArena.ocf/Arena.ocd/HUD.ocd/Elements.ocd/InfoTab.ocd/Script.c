@@ -4,16 +4,17 @@ local pTarget;
 local szMsg; // auszugebende Info-Nachricht
 local szGraph, iVal, iFlash;
 
+local Visibility = VIS_Owner;
+
 public func SetHUDElement(object pHUD, string szAction)
 {
-	Local(0)=Local(1)=0; 		// Parallax auf 0 Setzen
+	//TODO Local(0)=Local(1)=0; 		// Parallax auf 0 Setzen
 
 	SetCategory(C4D_Vehicle|C4D_Parallax|C4D_Foreground|C4D_MouseIgnore|C4D_IgnoreFoW);
 
-	SetVisibility(VIS_Owner); 	// Nur fuer den Besitzer sichtbar
 	SetAction( szAction ); 		// Anzeige-Action setzen
 
-	SetOwner(GetOwner(pHUD));
+	SetOwner(pHUD->GetOwner());
 }
 
 public func AttachToHUD( object pHUD, int iX, int iY, object pObj, bool bActive, szGr )
@@ -42,26 +43,26 @@ public func DoGraphics( bActive )
 	if(bActive)
 	{
 		SetGraphics("Active");
-		SetGraphics("HexActive",0,_HIT,1,GFXOV_MODE_ExtraGraphics);
+		SetGraphics("HexActive", GUI_UA_InfoTab,1,GFXOV_MODE_ExtraGraphics);
 		clr_t = RGBa(255,255,255,60);
 		clr_h = RGBa(255,255,255,120);
 	}
 	else
 	{
 		SetGraphics();
-		SetGraphics("Hex",0,_HIT,1,GFXOV_MODE_ExtraGraphics);
+		SetGraphics("Hex",GUI_UA_InfoTab,1,GFXOV_MODE_ExtraGraphics);
 		clr_t = RGBa(200,200,200,120);
 		clr_h = RGBa(255,255,255,160);
 	}
 	clr_s = RGBa(200,200,200,0);
-	SetGraphics(Format("Bar%s",szGraph),0,_HIT,2,GFXOV_MODE_ExtraGraphics);
+	SetGraphics(Format("Bar%s",szGraph),GUI_UA_InfoTab,2,GFXOV_MODE_ExtraGraphics);
 
 
-	SetObjDrawTransform(size,0,0,0,size,0,this,0);
+	SetObjDrawTransform(size,0,0,0,size,0,0);
 
-	SetClrModulation(clr_t,this,0);
-	SetClrModulation(clr_h,this,1);
-	SetClrModulation(clr_s,this,2);
+	SetClrModulation(clr_t,0);
+	SetClrModulation(clr_h,1);
+	SetClrModulation(clr_s,2);
 
 }
 
@@ -74,18 +75,18 @@ public func SetNumbers(iAmount)
 	iX=(iAmount/10)%10;
 	iI=iAmount%10;
 
-	SetGraphics(Format("Number%d",iI),0,_HIT,3,GFXOV_MODE_Base);
-	SetGraphics(Format("Number%d",iX),0,_HIT,4,GFXOV_MODE_Base);
-	SetGraphics(Format("Number%d",iC),0,_HIT,5,GFXOV_MODE_Base);
+	SetGraphics(Format("Number%d",iI),GUI_UA_InfoTab,3,GFXOV_MODE_Base);
+	SetGraphics(Format("Number%d",iX),GUI_UA_InfoTab,4,GFXOV_MODE_Base);
+	SetGraphics(Format("Number%d",iC),GUI_UA_InfoTab,5,GFXOV_MODE_Base);
 
 	size = 750;
 	x = 46;
 	dx = 14;
 	y = 125*100;
 
-	SetObjDrawTransform(size,-70,(x+2*dx)*1000,0,size,y,this,3);
-	SetObjDrawTransform(size,-70,(x+1*dx)*1000,0,size,y,this,4);
-	SetObjDrawTransform(size,-70,x*1000,0,size,y,this,5);
+	SetObjDrawTransform(size,-70,(x+2*dx)*1000,0,size,y,3);
+	SetObjDrawTransform(size,-70,(x+1*dx)*1000,0,size,y,4);
+	SetObjDrawTransform(size,-70,x*1000,0,size,y,5);
 
 }
 
@@ -111,9 +112,6 @@ public func FxFlashTimer()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // properties
-
-local Name = "$Name$";
-local Description = "$Description$";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
