@@ -14,7 +14,7 @@ func RejectEntrance(object container)
 	else // do not enter
 	{
 		// but remove if you cause an effect on the guy
-		if (this->PickupEffect(container));
+		if (this->PickupEffect(container))
 		{
 			RemoveObject();
 		}
