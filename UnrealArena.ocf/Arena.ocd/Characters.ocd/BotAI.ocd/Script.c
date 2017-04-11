@@ -36,12 +36,12 @@ global func BotSkill(i)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Überladenes Hazard-Zeug
-// die Wegfindung kann man z.B. auch fÃ¼r das normale Hazard verwenden
+// ï¿½berladenes Hazard-Zeug
+// die Wegfindung kann man z.B. auch fuer das normale Hazard verwenden
 
 
 
-// Hier wurde nur der Timer geändert
+// Hier wurde nur der Timer geï¿½ndert
 func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 {
 	if (iLevel > 3)
@@ -83,12 +83,12 @@ func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 
 func FxAggroTimer(object pTarget, proplist no)
 {
-	// Doppelsprung ausführen, wenn sinnvoll
+	// Doppelsprung ausfï¿½hren, wenn sinnvoll
 	if (WildcardMatch(GetAction(), "Jump*"))
 		if (GBackSolid(-20 + GetDir() * 40))
 			this->~ControlUp();
 	
-	// Je schlechter der Botskill, desto öfter machen wir hier Pause
+	// Je schlechter der Botskill, desto ï¿½fter machen wir hier Pause
 	if (Random(8 - BotSkill(7)))
 		return;
 	
@@ -111,7 +111,7 @@ func FxAggroTimer(object pTarget, proplist no)
 	}
 	else
 	{
-		// Waffe soll zu schießen aufhören
+		// Waffe soll zu schieï¿½en aufhï¿½ren
 		if (Contents())
 			Contents()->~StopAutoFire();
 	}
@@ -181,13 +181,13 @@ func FxAggroFire(object pTarget, proplist no)
 			Contents()->~StopAutoFire();
 		return;
 	}
-	// Ich hab nix? °-°
+	// Ich hab nix? ï¿½-ï¿½
 	if (!Contents())
 		return; // Lauf, Forest, lauf!
 	// Waffe in die Hand nehmen
 	if (!SelectWeapon(level, target, false))
 	{
-		// Bei Aggro_Follow können wir von unserem Pfade weg. D.h. eine Waffe und/oder Munition muss her
+		// Bei Aggro_Follow kï¿½nnen wir von unserem Pfade weg. D.h. eine Waffe und/oder Munition muss her
 		if (GetAggroLevel() == Aggro_Follow)
 		{
 			// Waffen auffrischen?
@@ -196,7 +196,7 @@ func FxAggroFire(object pTarget, proplist no)
 			// Munition auffrischen
 			return SearchAmmo(Aggro_Shoot);
 		}
-		// ein Balrog, ein Feind gegen den ihr nichts ausrichten könnt...lauft!
+		// ein Balrog, ein Feind gegen den ihr nichts ausrichten kï¿½nnt...lauft!
 		return;
 	}
 	// Stufe 1 - nur in die grobe Richtung ballern, lieber nicht anhalten oder sowas
@@ -208,7 +208,7 @@ func FxAggroFire(object pTarget, proplist no)
 	if (pWeapon->IsRecharging())
 		return;
 	
-	// Er schießt nicht immer, wenn er kann
+	// Er schieï¿½t nicht immer, wenn er kann
 	var efficiency = pWeapon->~GetBotData(BOT_Rating);
 	if (Random(efficiency - BotSkill(efficiency - 1)))
 		return;
@@ -255,7 +255,7 @@ func FxAggroFire(object pTarget, proplist no)
 	return;
 }
 
-// Wenn iLevel = 1 (Aggro_Shoot) werden keine Waffen mit FM_Aim ausgewählt
+// Wenn iLevel = 1 (Aggro_Shoot) werden keine Waffen mit FM_Aim ausgewï¿½hlt
 func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
 {
 	var arsenal, distance, selection, i, prio;
@@ -317,7 +317,7 @@ func GetPrefDmgType(object pTarget)
 
 // Das ganze Hazard-Ding ist ja mal ziemlich Banane gewesen, mal sehen, ob ich hier einen guten
 // Algorithmus einbauen kann. Wir machen das jetzt mit Dijkstra - Floyd-Warshall kann zwar negative
-// Kantengewichte und so, aber das kommt hier eh nicht vor, außerdem müsste man da erstmal eine
+// Kantengewichte und so, aber das kommt hier eh nicht vor, auï¿½erdem mï¿½sste man da erstmal eine
 // Matrix aufstellen.
 
 // gibt Pfad von Wegpunkt pStart bis pEnd als Array aus. An Stelle 0 ist pStart.
@@ -328,12 +328,12 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 	
 	var aNodes = []; // das Array, in welchem die Wegpunkte gespeichert werden
 	var aDistance = []; // dieses Array gibt an, wie weit ich zum Wegpunkt laufen muss
-	// könnte ausschließlich mit ObjectDistance() gemacht werden
+	// kï¿½nnte ausschlieï¿½lich mit ObjectDistance() gemacht werden
 	// stattdessen erlauben wir auch, dass Teleporter oder Jumppads
 	// eine geringere "Distanz" haben, weil sie den Clonk schneller
 	// ans Ziel bringen
-	var aPrev = []; // die Vorgänger, daraus bauen wir einen Pfad zusammen
-	var bPath = []; // aNodes hilft nur für die Nachbarschaft, bPath ist der gewählte Pfad
+	var aPrev = []; // die Vorgï¿½nger, daraus bauen wir einen Pfad zusammen
+	var bPath = []; // aNodes hilft nur fï¿½r die Nachbarschaft, bPath ist der gewï¿½hlte Pfad
 	var aSet = []; // Suchmenge
 	
 	var jetp = 0;
@@ -353,7 +353,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		
 		var aBest = [], pNode, iBest = -1;
 		
-		// besten Knoten auswählen
+		// besten Knoten auswï¿½hlen
 		for (pNode in aSet) 
 		{
 			var dist = aDistance[GetIndexOf(aNodes, pNode)];
@@ -382,7 +382,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		var pathcount = pCurrent->GetPathCount();
 		var iCurrent = GetIndexOf(aNodes, pCurrent);
 		
-		// alle Nachbarknoten des besten Knotens nach kürzeren Wegen absuchen
+		// alle Nachbarknoten des besten Knotens nach kï¿½rzeren Wegen absuchen
 		for (var i = 0; i < pathcount; ++i)
 		{
 			pNext = (pCurrent->GetPathTarget(i));
@@ -446,7 +446,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Eigenes Zeug, braucht man nicht für Hazard
+// Eigenes Zeug, braucht man nicht fï¿½r Hazard
 
 
 func UTBotAIDodgeBullets()
@@ -491,7 +491,7 @@ func UTBotAICalcAimAngle(object obj, object gun, int xmod, int ymod)
 	v1y = obj->GetYDir(prec);
 	v1 = Distance(v1x, v1y); // Betrag der Geschwindigket
 	
-	// Objekt fällt ballistisch?
+	// Objekt fï¿½llt ballistisch?
 	//if(obj->GetProcedure() == "FLOAT" || obj->GetProcedure() == "SWIM")
 	//	f1 = 0;
 	//else
@@ -506,16 +506,16 @@ func UTBotAICalcAimAngle(object obj, object gun, int xmod, int ymod)
 	y2 = prec * GetY();
 	v2 = gun->~GetFMData(FM_ProjSpeed);
 	v2 *= prec / 10;
-	// Projektil fällt ballistisch?
+	// Projektil fï¿½llt ballistisch?
 	if (gun->~GetFMData(FM_Ballistic))
 		f2 = 1;
 	else
 		f2 = 0;
 	
 
-	// Flugzeit-Schätzung:
-	// Mittelwert zwischen Direktverbindung und geschätzter ballistischer Strecke
-	// geschätzte Ballistische Strecke = 	* Direktverbindung, wenn f1 = f2 = 0
+	// Flugzeit-Schï¿½tzung:
+	// Mittelwert zwischen Direktverbindung und geschï¿½tzter ballistischer Strecke
+	// geschï¿½tzte Ballistische Strecke = 	* Direktverbindung, wenn f1 = f2 = 0
 	//										* Summe der Dreieckskanten im K-Sys, wenn f1 = f2 = 1
 	//										* der Mittelwert davon, sonst
 	

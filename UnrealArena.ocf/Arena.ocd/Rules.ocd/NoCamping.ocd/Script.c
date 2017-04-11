@@ -12,7 +12,7 @@ local Name = "$Name$";
 //local aAFK, aCursors, aPlrAFKDeaths;
 //
 //protected func Activate(iPlr) {
-//  // AFK-Menü
+//  // AFK-Menue 
 //  CreateMenu(GetID(), GetCursor(iPlr), this(),0, GetName());
 //  if(aAFK[iPlr])
 //    AddMenuItem("$Back$", Format("AFK(%d,%d)",iPlr,0), CLNK, GetCursor(iPlr), 0,0, "$Back$");
@@ -50,7 +50,7 @@ local Name = "$Name$";
 //  Schedule("Log(\"$Intro$\");", 1);
 //}
 //
-///* Alle Clonks bekommen einen Effekt, der ihr Verhalten überprüft */
+///* Alle Clonks bekommen einen Effekt, der ihr Verhalten ueberprueft */
 //
 //public func OnClonkRecruitment(object pClonk) {
 //  // Effekt erzeugen
@@ -69,8 +69,8 @@ local Name = "$Name$";
 //
 //// Effektvariablen
 //// EffectVar 0 und 1 speichern die Position des Clonks
-//// EffectVar 2 ist ein Check, für minimale Bewegungsänderung und führt sehr schnell zur Bestrafung
-//// EffectVar 3 checkt auf weitere Entfernungen. Auch Clonks, die ständig an der selben Stelle rumturnen, bekommen eine Bestrafung
+//// EffectVar 2 ist ein Check, fuer minimale Bewegungsaenderung und fuehrt sehr schnell zur Bestrafung
+//// EffectVar 3 checkt auf weitere Entfernungen. Auch Clonks, die staendig an der selben Stelle rumturnen, bekommen eine Bestrafung
 //// EffectVar 4,5,6 helfen Nr. 3
 //
 //public func FxCampingCheckTimer(object pClonk, int iNo, int iTime)
@@ -111,7 +111,7 @@ local Name = "$Name$";
 //  // Clonk hat sich doller bewegt? -> Abbauen
 //  if(!inc && EffectVar(2, pClonk, iNo))
 //    EffectVar(2, pClonk, iNo)--;
-//  // Größerer Check
+//  // Groesserer Check
 //  inc = false;
 //  if(Inside(EffectVar(5,pClonk,iNo), pClonk->GetX()-75, pClonk->GetX()+75))
 //    if(Inside(EffectVar(6,pClonk,iNo), pClonk->GetY()-75, pClonk->GetY()+75))
@@ -124,7 +124,7 @@ local Name = "$Name$";
 //  // Clonk hat sich bewegt -> Camp-Tode wegmachen, da kein auto-AFK (ist nicht 100%ig sicher, aber besser als nichts)
 //  if(!inc && aPlrAFKDeaths[pClonk->GetOwner()])
 //    aPlrAFKDeaths[pClonk->GetOwner()] = 0;
-//  // Die Großflächenposition wird nur alle 10 Checks erneuert -> Clonk muss sich in diesem Zeitraum mindestens 100 Pixel weit bewegen
+//  // Die Grossflaechenposition wird nur alle 10 Checks erneuert -> Clonk muss sich in diesem Zeitraum mindestens 100 Pixel weit bewegen
 //  if(EffectVar(4, pClonk, iNo) >= 10)
 //  {
 //    EffectVar(4, pClonk, iNo) = 0;
@@ -153,10 +153,10 @@ local Name = "$Name$";
 //       }
 //       else
 //       {
-//         // Tod durch Campen -> wird gezählt
+//         // Tod durch Campen -> wird gezaehlt
 //         if(pClonk->GetEnergy() <= 5) aPlrAFKDeaths[pClonk->GetOwner()]++;
 //         pClonk->DoEnergy(-5);
 //         Sound("Punch*", 1, 0,0, pClonk->GetOwner()+1);
 //       }
-//     }
+//     } 
 //}

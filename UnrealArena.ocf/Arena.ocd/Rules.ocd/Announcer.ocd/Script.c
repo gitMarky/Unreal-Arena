@@ -70,7 +70,7 @@ local Description = "$Description$";
 //	PushBack(command,aAnnouncer[iPlr]);
 //}
 //
-//global func UA_NoAnnouncer( object pTarget) // Hält 20 Frame lang, also Clonk schnell töten, dann kommt keine Nachricht
+//global func UA_NoAnnouncer( object pTarget) // Haelt 20 Frame lang, also Clonk schnell toeten, dann kommt keine Nachricht
 //{
 //	AddEffect("NoAnnouncer", pTarget, 1, 1, 0, R_M6);
 //}
@@ -82,5 +82,5 @@ local Description = "$Description$";
 //
 //public func FxAnnouncerQueueTimer()
 //{
-//	DoAnnouncerQueue();
+//	DoAnnouncerQueue(); 
 //}

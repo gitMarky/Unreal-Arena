@@ -122,7 +122,7 @@
 //
 //public func RelaunchPlayer(int iPlr, object pClonk)
 //{
-//	// Klasse zurücksetzen
+//	// Klasse zuruecksetzen
 //	//if(GetType(aClassName) == C4V_Array)
 //	//	aClassName[iPlr]=0;
 //
@@ -135,7 +135,7 @@
 //	if(!GetAlive(pClonk))
 //		return ScheduleCall(this,"RelaunchPlayer",1,0,iPlr);
 //
-//	//Menü zeitverzögert erstellen
+//	//Menue zeitverzoegert erstellen
 //	ScheduleCall(0,"InitClassMenu",10,0,pClonk);
 //
 //	return;
@@ -171,16 +171,16 @@
 //	//if(FindObject(GLMS) || FindObject(GTDM) || FindObject(GASS))
 //	//	AddEffect("Spawntimer", this, 100, 35, this, GetID(), iPlayer, pClonk, tmp);
 //
-//	//Bereits ein Menü offen?
-//	if(GetMenu(pClonk)) CloseMenu(pClonk); //Menü schließen
+//	//Bereits ein Menue offen?
+//	if(GetMenu(pClonk)) CloseMenu(pClonk); //Menue schliessen
 //
 //	OpenClassMenu(pClonk);
 //}
-//
+// 
 //public func ReOpenClassMenu( object pClonk )
 //{
 //	var iPlr = GetOwner(pClonk);
-//	// Klasse zurücksetzen
+//	// Klasse zuruecksetzen
 //	if(GetType(aClassName) == C4V_Array)
 //		aClassName[iPlr]=0;
 //
@@ -224,7 +224,7 @@
 //	if (GetMenu(pClonk))
 //		iSelection = GetMenuSelection(pClonk);
 //
-//	//Die Klassen durchgehen - welche sind Verfügbar, welche nicht, etc.
+//	//Die Klassen durchgehen - welche sind Verfuegbar, welche nicht, etc.
 //	if(!aMenuSelection[iOwner] || aMenuSelection[iOwner] != C4V_Array)
 //	{
 //		aMenuSelection[iOwner] = [iSelection - InfoMenuItems()];
@@ -241,7 +241,7 @@
 //		}
 //	}
 //
-//	// Klasse für Beschreibung selektieren
+//	// Klasse fuer Beschreibung selektieren
 //	var iClass;
 //
 //		iClass = aMenuSelection[iOwner][BoundBy(iSelection - InfoMenuItems()-1,0,GetLength(aMenuSelection[iOwner])-1)];
@@ -250,7 +250,7 @@
 //
 //	//var iClass = iSelection - InfoMenuItems();
 //
-//	//Menü öffnen
+//	//Menue oeffnen
 //	CloseMenu(pClonk);
 //	CreateMenu(GetID(), pClonk, this, 0, 0, 0, C4MN_Style_Dialog, true);
 //
@@ -298,14 +298,14 @@
 //	AddMenuItem(Format("   %s  %s",szStatName,szStatIcons), 0, NONE, pClonk, 0, 0, " ");
 //
 //
-//	//Ausrüstung
+//	//Ausruestung
 //	/*var szItems = "", aItems = GetCData(iClass, CData_Items), nextline = false, first = true;
 //	for (var aEntry in aItems)
 //	{
 //		if (GetType(aEntry) != C4V_Array || GetType(aEntry[0]) != C4V_C4ID)
 //			continue;
 //		szItems = Format("%s%2dx {{%i}}     ", szItems, aEntry[1], aEntry[0]);
-//		//Nach jedem zweiten Item umbrechen, außer beim letzten
+//		//Nach jedem zweiten Item umbrechen, ausser beim letzten
 //		if (!first && (nextline = !nextline) && GetIndexOf(aEntry, aItems) < GetLength(aItems) - 1)
 //			szItems = Format("%s|", szItems);
 //		first = false;
@@ -398,7 +398,7 @@
 //static const CData_Voice			= 14;
 //static const CData_Blood			= 15;
 //static const CData_Gender			= 16;
-//static const CData_IsTeam			= 17; // kann die Klasse als Team ausgewählt werden?
+//static const CData_IsTeam			= 17; // kann die Klasse als Team ausgewaehlt werden?
 //static const CData_AIRole			= 18;
 //
 //public func GetCData(int iClass, int iData, int iPlr)
@@ -428,7 +428,7 @@
 //	{
 //		Finish(pCrew, iClass);
 //	}
-//	// Sub-Klassen wählen
+//	// Sub-Klassen waehlen
 //	else
 //	{
 //		this->~OnClassSelectionTemp( aCrew[iPlr], iClass);
@@ -446,7 +446,7 @@
 //	if(!pClonk /*|| !Contained(pClonk)*/) return;
 //	var iPlayer = GetOwner(pClonk);
 //
-//	//Menü schließen
+//	//Menue schliessen
 //	CloseMenu(GetCursor(iPlayer));
 //	CloseMenu(pClonk);
 //

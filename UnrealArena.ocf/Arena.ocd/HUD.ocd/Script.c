@@ -48,7 +48,7 @@ global func FindHUD( plr )
 {
 	if(GetType(plr) == C4V_Int)
 	{
-		plr--; // man muss eine um eins erhöhte Zahl angeben, sonst wird sie nicht als Int erkannt
+		plr--; // man muss eine um eins erhoehte Zahl angeben, sonst wird sie nicht als Int erkannt
 	}
 	else if(GetType(plr) == C4V_C4Object)
 	{
@@ -95,12 +95,12 @@ public func CreateWeaponTabs()
 {
 	ScheduleCall(this,"CreateWeaponTabs",5);
 	var tab, bActive;
-	// altes Zeug löschen
+	// altes Zeug loeschen
 	for( tab in aWeaponTabs ) if(tab) RemoveObject(tab);
 
 	if (!pCommandObj) return;
 
-	// Inventar rückärts durchgehen
+	// Inventar rueckaerts durchgehen
 	var inventory = pCommandObj->~GetInventory();//FindObjects( Find_Container(pCommandObj));
 
 	if(!inventory) return;
@@ -146,7 +146,7 @@ public func UpdateInfoTabs()
 {
 	ScheduleCall(this,"UpdateInfoTabs",5);
 	var tab, bActive;
-	// altes Zeug l�schen
+	// altes Zeug l�schen
 	//for( tab in aInfoTabs ) if(tab) RemoveObject(tab);
 
 	var x, fVert, fHor;

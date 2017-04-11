@@ -8,7 +8,7 @@ SetGraphics(0,this,GLWP,2,GFXOV_MODE_IngamePicture)
 500 / 750
 
 Abstand 60 zwischen kleinen
-Abstand 90 zwischen kleine und großen
+Abstand 90 zwischen kleine und grossen
 
 SetShape(0,0,60,40)
 SetShape(0,-18,90,60)
@@ -26,7 +26,7 @@ public func SetHUDElement(object pHUD, string szAction)
 
 	SetCategory(C4D_Vehicle|C4D_Parallax|C4D_Foreground|C4D_MouseIgnore|C4D_IgnoreFoW);
 
-	SetVisibility(VIS_Owner); 	// Nur für den Besitzer sichtbar
+	SetVisibility(VIS_Owner); 	// Nur fuer den Besitzer sichtbar
 	SetAction( szAction ); 		// Anzeige-Action setzen
 
 	SetOwner(GetOwner(pHUD));
@@ -80,7 +80,7 @@ public func AttachToHUD( object pHUD, int iX, int iY, object pObj, bool bActive 
 	var pObj2 = pObj->~GetAkimbo();
 	if( pObj2 )
 	{
-		// leicht schräg und versetzt dazu zeichnen
+		// leicht schraeg und versetzt dazu zeichnen
 		var r = pObj2->~GetAkimboHUDOffsetR() , xoff = pObj2->~GetAkimboHUDOffsetX(), yoff = pObj2->~GetAkimboHUDOffsetY();
 		var fsin=Sin(r, 1000), fcos=Cos(r, 1000);
 
@@ -92,7 +92,7 @@ public func AttachToHUD( object pHUD, int iX, int iY, object pObj, bool bActive 
 	SetShape(0,y,w,h);
 	SetClrModulation(clr_t,this);
 
-	// Füllstand anzeigen
+	// Fuellstand anzeigen 
 	if(pObj->~IsWeapon())
 	{
 		SetGraphics(0,this,1HUD,3,GFXOV_MODE_IngamePicture);
