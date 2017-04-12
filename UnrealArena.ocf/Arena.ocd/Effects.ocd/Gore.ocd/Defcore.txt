@@ -1,6 +1,6 @@
 [DefCore]
 id=Effect_GoreChunk
-Version=7,0
+Version=8,0
 Category=C4D_Vehicle
 Width=9
 Height=7

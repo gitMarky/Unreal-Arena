@@ -1,6 +1,6 @@
 [DefCore]
 id=UA_Clonk_Corpse
-Version=6,0
+Version=8,0
 Category=C4D_Vehicle
 Width=8
 Height=20

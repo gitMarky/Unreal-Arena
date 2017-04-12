@@ -1,6 +1,6 @@
 [DefCore]
 id=Projectile_FlakGrenade
-Version=6,0
+Version=8,0
 Category=C4D_Vehicle
 Mass=15
 Width=3
