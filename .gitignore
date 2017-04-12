@@ -1,3 +1,6 @@
 .project
 Resource/*
 *.log
+Library_ArenaGames
+Library_Shooter
+Library_Character

@@ -1,0 +1,12 @@
+[submodule "Library_ArenaGames"]
+	path = Library_ArenaGames
+	url = https://github.com/gitMarky/Library_ArenaGames
+	branch = stable
+[submodule "Library_Shooter"]
+	path = Library_Shooter
+	url = https://github.com/gitMarky/Library_Shooter
+	branch = stable
+[submodule "Library_Character"]
+	path = Library_Character
+	url = https://github.com/gitMarky/Library_Character
+	branch = master

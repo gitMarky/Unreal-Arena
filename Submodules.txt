@@ -1,0 +1,13 @@
+Submodules:
+This repository contains two submodules:
+- Library_ArenaGames (https://github.com/gitMarky/Library_ArenaGames)
+- Library_Shooter (https://github.com/gitMarky/Library_Shooter)
+- Library_Character (https://github.com/gitMarky/Library_Character)
+
+These are separate projects, but the Hazard project references them, as may other projects.
+If you already cloned these projects you do not have to synchronize the submodules here anymore.
+
+You can use the scripts to create symbolic links to include in your OpenClonk folder:
+- create_links.bat (for the normal project files), create_links_submodules.bat (if you use the submodules)
+  You will need to run the console in administrator mode on windows for these scripts to work.
+- create_links.sh (for the normal project files), create_links_submodules.sh (if you use the submodules)
