@@ -363,67 +363,7 @@ private func CreateNewInventoryButton(int max_slots)
 // Calculates the position of a specific button and returns a proplist.
 private func CalculateButtonPosition(int slot_number, int max_slots)
 {
-	var column = 0;
-	var row = slot_number;
-
-	var max_columns = 1;
-	var max_rows = max_slots;
-	var config = InventoryBarProperties();
-	
-	var cell_width = config.Width + config.MarginX;
-	var cell_height = config.Height + config.MarginY;
-
-	
-	// determine alignment on x axis
-	var alignX;
-	var pos_x_offset;
-	if (config.AlignX == GUI_AlignLeft)
-	{
-		alignX = "0%";
-		pos_x_offset = 0;
-	}
-	else if (config.AlignX == GUI_AlignCenter)
-	{
-		alignX = "50%";
-		pos_x_offset = -(cell_width * max_columns - config.MarginX) / 2;
-	}
-	else if (config.AlignX == GUI_AlignRight)
-	{
-		alignX = "100%";
-		pos_x_offset = -(cell_width * max_columns - config.MarginX);
-	}
-	
-	// determine alignment on y axis
-	var alignY;
-	var pos_y_offset;
-	if (config.AlignY == GUI_AlignTop)
-	{
-		alignY = "0%";
-		pos_y_offset = 0;
-	}
-	else if (config.AlignY == GUI_AlignCenter)
-	{
-		alignY = "50%";
-		pos_y_offset = -(cell_height * max_rows - config.MarginY) / 2;
-	}
-	else if (config.AlignY == GUI_AlignBottom)
-	{
-		alignY = "100%";
-		pos_y_offset = -(cell_height * max_rows - config.MarginY);
-	}
-	
-	// determine position
-	var pos_x = pos_x_offset + column * cell_width;
-	var pos_y = pos_y_offset + row * cell_height;
-	
-	var pos =
-	{
-		Left = Format("%s%s", alignX, Call(config.Dimension, pos_x)),
-		Top = Format("%s%s", alignY, Call(config.Dimension, pos_y)),
-		Right = Format("%s%s", alignX, Call(config.Dimension, pos_x + config.Width)),
-		Bottom = Format("%s%s", alignY, Call(config.Dimension, pos_y + config.Height))
-	};
-	return pos;
+	return GetGridPosition(InventoryBarLayout(), 0, slot_number, 1, max_slots);
 }
 
 private func FxExtraSlotUpdaterTimer(object target, proplist effect)
@@ -451,7 +391,7 @@ static const GUI_AlignTop = -1;
 static const GUI_AlignBottom = +1;
 
 
-public func InventoryBarProperties()
+public func InventoryBarLayout()
 {
 	return {
 		AlignX = GUI_AlignCenter,
@@ -462,4 +402,61 @@ public func InventoryBarProperties()
 		Height = GUI_Controller_InventoryBar_IconSize,
 		Dimension = Global.ToEmString,
 	};
+}
+
+public func GetGridPosition(proplist layout, int row, int column, int grid_rows, int grid_columns)
+{
+	var cell_width = layout.Width + layout.MarginX;
+	var cell_height = layout.Height + layout.MarginY;
+
+	// determine alignment on x axis
+	var alignX;
+	var pos_x_offset;
+	if (layout.AlignX == GUI_AlignLeft)
+	{
+		alignX = "0%";
+		pos_x_offset = 0;
+	}
+	else if (layout.AlignX == GUI_AlignCenter)
+	{
+		alignX = "50%";
+		pos_x_offset = -(cell_width * grid_columns - layout.MarginX) / 2;
+	}
+	else if (layout.AlignX == GUI_AlignRight)
+	{
+		alignX = "100%";
+		pos_x_offset = -(cell_width * grid_columns - layout.MarginX);
+	}
+	
+	// determine alignment on y axis
+	var alignY;
+	var pos_y_offset;
+	if (layout.AlignY == GUI_AlignTop)
+	{
+		alignY = "0%";
+		pos_y_offset = 0;
+	}
+	else if (layout.AlignY == GUI_AlignCenter)
+	{
+		alignY = "50%";
+		pos_y_offset = -(cell_height * grid_rows - layout.MarginY) / 2;
+	}
+	else if (layout.AlignY == GUI_AlignBottom)
+	{
+		alignY = "100%";
+		pos_y_offset = -(cell_height * grid_rows - layout.MarginY);
+	}
+	
+	// determine position
+	var pos_x = pos_x_offset + column * cell_width;
+	var pos_y = pos_y_offset + row * cell_height;
+	
+	var pos =
+	{
+		Left = Format("%s%s", alignX, Call(layout.Dimension, pos_x)),
+		Top = Format("%s%s", alignY, Call(layout.Dimension, pos_y)),
+		Right = Format("%s%s", alignX, Call(layout.Dimension, pos_x + layout.Width)),
+		Bottom = Format("%s%s", alignY, Call(layout.Dimension, pos_y + layout.Height))
+	};
+	return pos;
 }
