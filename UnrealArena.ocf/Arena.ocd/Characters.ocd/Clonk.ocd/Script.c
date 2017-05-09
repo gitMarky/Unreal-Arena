@@ -6,7 +6,16 @@
 #include Library_AmmoManager
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Properties
+
 local MaxEnergy = 100000;
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Skins
 
 local skin_gender;
 local skin_team;
@@ -16,6 +25,7 @@ static const PLAYER_SKIN_SLOT_BODY = 1;
 static const PLAYER_SKIN_SLOT_ARML = 2;
 static const PLAYER_SKIN_SLOT_ARMR = 3;
 static const PLAYER_SKIN_SLOT_HEAD = 4;
+
 
 func SetSkin(int new_skin)
 {
@@ -49,6 +59,7 @@ func SetSkin(int new_skin)
 	return skin;
 }
 
+
 func GetSkinTextures()
 {
 	var skin_suffix = "";
@@ -59,6 +70,11 @@ func GetSkinTextures()
             head = Format("%s_head", prefix),
            };
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Death
 
 // TODO: Remove - this is great for testing, though
 func Splatter()
@@ -118,6 +134,11 @@ func OverlayDeathAnimation(int slot)
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Weapons
+
 public func GetAmmoSource(id ammo)
 {
 	// redundant at the moment, but it should avoid problems in the future
@@ -131,3 +152,58 @@ public func GetAmmoSource(id ammo)
 		return AMMO_Source_Local;
 	}
 }
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Helper functions to play some sounds. They are encapsulated here in case sound names change.
+
+public func PlaySoundConfirm()
+{
+	// not used at the moment
+}
+
+
+public func PlaySoundDecline()
+{
+	// not used at the moment
+}
+
+public func PlaySoundDoubt()
+{
+	// not used at the moment
+}
+
+public func PlaySoundHurt()
+{
+	// not used at the moment
+}
+
+
+public func PlaySoundTaunt()
+{
+	// not used at the moment
+}
+
+
+public func PlaySoundShock()
+{
+	// not used at the moment
+}
+
+public func PlaySoundScream()
+{
+	// not used at the moment
+}
+
+public func PlaySoundIdle()
+{
+	// not used at the moment
+}
+
+public func PlaySkinSound(string sound, ...)
+{
+	// not used until the sounds are implemented properly
+	// Sound(Format("Clonk::Skin::%s::%s", GetSoundSkinName(), sound), ...);
+}
+
