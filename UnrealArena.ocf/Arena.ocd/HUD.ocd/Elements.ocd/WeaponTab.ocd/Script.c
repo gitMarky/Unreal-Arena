@@ -123,7 +123,7 @@ public func FxDisplayMsgTimer(object pTarget, int iEffectNumber, int iEffectTime
 {
 	if(iEffectTime > HUD_iMessageTime )
 	{
-		//Log("RemovedMessage");
+		//DebugLog("RemovedMessage");
 		pTarget->~RemoveObject();
 		return -1;
 	}

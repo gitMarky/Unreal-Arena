@@ -80,7 +80,7 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 	var mass = level * level;
 	var target_count = BoundBy(GetLength(targets), 2, 20);
 	mass /= target_count;
-	Log("Explosion mass is %d", mass);
+	DebugLog("Explosion mass is %d", mass);
 	for (var target in targets) 
 	{
 		if (!target) continue;

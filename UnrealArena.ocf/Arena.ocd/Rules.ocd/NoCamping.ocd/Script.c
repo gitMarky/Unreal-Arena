@@ -29,7 +29,7 @@ local Name = "$Name$";
 //    var obj = CreateObject(AFKH, AbsX(aCursors[iPlr]->GetX()), AbsY(aCursors[iPlr]->GetY()), iPlr);
 //    SetCursor(iPlr, obj, 1,1);
 //    SetPlrView(iPlr, aCursors[iPlr]);
-//    Log("$isAFK$", GetPlayerName(iPlr));
+//    DebugLog("$isAFK$", GetPlayerName(iPlr));
 //  }
 //  else
 //  {
@@ -39,7 +39,7 @@ local Name = "$Name$";
 //    SetCursor(iPlr, aCursors[iPlr], 1,1);
 //    SetPlrView(iPlr, aCursors[iPlr]);
 //    aCursors[iPlr] = false;
-//    Log("$isBack$", GetPlayerName(iPlr));
+//    DebugLog("$isBack$", GetPlayerName(iPlr));
 //  }
 //}
 //
@@ -139,8 +139,8 @@ local Name = "$Name$";
 //  EffectVar(0, pClonk, iNo) = pClonk->GetX();
 //  EffectVar(1, pClonk, iNo) = pClonk->GetY();
 //
-////  Log("%d", EffectVar(2, pClonk, iNo));
-////  Log("%d", EffectVar(3, pClonk, iNo));
+////  DebugLog("%d", EffectVar(2, pClonk, iNo));
+////  DebugLog("%d", EffectVar(3, pClonk, iNo));
 //  // Bestrafung
 //  if(EffectVar(2, pClonk, iNo) >= 25 ||
 //     EffectVar(3, pClonk, iNo) >= 50)

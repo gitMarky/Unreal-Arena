@@ -73,12 +73,12 @@ func FxDeathCamTimer(object pTarget, proplist iEffectNumber, int iEffectTime)
 {
 	if (iEffectTime > 90)
 	{
-		Log("DeathCamTimout");
+		DebugLog("DeathCamTimout");
 		return -1;
 	}
 	if (!pTarget)
 	{
-		Log("DeathCamTarget");
+		DebugLog("DeathCamTarget");
 		return -1;
 	}
 	var g_iPlrViewRange = 700;

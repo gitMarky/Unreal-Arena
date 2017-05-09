@@ -15,7 +15,7 @@ func GetHUDController()
 
 protected func OnEnergyChange(int change, int cause, int caused_by)
 {
-	Log("*** OnEnergyChange: %d %d %d", change, cause, caused_by);
+	DebugLog("*** OnEnergyChange: %d %d %d", change, cause, caused_by);
 	return _inherited(change, cause, caused_by, ...);
 }
 

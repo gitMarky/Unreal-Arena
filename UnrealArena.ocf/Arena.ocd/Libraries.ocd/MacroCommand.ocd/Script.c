@@ -48,7 +48,7 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 		SetComDir(COMD_Stop);
 	}
 	// Liste l�schen
-	//Log("%s #%d: ClearMacroCom by SetMacroCom", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: ClearMacroCom by SetMacroCom", GetName(), ObjectNumber());
 	ClearMacroCommands();
 	// Befehl eintragen
 	var iEffect = AddEffect("MacroCommand", this, 300, 0, this);
@@ -64,7 +64,7 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 	ClearScheduleCall(this, "MacroCommandMoveTo");
 	ClearScheduleCall(this, "MacroCommandFollow");
 	ClearScheduleCall(this, "MacroCommandWait");
-	//Log("%s #%d: SetMacroCom: '%s' %d/%d Target: %s #%d", GetName(), ObjectNumber(), szCommand, iX, iY, GetName(pTarget), pTarget->ObjectNumber());
+	//DebugLog("%s #%d: SetMacroCom: '%s' %d/%d Target: %s #%d", GetName(), ObjectNumber(), szCommand, iX, iY, GetName(pTarget), pTarget->ObjectNumber());
 	if (szCommand != "None")
 		ScheduleCall(this, Format("MacroCom%s", szCommand), 1);
 	else
@@ -79,7 +79,7 @@ func SetMacroCommand(object pCallback, string szCommand, object pTarget, int iX,
 // Befehl an den Anfang setzen
 func AddMacroCommand(object pCallback, string szCommand, object pTarget, int iX, int iY, int iDelay, int iAggro)
 {
-	//Log("%s #%d: AddMacroCom", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: AddMacroCom", GetName(), ObjectNumber());
 	// Befehlsliste zwischenspeichern
 	var aComs = aMacroCommandList;
 	// Und leeren
@@ -257,7 +257,7 @@ func MacroComMoveTo()
 	// Aggrolevel
 	if (GetMacroCommand(0, 6) != -1)
 		SetAggroLevel(GetMacroCommand(0, 6), 0, 0, 0, "MacroComMoveTo");
-	//Log("%s #%d: MacroComMoveTo", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: MacroComMoveTo", GetName(), ObjectNumber());
 }
 
 func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
@@ -268,7 +268,7 @@ func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 	// Wird haben das Ende des Pfades erreicht?
 	if (GetLength(aPath) == iStep)
 	{
-		//Log("%s #%d: MacroComMoveTo finished", GetName(), ObjectNumber());
+		//DebugLog("%s #%d: MacroComMoveTo finished", GetName(), ObjectNumber());
 		// Zum Ziel laufen und beenden
 		var x = GetMacroCommand(0, 2), y = GetMacroCommand(0, 3);
 		SetCommand("MoveTo", nil, x, y);
@@ -288,13 +288,13 @@ func MacroComMoveToStep(object dummy, int iStep) // MoveTo-Schritt
 	// 200 Frames pro 100 Pixel Abstand sind angesetzt
 	var breaktime = Max(ObjectDistance(aPath[iStep - 1], aPath[iStep]) / 100 * 200, 100);
 	ScheduleCall(this, "MacroComSuccessFailed", breaktime, 0, 0, Macro_PathImpossible);
-	//Log("%s #%d: MacroComMoveToStep", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: MacroComMoveToStep", GetName(), ObjectNumber());
 	return 1;
 }
 
 func MacroComMoveToStepFailed() // MoveTo-Schritt fehlgeschlagen
 {
-	//Log("%s #%d: MacroComMoveToStepFailed", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: MacroComMoveToStepFailed", GetName(), ObjectNumber());
 	// Erstes Kommando ist gar nicht MoveTo?
 	if (GetMacroCommand(0, 0) != "MoveTo")
 		return;
@@ -399,7 +399,7 @@ func MacroComWait(bool fEnd)
 // Makrobefehl an der Stelle iCommand ist erfolgreich
 func MacroComSuccess(iCommand, int iCmd2)
 {
-	//Log("%s #%d: MacroComSuccess", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: MacroComSuccess", GetName(), ObjectNumber());
 	// F�r Aufrufe aus SetCommand(... "Call");
 	if (GetType(iCommand) == C4V_C4Object)
 		iCommand = iCmd2;
@@ -422,7 +422,7 @@ func MacroComSuccess(iCommand, int iCmd2)
 
 func MacroComTumble()
 {
-	//Log("%s #%d: MacroComTumble", GetName(), ObjectNumber());
+	//DebugLog("%s #%d: MacroComTumble", GetName(), ObjectNumber());
 	MacroComSuccessFailed(0, Macro_PathImpossible);
 	this->~CheckStuck();
 }
@@ -437,7 +437,7 @@ static const Macro_MoveToNoTarget = 4; // MoveTo hat kein Ziel bekommen
 // Makrobefehl an der Stelle iCommand ist fehlgeschlagen
 func MacroComSuccessFailed(int iCommand, int iReason)
 {
-	//Log("%s #%d: MacroComSuccessFailed: %d", GetName(), ObjectNumber(), iCommand);
+	//DebugLog("%s #%d: MacroComSuccessFailed: %d", GetName(), ObjectNumber(), iCommand);
 	// An der Stelle gibt es nichts?
 	if (iCommand < 0 || GetLength(aMacroCommandList) <= iCommand)
 		return;
@@ -460,7 +460,7 @@ func MacroComSuccessFailed(int iCommand, int iReason)
 // Makrobefehle aus der Liste entfernen
 func RemoveMacroCommand(int iCommand)
 {
-	//Log("%s #%d: RemoveMacroCommand: %d", GetName(), ObjectNumber(), iCommand);
+	//DebugLog("%s #%d: RemoveMacroCommand: %d", GetName(), ObjectNumber(), iCommand);
 	// An der Stelle gibt es nichts?
 	if (iCommand < 0 || GetLength(aMacroCommandList) <= iCommand)
 		return;
@@ -483,7 +483,7 @@ func RemoveMacroCommand(int iCommand)
 		checked = false;
 	}
 	/*	if (RemoveEffect(0, this, aMacroCommandList[iCommand]))
-		Log("Effect removed");*/
+		DebugLog("Effect removed");*/
 	var aNewMacroComList = CreateArray();
 	i = 0;
 	for (var iCom in aMacroCommandList) 

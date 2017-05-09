@@ -111,7 +111,7 @@ public func CreateWeaponTabs()
 	for(var i=0; i<GetLength(inventory); i++)
 	{
 		if(!inventory[i]) continue;
-		//Log("Did inventory %d",i);
+		//DebugLog("Did inventory %d",i);
 		if(pCommandObj->Contents(0) == inventory[i])
 		{
 			bActive = true;
@@ -267,7 +267,7 @@ global func HUDMessage( string szMessage, iPlr )
 		else
 		{
 			var iTeam = Abs(iPlr)-1;
-			Log("iTeam %d",iTeam);
+			DebugLog("iTeam %d",iTeam);
 			var j = 1;
 			var plr = GetTeamPlayer(iTeam, j);
 			while( plr != -1)
