@@ -6,6 +6,10 @@
 	@authors Zapper, Clonkonaut
 */
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Original code by Zapper and Clonkonaut
+
 /*
 	inventory_slot contains an array of proplists with the following attributes:
 		ID: submenu ID. Unique in combination with the target == this
@@ -359,15 +363,51 @@ private func CreateNewInventoryButton(int max_slots)
 // Calculates the position of a specific button and returns a proplist.
 private func CalculateButtonPosition(int slot_number, int max_slots)
 {
-	var pos_x_offset = -((GUI_Controller_InventoryBar_IconSize + GUI_Controller_InventoryBar_IconMargin) * max_slots - GUI_Controller_InventoryBar_IconMargin) / 2;
-	var pos_x = pos_x_offset + (GUI_Controller_InventoryBar_IconSize + GUI_Controller_InventoryBar_IconMargin) * slot_number;
-	var pos_y = GUI_Controller_InventoryBar_IconMarginScreenTop;
+	var config = InventoryBarProperties();
+	
+	
+
+	var pos_x_offset = -((config.Width + config.MarginX) * max_slots - config.MarginX) / 2;
+	var pos_x = pos_x_offset + (config.Width + config.MarginX) * slot_number;
+	var pos_y = config.MarginY;
+	
+	// determine alignment on x axis
+	var alignX;
+	if (config.AlignX == GUI_AlignLeft)
+	{
+		alignX = "0%";
+	}
+	else if (config.AlignX == GUI_AlignCenter)
+	{
+		alignX = "50%";
+	}
+	else if (config.AlignX == GUI_AlignRight)
+	{
+		alignX = "100%";
+	}
+	
+	// determine alignment on y axis
+		var alignY;
+	if (config.AlignY == GUI_AlignTop)
+	{
+		alignY = "0%";
+	}
+	else if (config.AlignY == GUI_AlignCenter)
+	{
+		alignY = "50%";
+	}
+	else if (config.AlignY == GUI_AlignBottom)
+	{
+		alignY = "100%";
+	}
+	
+	
 	var pos =
 	{
-		Left = Format("50%%%s", ToEmString(pos_x)),
-		Top = Format("0%%%s", ToEmString(pos_y)),
-		Right = Format("50%%%s", ToEmString(pos_x + GUI_Controller_InventoryBar_IconSize)),
-		Bottom = Format("0%%%s", ToEmString(pos_y + GUI_Controller_InventoryBar_IconSize))
+		Left = Format("%s%s", alignX, Call(config.Dimension, pos_x)),
+		Top = Format("%s%s", alignY, Call(config.Dimension, pos_y)),
+		Right = Format("%s%s", alignX, Call(config.Dimension, pos_x + GUI_Controller_InventoryBar_IconSize)),
+		Bottom = Format("%s%s", alignY, Call(config.Dimension, pos_y + GUI_Controller_InventoryBar_IconSize))
 	};
 	return pos;
 }
@@ -383,4 +423,29 @@ private func FxExtraSlotUpdaterTimer(object target, proplist effect)
 private func FxExtraSlotUpdaterUpdate(object target, proplist effect)
 {
 	if (this) ScheduleUpdateInventory();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Configuration functions
+
+static const GUI_AlignLeft = -1;
+static const GUI_AlignCenter = 0;
+static const GUI_AlignRight = +1;
+
+static const GUI_AlignTop = -1;
+static const GUI_AlignBottom = +1;
+
+
+public func InventoryBarProperties()
+{
+	return {
+		AlignX = GUI_AlignCenter,
+		AlignY = GUI_AlignCenter,
+		MarginX = GUI_Controller_InventoryBar_IconMargin,
+		MarginY = GUI_Controller_InventoryBar_IconMarginScreenTop,
+		Width = GUI_Controller_InventoryBar_IconSize,
+		Height = GUI_Controller_InventoryBar_IconSize,
+		Dimension = Global.ToEmString,
+	};
 }
