@@ -363,7 +363,16 @@ private func CreateNewInventoryButton(int max_slots)
 // Calculates the position of a specific button and returns a proplist.
 private func CalculateButtonPosition(int slot_number, int max_slots)
 {
+	var column = 0;
+	var row = slot_number;
+
+	var max_columns = 1;
+	var max_rows = max_slots;
 	var config = InventoryBarProperties();
+	
+	var cell_width = config.Width + config.MarginX;
+	var cell_height = config.Height + config.MarginY;
+
 	
 	// determine alignment on x axis
 	var alignX;
@@ -376,39 +385,43 @@ private func CalculateButtonPosition(int slot_number, int max_slots)
 	else if (config.AlignX == GUI_AlignCenter)
 	{
 		alignX = "50%";
-		pos_x_offset = -((config.Width + config.MarginX) * max_slots - config.MarginX) / 2;
+		pos_x_offset = -(cell_width * max_columns - config.MarginX) / 2;
 	}
 	else if (config.AlignX == GUI_AlignRight)
 	{
 		alignX = "100%";
-		pos_x_offset = -((config.Width + config.MarginX) * max_slots - config.MarginX);
+		pos_x_offset = -(cell_width * max_columns - config.MarginX);
 	}
 	
 	// determine alignment on y axis
-		var alignY;
+	var alignY;
+	var pos_y_offset;
 	if (config.AlignY == GUI_AlignTop)
 	{
 		alignY = "0%";
+		pos_y_offset = 0;
 	}
 	else if (config.AlignY == GUI_AlignCenter)
 	{
 		alignY = "50%";
+		pos_y_offset = -(cell_height * max_rows - config.MarginY) / 2;
 	}
 	else if (config.AlignY == GUI_AlignBottom)
 	{
 		alignY = "100%";
+		pos_y_offset = -(cell_height * max_rows - config.MarginY);
 	}
 	
 	// determine position
-	var pos_x = pos_x_offset + (config.Width + config.MarginX) * slot_number;
-	var pos_y = config.MarginY;
+	var pos_x = pos_x_offset + column * cell_width;
+	var pos_y = pos_y_offset + row * cell_height;
 	
 	var pos =
 	{
 		Left = Format("%s%s", alignX, Call(config.Dimension, pos_x)),
 		Top = Format("%s%s", alignY, Call(config.Dimension, pos_y)),
-		Right = Format("%s%s", alignX, Call(config.Dimension, pos_x + GUI_Controller_InventoryBar_IconSize)),
-		Bottom = Format("%s%s", alignY, Call(config.Dimension, pos_y + GUI_Controller_InventoryBar_IconSize))
+		Right = Format("%s%s", alignX, Call(config.Dimension, pos_x + config.Width)),
+		Bottom = Format("%s%s", alignY, Call(config.Dimension, pos_y + config.Height))
 	};
 	return pos;
 }
