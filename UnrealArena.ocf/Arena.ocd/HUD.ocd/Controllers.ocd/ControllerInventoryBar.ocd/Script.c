@@ -441,7 +441,7 @@ public func InventoryBarProperties()
 {
 	return {
 		AlignX = GUI_AlignCenter,
-		AlignY = GUI_AlignCenter,
+		AlignY = GUI_AlignTop,
 		MarginX = GUI_Controller_InventoryBar_IconMargin,
 		MarginY = GUI_Controller_InventoryBar_IconMarginScreenTop,
 		Width = GUI_Controller_InventoryBar_IconSize,
