@@ -408,6 +408,9 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
 {
 	var cell_width = layout.Width + layout.MarginX;
 	var cell_height = layout.Height + layout.MarginY;
+	
+	var grid_width = (cell_width * grid_columns - layout.MarginX);
+	var grid_height = (cell_height * grid_rows - layout.MarginY);
 
 	// determine alignment on x axis
 	var alignX;
@@ -420,12 +423,12 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
 	else if (layout.AlignX == GUI_AlignCenter)
 	{
 		alignX = "50%";
-		pos_x_offset = -(cell_width * grid_columns - layout.MarginX) / 2;
+		pos_x_offset = -grid_width / 2;
 	}
 	else if (layout.AlignX == GUI_AlignRight)
 	{
 		alignX = "100%";
-		pos_x_offset = -(cell_width * grid_columns - layout.MarginX);
+		pos_x_offset = -grid_width;
 	}
 	
 	// determine alignment on y axis
@@ -439,12 +442,12 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
 	else if (layout.AlignY == GUI_AlignCenter)
 	{
 		alignY = "50%";
-		pos_y_offset = -(cell_height * grid_rows - layout.MarginY) / 2;
+		pos_y_offset = -grid_height / 2;
 	}
 	else if (layout.AlignY == GUI_AlignBottom)
 	{
 		alignY = "100%";
-		pos_y_offset = -(cell_height * grid_rows - layout.MarginY);
+		pos_y_offset = -grid_height;
 	}
 	
 	// determine position
