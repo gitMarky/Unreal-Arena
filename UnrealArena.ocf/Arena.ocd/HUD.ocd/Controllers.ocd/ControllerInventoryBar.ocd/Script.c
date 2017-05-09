@@ -365,25 +365,23 @@ private func CalculateButtonPosition(int slot_number, int max_slots)
 {
 	var config = InventoryBarProperties();
 	
-	
-
-	var pos_x_offset = -((config.Width + config.MarginX) * max_slots - config.MarginX) / 2;
-	var pos_x = pos_x_offset + (config.Width + config.MarginX) * slot_number;
-	var pos_y = config.MarginY;
-	
 	// determine alignment on x axis
 	var alignX;
+	var pos_x_offset;
 	if (config.AlignX == GUI_AlignLeft)
 	{
 		alignX = "0%";
+		pos_x_offset = 0;
 	}
 	else if (config.AlignX == GUI_AlignCenter)
 	{
 		alignX = "50%";
+		pos_x_offset = -((config.Width + config.MarginX) * max_slots - config.MarginX) / 2;
 	}
 	else if (config.AlignX == GUI_AlignRight)
 	{
 		alignX = "100%";
+		pos_x_offset = -((config.Width + config.MarginX) * max_slots - config.MarginX);
 	}
 	
 	// determine alignment on y axis
@@ -401,6 +399,9 @@ private func CalculateButtonPosition(int slot_number, int max_slots)
 		alignY = "100%";
 	}
 	
+	// determine position
+	var pos_x = pos_x_offset + (config.Width + config.MarginX) * slot_number;
+	var pos_y = config.MarginY;
 	
 	var pos =
 	{
