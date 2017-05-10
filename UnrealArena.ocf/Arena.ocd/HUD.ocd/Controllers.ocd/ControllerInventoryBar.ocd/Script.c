@@ -363,7 +363,7 @@ private func CreateNewInventoryButton(int max_slots)
 // Calculates the position of a specific button and returns a proplist.
 private func CalculateButtonPosition(int slot_number, int max_slots)
 {
-	return GetGridPosition(0, slot_number, InventoryBarGridLayout(max_slots), InventoryBarCellLayout());
+	return GetGridPosition(InventoryBarGridLayout(max_slots), 0, slot_number);
 }
 
 private func FxExtraSlotUpdaterTimer(object target, proplist effect)
@@ -400,28 +400,27 @@ static const GUI_Layout = new Global {
 
 public func InventoryBarGridLayout(int max_slots)
 {
-	return {
-		Prototype = GUI_Layout,
-		Align = { X = GUI_AlignCenter,  Y = GUI_AlignTop, },
-		Margin = {Top = GUI_Controller_InventoryBar_UA_IconMarginScreenTop},
-		Rows = 1,
-		Columns = max_slots,
-		Dimension = Global.ToEmString,
-	};
-}
-
-public func InventoryBarCellLayout()
-{
-	return {
-		Prototype = GUI_Layout,
-		Margin =
-		{
-			Left = GUI_Controller_InventoryBar_UA_IconMargin, 
-			Right = GUI_Controller_InventoryBar_UA_IconMargin, 
+	return
+	{
+		Grid = {
+			Prototype = GUI_Layout,
+			Align = { X = GUI_AlignCenter,  Y = GUI_AlignTop,},
+			Margin = {Top = GUI_Controller_InventoryBar_UA_IconMarginScreenTop},
+			Rows = 1,
+			Columns = max_slots,
+			Dimension = Global.ToEmString,
 		},
-		Width = GUI_Controller_InventoryBar_UA_IconSize,
-		Height = GUI_Controller_InventoryBar_UA_IconSize,
-		Dimension = Global.ToEmString,
+		Cell = {
+			Prototype = GUI_Layout,
+			Margin =
+			{
+				Left = GUI_Controller_InventoryBar_UA_IconMargin, 
+				Right = GUI_Controller_InventoryBar_UA_IconMargin, 
+			},
+			Width = GUI_Controller_InventoryBar_UA_IconSize,
+			Height = GUI_Controller_InventoryBar_UA_IconSize,
+			Dimension = Global.ToEmString,
+		}
 	};
 }
 
@@ -513,8 +512,22 @@ public func GetElementPosition(proplist layout)
 }
 
 
-public func GetGridPosition(int row, int column, proplist grid_layout, proplist cell_layout)
+public func GetGridPosition(proplist layout, int row, int column)
 {
+	// determine internal layout
+	var grid_layout, cell_layout;
+	
+	if (layout["Grid"] && layout["Cell"])
+	{
+		grid_layout = layout["Grid"];
+		cell_layout = layout["Cell"];
+	}
+	else
+	{
+		grid_layout = {Prototype = layout};
+		cell_layout = {Prototype = layout};
+	}
+
 	// determine position of the cell in the grid
 	var cell_width = cell_layout.Width + cell_layout.Margin.Left + cell_layout.Margin.Right;
 	var cell_height = cell_layout.Height + cell_layout.Margin.Top + cell_layout.Margin.Bottom;
@@ -525,11 +538,8 @@ public func GetGridPosition(int row, int column, proplist grid_layout, proplist 
 	// determine position of the grid
 	var grid_width = cell_width * grid_layout.Columns;
 	var grid_height = cell_height * grid_layout.Rows;
-	
-	grid_layout.Width = grid_width;
-	grid_layout.Height = grid_height;
 
-	var grid_position = GetElementPosition(grid_layout);
+	var grid_position = GetElementPosition({Prototype = grid_layout, Width = grid_width, Height = grid_height});
 	
 	// merge everything into one
 	return
