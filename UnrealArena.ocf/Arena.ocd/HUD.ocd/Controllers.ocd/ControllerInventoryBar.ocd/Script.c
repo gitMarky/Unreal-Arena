@@ -461,5 +461,44 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
 		Right = Format("%s%s", alignX, Call(layout.Dimension, pos_x + layout.Width)),
 		Bottom = Format("%s%s", alignY, Call(layout.Dimension, pos_y + layout.Height))
 	};
+	
 	return pos;
+}
+
+/**
+ * Adds the contents of one proplist to the other.
+ * Usually you can do this by using a prototype, but 
+ * this is not possible when you receive a second proplist
+ * from another function.
+ * 
+ * @par original This proplist will be expanded.
+ * @par additional These are the additional contents.
+ * @par no_overwrite By default the function overwrites
+ *      existing properties in the original proplist,
+ *      as it would happen if you derive from a prototype.
+ *      If this parameter is 'true' the function will report
+ *      an error instead of overwriting a parameter.
+ */
+public func AddProperties(proplist original, proplist additional, bool no_overwrite)
+{
+	if (original == nil)
+	{
+		FatalError("Cannot add properties to 'nil'");
+	}
+	if (additional == nil)
+	{
+		FatalError("Adding proplist 'nil' to another proplist makes no sense.");
+	}
+	
+	for (var property in GetProperties(additional))
+	{
+		if (no_overwrite && (original[property] != nil)) // about to overwrite?
+		{
+			FatalError(Format("Cancelling overwrite of property '%s', original value %v, with new value %v", property, original[property], additional[property]));
+		}
+		else
+		{
+			original[property] = additional[property];
+		}
+	}
 }
