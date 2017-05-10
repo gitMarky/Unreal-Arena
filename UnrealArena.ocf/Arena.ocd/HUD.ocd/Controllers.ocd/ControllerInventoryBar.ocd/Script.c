@@ -419,15 +419,15 @@ public func CheckLayout(proplist layout)
 	var errors = [];
 	if (layout.Width == 0)
 	{
-		errors = PushBack(errors, "property 'Width' must not be 0");
+		PushBack(errors, "property 'Width' must not be 0");
 	}
 	if (layout.Height == 0)
 	{
-		errors = PushBack(errors, "property 'Height' must not be 0");
+		PushBack(errors, "property 'Height' must not be 0");
 	}
 	if (layout.Dimension != Global.ToEmString && layout.Dimension != Global.ToPercentString)
 	{
-		errors = PushBack(errors, Format("property 'Dimension' must be Global.ToEmString, or Global.ToPerccentString, but it is %v", layout.Dimension));
+		PushBack(errors, Format("property 'Dimension' must be Global.ToEmString, or Global.ToPerccentString, but it is %v", layout.Dimension));
 	}
 	
 	if (GetLength(errors) > 0)
@@ -504,6 +504,13 @@ public func GetElementPosition(proplist layout)
 
 public func GetGridPosition(proplist layout, int row, int column, int grid_rows, int grid_columns)
 {
+	// determine position of the cell in the grid
+	var cell_width = layout.Width + 2 * layout.MarginX;
+	var cell_height = layout.Height + 2 * layout.MarginY;
+
+	var cell_pos_x = layout.MarginX + column * cell_width;
+	var cell_pos_y = layout.MarginY + row * cell_height;
+
 	// determine position of the grid
 	var grid_width = cell_width * grid_columns;
 	var grid_height = cell_height * grid_rows;
@@ -516,13 +523,7 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
 
 	var grid_position = GetElementPosition(grid_layout);
 	
-	// determine position of the cell in the grid
-	var cell_width = layout.Width + 2 * layout.MarginX;
-	var cell_height = layout.Height + 2 * layout.MarginY;
-
-	var cell_pos_x = layout.MarginX + column * cell_width;
-	var cell_pos_y = layout.MarginY + row * cell_height;
-	
+	// merge everything into one
 	return
 	{
 		Left =   Format("%s%s", grid_position.Left, Call(layout.Dimension, cell_pos_x)),
