@@ -390,10 +390,20 @@ static const GUI_AlignRight = +1;
 static const GUI_AlignTop = -1;
 static const GUI_AlignBottom = +1;
 
+static const GUI_Layout = new Global {
+	AlignX = GUI_AlignLeft,
+	AlignY = GUI_AlignTop,
+	MarginX = 0,
+	MarginY = 0,
+	Width = 0,
+	Height = 0,
+	Dimenstion = Global.ToPercentString,
+};
 
 public func InventoryBarLayout()
 {
 	return {
+		Prototype = GUI_Layout,
 		AlignX = GUI_AlignCenter,
 		AlignY = GUI_AlignTop,
 		MarginX = GUI_Controller_InventoryBar_IconMargin,
@@ -403,6 +413,12 @@ public func InventoryBarLayout()
 		Dimension = Global.ToEmString,
 	};
 }
+
+
+public func GetElementPosition(proplist layout)
+{
+}
+
 
 public func GetGridPosition(proplist layout, int row, int column, int grid_rows, int grid_columns)
 {
