@@ -494,9 +494,9 @@ public func GetElementPosition(proplist layout)
 
 	return
 	{
-		Left = Format("%s%s", align_x, Call(layout.Dimension, element_x)),
-		Top = Format("%s%s", align_y, Call(layout.Dimension, element_y)),
-		Right = Format("%s%s", align_x, Call(layout.Dimension, element_x + layout.Width)),
+		Left =   Format("%s%s", align_x, Call(layout.Dimension, element_x)),
+		Top =    Format("%s%s", align_y, Call(layout.Dimension, element_y)),
+		Right =  Format("%s%s", align_x, Call(layout.Dimension, element_x + layout.Width)),
 		Bottom = Format("%s%s", align_y, Call(layout.Dimension, element_y + layout.Height))
 	};
 }
@@ -504,63 +504,32 @@ public func GetElementPosition(proplist layout)
 
 public func GetGridPosition(proplist layout, int row, int column, int grid_rows, int grid_columns)
 {
-	var cell_width = layout.Width + layout.MarginX;
-	var cell_height = layout.Height + layout.MarginY;
+	// determine position of the grid
+	var grid_width = cell_width * grid_columns;
+	var grid_height = cell_height * grid_rows;
 	
-	var grid_width = (cell_width * grid_columns - layout.MarginX);
-	var grid_height = (cell_height * grid_rows - layout.MarginY);
-
-	// determine alignment on x axis
-	var grid_alignX;
-	var cell_offset_x;
-	if (layout.AlignX == GUI_AlignLeft)
-	{
-		grid_alignX = "0%";
-		cell_offset_x = 0;
-	}
-	else if (layout.AlignX == GUI_AlignCenter)
-	{
-		grid_alignX = "50%";
-		cell_offset_x = -grid_width / 2;
-	}
-	else if (layout.AlignX == GUI_AlignRight)
-	{
-		grid_alignX = "100%";
-		cell_offset_x = -grid_width;
-	}
-	
-	// determine alignment on y axis
-	var grid_align_y;
-	var cell_offset_y;
-	if (layout.AlignY == GUI_AlignTop)
-	{
-		grid_align_y = "0%";
-		cell_offset_y = 0;
-	}
-	else if (layout.AlignY == GUI_AlignCenter)
-	{
-		grid_align_y = "50%";
-		cell_offset_y = -grid_height / 2;
-	}
-	else if (layout.AlignY == GUI_AlignBottom)
-	{
-		grid_align_y = "100%";
-		cell_offset_y = -grid_height;
-	}
-	
-	// determine position
-	var cell_pos_x = cell_offset_x + column * cell_width;
-	var cell_pos_y = cell_offset_y + row * cell_height;
-	
-	var pos =
-	{
-		Left = Format("%s%s", grid_alignX, Call(layout.Dimension, cell_pos_x)),
-		Top = Format("%s%s", grid_align_y, Call(layout.Dimension, cell_pos_y)),
-		Right = Format("%s%s", grid_alignX, Call(layout.Dimension, cell_pos_x + layout.Width)),
-		Bottom = Format("%s%s", grid_align_y, Call(layout.Dimension, cell_pos_y + layout.Height))
+	var grid_layout = {
+		Prototype = layout,
+		Width = grid_width,
+		Height = grid_height,
 	};
+
+	var grid_position = GetElementPosition(grid_layout);
 	
-	return pos;
+	// determine position of the cell in the grid
+	var cell_width = layout.Width + 2 * layout.MarginX;
+	var cell_height = layout.Height + 2 * layout.MarginY;
+
+	var cell_pos_x = layout.MarginX + column * cell_width;
+	var cell_pos_y = layout.MarginY + row * cell_height;
+	
+	return
+	{
+		Left =   Format("%s%s", grid_position.Left, Call(layout.Dimension, cell_pos_x)),
+		Top =    Format("%s%s", grid_position.Top, Call(layout.Dimension, cell_pos_y)),
+		Right =  Format("%s%s", grid_position.Left, Call(layout.Dimension, cell_pos_x + layout.Width)),
+		Bottom = Format("%s%s", grid_position.Top, Call(layout.Dimension, cell_pos_y + layout.Height))
+	};
 }
 
 /**
