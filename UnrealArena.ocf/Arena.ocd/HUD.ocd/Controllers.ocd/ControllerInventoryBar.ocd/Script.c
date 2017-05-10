@@ -414,9 +414,91 @@ public func InventoryBarLayout()
 	};
 }
 
+public func CheckLayout(proplist layout)
+{
+	var errors = [];
+	if (layout.Width == 0)
+	{
+		errors = PushBack(errors, "property 'Width' must not be 0");
+	}
+	if (layout.Height == 0)
+	{
+		errors = PushBack(errors, "property 'Height' must not be 0");
+	}
+	if (layout.Dimension != Global.ToEmString && layout.Dimension != Global.ToPercentString)
+	{
+		errors = PushBack(errors, Format("property 'Dimension' must be Global.ToEmString, or Global.ToPerccentString, but it is %v", layout.Dimension));
+	}
+	
+	if (GetLength(errors) > 0)
+	{
+		var message = "Error in layout";
+		for (var error in errors)
+		{
+			message = Format("%s, %s", message, error);
+		}
+		FatalError(message);
+	}
+}
+
 
 public func GetElementPosition(proplist layout)
 {
+	CheckLayout(layout);
+
+	var element_width = layout.Width + 2 * layout.MarginX;
+	var element_height = layout.Height + 2 * layout.MarginY;
+
+	// determine alignment on x axis
+	var align_x;
+	var offset_x;
+	if (layout.AlignX == GUI_AlignLeft)
+	{
+		align_x = "0%";
+		offset_x = 0;
+	}
+	else if (layout.AlignX == GUI_AlignCenter)
+	{
+		align_x = "50%";
+		offset_x = -element_width / 2;
+	}
+	else if (layout.AlignX == GUI_AlignRight)
+	{
+		align_x = "100%";
+		offset_x = -element_width;
+	}
+
+	// determine alignment on y axis
+	var align_y;
+	var offset_y;
+	if (layout.AlignY == GUI_AlignTop)
+	{
+		align_y = "0%";
+		offset_y = 0;
+	}
+	else if (layout.AlignY == GUI_AlignCenter)
+	{
+		align_y = "50%";
+		offset_y = -element_height / 2;
+	}
+	else if (layout.AlignY == GUI_AlignBottom)
+	{
+		align_y = "100%";
+		offset_y = -element_height;
+	}
+
+	// determine actual dimensions
+
+	var element_x = offset_x + layout.MarginX;
+	var element_y = offset_y + layout.MarginY;
+
+	return
+	{
+		Left = Format("%s%s", align_x, Call(layout.Dimension, element_x)),
+		Top = Format("%s%s", align_y, Call(layout.Dimension, element_y)),
+		Right = Format("%s%s", align_x, Call(layout.Dimension, element_x + layout.Width)),
+		Bottom = Format("%s%s", align_y, Call(layout.Dimension, element_y + layout.Height))
+	};
 }
 
 
