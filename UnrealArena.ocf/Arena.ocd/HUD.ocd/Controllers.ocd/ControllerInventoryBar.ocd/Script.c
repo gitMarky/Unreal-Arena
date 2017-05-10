@@ -35,8 +35,7 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 {
 	// The gui already exists, only update it with a new submenu
 	var pos = CalculateButtonPosition(slot_number, max_slots);
-
-	return
+	var content =
 	{
 		Target = this,
 		slot_number =
@@ -58,7 +57,6 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 		Style = GUI_NoCrop,
 		ID = slot_info.ID,
 		Symbol = {Std = Icon_Menu_Circle, Quick = Icon_Menu_Circle, Selected = Icon_Menu_CircleHighlight},
-		Left = pos.Left, Top = pos.Top, Right = pos.Right, Bottom = pos.Bottom,
 		count =
 		{
 			ID = 1000 + slot_info.ID,
@@ -90,6 +88,8 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 			ID = 2000 + slot_info.ID
 		}
 	};
+	
+	return AddProperties(content, pos);
 }
 
 /* Creation / Destruction */
@@ -478,6 +478,10 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
  *      as it would happen if you derive from a prototype.
  *      If this parameter is 'true' the function will report
  *      an error instead of overwriting a parameter.
+ *
+ * @return proplist The original proplist. This is in fact the same
+ *         proplist that was passed as an argument, the functions just
+ *         returns it for convenience.
  */
 public func AddProperties(proplist original, proplist additional, bool no_overwrite)
 {
@@ -501,4 +505,6 @@ public func AddProperties(proplist original, proplist additional, bool no_overwr
 			original[property] = additional[property];
 		}
 	}
+	
+	return original;
 }
