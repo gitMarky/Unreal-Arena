@@ -363,7 +363,7 @@ private func CreateNewInventoryButton(int max_slots)
 // Calculates the position of a specific button and returns a proplist.
 private func CalculateButtonPosition(int slot_number, int max_slots)
 {
-	return GetGridPosition(InventoryBarLayout(), 0, slot_number, 1, max_slots);
+	return GetGridPosition(0, slot_number, InventoryBarGridLayout(max_slots), InventoryBarCellLayout());
 }
 
 private func FxExtraSlotUpdaterTimer(object target, proplist effect)
@@ -398,21 +398,26 @@ static const GUI_Layout = new Global {
 	Dimension = Global.ToPercentString,
 };
 
-public func InventoryBarLayout()
+public func InventoryBarGridLayout(int max_slots)
 {
 	return {
 		Prototype = GUI_Layout,
-		Align =
-		{
-			X = GUI_AlignCenter, 
-			Y = GUI_AlignTop,
-		},
+		Align = { X = GUI_AlignCenter,  Y = GUI_AlignTop, },
+		Margin = {Top = GUI_Controller_InventoryBar_UA_IconMarginScreenTop},
+		Rows = 1,
+		Columns = max_slots,
+		Dimension = Global.ToEmString,
+	};
+}
+
+public func InventoryBarCellLayout()
+{
+	return {
+		Prototype = GUI_Layout,
 		Margin =
 		{
 			Left = GUI_Controller_InventoryBar_UA_IconMargin, 
 			Right = GUI_Controller_InventoryBar_UA_IconMargin, 
-			Top = GUI_Controller_InventoryBar_UA_IconMarginScreenTop, 
-			Bottom = 0,
 		},
 		Width = GUI_Controller_InventoryBar_UA_IconSize,
 		Height = GUI_Controller_InventoryBar_UA_IconSize,
@@ -508,34 +513,31 @@ public func GetElementPosition(proplist layout)
 }
 
 
-public func GetGridPosition(proplist layout, int row, int column, int grid_rows, int grid_columns)
+public func GetGridPosition(int row, int column, proplist grid_layout, proplist cell_layout)
 {
 	// determine position of the cell in the grid
-	var cell_width = layout.Width + layout.Margin.Left + layout.Margin.Right;
-	var cell_height = layout.Height + layout.Margin.Top + layout.Margin.Bottom;
+	var cell_width = cell_layout.Width + cell_layout.Margin.Left + cell_layout.Margin.Right;
+	var cell_height = cell_layout.Height + cell_layout.Margin.Top + cell_layout.Margin.Bottom;
 
-	var cell_pos_x = layout.Margin.Left + column * cell_width;
-	var cell_pos_y = layout.Margin.Top + row * cell_height;
+	var cell_pos_x = cell_layout.Margin.Left + column * cell_width;
+	var cell_pos_y = cell_layout.Margin.Top + row * cell_height;
 
 	// determine position of the grid
-	var grid_width = cell_width * grid_columns;
-	var grid_height = cell_height * grid_rows;
+	var grid_width = cell_width * grid_layout.Columns;
+	var grid_height = cell_height * grid_layout.Rows;
 	
-	var grid_layout = {
-		Prototype = layout,
-		Width = grid_width,
-		Height = grid_height,
-	};
+	grid_layout.Width = grid_width;
+	grid_layout.Height = grid_height;
 
 	var grid_position = GetElementPosition(grid_layout);
 	
 	// merge everything into one
 	return
 	{
-		Left =   Format("%s%s", grid_position.Left, Call(layout.Dimension, cell_pos_x)),
-		Top =    Format("%s%s", grid_position.Top, Call(layout.Dimension, cell_pos_y)),
-		Right =  Format("%s%s", grid_position.Left, Call(layout.Dimension, cell_pos_x + layout.Width)),
-		Bottom = Format("%s%s", grid_position.Top, Call(layout.Dimension, cell_pos_y + layout.Height))
+		Left =   Format("%s%s", grid_position.Left, Call(cell_layout.Dimension, cell_pos_x)),
+		Top =    Format("%s%s", grid_position.Top, Call(cell_layout.Dimension, cell_pos_y)),
+		Right =  Format("%s%s", grid_position.Left, Call(cell_layout.Dimension, cell_pos_x + cell_layout.Width)),
+		Bottom = Format("%s%s", grid_position.Top, Call(cell_layout.Dimension, cell_pos_y + cell_layout.Height))
 	};
 }
 
