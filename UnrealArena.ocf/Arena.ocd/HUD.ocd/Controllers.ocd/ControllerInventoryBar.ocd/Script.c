@@ -413,53 +413,53 @@ public func GetGridPosition(proplist layout, int row, int column, int grid_rows,
 	var grid_height = (cell_height * grid_rows - layout.MarginY);
 
 	// determine alignment on x axis
-	var alignX;
-	var pos_x_offset;
+	var grid_alignX;
+	var cell_offset_x;
 	if (layout.AlignX == GUI_AlignLeft)
 	{
-		alignX = "0%";
-		pos_x_offset = 0;
+		grid_alignX = "0%";
+		cell_offset_x = 0;
 	}
 	else if (layout.AlignX == GUI_AlignCenter)
 	{
-		alignX = "50%";
-		pos_x_offset = -grid_width / 2;
+		grid_alignX = "50%";
+		cell_offset_x = -grid_width / 2;
 	}
 	else if (layout.AlignX == GUI_AlignRight)
 	{
-		alignX = "100%";
-		pos_x_offset = -grid_width;
+		grid_alignX = "100%";
+		cell_offset_x = -grid_width;
 	}
 	
 	// determine alignment on y axis
-	var alignY;
-	var pos_y_offset;
+	var grid_align_y;
+	var cell_offset_y;
 	if (layout.AlignY == GUI_AlignTop)
 	{
-		alignY = "0%";
-		pos_y_offset = 0;
+		grid_align_y = "0%";
+		cell_offset_y = 0;
 	}
 	else if (layout.AlignY == GUI_AlignCenter)
 	{
-		alignY = "50%";
-		pos_y_offset = -grid_height / 2;
+		grid_align_y = "50%";
+		cell_offset_y = -grid_height / 2;
 	}
 	else if (layout.AlignY == GUI_AlignBottom)
 	{
-		alignY = "100%";
-		pos_y_offset = -grid_height;
+		grid_align_y = "100%";
+		cell_offset_y = -grid_height;
 	}
 	
 	// determine position
-	var pos_x = pos_x_offset + column * cell_width;
-	var pos_y = pos_y_offset + row * cell_height;
+	var cell_pos_x = cell_offset_x + column * cell_width;
+	var cell_pos_y = cell_offset_y + row * cell_height;
 	
 	var pos =
 	{
-		Left = Format("%s%s", alignX, Call(layout.Dimension, pos_x)),
-		Top = Format("%s%s", alignY, Call(layout.Dimension, pos_y)),
-		Right = Format("%s%s", alignX, Call(layout.Dimension, pos_x + layout.Width)),
-		Bottom = Format("%s%s", alignY, Call(layout.Dimension, pos_y + layout.Height))
+		Left = Format("%s%s", grid_alignX, Call(layout.Dimension, cell_pos_x)),
+		Top = Format("%s%s", grid_align_y, Call(layout.Dimension, cell_pos_y)),
+		Right = Format("%s%s", grid_alignX, Call(layout.Dimension, cell_pos_x + layout.Width)),
+		Bottom = Format("%s%s", grid_align_y, Call(layout.Dimension, cell_pos_y + layout.Height))
 	};
 	
 	return pos;
