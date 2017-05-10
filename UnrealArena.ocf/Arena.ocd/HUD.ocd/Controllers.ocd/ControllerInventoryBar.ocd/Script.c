@@ -19,9 +19,9 @@
 */
 
 // HUD margin and size in tenths of em.
-static const GUI_Controller_InventoryBar_IconMarginScreenTop = 5;
-static const GUI_Controller_InventoryBar_IconSize = 20;
-static const GUI_Controller_InventoryBar_IconMargin = 5;
+static const GUI_Controller_InventoryBar_UA_IconMarginScreenTop = 5;
+static const GUI_Controller_InventoryBar_UA_IconSize = 20;
+static const GUI_Controller_InventoryBar_UA_IconMargin = 2;
 
 local inventory_slots;
 local inventory_gui_menu;
@@ -67,18 +67,18 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 		// Prepare (invisible) extra-slot display circle.
 		extra_slot =
 		{
-			Top = ToEmString(GUI_Controller_InventoryBar_IconSize),
-			Bottom = ToEmString(GUI_Controller_InventoryBar_IconSize + GUI_Controller_InventoryBar_IconSize/2),
+			Top = ToEmString(GUI_Controller_InventoryBar_UA_IconSize),
+			Bottom = ToEmString(GUI_Controller_InventoryBar_UA_IconSize + GUI_Controller_InventoryBar_UA_IconSize/2),
 			Style = GUI_TextLeft,
 			Text = nil,
 			symbol =// used to display an infinity sign if necessary (Icon_Number)
 			{
-				Right = ToEmString(GUI_Controller_InventoryBar_IconSize/2),
+				Right = ToEmString(GUI_Controller_InventoryBar_UA_IconSize/2),
 				GraphicsName = "Inf",
 			},
 			circle =// shows the item in the extra slot
 			{
-				Left = ToEmString(GUI_Controller_InventoryBar_IconSize/2),
+				Left = ToEmString(GUI_Controller_InventoryBar_UA_IconSize/2),
 				Symbol = nil,
 				symbol = {}
 			}
@@ -391,25 +391,31 @@ static const GUI_AlignTop = -1;
 static const GUI_AlignBottom = +1;
 
 static const GUI_Layout = new Global {
-	AlignX = GUI_AlignLeft,
-	AlignY = GUI_AlignTop,
-	MarginX = 0,
-	MarginY = 0,
+	Align = { X = GUI_AlignLeft, Y = GUI_AlignTop,},
+	Margin = { Left = 0, Right = 0, Top = 0, Bottom = 0,},
 	Width = 0,
 	Height = 0,
-	Dimenstion = Global.ToPercentString,
+	Dimension = Global.ToPercentString,
 };
 
 public func InventoryBarLayout()
 {
 	return {
 		Prototype = GUI_Layout,
-		AlignX = GUI_AlignCenter,
-		AlignY = GUI_AlignTop,
-		MarginX = GUI_Controller_InventoryBar_IconMargin,
-		MarginY = GUI_Controller_InventoryBar_IconMarginScreenTop,
-		Width = GUI_Controller_InventoryBar_IconSize,
-		Height = GUI_Controller_InventoryBar_IconSize,
+		Align =
+		{
+			X = GUI_AlignCenter, 
+			Y = GUI_AlignTop,
+		},
+		Margin =
+		{
+			Left = GUI_Controller_InventoryBar_UA_IconMargin, 
+			Right = GUI_Controller_InventoryBar_UA_IconMargin, 
+			Top = GUI_Controller_InventoryBar_UA_IconMarginScreenTop, 
+			Bottom = 0,
+		},
+		Width = GUI_Controller_InventoryBar_UA_IconSize,
+		Height = GUI_Controller_InventoryBar_UA_IconSize,
 		Dimension = Global.ToEmString,
 	};
 }
@@ -446,23 +452,23 @@ public func GetElementPosition(proplist layout)
 {
 	CheckLayout(layout);
 
-	var element_width = layout.Width + 2 * layout.MarginX;
-	var element_height = layout.Height + 2 * layout.MarginY;
+	var element_width = layout.Width + layout.Margin.Left + layout.Margin.Right;
+	var element_height = layout.Height + layout.Margin.Top + layout.Margin.Bottom;
 
 	// determine alignment on x axis
 	var align_x;
 	var offset_x;
-	if (layout.AlignX == GUI_AlignLeft)
+	if (layout.Align.X == GUI_AlignLeft)
 	{
 		align_x = "0%";
 		offset_x = 0;
 	}
-	else if (layout.AlignX == GUI_AlignCenter)
+	else if (layout.Align.X == GUI_AlignCenter)
 	{
 		align_x = "50%";
 		offset_x = -element_width / 2;
 	}
-	else if (layout.AlignX == GUI_AlignRight)
+	else if (layout.Align.X == GUI_AlignRight)
 	{
 		align_x = "100%";
 		offset_x = -element_width;
@@ -471,17 +477,17 @@ public func GetElementPosition(proplist layout)
 	// determine alignment on y axis
 	var align_y;
 	var offset_y;
-	if (layout.AlignY == GUI_AlignTop)
+	if (layout.Align.Y == GUI_AlignTop)
 	{
 		align_y = "0%";
 		offset_y = 0;
 	}
-	else if (layout.AlignY == GUI_AlignCenter)
+	else if (layout.Align.Y == GUI_AlignCenter)
 	{
 		align_y = "50%";
 		offset_y = -element_height / 2;
 	}
-	else if (layout.AlignY == GUI_AlignBottom)
+	else if (layout.Align.Y == GUI_AlignBottom)
 	{
 		align_y = "100%";
 		offset_y = -element_height;
@@ -489,8 +495,8 @@ public func GetElementPosition(proplist layout)
 
 	// determine actual dimensions
 
-	var element_x = offset_x + layout.MarginX;
-	var element_y = offset_y + layout.MarginY;
+	var element_x = offset_x + layout.Margin.Left;
+	var element_y = offset_y + layout.Margin.Top;
 
 	return
 	{
@@ -505,11 +511,11 @@ public func GetElementPosition(proplist layout)
 public func GetGridPosition(proplist layout, int row, int column, int grid_rows, int grid_columns)
 {
 	// determine position of the cell in the grid
-	var cell_width = layout.Width + 2 * layout.MarginX;
-	var cell_height = layout.Height + 2 * layout.MarginY;
+	var cell_width = layout.Width + layout.Margin.Left + layout.Margin.Right;
+	var cell_height = layout.Height + layout.Margin.Top + layout.Margin.Bottom;
 
-	var cell_pos_x = layout.MarginX + column * cell_width;
-	var cell_pos_y = layout.MarginY + row * cell_height;
+	var cell_pos_x = layout.Margin.Left + column * cell_width;
+	var cell_pos_y = layout.Margin.Top + row * cell_height;
 
 	// determine position of the grid
 	var grid_width = cell_width * grid_columns;
