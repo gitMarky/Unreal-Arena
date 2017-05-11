@@ -146,13 +146,16 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 	var tab_width = 150;
 	var tab_height = tab_width / 2;
 	var offset_y = (-slot_nr) * (tab_height + 65);
-
-	var info_tab = {
-		Target = this,
+	
+	var tab_position = {
 		Left = ToPercentString(GUI_Controller_StatusBar_MarginLeft),
 		Right = ToPercentString(GUI_Controller_StatusBar_MarginLeft + tab_width),
 		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y),
 		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y + tab_height),
+	};
+
+	var info_tab = {
+		Target = this,
 		Symbol = GUI_UA_InfoTab,
 		GraphicsName = nil,
 		ElementHex = {
@@ -175,6 +178,8 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 		Element010 = AssembleStatusBarDigit(1),
 		Element100 = AssembleStatusBarDigit(2),
 	};
+	
+	AddProperties(info_tab, tab_position);
 
 	return info_tab;
 }
