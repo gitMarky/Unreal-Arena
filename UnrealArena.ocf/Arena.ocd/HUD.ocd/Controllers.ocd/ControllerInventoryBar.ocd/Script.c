@@ -18,11 +18,6 @@
 		quick: bool, whether this is the quick switch slot
 */
 
-// HUD margin and size in tenths of em.
-static const GUI_Controller_InventoryBar_UA_IconMarginScreenTop = 5;
-static const GUI_Controller_InventoryBar_UA_IconSize = 20;
-static const GUI_Controller_InventoryBar_UA_IconMargin = 2;
-
 local inventory_slots;
 local inventory_gui_menu;
 local inventory_gui_id;
@@ -67,18 +62,18 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 		// Prepare (invisible) extra-slot display circle.
 		extra_slot =
 		{
-			Top = ToEmString(GUI_Controller_InventoryBar_UA_IconSize),
-			Bottom = ToEmString(GUI_Controller_InventoryBar_UA_IconSize + GUI_Controller_InventoryBar_UA_IconSize/2),
+			Top = ToEmString(GUI_UA_InventoryBar_IconSize_Em),
+			Bottom = ToEmString(GUI_UA_InventoryBar_IconSize_Em + GUI_UA_InventoryBar_IconSize_Em/2),
 			Style = GUI_TextLeft,
 			Text = nil,
 			symbol =// used to display an infinity sign if necessary (Icon_Number)
 			{
-				Right = ToEmString(GUI_Controller_InventoryBar_UA_IconSize/2),
+				Right = ToEmString(GUI_UA_InventoryBar_IconSize_Em/2),
 				GraphicsName = "Inf",
 			},
 			circle =// shows the item in the extra slot
 			{
-				Left = ToEmString(GUI_Controller_InventoryBar_UA_IconSize/2),
+				Left = ToEmString(GUI_UA_InventoryBar_IconSize_Em/2),
 				Symbol = nil,
 				symbol = {}
 			}
@@ -385,8 +380,8 @@ private func FxExtraSlotUpdaterUpdate(object target, proplist effect)
 
 public func InventoryBarGridLayout(int max_slots)
 {
-	var cell_width = Min(100, 1000 / max_slots); // * 0.1 percent
-	var cell_height = 100; // * 0.1 percent
+	var cell_width = Min(GUI_UA_InventoryBar_MinWidth_Pt, 1000 / max_slots);
+	var cell_height = GUI_UA_InventoryBar_Height_Pt;
 	return
 	{
 		Grid = {
