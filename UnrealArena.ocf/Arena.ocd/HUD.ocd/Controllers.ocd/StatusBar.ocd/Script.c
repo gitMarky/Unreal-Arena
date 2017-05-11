@@ -143,9 +143,8 @@ private func UpdateStatusBarDisplay()
 // The bar is not shown until ShowCrewBar() is called. Bars will appear in order of creation.
 private func AssembleStatusBar(int slot_nr, string icon_name)
 {
-	var tab_width = 150; //100;
-	var tab_height = tab_width / 2; //50;
-//	var offset_y = (-slot_nr) * 4 * tab_height / 3;
+	var tab_width = 150;
+	var tab_height = tab_width / 2;
 	var offset_y = (-slot_nr) * (tab_height + 65);
 
 	var info_tab = {
@@ -162,7 +161,6 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 			Priority = 2,
 			Symbol = GUI_UA_InfoTab,
 			GraphicsName = "Hex",
-//			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
 			Left = ToPercentString(0), Right = ToPercentString(1000), Top = ToPercentString(0), Bottom = ToPercentString(1000),
 		},
 		ElementIcon = {
@@ -171,7 +169,6 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 			Priority = 3,
 			Symbol = GUI_UA_InfoTab,
 			GraphicsName = icon_name,
-//			Left = "0%", Right = "100%", Top = "0%", Bottom = "100%",
 			Left = ToPercentString(0), Right = ToPercentString(1000), Top = ToPercentString(0), Bottom = ToPercentString(1000),
 		},
 		Element001 = AssembleStatusBarDigit(0),
