@@ -147,12 +147,29 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 	var tab_height = tab_width / 2;
 	var offset_y = (-slot_nr) * (tab_height + 65);
 	
-	var tab_position = {
-		Left = ToPercentString(GUI_Controller_StatusBar_MarginLeft),
-		Right = ToPercentString(GUI_Controller_StatusBar_MarginLeft + tab_width),
-		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y),
-		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y + tab_height),
+//	var tab_position = {
+//		Left = ToPercentString(GUI_Controller_StatusBar_MarginLeft),
+//		Right = ToPercentString(GUI_Controller_StatusBar_MarginLeft + tab_width),
+//		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y),
+//		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y + tab_height),
+//	};
+
+	var tab_layout = {
+		Grid = {
+			Prototype = GUI_BoxLayout,
+			Align = {X = GUI_AlignLeft, Y = GUI_AlignBottom},
+			Margin = {Bottom = GUI_UA_InventoryBar_Height_Pt},
+			Rows = 4,
+		},
+		Cell = {
+			Prototype = GUI_BoxLayout,
+			Margin = {Bottom = 10},
+			Width = tab_width,
+			Height = tab_height,
+		},
 	};
+	
+	var tab_position = GuiCalculateGridElementPosition(tab_layout, slot_nr, 0);
 
 	var info_tab = {
 		Target = this,
