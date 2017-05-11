@@ -385,26 +385,22 @@ private func FxExtraSlotUpdaterUpdate(object target, proplist effect)
 
 public func InventoryBarGridLayout(int max_slots)
 {
+	var cell_width = Min(100, 1000 / max_slots); // * 0.1 percent
+	var cell_height = 100; // * 0.1 percent
 	return
 	{
 		Grid = {
 			Prototype = GUI_BoxLayout,
-			Align = { X = GUI_AlignCenter,  Y = GUI_AlignTop,},
-			Margin = {Top = GUI_Controller_InventoryBar_UA_IconMarginScreenTop},
+			Align = { X = GUI_AlignLeft,  Y = GUI_AlignBottom,},
 			Rows = 1,
 			Columns = max_slots,
-			Dimension = Global.ToEmString,
+			Dimension = Global.ToPercentString,
 		},
 		Cell = {
 			Prototype = GUI_BoxLayout,
-			Margin =
-			{
-				Left = GUI_Controller_InventoryBar_UA_IconMargin, 
-				Right = GUI_Controller_InventoryBar_UA_IconMargin, 
-			},
-			Width = GUI_Controller_InventoryBar_UA_IconSize,
-			Height = GUI_Controller_InventoryBar_UA_IconSize,
-			Dimension = Global.ToEmString,
+			Width = cell_width,
+			Height = cell_height,
+			Dimension = Global.ToPercentString,
 		}
 	};
 }
