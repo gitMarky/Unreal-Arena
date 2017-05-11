@@ -145,14 +145,6 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 {
 	var tab_width = 150;
 	var tab_height = tab_width / 2;
-	var offset_y = (-slot_nr) * (tab_height + 65);
-	
-//	var tab_position = {
-//		Left = ToPercentString(GUI_Controller_StatusBar_MarginLeft),
-//		Right = ToPercentString(GUI_Controller_StatusBar_MarginLeft + tab_width),
-//		Top = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y),
-//		Bottom = ToPercentString(GUI_Controller_StatusBar_MarginTop + offset_y + tab_height),
-//	};
 
 	var tab_layout = {
 		Grid = {
@@ -163,7 +155,7 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 		},
 		Cell = {
 			Prototype = GUI_BoxLayout,
-			Margin = {Bottom = 10},
+			Margin = {Bottom = GUI_UA_StatusBar_MarginBottom_Pt},
 			Width = tab_width,
 			Height = tab_height,
 		},
@@ -205,17 +197,32 @@ func AssembleStatusBarDigit(int dimension)
 {
 	var width = 150;
 	var height = 520;
-	var diff_x = 170;
-	var position_x = 750 - dimension * diff_x;
-	var position_y = 500 - height / 2;
-	return {
+	var diff_x = 130;
+	
+	var max_digits = 3;
+	
+	var digit_layout = {
+		Grid = {
+			Prototype = GUI_BoxLayout,
+			Margin = {Right = diff_x },
+			Align = {X = GUI_AlignRight, Y = GUI_AlignCenter},
+			Columns = max_digits,
+		},
+		Cell = {
+			Prototype = GUI_BoxLayout,
+			Width = width,
+			Height = height,
+		},
+	};
+	
+	var digit_position = GuiCalculateGridElementPosition(digit_layout, 0, max_digits - dimension - 1);
+	
+	var digit = {
 		Target = this,
 		Style = GUI_NoCrop,
 		Symbol = GUI_UA_Number,
 		GraphicsName = nil,
 		Priority = 4 + dimension,
-		Left = ToPercentString(position_x), Right = ToPercentString(position_x + width),
-		Top = ToPercentString(position_y), Bottom = ToPercentString(position_y + height), 
 		Digit = {
 			Target = this,
 			Style = GUI_NoCrop,
@@ -223,6 +230,9 @@ func AssembleStatusBarDigit(int dimension)
 			GraphicsName = "Number0",
 		},
 	};
+	
+	AddProperties(digit, digit_position);
+	return digit;
 }
 
 
