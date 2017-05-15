@@ -18,6 +18,7 @@ static const SPAWN_Superweapon = "n";
 protected func Initialize()
 {
 	CreateSpawnPoints();
+	CreateJumpPads();
 	
 	_inherited(...);
 }
@@ -30,6 +31,43 @@ protected func OnPlayerRelaunch(int plr)
 	relaunch->StartRelaunch(clonk);
 	return;
 }
+
+
+private func CreateJumpPads()
+{
+	// Jump pads
+	
+	var blue = RGB(100, 100, 200);
+	var red = RGB(200, 100, 100);
+	var grey = RGB(150, 150, 150);
+
+	var jumpPads = [[ 122, 474,  88,  37,   0, blue],
+			        [ 132, 507, 100, 115, 130, blue],
+			        [ 155, 575, 130,  10,   0, blue],
+			        [ 125, 575,  75,  28,   0, blue],
+			        [ 144, 638,  70,  80,  90, blue],
+			        [ 147, 674,  70,  30,   0, blue],
+			        // mirrored
+			        [1783, 474,  88, -37,   0, red],
+			        [1773, 507, 100,-115,-130, red],
+			        [1750, 575, 130, -10,   0, red],
+			        [1780, 575,  75, -28,   0, red],
+			        [1761, 638,  70, -80, -90, red],
+			        [1758, 674,  70, -30,   0, red]];
+
+	for (var padData in jumpPads)
+	{
+		CreateObject(Arena_JumpPad, padData[0], padData[1], NO_OWNER)->SetStrength(padData[2])
+		                                                             ->SetPadR(padData[3])
+		                                                             ->SetBaseR(padData[4])
+		                                                             ->SetPadColor(padData[5])
+		                                                             ->SetEffectColor(padData[5])
+		                                                             ->SetBaseColor(grey)
+		                                                             ->SetBaseGraphics("BaseSmall");
+	}
+
+}
+
 
 protected func CreateSpawnPoints()
 {
