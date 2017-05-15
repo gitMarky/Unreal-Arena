@@ -51,7 +51,8 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 		},
 		Style = GUI_NoCrop,
 		ID = slot_info.ID,
-		Symbol = {Std = Icon_Menu_Circle, Quick = Icon_Menu_Circle, Selected = Icon_Menu_CircleHighlight},
+		Symbol = GUI_UA_WeaponTab,
+		GraphicsName = {Std = nil, Quick = nil, Selected = "Active"},
 		count =
 		{
 			ID = 1000 + slot_info.ID,
