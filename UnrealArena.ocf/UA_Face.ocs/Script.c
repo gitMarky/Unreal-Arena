@@ -41,27 +41,27 @@ private func CreateJumpPads()
 	var red = RGB(200, 100, 100);
 	var grey = RGB(150, 150, 150);
 
-	var jumpPads = [[ 122, 474,  88,  37,   0, blue],
-			        [ 132, 507, 100, 115, 130, blue],
-			        [ 155, 575, 130,  10,   0, blue],
-			        [ 125, 575,  75,  28,   0, blue],
-			        [ 144, 638,  70,  80,  90, blue],
-			        [ 147, 674,  70,  30,   0, blue],
+	var jumpPads = [{x = 122, y = 474, strength =  88, angle =   37, base =    0, color =  blue},
+			        {x = 132, y = 507, strength = 100, angle =  115, base =  130, color =  blue},
+			        {x = 155, y = 575, strength = 130, angle =   10, base =    0, color =  blue},
+			        {x = 125, y = 575, strength =  75, angle =   28, base =    0, color =  blue},
+			        {x = 144, y = 638, strength =  70, angle =   80, base =   90, color =  blue},
+			        {x = 147, y = 674, strength =  70, angle =   30, base =    0, color =  blue},
 			        // mirrored
-			        [1783, 474,  88, -37,   0, red],
-			        [1773, 507, 100,-115,-130, red],
-			        [1750, 575, 130, -10,   0, red],
-			        [1780, 575,  75, -28,   0, red],
-			        [1761, 638,  70, -80, -90, red],
-			        [1758, 674,  70, -30,   0, red]];
+			        {x = 1783, y = 474, strength =  88, angle =  -37, base =    0, color =  red},
+			        {x = 1773, y = 507, strength = 100, angle = -115, base = -130, color =  red},
+			        {x = 1750, y = 575, strength = 130, angle =  -10, base =    0, color =  red},
+			        {x = 1780, y = 575, strength =  75, angle =  -28, base =    0, color =  red},
+			        {x = 1761, y = 638, strength =  70, angle =  -80, base =  -90, color =  red},
+			        {x = 1758, y = 674, strength =  70, angle =  -30, base =    0, color =  red}];
 
 	for (var padData in jumpPads)
 	{
-		CreateObject(Arena_JumpPad, padData[0], padData[1], NO_OWNER)->SetStrength(padData[2])
-		                                                             ->SetPadR(padData[3])
-		                                                             ->SetBaseR(padData[4])
-		                                                             ->SetPadColor(padData[5])
-		                                                             ->SetEffectColor(padData[5])
+		CreateObject(Arena_JumpPad, padData.x, padData.y, NO_OWNER)->SetStrength(padData.strength)
+		                                                             ->SetPadR(padData.angle)
+		                                                             ->SetBaseR(padData.base)
+		                                                             ->SetPadColor(padData.color)
+		                                                             ->SetEffectColor(padData.color)
 		                                                             ->SetBaseColor(grey)
 		                                                             ->SetBaseGraphics("BaseSmall");
 	}
