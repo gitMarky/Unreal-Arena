@@ -18,6 +18,13 @@ func Initialize()
 }
 
 
+public func GetPlayerCrewID(int player)
+{
+	return UA_Clonk;
+}
+
+
+
 private func StartingEquipment(object crew)
 {
 	if (IsInstaGibConfigured())
