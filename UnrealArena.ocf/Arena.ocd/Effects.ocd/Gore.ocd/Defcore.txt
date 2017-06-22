@@ -13,3 +13,4 @@ VertexY=-3,3,-3
 VertexCNAT=5,8,6
 VertexFriction=150,150,150
 Rotate=1
+HideInCreator=true

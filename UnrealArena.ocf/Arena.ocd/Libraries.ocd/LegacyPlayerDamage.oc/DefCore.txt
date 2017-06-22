@@ -2,3 +2,4 @@
 id=Legacy_UA_PlayerDamage
 Version=8,0
 Category=C4D_StaticBack
+HideInCreator=true

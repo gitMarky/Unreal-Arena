@@ -3,3 +3,4 @@ id=Projectile_Explosion
 Version=8,0
 Category=C4D_Vehicle
 Mass=10
+HideInCreator=true

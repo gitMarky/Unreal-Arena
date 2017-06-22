@@ -9,3 +9,4 @@ VertexX=-1
 VertexY=-1
 VertexCNAT=CNAT_Bottom
 VertexFriction=20
+HideInCreator=true

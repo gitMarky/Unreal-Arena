@@ -11,3 +11,4 @@ VertexFriction=20
 StretchGrowth=1
 IncompleteActivity=1
 Oversize=1
+HideInCreator=true
