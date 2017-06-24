@@ -1182,9 +1182,9 @@ func FxAggroFire(object pTarget, proplist no)
 	if (!Contents())
 		return; // Lauf, Forest, lauf!
 	// Waffe in die Hand nehmen
-	if (!SelectWeapon(level, target, false))
+	if (!this->SelectWeapon(level, target, false))
 		// Evtl. Feuermodus wechseln (dann muss erst nachgeladen werden, aber besser als nichts)
-		if (!SelectWeapon(level, target, true))
+		if (!this->SelectWeapon(level, target, true))
 		{
 			// Bei Aggro_Follow k�nnen wir von unserem Pfade weg. D.h. eine Waffe und/oder Munition muss her
 			if (GetAggroLevel() == Aggro_Follow)
@@ -1192,9 +1192,9 @@ func FxAggroFire(object pTarget, proplist no)
 				//			Message("@Searching for weapons / ammo", this);
 				// Waffen auffrischen?
 				if (this->~CustomContentsCount("IsWeapon") <= 1)
-					return SearchWeapon(Aggro_Shoot);
+					return this->SearchWeapon(Aggro_Shoot);
 				// Munition auffrischen
-				return SearchAmmo(Aggro_Shoot);
+				return this->SearchAmmo(Aggro_Shoot);
 			}
 			// ein Balrog, ein Feind gegen den ihr nichts ausrichten k�nnt...lauft!
 			return;
@@ -1268,125 +1268,6 @@ func FxAggroFire(object pTarget, proplist no)
 			}
 }
 
-// Wenn iLevel = 1 (Aggro_Shoot) werden keine Waffen mit FM_Aim ausgew�hlt
-func SelectWeapon(int iLevel, object pTarget, bool fFireModes)
-{
-	// Entfernung zum Ziel
-	var dist = ObjectDistance(pTarget);
-	// Keine Waffen in Inventar?
-	if (!this->~CustomContentsCount("IsWeapon"))
-		return;
-	// Bevorzugten Schadenstyp bestimmen
-	var preftype = GetPrefDmgType(pTarget), type;
-	// Alle durchgehen und passende pr�fen
-	for (var i = 0, obj, fav, mode, favmode; obj = Contents(i); mode++)
-	{
-		// Nix Waffe
-		if (!(obj->~IsWeapon()))
-		{
-			i++;
-			mode = -1;
-			continue;
-		}
-		// Feuermodus
-		if (mode && !fFireModes)
-		{
-			i++;
-			mode = -1;
-			continue;
-		}
-		if (!(obj->GetFMData(FM_Name, mode)))
-		{
-			i++;
-			mode = -1;
-			continue;
-		}
-		if (mode == obj->GetFireMode() && mode)
-			continue;
-		// Nix gut
-		if (obj->GetFMData(FM_Aim, mode) > 0)
-			if (iLevel == 1 || !WildcardMatch(GetAction(), "*Walk*"))
-				continue;
-		// Keine Munition daf�r?
-		if (!(obj->GetCharge()) && !this->~GetAmmo(obj->GetFMData(FM_AmmoID, mode)))
-			continue;
-		// EMP nur gegen Maschinen
-		if (obj->GetBotData(BOT_EMP, mode))
-			if (!(pTarget->~IsMachine()))
-				continue;
-		// Kein Favorit bisher?
-		if (!fav)
-		{
-			fav = obj;
-			type = fav->GetBotData(BOT_DmgType, mode);
-			favmode = mode;
-		}
-		else
-		{
-			// Favorit hat nicht genug Reichweite
-			if (fav->GetBotData(BOT_Range, favmode) < dist)
-			{
-				// Neue Waffe hat mehr
-				if (obj->GetBotData(BOT_Range, mode) > dist)
-				{
-					fav = obj;
-					type = obj->GetBotData(BOT_DmgType, mode);
-					favmode = mode;
-				}
-			}
-			else
-			{
-				// Favorit hat genug Reichweite -> nur wechseln, wenn Schadenstyp besser
-				if (pTarget->~OnDmg(obj->GetBotData(BOT_DmgType, mode)) < pTarget->~OnDmg(type) && fav->GetBotData(BOT_Power, favmode) - 1 <= obj->GetBotData(BOT_Power, mode))
-				{
-					// Neuer Favorit
-					fav = obj;
-					type = fav->GetBotData(BOT_DmgType);
-					favmode = mode;
-				}
-				else
-				{
-					// St�rke der neuen Waffe ist gr��er oder Favorit ist ein Langlader
-					if (fav->GetBotData(BOT_Power, favmode) < obj->GetBotData(BOT_Power, mode) || (fav->GetBotData(BOT_Power, favmode) == BOT_Power_LongLoad && (fav->IsReloading() || !(fav->GetCharge()))))
-					{
-						// Waffe hat keine extralange Nachladezeit
-						if (obj->GetBotData(BOT_Power, mode) != BOT_Power_LongLoad)
-						{
-							// Neuer Favorit
-							fav = obj;
-							type = fav->GetBotData(BOT_DmgType);
-							favmode = mode;
-						}
-						else if (obj->GetCharge() != 0 && !(obj->IsReloading()))
-						{
-							// Neuer Favorit
-							fav = obj;
-							type = fav->GetBotData(BOT_DmgType);
-							favmode = mode;
-						}
-					}
-				}
-			}
-			// Reichweite passt
-			if (fav->GetBotData(BOT_Range, favmode) >= dist)
-				// Schadenstyp auch
-				if (preftype == type)
-					// St�rke auch
-					if (fav->GetBotData(BOT_Power, favmode) >= BOT_Power_3)
-						break;
-		}
-	}
-	// Ausw�hlen
-	if (!fav)
-		return;
-	// Feuermodus wechseln?
-	if (fFireModes)
-		if (favmode && favmode != fav->GetFireMode())
-			fav->SetFireMode(favmode);
-	if (ContentsCount() == 1)
-		return 1;
-	return ShiftContents(false, fav->GetID());
-}
 
 func GetPrefDmgType(object pTarget)
 {
@@ -1416,32 +1297,6 @@ func GetPrefDmgType(object pTarget)
 		type = DMG_Bio;
 	
 	return type;
-}
-
-// Sucht nach Waffen und l�uft dorthin
-func SearchWeapon(int iAggro)
-{
-	// N�chstbeste Spawnpunkte abklappern
-	for (var pSpawn in FindObjects(Find_ID(SPNP), Sort_Random())) 
-		if (pSpawn->Contents()->~IsWeapon())
-			// Die haben wir auch noch nicht?
-			if (!FindContents(pSpawn->Contents()->GetID()))
-				// Einsammelbar?
-				if (pSpawn->CheckCollect(GetOwner(), this))
-					// Hinlaufen
-					return SetMacroCommand(nil, "MoveTo", pSpawn, 0, 0, 0, iAggro);
-}
-
-// Sucht nach Munition und l�uft dorthin
-func SearchAmmo(int iAggro)
-{
-	// N�chstbeste Spawnpunkte abklappern
-	for (var pSpawn in FindObjects(Find_ID(SPNP), Sort_Random())) 
-		if (pSpawn->Contents()->~IsAmmo())
-			// Einsammelbar?
-			if (pSpawn->CheckCollect(GetOwner(), this))
-				// Hinlaufen (wir sind gutgl�ubig und denken, dass wir die auch brauchen)
-				return SetMacroCommand(nil, "MoveTo", pSpawn, 0, 0, 0, iAggro);
 }
 
 /* Waffenbehandlung wenn nicht im Kampf */
