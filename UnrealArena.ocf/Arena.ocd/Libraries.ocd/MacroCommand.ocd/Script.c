@@ -1192,9 +1192,9 @@ func FxAggroFire(object pTarget, proplist no)
 				//			Message("@Searching for weapons / ammo", this);
 				// Waffen auffrischen?
 				if (this->~CustomContentsCount("IsWeapon") <= 1)
-					return this->SearchWeapon(Aggro_Shoot);
+					return this->SearchWeapon(this, Aggro_Shoot);
 				// Munition auffrischen
-				return this->SearchAmmo(Aggro_Shoot);
+				return this->SearchAmmo(this, Aggro_Shoot);
 			}
 			// ein Balrog, ein Feind gegen den ihr nichts ausrichten k�nnt...lauft!
 			return;

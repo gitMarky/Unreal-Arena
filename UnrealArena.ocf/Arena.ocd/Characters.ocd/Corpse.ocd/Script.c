@@ -521,7 +521,7 @@ protected func Hit(int dx, int dy)
 func IsProjectileTarget(object projectile, object shooter)
 {
 	if (MOD_NoBlood()) return false;
-	return projectile->GetID() == Projectile_Explosion;
+	return projectile && projectile->GetID() == Projectile_Explosion;
 }
 
 func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type)

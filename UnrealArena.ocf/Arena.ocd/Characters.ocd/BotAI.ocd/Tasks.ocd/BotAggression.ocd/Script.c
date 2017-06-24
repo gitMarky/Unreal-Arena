@@ -34,8 +34,8 @@ public func Execute(proplist controller, object bot)
 	else
 	{
 		// Tell the weapon to stop shooting
-		if (Contents())
-			Contents()->~StopAutoFire();
+		if (bot->Contents())
+			bot->Contents()->~StopAutoFire();
 	}
 	
 	var weaprange = 400;
@@ -112,11 +112,11 @@ public func GetAggroLevel()
 
 private func ExecuteAttack(object bot, object target)
 {
-	var y = this.TaskAggroX;
-	var x = this.TaskAggroY;
+	var x = this.TaskAggroX;
+	var y = this.TaskAggroY;
 	var dist = this.TaskAggroDistance;
 	var level = this.TaskAggroLevel;
-	var target = GetEnemy();
+	var enemy = GetEnemy();
 	
 	// TODO
 	var weaprange = 400; // was 0 before
@@ -134,16 +134,20 @@ private func ExecuteAttack(object bot, object target)
 //	}
 	
 	// Target vanished?
-	if (!this->~CheckTarget(target, this, Max(dist, weaprange), 0, 0, true))
+	/*if (!this->~CheckTarget(target, this, Max(dist, weaprange), 0, 0, true))
 	{
 
 		if (Contents())
 			Contents()->~StopAutoFire();
 		return;
+	}*/
+	if (!target)
+	{
+		return;
 	}
 	
 	// No guns?
-	if (!Contents())
+	if (!bot->Contents())
 	{
 		return;
 	}
@@ -154,7 +158,7 @@ private func ExecuteAttack(object bot, object target)
 		if (GetAggroLevel() == Aggro_Follow)
 		{
 			// Get weapons?
-			if (this->~CustomContentsCount("IsWeapon") <= 1)
+			if (bot->~CustomContentsCount("IsWeapon") <= 1)
 				return SearchWeapon(bot, Aggro_Shoot);
 			// Get ammo?
 			return SearchAmmo(bot, Aggro_Shoot);
@@ -166,7 +170,7 @@ private func ExecuteAttack(object bot, object target)
 	
 	// Level 1 - Shoot at the target
 
-	var weapon = Contents();
+	var weapon = bot->Contents();
 	
 	// The bot does not do this every time it could
 	var efficiency = weapon->~GetBotData(BOT_Rating);

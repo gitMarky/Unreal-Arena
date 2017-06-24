@@ -23,7 +23,7 @@ func Hit()
 	Sound("Hits::GeneralHit?");
 }
 
-public func GetAmmoSource(id ammo)
+public func GetAmmoSource(type_or_firemode)
 {
 	return AMMO_Source_Container;
 }

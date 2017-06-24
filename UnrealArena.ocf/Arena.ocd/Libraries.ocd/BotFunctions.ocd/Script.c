@@ -1,20 +1,28 @@
 
-func UTBotAIDodgeJump()
+func UTBotAIDoubleJump()
 {
 	if (GetProcedure() == "FLIGHT")
+	{
 		this->~ControlUp();
-	else
+		return true;
+	}
+	return false;
+}
+
+func UTBotAIDodgeJump()
+{
+	if (!UTBotAIDoubleJump())
 		Jump();
 }
 
 
 func UTBotAIFindDodgeBullet()
 {
-	var bullets = FindObjects(Find_InRect(-180, -60, 360, 120), Find_Func("IsBullet"));
+	var bullets = FindObjects(Find_InRect(-180, -60, 360, 120), Find_Func("IsProjectile"));
 	
 	for (var bullet in bullets) 
 	{
-		if (this->~CheckEnemy(bullet, this))
+		// TODO if (this->~CheckEnemy(bullet, this))
 			return bullet;
 	}
 	
@@ -50,7 +58,7 @@ public func UTBotAIFindEnemies(int radius, bool disregardLineOfSight)
 											 Find_OCF(OCF_Alive)),
 									Sort_Distance());
 	
-	for (target in candidates)
+	for (var target in candidates)
 	{
 		var target_x = target->GetX();
 		var target_y = target->GetY();
