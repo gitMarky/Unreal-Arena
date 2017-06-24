@@ -5,10 +5,10 @@ Version=6,0
 MinPlayer=1
 
 [Definitions]
-Definition1=Objects.ocd
 Definition2=LibraryArenaGames.ocd
 Definition3=LibraryShooter.ocd
 Definition4=LibraryCharacter.ocd
+Definition5=LibraryAI.ocd
 
 [Player1]
 Crew=UA_Clonk=1

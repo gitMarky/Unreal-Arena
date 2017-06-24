@@ -1,24 +1,30 @@
-#include AI
+
+// Include the basic functionality
+#include AI_Controller
+// Include the different parts of the AI.
+#include AI_Debugging
+#include AI_HelperFunctions
+#include AI_Protection
+#include AI_TargetFinding
+#include AI_HelperClonk
+#include AI_HomePosition
+#include AI_AttackEnemy
+// Main execution logic
+#include AI_TaskExecutor
+// Other stuff
 #include Library_MacroCommand
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Implementation
 
-func AddAI(object clonk)
+/* -- Callbacks -- */
+
+public func OnAddAI(proplist controller)
 {
-	var fx = AI->AddAI(clonk);
-	if (fx)
-	{
-		clonk.ExecuteAI = BotAI.Execute;
-		fx.ai = BotAI;
-		fx.ignore_allies = true;
-	}
-	return fx;
-}
+	_inherited(controller);
 
-
-func Execute(proplist fx, int time)
-{
-	// Do nothing!
-	return;
+	Task_BotAggression->AddTo(controller.Target);
 }
 
 
@@ -83,7 +89,7 @@ func SetAggroLevel(int iLevel, int iDist, int iX, int iY, string text)
 
 func FxAggroTimer(object pTarget, proplist no)
 {
-	// Doppelsprung ausf�hren, wenn sinnvoll
+	// Doppelsprung ausführen, wenn sinnvoll
 	if (WildcardMatch(GetAction(), "Jump*"))
 		if (GBackSolid(-20 + GetDir() * 40))
 			this->~ControlUp();

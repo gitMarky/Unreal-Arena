@@ -24,7 +24,6 @@ public func GetPlayerCrewID(int player)
 }
 
 
-
 private func StartingEquipment(object crew)
 {
 	if (IsInstaGibConfigured())
