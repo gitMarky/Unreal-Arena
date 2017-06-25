@@ -29,6 +29,17 @@ public func OnAddAI(proplist controller)
 	Behaviour_Aggression->AddTo(controller.Target);
 	Behaviour_DoubleJump->AddTo(controller.Target);
 	Behaviour_Protection->AddTo(controller.Target);
+
+	Task_GetWeapon->AddTo(controller.Target, 1);
+}
+
+
+private func QueryCallExecute(proplist controller, object agent, int time)
+{
+	if (_inherited(controller, agent, time)) return true;
+	if (!RoundManager()->IsRoundActive()) return true;
+	if (agent->Contained() && agent->Contained()->GetID() == RelaunchContainerEx) return true;
+	return false;
 }
 
 

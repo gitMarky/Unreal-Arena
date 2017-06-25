@@ -6,15 +6,15 @@
  */
 
 
-public func Agent_FindItemType(object agent, def type) // for item collection
+public func Agent_FindItem(object agent, array find_criteria) // for item collection
 {
-	var found = _inherited(agent, type);
+	var found = _inherited(agent, find_criteria);
 	var candidates = [];
 	var spawnpoints = agent->FindObjects(Find_Func("IsSpawnPoint"), Find_Func("HasCollectibleItem", agent));
 
 	for (var spawnpoint in spawnpoints) 
 	{
-		if (spawnpoint->GetIDSpawned() == type)
+		if (GetLength(FindObjects(Find_Container(spawnpoint), find_criteria)))
 		{
 			PushBack(candidates, spawnpoint); // The agent will find the spawn point and try to collect that.
 		}
