@@ -1,5 +1,5 @@
 [DefCore]
-id=AgentExtension_SpawnPoint
+id=AgentExtension_AggroTarget
 Version=8,0
 Category=C4D_StaticBack
 HideInCreator=true

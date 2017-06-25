@@ -11,6 +11,47 @@ private func CreateTask()
 
 public func Execute(proplist controller, object bot)
 {
+	var logic = controller->GetAgent();
+
+	if (logic->Agent_HasWeapon(bot)) 
+	{
+		var target = bot->Agent_Properties()->GetAggroTarget();
+		
+		// Check if target is still valid
+		if (target && !logic->Agent_IsAggroTarget(bot, target))
+		{
+			target = nil;
+		}
+
+		if (!target)
+		{
+			target = logic->Agent_FindAggroTarget(bot);
+		}
+
+		// Delete or set new aggro target
+		bot->Agent_Properties()->SetAggroTarget(target);
+
+		// Fight the target
+		if (target)
+		{
+			logic->Agent_FightAggroTarget(bot, target);
+		}
+	}
+	else
+	{
+		if (!controller->HasPriorityTask(Task_GetWeapon))
+		{
+			Task_GetWeapon->AddTo(bot, 1); // TODO: change the priority value, once the priority meaning is established
+		}
+		
+	}
+
+	return TASK_EXECUTION_IN_PROGRESS;
+}
+
+
+public func ExecuteOld(proplist controller, object bot)
+{
 	if (DelayBotBySkill(7))
 		return TASK_EXECUTION_IN_PROGRESS;
 
