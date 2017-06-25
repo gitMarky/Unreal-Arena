@@ -24,9 +24,9 @@ public func OnAddAI(proplist controller)
 {
 	_inherited(controller);
 
-	Task_BotAggression->AddTo(controller.Target);
-	Task_BotDoubleJump->AddTo(controller.Target);
-	Task_BotProtection->AddTo(controller.Target);
+	Behaviour_Aggression->AddTo(controller.Target);
+	Behaviour_DoubleJump->AddTo(controller.Target);
+	Behaviour_Protection->AddTo(controller.Target);
 }
 
 
