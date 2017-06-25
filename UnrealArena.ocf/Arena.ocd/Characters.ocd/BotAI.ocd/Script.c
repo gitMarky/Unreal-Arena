@@ -24,6 +24,8 @@ public func OnAddAI(proplist controller)
 {
 	_inherited(controller);
 
+	controller->SetAgent(AI_Agent_UA); // sets the agent logic
+
 	Behaviour_Aggression->AddTo(controller.Target);
 	Behaviour_DoubleJump->AddTo(controller.Target);
 	Behaviour_Protection->AddTo(controller.Target);

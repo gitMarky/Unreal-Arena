@@ -268,7 +268,7 @@ func SearchAmmo(object bot, int aggro_level)
 {
 	for (var spawn in FindObjects(Find_Func("IsSpawnPoint"), Sort_Random())) 
 	{
-		var type = spawn->GetIDSpawned(); 
+		var type = spawn->GetIDSpawned();
 		if (type->~IsAmmoPacket() && spawn->HasCollectibleItem(bot))
 		{
 			// TODO: Add task
