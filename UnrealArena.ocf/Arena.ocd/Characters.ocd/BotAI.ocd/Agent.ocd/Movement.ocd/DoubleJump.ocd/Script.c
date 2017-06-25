@@ -8,5 +8,5 @@ public func Agent_Jump(object agent)
 	if (_inherited(agent)) return true;
 
 	// Jump if flying
-	return agent->GetProcedure() == "Flight" && agent->~ControlJump();
+	return agent->GetAction() == "Jump" && agent->~ControlJump();
 }
