@@ -15,19 +15,41 @@ public func Agent_Initialize(object agent)
 
 public func Agent_HasWeapon(object agent)
 {
+	return GetLength(Agent_FindInventoryWeapons(agent)) > 0;
+}
+
+public func Agent_FindInventoryWeapons(object agent)
+{
+	return agent->FindObjects(Find_Container(agent), Find_Func("IsShooterWeapon"));
+}
+
+public func Agent_GetCurrentWeapon(object agent)
+{
+	return agent->GetHandItem(0);
 }
 
 public func Agent_IsAggroTarget(object agent, object target)
 {
+	return ObjectDistance(agent, target) < 400;
 }
 
 public func Agent_FindAggroTarget(object agent)
 {
+	var targets = agent->FindObjects(Find_OCF(OCF_Alive), Find_NoContainer(), Find_Distance(400), Find_Exclude(agent), Sort_Distance());
+	
+	for (var target in targets)
+	{
+		if (Agent_IsAggroTarget(agent, target))
+			return target;
+	}
+	return nil;
 }
 
+/*
 public func Agent_FightAggroTarget(object agent, object target)
 {
 }
+*/
 
 /* -- Internals that are added to the agent logic -- */
 

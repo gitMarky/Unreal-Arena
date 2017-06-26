@@ -43,7 +43,6 @@ public func Execute(proplist controller, object bot)
 		{
 			Task_GetWeapon->AddTo(bot, 1); // TODO: change the priority value, once the priority meaning is established
 		}
-		
 	}
 
 	return TASK_EXECUTION_IN_PROGRESS;

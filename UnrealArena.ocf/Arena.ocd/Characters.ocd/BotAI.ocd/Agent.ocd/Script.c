@@ -7,4 +7,5 @@
 #include AgentExtension_Movement_DoubleJump
 #include AgentExtension_SpawnPoint
 #include AgentExtension_AggroTarget
+#include AgentExtension_FightRanged
 #include AgentExtension_Projectiles
