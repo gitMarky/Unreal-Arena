@@ -100,5 +100,7 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 	}
 }
 
-public func AmmoOnPickup(){ return [Ammo_Redeemer, 1]; }
 
+// Ammo on pickup
+public func AmmoID()       { return Ammo_Redeemer; }
+public func AmmoCount()    { return 1; }

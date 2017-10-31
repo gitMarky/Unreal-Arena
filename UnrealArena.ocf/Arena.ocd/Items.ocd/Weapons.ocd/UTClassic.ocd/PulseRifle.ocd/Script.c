@@ -146,8 +146,6 @@ private func LaserStop()
 	if (laser_beam) laser_beam->RemoveObject();
 }
 
-public func AmmoOnPickup(){ return [Ammo_Plasma, 60]; }
-
 
 public func Departure(object container)
 {
@@ -157,3 +155,9 @@ public func Departure(object container)
 
 	_inherited(container);
 }
+
+
+// Ammo on pickup
+public func AmmoID()       { return Ammo_Plasma; }
+public func AmmoCount()    { return 60; }
+

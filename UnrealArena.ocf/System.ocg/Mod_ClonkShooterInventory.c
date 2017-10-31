@@ -33,3 +33,19 @@ public func SetInventorySize()
 		SetMaxContentsCount(10);
 	}
 }
+
+
+public func Collection2(object item)
+{
+	_inherited(item, ...);
+	
+	if (item)
+	{
+		// Collect ammo from initially collected weapon
+		// A weapon that is departed already counts as an ammo pack anyway, so we exclude this here
+		if (item->~IsShooterWeapon() && !item->~IsDeparted())
+		{
+			Ammo_Pack->TransferAmmoFromTo(item, this);
+		}
+	}
+}

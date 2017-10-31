@@ -117,4 +117,6 @@ public func ChangeFiremode(firemode)
 	}
 }
 
-public func AmmoOnPickup(){ return [Ammo_Energy, 20]; }
+// Ammo on pickup
+public func AmmoID()       { return Ammo_Energy; }
+public func AmmoCount()    { return 20; }

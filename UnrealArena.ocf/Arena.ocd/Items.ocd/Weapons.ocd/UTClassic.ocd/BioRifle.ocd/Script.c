@@ -130,4 +130,6 @@ private func Fire(object user, int x, int y)
 	}
 }
 
-public func AmmoOnPickup(){ return [Ammo_Bio, 25]; }
+// Ammo on pickup
+public func AmmoID()       { return Ammo_Bio; }
+public func AmmoCount()    { return 25; }

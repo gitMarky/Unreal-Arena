@@ -68,8 +68,6 @@ func IsWeaponReadyToUse(object user)
 // Weapon as ammo
 
 public func IsAmmoPacket() { return this->~IsDeparted(); } // only if the weapon has left the user
-public func AmmoID()       { return GetFiremode().ammo_id; }
-public func AmmoCount()    { return 10; } // TODO: this is probably weapon-specific
 
 
 public func RejectEntrance(object into)

@@ -160,4 +160,7 @@ private func GetSpread(proplist firemode)
 	return NormalizeDeviations([spread, additional]);
 }
 
-public func AmmoOnPickup(){ return [Ammo_Rocket, 6]; }
+
+// Ammo on pickup
+public func AmmoID()       { return Ammo_Rocket; }
+public func AmmoCount()    { return 6; }

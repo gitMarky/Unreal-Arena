@@ -105,4 +105,6 @@ public func FireEffect(object user, int angle, proplist firemode)
 	//
 }
 
-public func AmmoOnPickup(){ return [Ammo_Ripper, 15]; }
+// Ammo on pickup
+public func AmmoID()       { return Ammo_Ripper; }
+public func AmmoCount()    { return 15; }
