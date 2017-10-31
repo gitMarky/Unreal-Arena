@@ -147,3 +147,13 @@ private func LaserStop()
 }
 
 public func AmmoOnPickup(){ return [Ammo_Plasma, 60]; }
+
+
+public func Departure(object container)
+{
+	// necessary, so that the weapon stops sound effects, etc.
+	// might be moved to the library
+	StartCooldown(container, GetFiremode());
+
+	_inherited(container);
+}
