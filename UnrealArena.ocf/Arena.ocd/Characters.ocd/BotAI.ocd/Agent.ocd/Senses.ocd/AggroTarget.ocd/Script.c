@@ -30,7 +30,9 @@ public func Agent_GetCurrentWeapon(object agent)
 
 public func Agent_IsAggroTarget(object agent, object target)
 {
-	return ObjectDistance(agent, target) < 400;
+	var is_hostile = Hostile(agent->GetOwner(), target->GetOwner(), true);
+	var is_in_range = ObjectDistance(agent, target) < 400;
+	return is_hostile && is_in_range;
 }
 
 public func Agent_FindAggroTarget(object agent)
