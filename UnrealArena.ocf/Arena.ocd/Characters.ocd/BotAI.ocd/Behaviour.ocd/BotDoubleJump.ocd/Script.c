@@ -6,7 +6,6 @@ public func Execute(proplist controller, object bot)
 	// Execute a double jump if it makes sence
 	if (bot->GBackSolid(20 * bot->GetCalcDir()))
 	{
-		Log("Try a double jump");
 		bot->UTBotAIDoubleJump();
 	}
 
