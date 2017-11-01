@@ -149,9 +149,16 @@ private func UpdateStatusBarValues(object cursor)
 }
 
 
+private func OnSlotObjectChanged(int slot)
+{
+	StatusBarSetValue(gui_status_bar_menu.ElementAmmoBar, 0); // reset ammo to 0 when selecting a new object or empty slot
+	return _inherited(slot, ...);
+}
+
+
 private func OnSelectedWeaponAmmoChange(id ammo, int new_value)
 {
-	StatusBarSetValue(gui_status_bar_menu.ElementAmmoBar, new_value);
+	StatusBarSetValue(gui_status_bar_menu.ElementAmmoBar, new_value); // set ammo value (happens after reset in OnSlotObjectChanged)
 }
 
 
