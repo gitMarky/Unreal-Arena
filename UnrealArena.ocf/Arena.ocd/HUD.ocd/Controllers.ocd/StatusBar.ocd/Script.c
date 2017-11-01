@@ -105,7 +105,7 @@ public func OnCrewSelection(object clonk, bool unselect)
 
 public func OnCrewHealthChange(object clonk, int change, int cause, int caused_by)
 {
-	// TODO: set values
+	UpdateStatusBarDisplay();
 
 	return _inherited(clonk, change, cause, caused_by, ...);
 }
