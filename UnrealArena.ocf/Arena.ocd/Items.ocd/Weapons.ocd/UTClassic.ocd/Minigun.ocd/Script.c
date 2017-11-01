@@ -36,6 +36,8 @@ local firemode_primary =
 	projectile_offset_y = -2, // -4
 	projectile_number = 1,
 	projectile_spread = {angle = 5, precision = 2}, // 2 - default inaccuracy of a single projectile
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 	
 local firemode_secondary = 
@@ -65,6 +67,8 @@ local firemode_secondary =
 	projectile_offset_y = -2, // -4
 	projectile_number = 1,
 	projectile_spread = {angle = 15, precision = 2}, // 6 - default inaccuracy of a single projectile
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 
 local weapon_properties = 

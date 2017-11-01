@@ -34,6 +34,8 @@ local firemode_primary	=
 	projectile_distance = 10,
 	projectile_offset_y = -6,
 	projectile_spread = {angle = 7, precision = 4},
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 
 local firemode_secondary = 
@@ -62,6 +64,8 @@ local firemode_secondary =
 	projectile_offset_y = -6,
 	
 	projectile_spread = {angle = 4, precision = 1},
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 
 public func FireSound(object user, proplist firemode)

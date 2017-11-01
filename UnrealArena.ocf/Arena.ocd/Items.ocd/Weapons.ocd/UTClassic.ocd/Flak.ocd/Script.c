@@ -46,6 +46,8 @@ local firemode_primary =
 	burst = 0, // number of projectiles fired in a burst
 	
 	sound = "Weapon::Classic::flak-fire-reg",
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 
 local firemode_secondary = 
@@ -79,6 +81,8 @@ local firemode_secondary =
 	burst = 0,
 	
 	sound = "Weapon::Classic::flak-fire-alt",
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 
 public func FireSound(object user, proplist firemode)

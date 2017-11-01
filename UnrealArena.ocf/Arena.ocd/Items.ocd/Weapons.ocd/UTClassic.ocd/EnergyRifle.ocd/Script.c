@@ -38,7 +38,7 @@ local firemode_primary	=
 
 	projectile_id = 		Projectile_ShockBeam,
 	projectile_speed = 		300,
-	projectile_range = 		PROJECTILE_Range_Sniper,
+	projectile_range = 		PROJECTILE_Range_EnergyRifle,
 	projectile_distance = 	16,
 	projectile_offset_y = 	-3,
 	projectile_spread = 	nil,

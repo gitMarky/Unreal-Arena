@@ -80,6 +80,8 @@ local firemode_secondary =
 	burst = 0,
 	
 	sound = "Weapon::Classic::rocket-fire-alt",
+	
+	ai_fire_ballistic = true,	// custom property for the bot
 };
 
 local projectiles_loaded;
