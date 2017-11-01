@@ -105,11 +105,13 @@ public func OnCrewSelection(object clonk, bool unselect)
 
 public func OnCrewHealthChange(object clonk, int change, int cause, int caused_by)
 {
-	UpdateStatusBarDisplay();
+	if (GetCursor(GetOwner()) == clonk)
+	{
+		UpdateStatusBarValues(clonk);
+	}
 
 	return _inherited(clonk, change, cause, caused_by, ...);
 }
-
 
 
 // Update everything
@@ -130,12 +132,23 @@ private func UpdateStatusBarDisplay()
 		ShowStatusBar(gui_status_bar_menu.ElementArmorBar);
 		ShowStatusBar(gui_status_bar_menu.ElementShieldBar);
 		ShowStatusBar(gui_status_bar_menu.ElementHealthBar);
+		
+		UpdateStatusBarValues(cursor);
+	}
+}
 
+
+private func UpdateStatusBarValues(object cursor)
+{
+	if (cursor)
+	{
 		StatusBarSetValue(gui_status_bar_menu.ElementHealthBar, cursor->GetEnergy());
 		StatusBarSetValue(gui_status_bar_menu.ElementArmorBar, cursor->~GetUTArmor());
 		StatusBarSetValue(gui_status_bar_menu.ElementShieldBar, cursor->GetUTShield());
+		// TODO: Update ammo
 	}
 }
+
 
 /* Bars (health, breath, ...) */
 
