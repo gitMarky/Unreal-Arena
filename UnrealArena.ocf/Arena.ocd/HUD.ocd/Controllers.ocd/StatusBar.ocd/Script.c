@@ -145,8 +145,13 @@ private func UpdateStatusBarValues(object cursor)
 		StatusBarSetValue(gui_status_bar_menu.ElementHealthBar, cursor->GetEnergy());
 		StatusBarSetValue(gui_status_bar_menu.ElementArmorBar, cursor->~GetUTArmor());
 		StatusBarSetValue(gui_status_bar_menu.ElementShieldBar, cursor->GetUTShield());
-		// TODO: Update ammo
 	}
+}
+
+
+private func OnSelectedWeaponAmmoChange(id ammo, int new_value)
+{
+	StatusBarSetValue(gui_status_bar_menu.ElementAmmoBar, new_value);
 }
 
 
