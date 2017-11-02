@@ -1,14 +1,6 @@
 
 // Include the basic functionality
 #include AI_Controller
-// Include the different parts of the AI.
-#include AI_Debugging
-#include AI_HelperFunctions
-#include AI_Protection
-#include AI_TargetFinding
-#include AI_HelperClonk
-#include AI_HomePosition
-#include AI_AttackEnemy
 // Main execution logic
 #include AI_TaskExecutor
 // Other stuff
