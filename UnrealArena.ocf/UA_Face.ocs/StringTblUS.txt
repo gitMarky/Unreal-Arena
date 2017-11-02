@@ -1,0 +1,24 @@
+Red=Red
+Blue=Blue
+
+WeaponBaseFront=Base front
+WeaponBaseBack=Base back
+WeaponBaseFloor1=Base first level
+WeaponBaseFloor2=Base sniper front 
+WeaponBaseRoof=Base sniper top
+WeaponBaseTunnel=Base tunnel
+WeaponSuper=Special weapon
+
+AmmoBaseFront=Ammo base front
+AmmoBaseBack=Ammo base back
+AmmoBaseFloor1=Ammo base first level
+AmmoBaseFloor2=Ammo base sniper front
+AmmoBaseRoof=Ammo base sniper top
+AmmoBaseTunnel=Ammo base tunnel
+
+ExtraBaseRoof=Extra sniper top
+
+HealthSmall=Health Vial
+HealthBase=Health Pack Base
+HealthCenter=Health Pack Center
+HealthSuper=Super Health Pack
