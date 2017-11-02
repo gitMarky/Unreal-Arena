@@ -32,4 +32,3 @@ public func ObjectControl(int plr, int ctrl, int x, int y, int strength, bool re
 		return inherited(plr, ctrl, x, y, strength, repeat, release);
 	}
 }
-

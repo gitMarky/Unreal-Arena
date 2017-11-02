@@ -29,4 +29,3 @@ static const SPAWN_Item_Shield = "item_slot_06";
 static const SPAWN_Item_Cloak = "item_slot_07";
 static const SPAWN_Item_UDamage = "item_slot_08";
 static const SPAWN_Item_JumpBoots = "item_slot_09";
-

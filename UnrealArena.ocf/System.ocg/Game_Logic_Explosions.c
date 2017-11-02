@@ -118,3 +118,4 @@ global func BlastObjectNoContainer(int x, int y, int level, object container, in
 		if (explosion) explosion->RemoveObject();
 	}
 }
+

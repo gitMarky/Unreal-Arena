@@ -17,5 +17,3 @@ protected func Death(int killed_by)
 	
 	Schedule(this, "Disintegrate(20, 50, -10)", 100);	
 }
-
-

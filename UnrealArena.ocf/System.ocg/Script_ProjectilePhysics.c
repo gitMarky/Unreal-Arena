@@ -112,4 +112,3 @@ global func Test_Calc_ProjectileCollision()
 		if (dummy2) dummy2->RemoveObject();
 	}
 }
-
