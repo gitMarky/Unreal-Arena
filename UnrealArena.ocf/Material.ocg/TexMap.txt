@@ -8,12 +8,12 @@ OverloadTextures
 8=Sand-smooth_tunnel
 10=Ashes-smooth_tunnel
 12=Tunnel-brickback
-13=BrickSoft-brick1
+13=BrickSoft-brick
 14=Earth-rough_earth
 15=Rock-ridge_rock
 
 19=DuroLava-lava_red
-20=Water-water1-water2-water3-water1-water3-water2
+20=Water-water
 22=Acid-acid
 23=Lava-lava_red
 24=Water-water
@@ -22,10 +22,10 @@ OverloadTextures
 27=BackWall-column1_wall
 
 28=Earth-earth
-29=Earth-earth_dry
-30=Earth-earth_rough
-31=Earth-earth_topsoil
-32=Earth-earth_midsoil
+29=Earth-earth_root
+30=Earth-earth_spongy
+31=Earth-earth_root
+32=Earth-earth_spongy
 33=Ashes-ashes
 
 35=Wall-grid4_blue
@@ -41,8 +41,8 @@ OverloadTextures
 52=Wall-concrete1
 
 
-55=Sand-sand_rough
-56=Sand-sand_smooth
+55=Sand-sand
+56=Sand-sand
 
 
 58=Wall-metal2
