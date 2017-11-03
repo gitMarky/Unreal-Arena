@@ -19,6 +19,7 @@ protected func Initialize()
 {
 	CreateSpawnPoints();
 	CreateJumpPads();
+	CreateWaypoints();
 	
 	_inherited(...);
 }
@@ -219,4 +220,276 @@ protected func CreateSpawnPoints()
 	health_base->RemoveObject();
 	health_center->RemoveObject();
 	keg_o_health->RemoveObject();	
+}
+
+
+public func CreateWaypoints()
+{
+	var shift = -86;
+
+	var wp_red_ground_front = CreateObject(Map_Waypoint, 1307, 575);
+	var wp_red_ground_entrance = CreateObject(Map_Waypoint, 1439, 581);
+	var wp3 = CreateObject(Map_Waypoint, 1632, 485);
+	var wp_red_ground_back = CreateObject(Map_Waypoint, 1651, 581);
+	var wp_blue_ground_front = CreateObject(Map_Waypoint, 598, 575);
+	var wp_blue_ground_entrance = CreateObject(Map_Waypoint, 466, 581);
+	var wp7 = CreateObject(Map_Waypoint, 273, 485);
+	var wp_blue_ground_back = CreateObject(Map_Waypoint, 254, 581);
+	var wp9 = CreateObject(Map_Waypoint, 871, 529);
+	var wp10 = CreateObject(Map_Waypoint, 1034, 529);
+	var wp11 = CreateObject(Map_Waypoint, 971, 579);
+	var wp12 = CreateObject(Map_Waypoint, 929, 579);
+	var wp13 = CreateObject(Map_Waypoint, 1082, 619);
+	var wp14 = CreateObject(Map_Waypoint, 953, 655);
+	var wp15 = CreateObject(Map_Waypoint, 822, 619);
+	var wp16 = CreateObject(Map_Waypoint, 1355, 665);
+	var wp17 = CreateObject(Map_Waypoint, 552, 665);
+	var wp18 = CreateObject(Map_Waypoint, 253, 649);
+	var wp19 = CreateObject(Map_Waypoint, 1655, 650);
+
+//	var wp_blue_jumppad = CreateObject(Map_Waypoint, 155,  665);
+//	var wp_red_jumppad = CreateObject(Map_Waypoint, LandscapeWidth()-155,  665);
+	var wp_blue_jumppad = CreateObject(Map_Waypoint, 190,  665);
+	var wp_red_jumppad = CreateObject(Map_Waypoint, LandscapeWidth()-190,  665);
+
+	var wp_blue_teleporter_sniper = CreateObject(Map_Waypoint, 398, 368);
+	var wp_blue_teleporter_roof = CreateObject(Map_Waypoint, 330, 212);
+	var wpt3 = CreateObject(Map_Waypoint, 290, 185);
+	var wpt4 = CreateObject(Map_Waypoint, 422, 367);
+	var wp_blue_teleporter_base = CreateObject(Map_Waypoint, 307, 581);
+	var wp_blue_sniper_roof = CreateObject(Map_Waypoint, 406, 185);
+	var wp_blue_sniper = CreateObject(Map_Waypoint, 433+5, 368);
+	var wp_blue_teleporter_level = CreateObject(Map_Waypoint, 420, 485);
+	var wpt16 = CreateObject(Map_Waypoint, 442+13, 485);
+	var wp_red_teleporter_base = CreateObject(Map_Waypoint, 1684+shift, 581); // wp_blue_teleporter_base
+	var wp_red_teleporter_sniper = CreateObject(Map_Waypoint, 1605+shift, 368); // wp_blue_teleporter_sniper
+	var wp_red_teleporter_roof = CreateObject(Map_Waypoint, 1673+shift, 212); //wp_blue_teleporter_roof
+	var wp_red_teleporter_level = CreateObject(Map_Waypoint, 1577+shift, 485); // wp_blue_teleporter_level
+	var wpt22 = CreateObject(Map_Waypoint, 1554-13+shift, 485); // wpt16
+	var wp_red_sniper = CreateObject(Map_Waypoint, 1562-5+shift, 368); // wp_blue_sniper
+	var wpt24 = CreateObject(Map_Waypoint, 1570+shift, 368); //wpt24
+	var wp_red_sniper_roof = CreateObject(Map_Waypoint, LandscapeWidth()-406, 185); // wp_blue_sniper_roof
+	var wpt26 = CreateObject(Map_Waypoint, LandscapeWidth()-290, 185); // wpt3
+
+	wp_red_ground_front->SetName("wp_red_ground_front");
+	wp_red_ground_entrance->SetName("wp_red_ground_entrance");
+	wp3->SetName("wp3");
+	wp_red_ground_back->SetName("wp_red_ground_back");
+	wp_blue_ground_front->SetName("wp_blue_ground_front");
+	wp_blue_ground_entrance->SetName("wp_blue_ground_entrance");
+	wp7->SetName("wp7");
+	wp_blue_ground_back->SetName("wp_blue_ground_back");
+	wp9->SetName("wp9");
+	wp10->SetName("wp10");
+	wp11->SetName("wp11");
+	wp12->SetName("wp12");
+	wp13->SetName("wp13");
+	wp14->SetName("wp14");
+	wp15->SetName("wp15");
+	wp16->SetName("wp16");
+	wp17->SetName("wp17");
+	wp18->SetName("wp18");
+	wp19->SetName("wp19");
+	wp_blue_teleporter_sniper->SetName("wp_blue_teleporter_sniper");
+	wp_blue_teleporter_roof->SetName("wp_blue_teleporter_roof");
+	wp_blue_teleporter_base->SetName("wp_blue_teleporter_base");
+	wp_blue_sniper_roof->SetName("wp_blue_sniper_roof");
+	wp_blue_teleporter_level->SetName("wp_blue_teleporter_level");
+	wp_red_teleporter_base->SetName("wp_red_teleporter_base");
+	wp_red_teleporter_sniper->SetName("wp_red_teleporter_sniper");
+	wp_red_teleporter_roof->SetName("wp_red_teleporter_roof");
+	wp_red_teleporter_level->SetName("wp_red_teleporter_level");
+	wp_red_sniper_roof->SetName("wp_red_sniper_roof");
+	wpt3->SetName("wpt3");
+	wpt4->SetName("wpt4");
+	wp_blue_sniper->SetName("wp_blue_sniper");
+	wpt16->SetName("wpt16");
+	wpt22->SetName("wpt22");
+	wp_red_sniper->SetName("wp_red_sniper");
+	wpt24->SetName("wpt24");
+	wpt26->SetName("wpt26");
+
+
+
+	wp_red_ground_front->AddPath(wp10, Path_MoveTo, 1);
+	wp_red_ground_front->AddPath(wp_red_ground_entrance, Path_MoveTo, 1);
+	wp_red_ground_entrance->AddPath(wp_red_ground_front, Path_MoveTo, 1);
+	wp_red_ground_back->AddPath(wp19, Path_MoveTo, -1);
+	wp_blue_ground_front->AddPath(wp9, Path_MoveTo, 1);
+	wp_blue_ground_front->AddPath(wp_blue_ground_entrance, Path_MoveTo, 1);
+	wp_blue_ground_entrance->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
+	wp_blue_ground_back->AddPath(wp18, Path_MoveTo, -1);
+	wp9->AddPath(wp10, Path_Jump, 1);
+	wp9->AddPath(wp11, Path_MoveTo, 1);
+	wp9->AddPath(wp_blue_ground_front, Path_MoveTo, -1);
+	wp10->AddPath(wp9, Path_Jump, -1);
+	wp10->AddPath(wp12, Path_MoveTo, -1);
+	wp10->AddPath(wp_red_ground_front, Path_MoveTo, 1);
+	wp11->AddPath(wp9, Path_Jump, -1);
+	wp11->AddPath(wp12, Path_MoveTo, -1);
+	wp11->AddPath(wp13, Path_MoveTo, 1);
+	wp12->AddPath(wp10, Path_Jump, 1);
+	wp12->AddPath(wp11, Path_MoveTo, 1);
+	wp12->AddPath(wp15, Path_MoveTo, -1);
+	wp13->AddPath(wp11, Path_Jump, -1);
+	wp13->AddPath(wp14, Path_MoveTo, -1);
+	wp13->AddPath(wp16, Path_MoveTo, 1);
+	wp14->AddPath(wp15, Path_MoveTo, -1);
+	wp14->AddPath(wp13, Path_MoveTo, 1);
+	wp15->AddPath(wp12, Path_Jump, 1);
+	wp15->AddPath(wp14, Path_MoveTo, 1);
+	wp15->AddPath(wp17, Path_MoveTo, -1);
+	wp16->AddPath(wp19, Path_MoveTo, 1);
+	wp16->AddPath(wp13, Path_MoveTo, -1);
+	wp17->AddPath(wp15, Path_MoveTo, 1);
+	wp17->AddPath(wp18, Path_MoveTo, -1);
+	wp18->AddPath(wp17, Path_MoveTo, 1);
+	wp19->AddPath(wp16, Path_MoveTo, -1);
+
+
+
+
+
+	wp_blue_teleporter_sniper->AddPath(wp_blue_teleporter_base, Path_MoveTo, -1);
+	wp_blue_teleporter_sniper->AddPath(wpt4, Path_MoveTo, 1);
+	wp_blue_teleporter_roof->AddPath(wp_blue_teleporter_base, Path_MoveTo, -1);
+	wp_blue_teleporter_roof->AddPath(wpt3, Path_MoveTo, 1);
+	wpt3->AddPath(wp_blue_teleporter_roof, Path_MoveTo, -1);
+	wpt3->AddPath(wp_blue_sniper_roof, Path_MoveTo, 1);
+	wpt4->AddPath(wp_blue_teleporter_sniper, Path_MoveTo, -1);
+	wpt4->AddPath(wp_blue_sniper, Path_MoveTo, 1);
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper, Path_MoveTo, 1);
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof, Path_MoveTo, 1);
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level, Path_MoveTo, 1);
+
+
+
+
+	wp_blue_teleporter_base->AddPath(wp_blue_ground_back, Path_MoveTo, 1);
+	wp_blue_teleporter_base->AddPath(wp_blue_ground_entrance, Path_MoveTo, 1);
+	wp_blue_ground_back->AddPath(wp_blue_teleporter_base, Path_MoveTo, 1);
+	wp_blue_ground_entrance->AddPath(wp_blue_teleporter_base, Path_MoveTo, 1);
+	wp_blue_sniper_roof->AddPath(wpt3, Path_MoveTo, -1);
+	wp_blue_sniper_roof->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
+	wp_blue_sniper->AddPath(wpt4, Path_MoveTo, -1);
+
+	wp_blue_sniper->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
+	wp_blue_teleporter_level->AddPath(wp_blue_teleporter_base, Path_MoveTo, -1);
+	wp_blue_teleporter_level->AddPath(wpt16, Path_MoveTo, 1);
+	wp_blue_teleporter_level->AddPath(wp7, Path_MoveTo, 1);
+	wp7->AddPath(wp_blue_teleporter_level, Path_MoveTo, 1);
+	wpt16->AddPath(wp_blue_teleporter_level, Path_MoveTo, -1);
+	wpt16->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_roof, Path_MoveTo, -1);
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_sniper, Path_MoveTo, -1);
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_level, Path_MoveTo, -1);
+	wp_red_teleporter_base->AddPath(wp_red_ground_back, Path_MoveTo, 1);
+	wp_red_teleporter_base->AddPath(wp_red_ground_entrance, Path_MoveTo, 1);
+
+	wp_red_ground_back->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+	wp_red_ground_entrance->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+	wp_red_teleporter_sniper->AddPath(wpt24, Path_MoveTo, -1);
+	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+	wp_red_teleporter_roof->AddPath(wpt26, Path_MoveTo, -1);
+	wp_red_teleporter_level->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+	wp_red_teleporter_level->AddPath(wpt22, Path_MoveTo, -1);
+	wp_red_teleporter_level->AddPath(wp3, Path_MoveTo, 1);
+	wp3->AddPath(wp_red_teleporter_level, Path_MoveTo, 1);
+	wpt22->AddPath(wp_red_teleporter_level, Path_MoveTo, 1);
+	wpt22->AddPath(wp_red_ground_front, Path_MoveTo, 1);
+	wp_red_sniper->AddPath(wpt24, Path_MoveTo, 1);
+
+	wp_red_sniper->AddPath(wp_red_ground_front, Path_MoveTo, 1);
+	wpt24->AddPath(wp_red_teleporter_sniper, Path_MoveTo, 1);
+	wpt24->AddPath(wp_red_sniper, Path_MoveTo, -1);
+	wp_red_sniper_roof->AddPath(wpt26, Path_MoveTo, 1);
+	wp_red_sniper_roof->AddPath(wp_red_ground_front, Path_MoveTo, 1);
+	wpt26->AddPath(wp_red_teleporter_roof, Path_MoveTo, 1);
+	wpt26->AddPath(wp_red_sniper_roof, Path_MoveTo, -1);
+
+	wp18->AddPath(wp_blue_jumppad, Path_MoveTo, 1);
+	wp19->AddPath(wp_red_jumppad, Path_MoveTo, 1);
+	wp_blue_jumppad->AddPath(wp_blue_teleporter_base, Path_MoveTo, 1);
+	wp_red_jumppad->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+
+/*
+	wp_blue_ground_front->SetInfo(WPInfo_Defend, 1);
+	wp_blue_ground_entrance->SetInfo(WPInfo_Defend, 1);
+	wp_blue_ground_back->SetInfo(WPInfo_Defend, 1);
+	wp_blue_teleporter_base->SetInfo(WPInfo_Defend,1);
+	wp7->SetInfo(WPInfo_Defend, 1);
+	wp_blue_sniper->SetInfo(WPInfo_Sniper,1);
+	wp_blue_sniper_roof->SetInfo(WPInfo_Sniper,1);
+
+	wp_red_ground_front->SetInfo(WPInfo_Defend, 2);
+	wp_red_ground_entrance->SetInfo(WPInfo_Defend, 2);
+	wp_red_ground_back->SetInfo(WPInfo_Defend, 2);
+	wp_red_teleporter_base->SetInfo(WPInfo_Defend,2);
+	wp3->SetInfo(WPInfo_Defend, 2);
+	wp_red_sniper->SetInfo(WPInfo_Sniper,2);
+	wp_red_sniper_roof->SetInfo(WPInfo_Sniper,2);
+
+
+
+	wp_blue_teleporter_base->SetArriveCommand(0, 0, "Call", b_ent, 0, 0, 0, "ContainedRight");
+	wp_blue_teleporter_base->SetArriveCommand(1, 0, "Call", b_ent, 0, 0, 0, "ContainedUp");
+	wp_blue_teleporter_base->SetArriveCommand(2, 0, "Call", b_ent, 0, 0, 0, "ContainedLeft");
+	wp_blue_teleporter_roof->SetArriveCommand(0, 0, "Enter", b_ex1, 0, 0, 0, 0);
+	wp_blue_teleporter_sniper->SetArriveCommand(0, 0, "Enter", b_ex2, 0, 0, 0, 0);
+	wp_blue_teleporter_level->SetArriveCommand(0, 0, "Enter", b_ex3, 0, 0, 0, 0);
+
+	wp_red_teleporter_base->SetArriveCommand(0, 0, "Call", r_ent, 0, 0, 0, "ContainedUp");
+	wp_red_teleporter_base->SetArriveCommand(1, 0, "Call", r_ent, 0, 0, 0, "ContainedLeft");
+	wp_red_teleporter_base->SetArriveCommand(2, 0, "Call", r_ent, 0, 0, 0, "ContainedRight");
+	wp_red_teleporter_roof->SetArriveCommand(0, 0, "Enter", r_ex1, 0, 0, 0, 0);
+	wp_red_teleporter_sniper->SetArriveCommand(0, 0, "Enter", r_ex2, 0, 0, 0, 0);
+	wp_red_teleporter_level->SetArriveCommand(0, 0, "Enter", r_ex3, 0, 0, 0, 0);
+
+	wp_blue_jumppad ->SetArriveCommand(0, 0, "MoveTo", 0, 155, 665);
+	wp_red_jumppad->SetArriveCommand(0, 0, "MoveTo", 0, LandscapeWidth()-155, 665);
+
+	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_sniper), 1);
+	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_roof), 1);
+	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_level), 1);
+
+	wp_blue_teleporter_sniper->SetPathLength( wp_blue_teleporter_sniper->GetPathID(wp_blue_teleporter_base), 1);
+	wp_blue_teleporter_roof->SetPathLength( wp_blue_teleporter_roof->GetPathID(wp_blue_teleporter_base), 1);
+	wp_blue_teleporter_level->SetPathLength( wp_blue_teleporter_level->GetPathID(wp_blue_teleporter_base), 1);
+
+
+	wp_red_teleporter_base->SetPathLength( wp_red_teleporter_base->GetPathID(wp_red_teleporter_sniper), 1);
+	wp_red_teleporter_base->SetPathLength( wp_red_teleporter_base->GetPathID(wp_red_teleporter_roof), 1);
+	wp_red_teleporter_base->SetPathLength( wp_red_teleporter_base->GetPathID(wp_red_teleporter_level), 1);
+
+	wp_red_teleporter_sniper->SetPathLength( wp_red_teleporter_sniper->GetPathID(wp_red_teleporter_base), 1);
+	wp_red_teleporter_roof->SetPathLength( wp_red_teleporter_roof->GetPathID(wp_red_teleporter_base), 1);
+	wp_red_teleporter_level->SetPathLength( wp_red_teleporter_level->GetPathID(wp_red_teleporter_base), 1);
+
+	wp_red_jumppad->SetPathLength(0, 1);
+	wp_blue_jumppad->SetPathLength(0, 1);
+
+
+	wp9->SetPathLength( wp9->GetPathID(wp10), 35);
+	wp10->SetPathLength( wp10->GetPathID(wp9), 35);
+
+	wp12->SetPathLength( wp12->GetPathID(wp10), 10);
+	wp10->SetPathLength( wp10->GetPathID(wp12), 10);
+	wp12->SetPathLength( wp12->GetPathID(wp15), 10);
+	wp15->SetPathLength( wp15->GetPathID(wp12), 10);
+	wp9->SetPathLength( wp9->GetPathID(wp11), 10);
+	wp11->SetPathLength( wp11->GetPathID(wp9), 10);
+	wp13->SetPathLength( wp13->GetPathID(wp11), 10);
+	wp11->SetPathLength( wp11->GetPathID(wp13), 10);
+	wp13->SetPathLength( wp13->GetPathID(wp14), 10);
+	wp14->SetPathLength( wp14->GetPathID(wp13), 10);
+	wp15->SetPathLength( wp15->GetPathID(wp14), 10);
+	wp14->SetPathLength( wp14->GetPathID(wp15), 10);
+
+
+	wp18->SetPathLength( wp18->GetPathID(wp17), 100);
+	wp17->SetPathLength( wp17->GetPathID(wp18), 50);
+
+	wp19->SetPathLength( wp19->GetPathID(wp16), 100);
+	wp16->SetPathLength( wp16->GetPathID(wp19), 50);*/
 }
