@@ -311,107 +311,107 @@ public func CreateWaypoints()
 
 
 
-	wp_red_ground_front->AddPath(wp10, Path_MoveTo, 1);
-	wp_red_ground_front->AddPath(wp_red_ground_entrance, Path_MoveTo, 1);
-	wp_red_ground_entrance->AddPath(wp_red_ground_front, Path_MoveTo, 1);
-	wp_red_ground_back->AddPath(wp19, Path_MoveTo, -1);
-	wp_blue_ground_front->AddPath(wp9, Path_MoveTo, 1);
-	wp_blue_ground_front->AddPath(wp_blue_ground_entrance, Path_MoveTo, 1);
-	wp_blue_ground_entrance->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
-	wp_blue_ground_back->AddPath(wp18, Path_MoveTo, -1);
-	wp9->AddPath(wp10, Path_Jump, 1);
-	wp9->AddPath(wp11, Path_MoveTo, 1);
-	wp9->AddPath(wp_blue_ground_front, Path_MoveTo, -1);
-	wp10->AddPath(wp9, Path_Jump, -1);
-	wp10->AddPath(wp12, Path_MoveTo, -1);
-	wp10->AddPath(wp_red_ground_front, Path_MoveTo, 1);
-	wp11->AddPath(wp9, Path_Jump, -1);
-	wp11->AddPath(wp12, Path_MoveTo, -1);
-	wp11->AddPath(wp13, Path_MoveTo, 1);
-	wp12->AddPath(wp10, Path_Jump, 1);
-	wp12->AddPath(wp11, Path_MoveTo, 1);
-	wp12->AddPath(wp15, Path_MoveTo, -1);
-	wp13->AddPath(wp11, Path_Jump, -1);
-	wp13->AddPath(wp14, Path_MoveTo, -1);
-	wp13->AddPath(wp16, Path_MoveTo, 1);
-	wp14->AddPath(wp15, Path_MoveTo, -1);
-	wp14->AddPath(wp13, Path_MoveTo, 1);
-	wp15->AddPath(wp12, Path_Jump, 1);
-	wp15->AddPath(wp14, Path_MoveTo, 1);
-	wp15->AddPath(wp17, Path_MoveTo, -1);
-	wp16->AddPath(wp19, Path_MoveTo, 1);
-	wp16->AddPath(wp13, Path_MoveTo, -1);
-	wp17->AddPath(wp15, Path_MoveTo, 1);
-	wp17->AddPath(wp18, Path_MoveTo, -1);
-	wp18->AddPath(wp17, Path_MoveTo, 1);
-	wp19->AddPath(wp16, Path_MoveTo, -1);
+	wp_red_ground_front->AddPath(wp10); //Path_MoveTo, 1
+	wp_red_ground_front->AddPath(wp_red_ground_entrance); //Path_MoveTo, 1
+	wp_red_ground_entrance->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wp_red_ground_back->AddPath(wp19); //Path_MoveTo, -1
+	wp_blue_ground_front->AddPath(wp9); //Path_MoveTo, 1
+	wp_blue_ground_front->AddPath(wp_blue_ground_entrance); //Path_MoveTo, 1
+	wp_blue_ground_entrance->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_blue_ground_back->AddPath(wp18); //Path_MoveTo, -1
+	wp9->AddPath(wp10); //Path_Jump, 1
+	wp9->AddPath(wp11); //Path_MoveTo, 1
+	wp9->AddPath(wp_blue_ground_front); //Path_MoveTo, -1
+	wp10->AddPath(wp9); //Path_Jump, -1
+	wp10->AddPath(wp12); //Path_MoveTo, -1
+	wp10->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wp11->AddPath(wp9); //Path_Jump, -1
+	wp11->AddPath(wp12); //Path_MoveTo, -1
+	wp11->AddPath(wp13); //Path_MoveTo, 1
+	wp12->AddPath(wp10); //Path_Jump, 1
+	wp12->AddPath(wp11); //Path_MoveTo, 1
+	wp12->AddPath(wp15); //Path_MoveTo, -1
+	wp13->AddPath(wp11); //Path_Jump, -1
+	wp13->AddPath(wp14); //Path_MoveTo, -1
+	wp13->AddPath(wp16); //Path_MoveTo, 1
+	wp14->AddPath(wp15); //Path_MoveTo, -1
+	wp14->AddPath(wp13); //Path_MoveTo, 1
+	wp15->AddPath(wp12); //Path_Jump, 1
+	wp15->AddPath(wp14); //Path_MoveTo, 1
+	wp15->AddPath(wp17); //Path_MoveTo, -1
+	wp16->AddPath(wp19); //Path_MoveTo, 1
+	wp16->AddPath(wp13); //Path_MoveTo, -1
+	wp17->AddPath(wp15); //Path_MoveTo, 1
+	wp17->AddPath(wp18); //Path_MoveTo, -1
+	wp18->AddPath(wp17); //Path_MoveTo, 1
+	wp19->AddPath(wp16); //Path_MoveTo, -1
 
 
 
 
 
-	wp_blue_teleporter_sniper->AddPath(wp_blue_teleporter_base, Path_MoveTo, -1);
-	wp_blue_teleporter_sniper->AddPath(wpt4, Path_MoveTo, 1);
-	wp_blue_teleporter_roof->AddPath(wp_blue_teleporter_base, Path_MoveTo, -1);
-	wp_blue_teleporter_roof->AddPath(wpt3, Path_MoveTo, 1);
-	wpt3->AddPath(wp_blue_teleporter_roof, Path_MoveTo, -1);
-	wpt3->AddPath(wp_blue_sniper_roof, Path_MoveTo, 1);
-	wpt4->AddPath(wp_blue_teleporter_sniper, Path_MoveTo, -1);
-	wpt4->AddPath(wp_blue_sniper, Path_MoveTo, 1);
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper, Path_MoveTo, 1);
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof, Path_MoveTo, 1);
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level, Path_MoveTo, 1);
+	wp_blue_teleporter_sniper->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
+	wp_blue_teleporter_sniper->AddPath(wpt4); //Path_MoveTo, 1
+	wp_blue_teleporter_roof->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
+	wp_blue_teleporter_roof->AddPath(wpt3); //Path_MoveTo, 1
+	wpt3->AddPath(wp_blue_teleporter_roof); //Path_MoveTo, -1
+	wpt3->AddPath(wp_blue_sniper_roof); //Path_MoveTo, 1
+	wpt4->AddPath(wp_blue_teleporter_sniper); //Path_MoveTo, -1
+	wpt4->AddPath(wp_blue_sniper); //Path_MoveTo, 1
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper); //Path_MoveTo, 1
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof); //Path_MoveTo, 1
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level); //Path_MoveTo, 1
 
 
 
 
-	wp_blue_teleporter_base->AddPath(wp_blue_ground_back, Path_MoveTo, 1);
-	wp_blue_teleporter_base->AddPath(wp_blue_ground_entrance, Path_MoveTo, 1);
-	wp_blue_ground_back->AddPath(wp_blue_teleporter_base, Path_MoveTo, 1);
-	wp_blue_ground_entrance->AddPath(wp_blue_teleporter_base, Path_MoveTo, 1);
-	wp_blue_sniper_roof->AddPath(wpt3, Path_MoveTo, -1);
-	wp_blue_sniper_roof->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
-	wp_blue_sniper->AddPath(wpt4, Path_MoveTo, -1);
+	wp_blue_teleporter_base->AddPath(wp_blue_ground_back); //Path_MoveTo, 1
+	wp_blue_teleporter_base->AddPath(wp_blue_ground_entrance); //Path_MoveTo, 1
+	wp_blue_ground_back->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
+	wp_blue_ground_entrance->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
+	wp_blue_sniper_roof->AddPath(wpt3); //Path_MoveTo, -1
+	wp_blue_sniper_roof->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_blue_sniper->AddPath(wpt4); //Path_MoveTo, -1
 
-	wp_blue_sniper->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
-	wp_blue_teleporter_level->AddPath(wp_blue_teleporter_base, Path_MoveTo, -1);
-	wp_blue_teleporter_level->AddPath(wpt16, Path_MoveTo, 1);
-	wp_blue_teleporter_level->AddPath(wp7, Path_MoveTo, 1);
-	wp7->AddPath(wp_blue_teleporter_level, Path_MoveTo, 1);
-	wpt16->AddPath(wp_blue_teleporter_level, Path_MoveTo, -1);
-	wpt16->AddPath(wp_blue_ground_front, Path_MoveTo, 1);
-	wp_red_teleporter_base->AddPath(wp_red_teleporter_roof, Path_MoveTo, -1);
-	wp_red_teleporter_base->AddPath(wp_red_teleporter_sniper, Path_MoveTo, -1);
-	wp_red_teleporter_base->AddPath(wp_red_teleporter_level, Path_MoveTo, -1);
-	wp_red_teleporter_base->AddPath(wp_red_ground_back, Path_MoveTo, 1);
-	wp_red_teleporter_base->AddPath(wp_red_ground_entrance, Path_MoveTo, 1);
+	wp_blue_sniper->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_blue_teleporter_level->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
+	wp_blue_teleporter_level->AddPath(wpt16); //Path_MoveTo, 1
+	wp_blue_teleporter_level->AddPath(wp7); //Path_MoveTo, 1
+	wp7->AddPath(wp_blue_teleporter_level); //Path_MoveTo, 1
+	wpt16->AddPath(wp_blue_teleporter_level); //Path_MoveTo, -1
+	wpt16->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_roof); //Path_MoveTo, -1
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_sniper); //Path_MoveTo, -1
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_level); //Path_MoveTo, -1
+	wp_red_teleporter_base->AddPath(wp_red_ground_back); //Path_MoveTo, 1
+	wp_red_teleporter_base->AddPath(wp_red_ground_entrance); //Path_MoveTo, 1
 
-	wp_red_ground_back->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
-	wp_red_ground_entrance->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
-	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
-	wp_red_teleporter_sniper->AddPath(wpt24, Path_MoveTo, -1);
-	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
-	wp_red_teleporter_roof->AddPath(wpt26, Path_MoveTo, -1);
-	wp_red_teleporter_level->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
-	wp_red_teleporter_level->AddPath(wpt22, Path_MoveTo, -1);
-	wp_red_teleporter_level->AddPath(wp3, Path_MoveTo, 1);
-	wp3->AddPath(wp_red_teleporter_level, Path_MoveTo, 1);
-	wpt22->AddPath(wp_red_teleporter_level, Path_MoveTo, 1);
-	wpt22->AddPath(wp_red_ground_front, Path_MoveTo, 1);
-	wp_red_sniper->AddPath(wpt24, Path_MoveTo, 1);
+	wp_red_ground_back->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_ground_entrance->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_teleporter_sniper->AddPath(wpt24); //Path_MoveTo, -1
+	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_teleporter_roof->AddPath(wpt26); //Path_MoveTo, -1
+	wp_red_teleporter_level->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_teleporter_level->AddPath(wpt22); //Path_MoveTo, -1
+	wp_red_teleporter_level->AddPath(wp3); //Path_MoveTo, 1
+	wp3->AddPath(wp_red_teleporter_level); //Path_MoveTo, 1
+	wpt22->AddPath(wp_red_teleporter_level); //Path_MoveTo, 1
+	wpt22->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wp_red_sniper->AddPath(wpt24); //Path_MoveTo, 1
 
-	wp_red_sniper->AddPath(wp_red_ground_front, Path_MoveTo, 1);
-	wpt24->AddPath(wp_red_teleporter_sniper, Path_MoveTo, 1);
-	wpt24->AddPath(wp_red_sniper, Path_MoveTo, -1);
-	wp_red_sniper_roof->AddPath(wpt26, Path_MoveTo, 1);
-	wp_red_sniper_roof->AddPath(wp_red_ground_front, Path_MoveTo, 1);
-	wpt26->AddPath(wp_red_teleporter_roof, Path_MoveTo, 1);
-	wpt26->AddPath(wp_red_sniper_roof, Path_MoveTo, -1);
+	wp_red_sniper->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wpt24->AddPath(wp_red_teleporter_sniper); //Path_MoveTo, 1
+	wpt24->AddPath(wp_red_sniper); //Path_MoveTo, -1
+	wp_red_sniper_roof->AddPath(wpt26); //Path_MoveTo, 1
+	wp_red_sniper_roof->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wpt26->AddPath(wp_red_teleporter_roof); //Path_MoveTo, 1
+	wpt26->AddPath(wp_red_sniper_roof); //Path_MoveTo, -1
 
-	wp18->AddPath(wp_blue_jumppad, Path_MoveTo, 1);
-	wp19->AddPath(wp_red_jumppad, Path_MoveTo, 1);
-	wp_blue_jumppad->AddPath(wp_blue_teleporter_base, Path_MoveTo, 1);
-	wp_red_jumppad->AddPath(wp_red_teleporter_base, Path_MoveTo, 1);
+	wp18->AddPath(wp_blue_jumppad); //Path_MoveTo, 1
+	wp19->AddPath(wp_red_jumppad); //Path_MoveTo, 1
+	wp_blue_jumppad->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
+	wp_red_jumppad->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
 
 /*
 	wp_blue_ground_front->SetInfo(WPInfo_Defend, 1);
