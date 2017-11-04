@@ -83,10 +83,31 @@ private func BeamFlag(bool msg)
 		return;
 	if (msg)
 		Log("$MsgFlagBeamed$", GetTaggedTeamName(team));
-	var base = FindObject(Find_ID(Goal_CaptureTheFlagEx->GetFlagBaseID()), Find_Func("FindTeam", team));
+	var base = GetFlagBase();
 	if (base)
 		SetAction("AttachBase", base);
 	else 
 		RemoveObject();
 	return;
 }
+
+
+private func GetFlagBase()
+{
+	return FindObject(Find_ID(Goal_CaptureTheFlagEx->GetFlagBaseID()), Find_Func("FindTeam", team));
+}
+
+
+private func GetFlagCarrier()
+{
+	if (IsAtBase())
+	{
+		return nil;
+	}
+	else
+	{
+		return GetActionTarget(0);
+	}
+}
+
+
