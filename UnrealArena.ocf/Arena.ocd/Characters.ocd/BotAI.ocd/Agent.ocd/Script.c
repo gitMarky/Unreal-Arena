@@ -6,6 +6,7 @@
 #include AgentExtension_Movement_Clonk
 #include AgentExtension_Movement_Jump
 #include AgentExtension_Movement_DoubleJump
+#include AgentExtension_Movement_Waypoints
 #include AgentExtension_SpawnPoint
 #include AgentExtension_AggroTarget
 #include AgentExtension_FightRanged
