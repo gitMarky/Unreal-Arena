@@ -47,6 +47,24 @@ public func Agent_FindAggroTarget(object agent)
 	return nil;
 }
 
+
+public func Agent_IsInterceptor(object interceptor, object aggressor, object precious)
+{
+	if (_inherited(interceptor, aggressor, precious))
+	{
+		return true;
+	}
+	else // Can the object intercept, because it is between aggressor and the precious?
+	{
+		var angle_to_aggressor = Angle(interceptor->GetX(), interceptor->GetY(), aggressor->GetX(), aggressor->GetY());
+		var angle_to_precious = Angle(interceptor->GetX(), interceptor->GetY(), precious->GetX(), precious->GetY());
+		
+		var angle = Abs(Normalize(angle_to_aggressor - angle_to_precious, 0));
+		
+		return angle > 90;
+	}
+}
+
 /*
 public func Agent_FightAggroTarget(object agent, object target)
 {

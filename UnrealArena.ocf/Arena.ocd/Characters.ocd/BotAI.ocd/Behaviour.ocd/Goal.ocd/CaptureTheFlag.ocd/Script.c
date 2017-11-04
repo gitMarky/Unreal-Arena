@@ -63,7 +63,7 @@ public func Execute(proplist controller, object bot)
 		var intercept = false;
 		if (enemy_carrier)
 		{
-			intercept = bot->Interceptor(bot, enemy_flag, enemy_carrier);
+			intercept = logic->Agent_IsInterceptor(bot, enemy_flag, enemy_carrier);
 			if (intercept)
 			{
 				bot->Follow(bot, enemy_carrier, 0, "Intercepting enemy flag carrier!");
@@ -85,7 +85,7 @@ public func Execute(proplist controller, object bot)
 				}
 				else
 				{
-					follower = bot->Interceptor(bot, flagbase, friendly_carrier);
+					follower = logic->Agent_IsInterceptor(bot, flagbase, friendly_carrier);
 				}
 				// between flagger and own flag: follow flagger
 				if (follower)
@@ -100,10 +100,11 @@ public func Execute(proplist controller, object bot)
 				// Just go to enemy flag/enemy flag carrier
 				if (!enemy_carrier)
 				{
-					if (!(bot->GetCommand() || bot->GetMacroCommand()))
+					bot->Run(bot, enemy_flag, "Get enemy flag");
+					/*if (!(bot->GetCommand() || bot->GetMacroCommand()))
 					{
 						bot->SetMacroCommand(this, "MoveTo", enemy_flag, 0, 0, 0, Aggro_Follow);
-					}
+					}*/
 				}
 				else
 				{
@@ -120,7 +121,7 @@ public func Execute(proplist controller, object bot)
 					
 					if (wp)
 					{
-						bot->SetMacroCommand(this, "MoveTo", wp, 0, 0, 0, Aggro_Follow);
+						bot->Run(bot, wp, "Move to defense point"); //SetMacroCommand(this, "MoveTo", wp, 0, 0, 0, Aggro_Follow);
 					}
 				}
 			*/
@@ -224,4 +225,51 @@ private func GetOwnFlagBase(int player)
 private func GetFlags()
 {
 	return FindObjects(Find_ID(Goal_CaptureTheFlagEx->GetFlagID()));
+}
+
+
+
+
+// Sniper
+public func Sniper(object bot)
+{
+	var owner = bot->GetOwner();
+
+	var wps = FindObjects(Find_Func("IsWaypoint"), Find_Func("CheckInfo", WPInfo_Sniper,GetPlayerTeam(owner)));
+	var snipe;
+
+ 	DebugLog("Found sniping points %v","tactics",wps);
+ 	for (var wp in wps)
+ 	{
+		if (ObjectDistance(bot, wp) < 5)
+		{
+			snipe = true;
+			break;
+		}
+	}
+	if (!snipe)
+	{
+		wp = wps[Random(GetLength(wps))];
+
+		if (wp) bot->Run(bot, wp, "Going to sniper point");
+	}
+	else
+	{
+		bot->SetMacroCommand(0, "Wait",	0,0,0,0,35);
+
+		var target;
+		if (!bot->GetAggroTarget()) target = bot->~UTBotAIFindEnemy(bot,1500);
+		if (target)
+		{
+			bot->SetAggroLevel(Aggro_Shoot);
+			bot->SetAggroTarget(target);
+			Message("@Sniping,...",bot);
+			Message("@Sn: %d",target,ObjectNumber(bot));
+		}
+		else
+		{
+			bot->SetAggroLevel(Aggro_Nothing);
+			Message("@Waiting,...",bot);
+		}
+	}
 }
