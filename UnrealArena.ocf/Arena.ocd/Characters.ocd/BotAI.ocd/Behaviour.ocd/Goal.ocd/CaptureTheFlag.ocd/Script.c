@@ -1,12 +1,13 @@
 #include Task_Template
 
 
-static ai_max_flag_base_distance = 250;
+static const ai_max_flag_base_distance = 250;
 
 public func Execute(proplist controller, object bot)
 {
 	var logic = controller->GetAgent();
 	var owner = bot->GetOwner();
+	var role = Bot_Strategy->GetPlayerRole(owner);
 
 	// Initialize some variables
 	var enemy_carrier = GetEnemyFlagCarrier(owner);
@@ -19,7 +20,7 @@ public func Execute(proplist controller, object bot)
 	var flagbase = GetOwnFlagBase(owner);
 	var enemy_flag = GetEnemyFlag(owner);
 	
-	var team_has_players = GetTeamPlayerCount(GetPlayerTeam(bot->GetOwner())) > 1;
+	var team_has_players = GetTeamPlayerCount(GetPlayerTeam(owner)) > 1;
 
 	
 	// Flag carrier returns home
@@ -73,7 +74,6 @@ public func Execute(proplist controller, object bot)
 		// Otherwise we do the normal routine
 		if (!intercept)
 		{
-			var role = GetPlayerAIRole(owner);
 			// Friendly flag carrier around?
 			if (friendly_carrier && !enemy_carrier)
 			{
@@ -112,6 +112,7 @@ public func Execute(proplist controller, object bot)
 			}
 			else if (role == ROLE_Defend)
 			{
+			/* TODO
 				if (!(bot->GetCommand() || bot->GetMacroCommand()))
 				{
 					var wps = FindObjects(Find_ID(WAYP), Find_Func("CheckInfo", WPInfo_Defend, GetPlayerTeam(owner)));
@@ -122,6 +123,7 @@ public func Execute(proplist controller, object bot)
 						bot->SetMacroCommand(this, "MoveTo", wp, 0, 0, 0, Aggro_Follow);
 					}
 				}
+			*/
 			}
 			else if (role == ROLE_Sniper)
 			{

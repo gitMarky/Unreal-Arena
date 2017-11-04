@@ -6,9 +6,19 @@
 	This defines, what kind of tasks the bots will get.
 */
 
-static strategy;
 
-static strategy_levels = 3;
+// Roles can be mixed, e.g. in a class system
+static const ROLE_Player = 0;
+static const ROLE_Assault = 1;
+static const ROLE_Support = 2;
+static const ROLE_Sniper = 4;
+static const ROLE_Defend = 8;
+
+static const strategy_levels = 3;
+
+static strategy;
+static roles;
+
 
 
 /**
@@ -72,12 +82,28 @@ func SelectFactionStrategy()
 }
 
 
-func SelectBotStrategy()
+public func SetPlayerRole(int player, int role)
 {
+	AssertDefinitionContext();
+	InitPlayerRoles();
+	
+	roles[player] = role;
 }
 
 
+public func GetPlayerRole(int player)
+{
+	AssertDefinitionContext();
+	InitPlayerRoles();
+	
+	return roles[player];
+}
 
+
+private func InitPlayerRoles()
+{
+	if (!roles) roles = [];
+}
 
 
 func GetGoal()
