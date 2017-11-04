@@ -14,7 +14,7 @@ public func Execute(proplist controller, object bot)
 	var flag = GetFriendlyFlag(owner);
 	if (!enemy_carrier && !flag->IsAtBase())
 	{
-			enemy_carrier = flag;
+		enemy_carrier = flag;
 	}
 	var friendly_carrier = GetFriendlyFlagCarrier(owner);
 	var flagbase = GetOwnFlagBase(owner);
@@ -32,13 +32,13 @@ public func Execute(proplist controller, object bot)
 			// If there are more than one players per team
 			if (team_has_players || !enemy_carrier)
 			{
-				bot->Run(bot, flagbase, "Returning home!");
+				Run(bot, flagbase, "Returning home!");
 				return;
 			}
 			// You are the last guy in your team, so hunt the enemy carrier
 			else if (enemy_carrier)
 			{
-				bot->Follow(bot, enemy_carrier, 0, "Attacking enemy flag carrier");
+				Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
 				return;
 			}
 		}
@@ -52,7 +52,7 @@ public func Execute(proplist controller, object bot)
 			}
 			else if (enemy_carrier)
 			{
-				bot->Follow(bot, enemy_carrier, 0, "Attacking enemy flag carrier");
+				Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
 				return;
 			}
 		}
@@ -66,7 +66,7 @@ public func Execute(proplist controller, object bot)
 			intercept = logic->Agent_IsInterceptor(bot, enemy_flag, enemy_carrier);
 			if (intercept)
 			{
-				bot->Follow(bot, enemy_carrier, 0, "Intercepting enemy flag carrier!");
+				Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Intercepting enemy flag carrier!");
 				return;
 			}
 		}
@@ -90,7 +90,7 @@ public func Execute(proplist controller, object bot)
 				// between flagger and own flag: follow flagger
 				if (follower)
 				{
-					bot->Follow(bot, friendly_carrier, 0, "Escorting friendly flag carrier!");
+					Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Escorting friendly flag carrier!");
 					return;
 				}
 			}
@@ -100,15 +100,11 @@ public func Execute(proplist controller, object bot)
 				// Just go to enemy flag/enemy flag carrier
 				if (!enemy_carrier)
 				{
-					bot->Run(bot, enemy_flag, "Get enemy flag");
-					/*if (!(bot->GetCommand() || bot->GetMacroCommand()))
-					{
-						bot->SetMacroCommand(this, "MoveTo", enemy_flag, 0, 0, 0, Aggro_Follow);
-					}*/
+					Run(bot, enemy_flag, "Get enemy flag");
 				}
 				else
 				{
-					bot->Follow(bot, enemy_carrier, 0, "Hunting down enemy flag carrier!");
+					Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Hunting down enemy flag carrier!");
 				}
 			}
 			else if (role == ROLE_Defend)
@@ -121,17 +117,20 @@ public func Execute(proplist controller, object bot)
 					
 					if (wp)
 					{
-						bot->Run(bot, wp, "Move to defense point"); //SetMacroCommand(this, "MoveTo", wp, 0, 0, 0, Aggro_Follow);
+						Run(bot, wp, "Move to defense point"); //SetMacroCommand(this, "MoveTo", wp, 0, 0, 0, Aggro_Follow);
 					}
 				}
 			*/
 			}
 			else if (role == ROLE_Sniper)
 			{
+			/*
 				if (!(bot->GetCommand() || bot->GetMacroCommand()))
 				{
-					bot->Sniper(bot);
+					// TODO: make this a task
+					Sniper(bot);
 				}
+			*/
 			}
 		}
 	}
@@ -227,7 +226,10 @@ private func GetFlags()
 	return FindObjects(Find_ID(Goal_CaptureTheFlagEx->GetFlagID()));
 }
 
-
+private func Run(object bot, object destination, string description)
+{
+	bot->GetAI()->GetAgent()->Agent_MoveTo(bot, destination);
+}
 
 
 // Sniper
@@ -235,7 +237,7 @@ public func Sniper(object bot)
 {
 	var owner = bot->GetOwner();
 
-	var wps = FindObjects(Find_Func("IsWaypoint"), Find_Func("CheckInfo", WPInfo_Sniper,GetPlayerTeam(owner)));
+	var wps = FindObjects(Find_Func("IsWaypoint"), Find_Func("CheckInfo")); // TODO , WPInfo_Sniper,GetPlayerTeam(owner)));
 	var snipe;
 
  	DebugLog("Found sniping points %v","tactics",wps);
@@ -251,14 +253,14 @@ public func Sniper(object bot)
 	{
 		wp = wps[Random(GetLength(wps))];
 
-		if (wp) bot->Run(bot, wp, "Going to sniper point");
+		if (wp) Run(bot, wp, "Going to sniper point");
 	}
 	else
 	{
-		bot->SetMacroCommand(0, "Wait",	0,0,0,0,35);
+		//TODO bot->SetMacroCommand(0, "Wait",	0,0,0,0,35);
 
 		var target;
-		if (!bot->GetAggroTarget()) target = bot->~UTBotAIFindEnemy(bot,1500);
+		if (!bot->GetAggroTarget()) target = bot->~UTBotAIFindEnemy(1500);
 		if (target)
 		{
 			bot->SetAggroLevel(Aggro_Shoot);
