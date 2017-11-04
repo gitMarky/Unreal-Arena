@@ -1,0 +1,2 @@
+DE:Spielzielspezifisches Verhalten
+US:Goal specific behavior
