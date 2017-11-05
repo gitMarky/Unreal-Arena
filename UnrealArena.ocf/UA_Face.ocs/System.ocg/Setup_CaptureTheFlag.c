@@ -17,7 +17,8 @@ public func DoSetup(int round)
 	flag_team2->SetColor(GetTeamColor(2));
 	
 //	DebugLog("Setup round %d", round);
-	
+
+	_inherited(round);
 }
 
 public func DoCleanup(int round)

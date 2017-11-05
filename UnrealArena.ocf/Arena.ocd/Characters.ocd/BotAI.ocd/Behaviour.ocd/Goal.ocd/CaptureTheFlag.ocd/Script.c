@@ -265,13 +265,13 @@ public func Sniper(object bot)
 		{
 			bot->SetAggroLevel(Aggro_Shoot);
 			bot->SetAggroTarget(target);
-			Message("@Sniping,...",bot);
-			Message("@Sn: %d",target,ObjectNumber(bot));
+			bot->Message("@Sniping,...");
+			target->Message("@Sn: %d", bot->ObjectNumber());
 		}
 		else
 		{
 			bot->SetAggroLevel(Aggro_Nothing);
-			Message("@Waiting,...",bot);
+			bot->Message("@Waiting,...");
 		}
 	}
 }
