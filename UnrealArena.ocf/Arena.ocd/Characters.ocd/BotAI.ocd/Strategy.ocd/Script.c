@@ -134,9 +134,9 @@ public func SelectPlayerRole(object goal, int player)
 		var demand_defender = Max(1, quota_defend * size / total);
 		var demand_assault = Max(1, quota_assault * size / total);
 
+		if (count_assault < demand_assault && !role) role = ROLE_Assault; // was last priority
 		if (count_sniper < demand_sniper && !role) role = ROLE_Sniper;
 		if (count_defender < demand_defender && !role) role = ROLE_Defend;
-		if (count_assault < demand_assault && !role) role = ROLE_Assault;
 		if (!role) role = ROLE_Support;
 		
 		Log("Choosing role for player %d (team %d): choice = %d; sniper = %d/%d, defender = %d/%d, assault = %d/%d", player, faction, role, count_sniper, demand_sniper, count_defender, demand_defender, count_assault, demand_assault);
