@@ -38,7 +38,7 @@ public func Execute(proplist controller, object bot)
 			// You are the last guy in your team, so hunt the enemy carrier
 			else if (enemy_carrier)
 			{
-				Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
+				Task_Follow->AddTo(bot, TASK_PRIORITY_IMMEDIATE)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
 				return;
 			}
 		}
@@ -52,7 +52,7 @@ public func Execute(proplist controller, object bot)
 			}
 			else if (enemy_carrier)
 			{
-				Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
+				Task_Follow->AddTo(bot, TASK_PRIORITY_IMMEDIATE)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
 				return;
 			}
 		}
@@ -66,7 +66,7 @@ public func Execute(proplist controller, object bot)
 			intercept = logic->Agent_IsInterceptor(bot, enemy_flag, enemy_carrier);
 			if (intercept)
 			{
-				Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Intercepting enemy flag carrier!");
+				Task_Follow->AddTo(bot, TASK_PRIORITY_URGENT)->SetTarget(enemy_carrier)->SetDescription("Intercepting enemy flag carrier!");
 				return;
 			}
 		}
@@ -90,7 +90,7 @@ public func Execute(proplist controller, object bot)
 				// between flagger and own flag: follow flagger
 				if (follower)
 				{
-					Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Escorting friendly flag carrier!");
+					Task_Follow->AddTo(bot, TASK_PRIORITY_HIGH)->SetTarget(enemy_carrier)->SetDescription("Escorting friendly flag carrier!");
 					return;
 				}
 			}
@@ -104,7 +104,7 @@ public func Execute(proplist controller, object bot)
 				}
 				else
 				{
-					Task_Follow->AddTo(bot, 1)->SetTarget(enemy_carrier)->SetDescription("Hunting down enemy flag carrier!");
+					Task_Follow->AddTo(bot, TASK_PRIORITY_URGENT)->SetTarget(enemy_carrier)->SetDescription("Hunting down enemy flag carrier!");
 				}
 			}
 			else if (role == ROLE_Defend)
