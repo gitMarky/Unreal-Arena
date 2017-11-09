@@ -109,28 +109,23 @@ public func Execute(proplist controller, object bot)
 			}
 			else if (role == ROLE_Defend)
 			{
-			/* TODO
-				if (!(bot->GetCommand() || bot->GetMacroCommand()))
+				if (!controller->HasPriorityTask(Task_MoveAlongPath))
 				{
-					var wps = FindObjects(Find_ID(WAYP), Find_Func("CheckInfo", WPInfo_Defend, GetPlayerTeam(owner)));
-					var wp = wps[Random(GetLength(wps))];
+					var defense_points = FindObjects(Find_Func("IsWaypoint")); //TODO , Find_Func("CheckInfo", WPInfo_Defend, GetPlayerTeam(owner)));
+					var destination = defense_points[Random(GetLength(defense_points))];
 					
-					if (wp)
+					if (destination)
 					{
-						Run(bot, wp, "Move to defense point"); //SetMacroCommand(this, "MoveTo", wp, 0, 0, 0, Aggro_Follow);
+						Task_MoveAlongPath->AddTo(bot, TASK_PRIORITY_NORMAL)->SetStart(bot)->SetDestination(destination)->SetDescription("Move to defense point");
 					}
 				}
-			*/
 			}
 			else if (role == ROLE_Sniper)
 			{
-			/*
-				if (!(bot->GetCommand() || bot->GetMacroCommand()))
+				if (!controller->HasPriorityTask(Task_Sniper))
 				{
-					// TODO: make this a task
-					Sniper(bot);
+					Task_Sniper->AddTo(bot, TASK_PRIORITY_HIGH);
 				}
-			*/
 			}
 		}
 	}
@@ -224,51 +219,4 @@ private func GetOwnFlagBase(int player)
 private func GetFlags()
 {
 	return FindObjects(Find_ID(Goal_CaptureTheFlagEx->GetFlagID()));
-}
-
-
-// Sniper
-public func Sniper(object bot)
-{
-/*
-	var owner = bot->GetOwner();
-
-	var wps = FindObjects(Find_Func("IsWaypoint"), Find_Func("CheckInfo")); // TODO , WPInfo_Sniper,GetPlayerTeam(owner)));
-	var snipe;
-
- 	DebugLog("Found sniping points %v","tactics",wps);
- 	for (var wp in wps)
- 	{
-		if (ObjectDistance(bot, wp) < 5)
-		{
-			snipe = true;
-			break;
-		}
-	}
-	if (!snipe)
-	{
-		wp = wps[Random(GetLength(wps))];
-
-		if (wp) Run(bot, wp, "Going to sniper point");
-	}
-	else
-	{
-		//TODO bot->SetMacroCommand(0, "Wait",	0,0,0,0,35);
-
-		var target;
-		if (!bot->GetAggroTarget()) target = bot->~UTBotAIFindEnemy(1500);
-		if (target)
-		{
-			bot->SetAggroLevel(Aggro_Shoot);
-			bot->SetAggroTarget(target);
-			bot->Message("@Sniping,...");
-			target->Message("@Sn: %d", bot->ObjectNumber());
-		}
-		else
-		{
-			bot->SetAggroLevel(Aggro_Nothing);
-			bot->Message("@Waiting,...");
-		}
-	}
-*/
 }

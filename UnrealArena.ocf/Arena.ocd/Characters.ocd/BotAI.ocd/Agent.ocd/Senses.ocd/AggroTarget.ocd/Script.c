@@ -4,6 +4,8 @@
 	Bots can have a target that they want to fight.
  */
  
+static const AGGRO_TARGET_MAX_DISTANCE = 400;
+ 
  
 public func Agent_Initialize(object agent)
 {
@@ -31,13 +33,13 @@ public func Agent_GetCurrentWeapon(object agent)
 public func Agent_IsAggroTarget(object agent, object target)
 {
 	var is_hostile = Hostile(agent->GetOwner(), target->GetOwner(), true);
-	var is_in_range = ObjectDistance(agent, target) < 400;
+	var is_in_range = ObjectDistance(agent, target) < AGGRO_TARGET_MAX_DISTANCE;
 	return is_hostile && is_in_range;
 }
 
-public func Agent_FindAggroTarget(object agent)
+public func Agent_FindAggroTarget(object agent, int distance)
 {
-	var targets = agent->FindObjects(Find_OCF(OCF_Alive), Find_NoContainer(), Find_Distance(400), Find_Exclude(agent), Sort_Distance());
+	var targets = agent->FindObjects(Find_OCF(OCF_Alive), Find_NoContainer(), Find_Distance(distance ?? AGGRO_TARGET_MAX_DISTANCE), Find_Exclude(agent), Sort_Distance());
 	
 	for (var target in targets)
 	{
