@@ -207,3 +207,20 @@ private func TeamQuota(int faction, int role)
 	
 	return 100; // Fallback for unhandled cases
 }
+
+
+/**
+ This function can be added to waypoints.
+ */
+public func IsDefensePoint(int team)
+{
+	return this.team == team;
+}
+
+/**
+ This function can be added to waypoints.
+ */
+public func IsSniperPoint(int team)
+{
+	return this.team == team;
+}

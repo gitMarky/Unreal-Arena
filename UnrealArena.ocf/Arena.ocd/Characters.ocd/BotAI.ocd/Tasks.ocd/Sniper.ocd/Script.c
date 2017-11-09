@@ -23,7 +23,7 @@ public func Execute(proplist controller, object agent)
 		return TASK_EXECUTION_IN_PROGRESS;
 	}
 
-	var vantage_points = FindObjects(Find_Func("IsWaypoint"), Find_Func("CheckInfo")); // TODO , WPInfo_Sniper,GetPlayerTeam(owner)));
+	var vantage_points = FindObjects(Find_Func("IsWaypoint"), Find_Func("IsSniperPoint", GetPlayerTeam(owner)));
  	AI_Debugging->LogAI_Info(controller, Format("Found vantage points %v", vantage_points));
  	
  	if (GetLength(vantage_points) == 0)

@@ -14,6 +14,9 @@ static const SPAWN_Ammo_BaseTunnel = "m";
 
 static const SPAWN_Superweapon = "n";
 
+static const TEAM_BLUE = 1;
+static const TEAM_RED = 2;
+
 
 protected func Initialize()
 {
@@ -413,25 +416,25 @@ public func CreateWaypoints()
 	wp_blue_jumppad->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
 	wp_red_jumppad->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
 
+	// Add infos for defense and sniper points
+	wp_blue_ground_front->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_blue_ground_entrance->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_blue_ground_back->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_blue_teleporter_base->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp7->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_blue_sniper->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsSniperPoint);
+	wp_blue_sniper_roof->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsSniperPoint);
+
+	wp_red_ground_front->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_red_ground_entrance->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_red_ground_back->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_red_teleporter_base->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp3->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsDefensePoint);
+	wp_red_sniper->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsSniperPoint);
+	wp_red_sniper_roof->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsSniperPoint);
+
+
 /*
-	wp_blue_ground_front->SetInfo(WPInfo_Defend, 1);
-	wp_blue_ground_entrance->SetInfo(WPInfo_Defend, 1);
-	wp_blue_ground_back->SetInfo(WPInfo_Defend, 1);
-	wp_blue_teleporter_base->SetInfo(WPInfo_Defend,1);
-	wp7->SetInfo(WPInfo_Defend, 1);
-	wp_blue_sniper->SetInfo(WPInfo_Sniper,1);
-	wp_blue_sniper_roof->SetInfo(WPInfo_Sniper,1);
-
-	wp_red_ground_front->SetInfo(WPInfo_Defend, 2);
-	wp_red_ground_entrance->SetInfo(WPInfo_Defend, 2);
-	wp_red_ground_back->SetInfo(WPInfo_Defend, 2);
-	wp_red_teleporter_base->SetInfo(WPInfo_Defend,2);
-	wp3->SetInfo(WPInfo_Defend, 2);
-	wp_red_sniper->SetInfo(WPInfo_Sniper,2);
-	wp_red_sniper_roof->SetInfo(WPInfo_Sniper,2);
-
-
-
 	wp_blue_teleporter_base->SetArriveCommand(0, 0, "Call", b_ent, 0, 0, 0, "ContainedRight");
 	wp_blue_teleporter_base->SetArriveCommand(1, 0, "Call", b_ent, 0, 0, 0, "ContainedUp");
 	wp_blue_teleporter_base->SetArriveCommand(2, 0, "Call", b_ent, 0, 0, 0, "ContainedLeft");

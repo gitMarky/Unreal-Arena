@@ -16,3 +16,19 @@ private func OnGoalCreation(object goal)
 		}
 	}
 }
+
+
+/*
+ Bots that were added after goal creation need to get the team strategy, too.
+ */
+private func Recruitment()
+{
+	var previous = _inherited(...);
+
+	for (var goal in FindObjects(Find_Func("IsGoal")))
+	{
+		OnGoalCreation(goal);
+	}
+
+	return previous;
+}
