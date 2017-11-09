@@ -12,7 +12,7 @@ private func OnGoalCreation(object goal)
 	{
 		if (goal->GetID() == Goal_CaptureTheFlagEx)
 		{
-			Behaviour_Goal_CTF->AddTo(this, 1);
+			Behaviour_Goal_CTF->AddTo(this);
 		}
 	}
 }

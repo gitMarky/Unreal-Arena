@@ -3,10 +3,11 @@
 #include AgentExtension_Inventory_Clonk
 #include AgentExtension_Ready_Clonk
 #include AgentExtension_Senses_RangedVision
+#include AgentExtension_Movement_Generic
 #include AgentExtension_Movement_Clonk
 #include AgentExtension_Movement_Jump
 #include AgentExtension_Movement_DoubleJump
-#include AgentExtension_Movement_Waypoints
+//#include AgentExtension_Movement_Waypoints
 #include AgentExtension_SpawnPoint
 #include AgentExtension_AggroTarget
 #include AgentExtension_FightRanged

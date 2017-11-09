@@ -32,13 +32,13 @@ public func Execute(proplist controller, object bot)
 			// If there are more than one players per team
 			if (team_has_players || !enemy_carrier)
 			{
-				Run(bot, flagbase, "Returning home!");
+				Task_MoveAlongPath->AddTo(bot, TASK_PRIORITY_URGENT)->SetStart(bot)->SetDestination(flagbase)->SetDescription("Returning home!");
 				return;
 			}
 			// You are the last guy in your team, so hunt the enemy carrier
 			else if (enemy_carrier)
 			{
-				Task_Follow->AddTo(bot, TASK_PRIORITY_IMMEDIATE)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
+				Task_FollowAlongPath->AddTo(bot, TASK_PRIORITY_IMMEDIATE)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
 				return;
 			}
 		}
@@ -52,7 +52,7 @@ public func Execute(proplist controller, object bot)
 			}
 			else if (enemy_carrier)
 			{
-				Task_Follow->AddTo(bot, TASK_PRIORITY_IMMEDIATE)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
+				Task_FollowAlongPath->AddTo(bot, TASK_PRIORITY_IMMEDIATE)->SetTarget(enemy_carrier)->SetDescription("Attacking enemy flag carrier");
 				return;
 			}
 		}
@@ -66,7 +66,7 @@ public func Execute(proplist controller, object bot)
 			intercept = logic->Agent_IsInterceptor(bot, enemy_flag, enemy_carrier);
 			if (intercept)
 			{
-				Task_Follow->AddTo(bot, TASK_PRIORITY_URGENT)->SetTarget(enemy_carrier)->SetDescription("Intercepting enemy flag carrier!");
+				Task_FollowAlongPath->AddTo(bot, TASK_PRIORITY_URGENT)->SetTarget(enemy_carrier)->SetDescription("Intercepting enemy flag carrier!");
 				return;
 			}
 		}
@@ -90,7 +90,7 @@ public func Execute(proplist controller, object bot)
 				// between flagger and own flag: follow flagger
 				if (follower)
 				{
-					Task_Follow->AddTo(bot, TASK_PRIORITY_HIGH)->SetTarget(enemy_carrier)->SetDescription("Escorting friendly flag carrier!");
+					Task_FollowAlongPath->AddTo(bot, TASK_PRIORITY_HIGH)->SetTarget(enemy_carrier)->SetDescription("Escorting friendly flag carrier!");
 					return;
 				}
 			}
@@ -100,11 +100,11 @@ public func Execute(proplist controller, object bot)
 				// Just go to enemy flag/enemy flag carrier
 				if (!enemy_carrier)
 				{
-					Run(bot, enemy_flag, "Get enemy flag");
+					Task_MoveAlongPath->AddTo(bot, TASK_PRIORITY_HIGH)->SetStart(bot)->SetDestination(enemy_flag)->SetDescription("Get enemy flag");
 				}
 				else
 				{
-					Task_Follow->AddTo(bot, TASK_PRIORITY_URGENT)->SetTarget(enemy_carrier)->SetDescription("Hunting down enemy flag carrier!");
+					Task_FollowAlongPath->AddTo(bot, TASK_PRIORITY_URGENT)->SetTarget(enemy_carrier)->SetDescription("Hunting down enemy flag carrier!");
 				}
 			}
 			else if (role == ROLE_Defend)
@@ -226,15 +226,11 @@ private func GetFlags()
 	return FindObjects(Find_ID(Goal_CaptureTheFlagEx->GetFlagID()));
 }
 
-private func Run(object bot, object destination, string description)
-{
-	bot->GetAI()->GetAgent()->Agent_MoveTo(bot, destination);
-}
-
 
 // Sniper
 public func Sniper(object bot)
 {
+/*
 	var owner = bot->GetOwner();
 
 	var wps = FindObjects(Find_Func("IsWaypoint"), Find_Func("CheckInfo")); // TODO , WPInfo_Sniper,GetPlayerTeam(owner)));
@@ -274,4 +270,5 @@ public func Sniper(object bot)
 			bot->Message("@Waiting,...");
 		}
 	}
+*/
 }
