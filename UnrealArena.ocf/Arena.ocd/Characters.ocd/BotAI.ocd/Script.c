@@ -26,7 +26,7 @@ public func OnAddAI(proplist controller)
 }
 
 
-private func QueryCallExecute(proplist controller, object agent, int time)
+private func QueryRejectCallExecute(proplist controller, object agent, int time)
 {
 	if (_inherited(controller, agent, time)) return true;
 	if (!RoundManager()->IsRoundActive()) return true;
