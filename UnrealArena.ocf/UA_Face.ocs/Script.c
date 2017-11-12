@@ -322,24 +322,24 @@ public func CreateWaypoints()
 	wp_blue_ground_front->AddPath(wp_blue_ground_entrance); //Path_MoveTo, 1
 	wp_blue_ground_entrance->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
 	wp_blue_ground_back->AddPath(wp18); //Path_MoveTo, -1
-	wp9->AddPath(wp10); //Path_Jump, 1
+	wp9->AddPath(wp10)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp9->AddPath(wp11); //Path_MoveTo, 1
 	wp9->AddPath(wp_blue_ground_front); //Path_MoveTo, -1
-	wp10->AddPath(wp9); //Path_Jump, -1
+	wp10->AddPath(wp9)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp10->AddPath(wp12); //Path_MoveTo, -1
 	wp10->AddPath(wp_red_ground_front); //Path_MoveTo, 1
-	wp11->AddPath(wp9); //Path_Jump, -1
+	wp11->AddPath(wp9)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp11->AddPath(wp12); //Path_MoveTo, -1
 	wp11->AddPath(wp13); //Path_MoveTo, 1
-	wp12->AddPath(wp10); //Path_Jump, 1
+	wp12->AddPath(wp10)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp12->AddPath(wp11); //Path_MoveTo, 1
 	wp12->AddPath(wp15); //Path_MoveTo, -1
-	wp13->AddPath(wp11); //Path_Jump, -1
+	wp13->AddPath(wp11)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp13->AddPath(wp14); //Path_MoveTo, -1
 	wp13->AddPath(wp16); //Path_MoveTo, 1
 	wp14->AddPath(wp15); //Path_MoveTo, -1
 	wp14->AddPath(wp13); //Path_MoveTo, 1
-	wp15->AddPath(wp12); //Path_Jump, 1
+	wp15->AddPath(wp12)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp15->AddPath(wp14); //Path_MoveTo, 1
 	wp15->AddPath(wp17); //Path_MoveTo, -1
 	wp16->AddPath(wp19); //Path_MoveTo, 1
