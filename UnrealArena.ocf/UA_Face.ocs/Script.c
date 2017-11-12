@@ -250,8 +250,6 @@ public func CreateWaypoints()
 	var wp18 = CreateObject(Map_Waypoint, 253, 649);
 	var wp19 = CreateObject(Map_Waypoint, 1655, 650);
 
-//	var wp_blue_jumppad = CreateObject(Map_Waypoint, 155,  665);
-//	var wp_red_jumppad = CreateObject(Map_Waypoint, LandscapeWidth()-155,  665);
 	var wp_blue_jumppad = CreateObject(Map_Waypoint, 190,  665);
 	var wp_red_jumppad = CreateObject(Map_Waypoint, LandscapeWidth()-190,  665);
 
@@ -314,39 +312,39 @@ public func CreateWaypoints()
 
 
 
-	wp_red_ground_front->AddPath(wp10); //Path_MoveTo, 1
-	wp_red_ground_front->AddPath(wp_red_ground_entrance); //Path_MoveTo, 1
-	wp_red_ground_entrance->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wp_red_ground_front->AddPath(wp10);
+	wp_red_ground_front->AddPath(wp_red_ground_entrance);
+	wp_red_ground_entrance->AddPath(wp_red_ground_front);
 	wp_red_ground_back->AddPath(wp19); //Path_MoveTo, -1
-	wp_blue_ground_front->AddPath(wp9); //Path_MoveTo, 1
-	wp_blue_ground_front->AddPath(wp_blue_ground_entrance); //Path_MoveTo, 1
-	wp_blue_ground_entrance->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_blue_ground_front->AddPath(wp9);
+	wp_blue_ground_front->AddPath(wp_blue_ground_entrance);
+	wp_blue_ground_entrance->AddPath(wp_blue_ground_front);
 	wp_blue_ground_back->AddPath(wp18); //Path_MoveTo, -1
-	wp9->AddPath(wp10)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
-	wp9->AddPath(wp11); //Path_MoveTo, 1
+	wp9->AddPath(wp10)->SetCost(35)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
+	wp9->AddPath(wp11);
 	wp9->AddPath(wp_blue_ground_front); //Path_MoveTo, -1
-	wp10->AddPath(wp9)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
+	wp10->AddPath(wp9)->SetCost(35)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp10->AddPath(wp12); //Path_MoveTo, -1
-	wp10->AddPath(wp_red_ground_front); //Path_MoveTo, 1
+	wp10->AddPath(wp_red_ground_front);
 	wp11->AddPath(wp9)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp11->AddPath(wp12); //Path_MoveTo, -1
-	wp11->AddPath(wp13); //Path_MoveTo, 1
+	wp11->AddPath(wp13);
 	wp12->AddPath(wp10)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
-	wp12->AddPath(wp11); //Path_MoveTo, 1
+	wp12->AddPath(wp11);
 	wp12->AddPath(wp15); //Path_MoveTo, -1
 	wp13->AddPath(wp11)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
 	wp13->AddPath(wp14); //Path_MoveTo, -1
-	wp13->AddPath(wp16); //Path_MoveTo, 1
+	wp13->AddPath(wp16);
 	wp14->AddPath(wp15); //Path_MoveTo, -1
-	wp14->AddPath(wp13); //Path_MoveTo, 1
+	wp14->AddPath(wp13);
 	wp15->AddPath(wp12)->SetMoveTo(Map_Waypoint.OnMoveTo_Jump);
-	wp15->AddPath(wp14); //Path_MoveTo, 1
+	wp15->AddPath(wp14);
 	wp15->AddPath(wp17); //Path_MoveTo, -1
-	wp16->AddPath(wp19); //Path_MoveTo, 1
+	wp16->AddPath(wp19);
 	wp16->AddPath(wp13); //Path_MoveTo, -1
-	wp17->AddPath(wp15); //Path_MoveTo, 1
+	wp17->AddPath(wp15);
 	wp17->AddPath(wp18); //Path_MoveTo, -1
-	wp18->AddPath(wp17); //Path_MoveTo, 1
+	wp18->AddPath(wp17);
 	wp19->AddPath(wp16); //Path_MoveTo, -1
 
 
@@ -354,67 +352,67 @@ public func CreateWaypoints()
 
 
 	wp_blue_teleporter_sniper->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
-	wp_blue_teleporter_sniper->AddPath(wpt4); //Path_MoveTo, 1
+	wp_blue_teleporter_sniper->AddPath(wpt4);
 	wp_blue_teleporter_roof->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
-	wp_blue_teleporter_roof->AddPath(wpt3); //Path_MoveTo, 1
+	wp_blue_teleporter_roof->AddPath(wpt3);
 	wpt3->AddPath(wp_blue_teleporter_roof); //Path_MoveTo, -1
-	wpt3->AddPath(wp_blue_sniper_roof); //Path_MoveTo, 1
+	wpt3->AddPath(wp_blue_sniper_roof);
 	wpt4->AddPath(wp_blue_teleporter_sniper); //Path_MoveTo, -1
-	wpt4->AddPath(wp_blue_sniper); //Path_MoveTo, 1
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper); //Path_MoveTo, 1
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof); //Path_MoveTo, 1
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level); //Path_MoveTo, 1
+	wpt4->AddPath(wp_blue_sniper);
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper);
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof);
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level);
 
 
 
 
-	wp_blue_teleporter_base->AddPath(wp_blue_ground_back); //Path_MoveTo, 1
-	wp_blue_teleporter_base->AddPath(wp_blue_ground_entrance); //Path_MoveTo, 1
-	wp_blue_ground_back->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
-	wp_blue_ground_entrance->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
+	wp_blue_teleporter_base->AddPath(wp_blue_ground_back);
+	wp_blue_teleporter_base->AddPath(wp_blue_ground_entrance);
+	wp_blue_ground_back->AddPath(wp_blue_teleporter_base);
+	wp_blue_ground_entrance->AddPath(wp_blue_teleporter_base);
 	wp_blue_sniper_roof->AddPath(wpt3); //Path_MoveTo, -1
-	wp_blue_sniper_roof->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_blue_sniper_roof->AddPath(wp_blue_ground_front);
 	wp_blue_sniper->AddPath(wpt4); //Path_MoveTo, -1
 
-	wp_blue_sniper->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wp_blue_sniper->AddPath(wp_blue_ground_front);
 	wp_blue_teleporter_level->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
-	wp_blue_teleporter_level->AddPath(wpt16); //Path_MoveTo, 1
-	wp_blue_teleporter_level->AddPath(wp7); //Path_MoveTo, 1
-	wp7->AddPath(wp_blue_teleporter_level); //Path_MoveTo, 1
+	wp_blue_teleporter_level->AddPath(wpt16);
+	wp_blue_teleporter_level->AddPath(wp7);
+	wp7->AddPath(wp_blue_teleporter_level);
 	wpt16->AddPath(wp_blue_teleporter_level); //Path_MoveTo, -1
-	wpt16->AddPath(wp_blue_ground_front); //Path_MoveTo, 1
+	wpt16->AddPath(wp_blue_ground_front);
 	wp_red_teleporter_base->AddPath(wp_red_teleporter_roof); //Path_MoveTo, -1
 	wp_red_teleporter_base->AddPath(wp_red_teleporter_sniper); //Path_MoveTo, -1
 	wp_red_teleporter_base->AddPath(wp_red_teleporter_level); //Path_MoveTo, -1
-	wp_red_teleporter_base->AddPath(wp_red_ground_back); //Path_MoveTo, 1
-	wp_red_teleporter_base->AddPath(wp_red_ground_entrance); //Path_MoveTo, 1
+	wp_red_teleporter_base->AddPath(wp_red_ground_back);
+	wp_red_teleporter_base->AddPath(wp_red_ground_entrance);
 
-	wp_red_ground_back->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
-	wp_red_ground_entrance->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
-	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_ground_back->AddPath(wp_red_teleporter_base);
+	wp_red_ground_entrance->AddPath(wp_red_teleporter_base);
+	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base);
 	wp_red_teleporter_sniper->AddPath(wpt24); //Path_MoveTo, -1
-	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base);
 	wp_red_teleporter_roof->AddPath(wpt26); //Path_MoveTo, -1
-	wp_red_teleporter_level->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp_red_teleporter_level->AddPath(wp_red_teleporter_base);
 	wp_red_teleporter_level->AddPath(wpt22); //Path_MoveTo, -1
-	wp_red_teleporter_level->AddPath(wp3); //Path_MoveTo, 1
-	wp3->AddPath(wp_red_teleporter_level); //Path_MoveTo, 1
-	wpt22->AddPath(wp_red_teleporter_level); //Path_MoveTo, 1
-	wpt22->AddPath(wp_red_ground_front); //Path_MoveTo, 1
-	wp_red_sniper->AddPath(wpt24); //Path_MoveTo, 1
+	wp_red_teleporter_level->AddPath(wp3);
+	wp3->AddPath(wp_red_teleporter_level);
+	wpt22->AddPath(wp_red_teleporter_level);
+	wpt22->AddPath(wp_red_ground_front);
+	wp_red_sniper->AddPath(wpt24);
 
-	wp_red_sniper->AddPath(wp_red_ground_front); //Path_MoveTo, 1
-	wpt24->AddPath(wp_red_teleporter_sniper); //Path_MoveTo, 1
+	wp_red_sniper->AddPath(wp_red_ground_front);
+	wpt24->AddPath(wp_red_teleporter_sniper);
 	wpt24->AddPath(wp_red_sniper); //Path_MoveTo, -1
-	wp_red_sniper_roof->AddPath(wpt26); //Path_MoveTo, 1
-	wp_red_sniper_roof->AddPath(wp_red_ground_front); //Path_MoveTo, 1
-	wpt26->AddPath(wp_red_teleporter_roof); //Path_MoveTo, 1
-	wpt26->AddPath(wp_red_sniper_roof); //Path_MoveTo, -1
+	wp_red_sniper_roof->AddPath(wpt26);
+	wp_red_sniper_roof->AddPath(wp_red_ground_front);
+	wpt26->AddPath(wp_red_teleporter_roof);
+	wpt26->AddPath(wp_red_sniper_roof);
 
-	wp18->AddPath(wp_blue_jumppad); //Path_MoveTo, 1
-	wp19->AddPath(wp_red_jumppad); //Path_MoveTo, 1
-	wp_blue_jumppad->AddPath(wp_blue_teleporter_base); //Path_MoveTo, 1
-	wp_red_jumppad->AddPath(wp_red_teleporter_base); //Path_MoveTo, 1
+	wp18->AddPath(wp_blue_jumppad);
+	wp19->AddPath(wp_red_jumppad);
+	wp_blue_jumppad->AddPath(wp_blue_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_JumpPadBlue);
+	wp_red_jumppad->AddPath(wp_red_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_JumpPadRed);
 
 	// Add infos for defense and sniper points
 	wp_blue_ground_front->~SetTeam(TEAM_BLUE)->AddFunction(Bot_Strategy.IsDefensePoint);
@@ -448,10 +446,8 @@ public func CreateWaypoints()
 	wp_red_teleporter_roof->SetArriveCommand(0, 0, "Enter", r_ex1, 0, 0, 0, 0);
 	wp_red_teleporter_sniper->SetArriveCommand(0, 0, "Enter", r_ex2, 0, 0, 0, 0);
 	wp_red_teleporter_level->SetArriveCommand(0, 0, "Enter", r_ex3, 0, 0, 0, 0);
-
-	wp_blue_jumppad ->SetArriveCommand(0, 0, "MoveTo", 0, 155, 665);
-	wp_red_jumppad->SetArriveCommand(0, 0, "MoveTo", 0, LandscapeWidth()-155, 665);
-
+*/
+/*
 	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_sniper), 1);
 	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_roof), 1);
 	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_level), 1);
@@ -469,12 +465,6 @@ public func CreateWaypoints()
 	wp_red_teleporter_roof->SetPathLength( wp_red_teleporter_roof->GetPathID(wp_red_teleporter_base), 1);
 	wp_red_teleporter_level->SetPathLength( wp_red_teleporter_level->GetPathID(wp_red_teleporter_base), 1);
 
-	wp_red_jumppad->SetPathLength(0, 1);
-	wp_blue_jumppad->SetPathLength(0, 1);
-
-
-	wp9->SetPathLength( wp9->GetPathID(wp10), 35);
-	wp10->SetPathLength( wp10->GetPathID(wp9), 35);
 
 	wp12->SetPathLength( wp12->GetPathID(wp10), 10);
 	wp10->SetPathLength( wp10->GetPathID(wp12), 10);
@@ -495,4 +485,36 @@ public func CreateWaypoints()
 
 	wp19->SetPathLength( wp19->GetPathID(wp16), 100);
 	wp16->SetPathLength( wp16->GetPathID(wp19), 50);*/
+}
+
+
+public func OnMoveTo_JumpPadRed(proplist logic, object agent, object move_from, object move_to)
+{
+	if (logic->Agent_IsReadyForCommand(agent))
+	{
+		if (logic->Agent_IsNear(agent, move_from))
+		{
+			agent->SetCommand("MoveTo", nil, LandscapeWidth()-155, 665);
+		}
+		else if (PathFree(agent->GetX(), agent->GetY(), move_to->GetX(), move_to->GetY())) // Jumping
+		{
+			agent->SetCommand("MoveTo", move_to);
+		}
+	}
+}
+
+
+public func OnMoveTo_JumpPadBlue(proplist logic, object agent, object move_from, object move_to)
+{
+	if (logic->Agent_IsReadyForCommand(agent))
+	{
+		if (logic->Agent_IsNear(agent, move_from))
+		{
+			agent->SetCommand("MoveTo", nil, 155, 665);
+		}
+		else if (PathFree(agent->GetX(), agent->GetY(), move_to->GetX(), move_to->GetY())) // Jumping
+		{
+			agent->SetCommand("MoveTo", move_to);
+		}
+	}
 }
