@@ -21,6 +21,12 @@ public func Execute(proplist controller, object bot)
 	var enemy_flag = GetEnemyFlag(owner);
 	
 	var team_has_players = GetTeamPlayerCount(GetPlayerTeam(owner)) > 1;
+	
+	// Prevent tasks while in a spawn point
+	if (bot->GetProcedure() != DFA_WALK)
+	{
+		return TASK_EXECUTION_IN_PROGRESS;
+	}
 
 	
 	// Flag carrier returns home
@@ -103,6 +109,7 @@ public func Execute(proplist controller, object bot)
 				// Just go to enemy flag/enemy flag carrier
 				if (!enemy_carrier)
 				{
+					// TODO: Move tasks need to override the one with the least priority
 					Task_MoveAlongPath->AddTo(bot, TASK_PRIORITY_HIGH)->SetStart(bot)->SetDestination(enemy_flag)->SetDescription("Get enemy flag");
 				}
 				else
