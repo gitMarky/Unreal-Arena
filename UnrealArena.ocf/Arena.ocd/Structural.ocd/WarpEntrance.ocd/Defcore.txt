@@ -1,0 +1,6 @@
+[DefCore]
+id=Arena_WarpEntrance
+Category=C4D_StaticBack
+Width=16
+Height=20
+Offset=-8,-10

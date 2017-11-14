@@ -22,6 +22,7 @@ protected func Initialize()
 {
 	CreateSpawnPoints();
 	CreateJumpPads();
+	CreateTeleports();
 	CreateWaypoints();
 	
 	_inherited(...);
@@ -69,7 +70,36 @@ private func CreateJumpPads()
 		                                                             ->SetBaseColor(grey)
 		                                                             ->SetBaseGraphics("BaseSmall");
 	}
+}
 
+
+private func CreateTeleports()
+{
+	// Teleporter
+
+	var blue_ent = CreateObject(Arena_WarpEntrance, 307, 581, NO_OWNER);
+	var blue_ex1 = CreateObject(Arena_WarpEntrance, 323, 212, NO_OWNER);
+	var blue_ex2 = CreateObject(Arena_WarpEntrance, 392, 368, NO_OWNER);
+	var blue_ex3 = CreateObject(Arena_WarpEntrance, 417, 485, NO_OWNER);
+	
+	blue_ent->SetTeam(TEAM_BLUE)->SetGlowColor(RGB(0, 0, 232))
+	        ->SetTargetLeft(blue_ex3)
+	        ->SetTargetRight(blue_ex2)
+	        ->SetTargetUp(blue_ex1)
+	        ->Create();
+	        
+	var w = LandscapeWidth();
+
+	var red_ent = CreateObject(Arena_WarpEntrance, w-307, 581, NO_OWNER);
+	var red_ex1 = CreateObject(Arena_WarpEntrance, w-323, 212, NO_OWNER);
+	var red_ex2 = CreateObject(Arena_WarpEntrance, w-392, 368, NO_OWNER);
+	var red_ex3 = CreateObject(Arena_WarpEntrance, w-417, 485, NO_OWNER);
+	
+	red_ent->SetTeam(TEAM_RED)->SetGlowColor(RGB(244, 0, 0))
+	       ->SetTargetLeft(red_ex2)
+	       ->SetTargetRight(red_ex3)
+	       ->SetTargetUp(red_ex1)
+	       ->Create();
 }
 
 
