@@ -17,6 +17,9 @@ static const SPAWN_Superweapon = "n";
 static const TEAM_BLUE = 1;
 static const TEAM_RED = 2;
 
+static teleport_blue_ent, teleport_blue_ex1, teleport_blue_ex2, teleport_blue_ex3;
+static teleport_red_ent, teleport_red_ex1, teleport_red_ex2, teleport_red_ex3;
+
 
 protected func Initialize()
 {
@@ -77,29 +80,29 @@ private func CreateTeleports()
 {
 	// Teleporter
 
-	var blue_ent = CreateObject(Arena_WarpEntrance, 307, 581, NO_OWNER);
-	var blue_ex1 = CreateObject(Arena_WarpEntrance, 323, 212, NO_OWNER);
-	var blue_ex2 = CreateObject(Arena_WarpEntrance, 392, 368, NO_OWNER);
-	var blue_ex3 = CreateObject(Arena_WarpEntrance, 417, 485, NO_OWNER);
+	teleport_blue_ent = CreateObject(Arena_WarpEntrance, 307, 581, NO_OWNER);
+	teleport_blue_ex1 = CreateObject(Arena_WarpEntrance, 323, 212, NO_OWNER);
+	teleport_blue_ex2 = CreateObject(Arena_WarpEntrance, 392, 368, NO_OWNER);
+	teleport_blue_ex3 = CreateObject(Arena_WarpEntrance, 417, 485, NO_OWNER);
 	
-	blue_ent->SetTeam(TEAM_BLUE)->SetGlowColor(RGB(0, 0, 232))
-	        ->SetTargetLeft(blue_ex3)
-	        ->SetTargetRight(blue_ex2)
-	        ->SetTargetUp(blue_ex1)
-	        ->Create();
+	teleport_blue_ent->SetTeam(TEAM_BLUE)->SetGlowColor(RGB(0, 0, 232))
+	                 ->SetTargetLeft(teleport_blue_ex3)
+	                 ->SetTargetRight(teleport_blue_ex2)
+	                 ->SetTargetUp(teleport_blue_ex1)
+	                 ->Create();
 	        
 	var w = LandscapeWidth();
 
-	var red_ent = CreateObject(Arena_WarpEntrance, w-307, 581, NO_OWNER);
-	var red_ex1 = CreateObject(Arena_WarpEntrance, w-323, 212, NO_OWNER);
-	var red_ex2 = CreateObject(Arena_WarpEntrance, w-392, 368, NO_OWNER);
-	var red_ex3 = CreateObject(Arena_WarpEntrance, w-417, 485, NO_OWNER);
+	teleport_red_ent = CreateObject(Arena_WarpEntrance, w-307, 581, NO_OWNER);
+	teleport_red_ex1 = CreateObject(Arena_WarpEntrance, w-323, 212, NO_OWNER);
+	teleport_red_ex2 = CreateObject(Arena_WarpEntrance, w-392, 368, NO_OWNER);
+	teleport_red_ex3 = CreateObject(Arena_WarpEntrance, w-417, 485, NO_OWNER);
 	
-	red_ent->SetTeam(TEAM_RED)->SetGlowColor(RGB(244, 0, 0))
-	       ->SetTargetLeft(red_ex2)
-	       ->SetTargetRight(red_ex3)
-	       ->SetTargetUp(red_ex1)
-	       ->Create();
+	teleport_red_ent->SetTeam(TEAM_RED)->SetGlowColor(RGB(244, 0, 0))
+	                ->SetTargetLeft(teleport_red_ex2)
+	                ->SetTargetRight(teleport_red_ex3)
+	                ->SetTargetUp(teleport_red_ex1)
+	                ->Create();
 }
 
 
@@ -381,19 +384,17 @@ public func CreateWaypoints()
 
 
 
-	wp_blue_teleporter_sniper->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
+	wp_blue_teleporter_sniper->AddPath(wp_blue_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_blue_ex2, to = teleport_blue_ent};
 	wp_blue_teleporter_sniper->AddPath(wpt4);
-	wp_blue_teleporter_roof->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
+	wp_blue_teleporter_roof->AddPath(wp_blue_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_blue_ex1, to = teleport_blue_ent};
 	wp_blue_teleporter_roof->AddPath(wpt3);
 	wpt3->AddPath(wp_blue_teleporter_roof); //Path_MoveTo, -1
 	wpt3->AddPath(wp_blue_sniper_roof);
 	wpt4->AddPath(wp_blue_teleporter_sniper); //Path_MoveTo, -1
 	wpt4->AddPath(wp_blue_sniper);
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper);
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof);
-	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level);
-
-
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_sniper)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_blue_ent, to = teleport_blue_ex2};
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_roof)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_blue_ent, to = teleport_blue_ex1};
+	wp_blue_teleporter_base->AddPath(wp_blue_teleporter_level)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_blue_ent, to = teleport_blue_ex3};
 
 
 	wp_blue_teleporter_base->AddPath(wp_blue_ground_back);
@@ -405,7 +406,7 @@ public func CreateWaypoints()
 	wp_blue_sniper->AddPath(wpt4); //Path_MoveTo, -1
 
 	wp_blue_sniper->AddPath(wp_blue_ground_front);
-	wp_blue_teleporter_level->AddPath(wp_blue_teleporter_base); //Path_MoveTo, -1
+	wp_blue_teleporter_level->AddPath(wp_blue_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_blue_ex3, to = teleport_blue_ent};
 	wp_blue_teleporter_level->AddPath(wpt16);
 	wp_blue_teleporter_level->AddPath(wp7);
 	wp7->AddPath(wp_blue_teleporter_level);
@@ -462,14 +463,8 @@ public func CreateWaypoints()
 	wp_red_sniper_roof->~SetTeam(TEAM_RED)->AddFunction(Bot_Strategy.IsSniperPoint);
 
 
-/*
-	wp_blue_teleporter_base->SetArriveCommand(0, 0, "Call", b_ent, 0, 0, 0, "ContainedRight");
-	wp_blue_teleporter_base->SetArriveCommand(1, 0, "Call", b_ent, 0, 0, 0, "ContainedUp");
-	wp_blue_teleporter_base->SetArriveCommand(2, 0, "Call", b_ent, 0, 0, 0, "ContainedLeft");
-	wp_blue_teleporter_roof->SetArriveCommand(0, 0, "Enter", b_ex1, 0, 0, 0, 0);
-	wp_blue_teleporter_sniper->SetArriveCommand(0, 0, "Enter", b_ex2, 0, 0, 0, 0);
-	wp_blue_teleporter_level->SetArriveCommand(0, 0, "Enter", b_ex3, 0, 0, 0, 0);
 
+/*
 	wp_red_teleporter_base->SetArriveCommand(0, 0, "Call", r_ent, 0, 0, 0, "ContainedUp");
 	wp_red_teleporter_base->SetArriveCommand(1, 0, "Call", r_ent, 0, 0, 0, "ContainedLeft");
 	wp_red_teleporter_base->SetArriveCommand(2, 0, "Call", r_ent, 0, 0, 0, "ContainedRight");
@@ -478,13 +473,7 @@ public func CreateWaypoints()
 	wp_red_teleporter_level->SetArriveCommand(0, 0, "Enter", r_ex3, 0, 0, 0, 0);
 */
 /*
-	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_sniper), 1);
-	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_roof), 1);
-	wp_blue_teleporter_base->SetPathLength( wp_blue_teleporter_base->GetPathID(wp_blue_teleporter_level), 1);
 
-	wp_blue_teleporter_sniper->SetPathLength( wp_blue_teleporter_sniper->GetPathID(wp_blue_teleporter_base), 1);
-	wp_blue_teleporter_roof->SetPathLength( wp_blue_teleporter_roof->GetPathID(wp_blue_teleporter_base), 1);
-	wp_blue_teleporter_level->SetPathLength( wp_blue_teleporter_level->GetPathID(wp_blue_teleporter_base), 1);
 
 
 	wp_red_teleporter_base->SetPathLength( wp_red_teleporter_base->GetPathID(wp_red_teleporter_sniper), 1);
@@ -544,6 +533,19 @@ public func OnMoveTo_JumpPadBlue(proplist logic, object agent, object move_from,
 		}
 		else if (PathFree(agent->GetX(), agent->GetY(), move_to->GetX(), move_to->GetY())) // Jumping
 		{
+			agent->SetCommand("MoveTo", move_to);
+		}
+	}
+}
+
+
+public func OnMoveTo_Teleport(proplist logic, object agent, object move_from, object move_to)
+{
+	if (logic->Agent_IsReadyForCommand(agent))
+	{
+		if (logic->Agent_IsNear(agent, move_from))
+		{
+			this.teleport.from->Teleport(agent, this.teleport.to);
 			agent->SetCommand("MoveTo", move_to);
 		}
 	}
