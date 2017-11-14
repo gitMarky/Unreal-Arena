@@ -7,57 +7,53 @@ local target_left, target_right, target_up, target_down, target_single;
 local Name = "$Name$";
 local Description = "$Description$";
 
+/* -- Interaction -- */
 
-public func ActivateEntrance( object pObj )
+// Players can interact
+func IsInteractable(object clonk)
 {
-/*
-	SetEntrance(1);
+	return target_left || target_right || target_up || target_down || target_single;
+}
 
 
-	var tele = false;
-	if( tgt1 && !tgt2 && !tgt3) {ScheduleCall(this,"Teleport",2,0,pObj,tgt1); tele = true;}//Teleport(pObj,tgt1);
-	if(!tgt1 &&  tgt2 && !tgt3) {ScheduleCall(this,"Teleport",2,0,pObj,tgt2); tele = true;}//Teleport(pObj,tgt2);
-	if(!tgt1 && !tgt2 &&  tgt3) {ScheduleCall(this,"Teleport",2,0,pObj,tgt3); tele = true;}//Teleport(pObj,tgt3);
 
-	if(!tele)
+
+// Adapt appearance in the interaction bar.
+public func GetInteractionMetaInfo(object clonk)
+{
+	var text;
+	return { Description = "Teleport", IconName = nil, IconID = Hammer };
+}
+
+
+// Called on player interaction.
+public func Interact(object bot)
+{
+	if (target_single)
 	{
-		ScheduleCall(this,"Teleport",15,0,pObj,this);
+		Teleport(bot, target_single);
 	}
-
-	Schedule("SetEntrance()",2);
-	return 1;
-*/
-}
-/*
-
-public func ContainedUp( object obj )
-{
-	Teleport( obj, tgt3);
-	return 1;
-}
-
-public func ContainedRight( object obj )
-{
-	Teleport( obj, tgt2);
-	return(1);
+	else
+	{
+		var fx = GetEffect("FxTeleportControl", bot);
+		if (!fx)
+		{
+			fx = bot->CreateEffect(FxTeleportControl, 1, 1);
+		}
+		fx.teleport = this;
+	}
+	return true;
 }
 
-
-public func ContainedLeft( object obj )
-{
-	Teleport( obj, tgt1);
-}
-*/
 
 public func Teleport(object bot, object target)
 {
 	if (!bot) return;
-	if (target == this && (bot->Contained() != this))
+	if (target == this)
 	{
 		return;
 	}
 
-	bot->Exit();
 	if (target)
 	{
 		bot->SetPosition(target->GetX(), target->GetY());
@@ -157,5 +153,46 @@ local FxGlow = new Effect
 			this.Target->CreateParticle("Magic", PV_Random(-5, +5), PV_Random( +7, -2), 0, PV_Random(-7, -2), PV_Random(25, 40), particles, 2);
 		}
 		this.Target->CreateParticle("Magic", PV_Random(-1, +1), 7, 0, -4, 60, {Prototype = particles, Size = PV_Random(15, 25), Alpha = PV_Linear(3, 0)});
+	},
+};
+
+local FxTeleportControl = new Effect
+{
+	Control = func (int ctrl, int x, int y, int strength, bool repeat, int status)
+	{
+		if (status == CONS_Up)
+		{
+			this.kill = true;
+			if (ctrl == CON_Up)
+			{
+				this.teleport->Teleport(this.Target, this.teleport.target_up);
+				return true;
+			}
+			if (ctrl == CON_Down)
+			{
+				this.teleport->Teleport(this.Target, this.teleport.target_down);
+				return true;
+			}
+			if (ctrl == CON_Left)
+			{
+				this.teleport->Teleport(this.Target, this.teleport.target_left);
+				return true;
+			}
+			if (ctrl == CON_Right)
+			{
+				this.teleport->Teleport(this.Target, this.teleport.target_right);
+				return true;
+			}
+		}
+		return true;
+	},
+	
+	Timer = func ()
+	{
+		if (this.kill || !this.teleport)
+		{
+			return FX_Execute_Kill;
+		}
+		return FX_OK;
 	},
 };

@@ -22,6 +22,7 @@
 // themselves via overloading of callbacks.
 #include GUI_Controller_UA_InventoryBar
 #include GUI_Controller_UA_StatusBar
+#include GUI_Controller_ActionBar
 #include GUI_Controller_Goal
 
 // All elements visible to HUD owner only - so NO_OWNER on sub-elements can be used to make them invisible temporarily.
