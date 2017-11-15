@@ -412,25 +412,29 @@ public func CreateWaypoints()
 	wp7->AddPath(wp_blue_teleporter_level);
 	wpt16->AddPath(wp_blue_teleporter_level); //Path_MoveTo, -1
 	wpt16->AddPath(wp_blue_ground_front);
-	wp_red_teleporter_base->AddPath(wp_red_teleporter_roof); //Path_MoveTo, -1
-	wp_red_teleporter_base->AddPath(wp_red_teleporter_sniper); //Path_MoveTo, -1
-	wp_red_teleporter_base->AddPath(wp_red_teleporter_level); //Path_MoveTo, -1
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_roof)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ent, to = teleport_red_ex1};
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_sniper)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ent, to = teleport_red_ex2};
+	wp_red_teleporter_base->AddPath(wp_red_teleporter_level)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ent, to = teleport_red_ex3};
 	wp_red_teleporter_base->AddPath(wp_red_ground_back);
 	wp_red_teleporter_base->AddPath(wp_red_ground_entrance);
+	
+	
 
 	wp_red_ground_back->AddPath(wp_red_teleporter_base);
 	wp_red_ground_entrance->AddPath(wp_red_teleporter_base);
-	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base);
+	wp_red_teleporter_sniper->AddPath(wp_red_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ex2, to = teleport_red_ent};
 	wp_red_teleporter_sniper->AddPath(wpt24); //Path_MoveTo, -1
-	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base);
+	wp_red_teleporter_roof->AddPath(wp_red_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ex1, to = teleport_red_ent};
 	wp_red_teleporter_roof->AddPath(wpt26); //Path_MoveTo, -1
-	wp_red_teleporter_level->AddPath(wp_red_teleporter_base);
+	wp_red_teleporter_level->AddPath(wp_red_teleporter_base)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ex3, to = teleport_red_ent};
 	wp_red_teleporter_level->AddPath(wpt22); //Path_MoveTo, -1
 	wp_red_teleporter_level->AddPath(wp3);
 	wp3->AddPath(wp_red_teleporter_level);
 	wpt22->AddPath(wp_red_teleporter_level);
 	wpt22->AddPath(wp_red_ground_front);
 	wp_red_sniper->AddPath(wpt24);
+
+	
 
 	wp_red_sniper->AddPath(wp_red_ground_front);
 	wpt24->AddPath(wp_red_teleporter_sniper);
