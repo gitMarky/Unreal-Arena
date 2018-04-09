@@ -1,5 +1,6 @@
-#include Library_Weapon
-#include Plugin_Weapon_FiremodeByUse
+#include Library_AmmoManager
+#include Library_Firearm
+#include Plugin_Firearm_FiremodeByUse
 
 local Collectible = true;
 
@@ -60,6 +61,11 @@ func IsWeaponReadyToUse(object user)
 	}
 
 	return can_use;
+}
+
+func IsUserReadyToUse(object user)
+{
+	return user->HasActionProcedure(false);
 }
 
 
