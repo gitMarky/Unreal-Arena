@@ -42,7 +42,7 @@ public func Initialize()
 	ClearFiremodes();
 	AddFiremode(firemode_primary);
 	AddFiremode(firemode_secondary);
-	ChangeFiremode(firemode_primary);
+	SetFiremode(GetFiremodeIndex(firemode_primary), true);
 }
 
 
