@@ -25,7 +25,7 @@ public func IsDeparted()
 private func FxIntDisintegrationTimer(object target, proplist effect, int timer)
 {
 	if (target->Contained()) return FX_Execute_Kill;
-	
+
 	if (timer > 100)
 	{
 		target->Disintegrate(20, 50, -5, true);

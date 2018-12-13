@@ -18,7 +18,7 @@ protected func Initialize()
 {
 	CreateSpawnPoints();
 	CreateObject(Environment_ScenarioScript);
-	
+
 	// lift plates
 	var lp1 = CreateObject(Liftplate_Small, 264, 695 -5, NO_OWNER);
 	var lp2 = CreateObject(Liftplate_Small, 199, 775 -5, NO_OWNER);

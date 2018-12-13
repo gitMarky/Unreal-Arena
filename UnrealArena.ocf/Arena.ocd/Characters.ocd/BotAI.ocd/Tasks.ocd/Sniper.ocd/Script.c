@@ -19,18 +19,18 @@ public func Execute(proplist controller, object agent)
 		{
 			this.TaskGetWeapon = Task_GetWeapon->AddTo(agent, TASK_PRIORITY_HIGH, this);
 		}
-	
+
 		return TASK_EXECUTION_IN_PROGRESS;
 	}
 
 	var vantage_points = FindObjects(Find_Func("IsWaypoint"), Find_Func("IsSniperPoint", GetPlayerTeam(owner)));
  	AI_Debugging->LogAI_Info(controller, Format("Found vantage points %v", vantage_points));
- 	
+
  	if (GetLength(vantage_points) == 0)
  	{
  		return TASK_EXECUTION_FAILURE;
  	}
- 	
+
 	var is_at_vantage_point;
  	for (var vantage_point in vantage_points)
  	{
@@ -59,7 +59,7 @@ public func Execute(proplist controller, object agent)
 	else
 	{
 		var destination = vantage_points[Random(GetLength(vantage_points))];
-		
+
 		if (destination)
 		{	
 			Task_MoveAlongPath->AddTo(agent, TASK_PRIORITY_NORMAL, this)->SetStart(agent)->SetDestination(destination)->SetDescription("Moving to vantage point");
@@ -69,7 +69,7 @@ public func Execute(proplist controller, object agent)
 			return TASK_EXECUTION_FAILURE;
 		}
 	}
-	
+
 	return TASK_EXECUTION_IN_PROGRESS;
 }
 

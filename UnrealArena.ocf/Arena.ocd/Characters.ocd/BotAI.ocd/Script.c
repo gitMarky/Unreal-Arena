@@ -89,7 +89,7 @@ func GetPrefDmgType(object pTarget)
 	}
 	if (pTarget->~OnDmg(DMG_Bio) < min)
 		type = DMG_Bio;
-	
+
 	return type;
 }
 
@@ -107,7 +107,7 @@ func GetPrefDmgType(object pTarget)
 func FindPath(object pStart, object pEnd, bool fJetpack)
 {
 	var pCurrent = pStart;
-	
+
 	var aNodes = []; // das Array, in welchem die Wegpunkte gespeichert werden
 	var aDistance = []; // dieses Array gibt an, wie weit ich zum Wegpunkt laufen muss
 	// könnte ausschließlich mit ObjectDistance() gemacht werden
@@ -117,24 +117,24 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 	var aPrev = []; // die Vorgänger, daraus bauen wir einen Pfad zusammen
 	var bPath = []; // aNodes hilft nur für die Nachbarschaft, bPath ist der gewählte Pfad
 	var aSet = []; // Suchmenge
-	
+
 	var jetp = 0;
 	var ammoload = JTPK->GetFMData(FM_AmmoLoad);
-	
+
 	// Initialisierung: Startpunkt in die Knotenmenge, Label ist 0
 	aNodes = FindObjects(Find_ID(WAYP));
 	aSet = aNodes;
 	for (var i = 0; i < GetLength(aNodes); i++)
 		aDistance[i] = -1;
 	aDistance[GetIndexOf(aNodes, pCurrent)] = 0;
-	
+
 	// jetzt der eigentliche Algorithmus
 	var bEnd = false;
 	while (GetLength(aSet) && (!bEnd))
 	{
-		
+
 		var aBest = [], pNode, iBest = -1;
-		
+
 		// besten Knoten auswählen
 		for (pNode in aSet) 
 		{
@@ -155,21 +155,21 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		}
 		DebugLog("Best Nodes: %v", "dijkstra", aBest);
 		pCurrent = aBest[Random(GetLength(aBest))];
-		
+
 		if (!pCurrent) break;
-		
+
 		RemoveArrayValue(aSet, pCurrent);
-		
+
 		var pNext = 0;
 		var pathcount = pCurrent->GetPathCount();
 		var iCurrent = GetIndexOf(aNodes, pCurrent);
-		
+
 		// alle Nachbarknoten des besten Knotens nach k�rzeren Wegen absuchen
 		for (var i = 0; i < pathcount; ++i)
 		{
 			pNext = (pCurrent->GetPathTarget(i));
 			var iNext = GetIndexOf(aNodes, pNext);
-			
+
 			if (!Check4Jetpack(pCurrent, i, fJetpack, jetp, ammoload))
 			{
 				DebugLog
@@ -181,7 +181,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				);
 				continue;
 			}
-			
+
 
 			// jetzt die Distanz updaten
 			var distnew = aDistance[iCurrent] + pCurrent->~GetPathLengthWP(i);
@@ -194,13 +194,13 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				distnew,
 				aDistance[iNext]
 			);
-			
+
 			if (aDistance[iNext] < 0 || aDistance[iNext] > distnew)
 			{
 				aDistance[iNext] = distnew;
 				aPrev[iNext] = pCurrent;
 			}
-			
+
 			if (pNext == pEnd)
 			{
 				DebugLog("Found Endpoint", "dijkstra");
@@ -209,11 +209,11 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 			}
 		}
 	}
-	
+
 	// er findet keinen Weg dorthin, leider
 	if (!bEnd)
 		return false;
-	
+
 	// Jetzt den Weg aufbauen
 	bPath = [pEnd];
 	pCurrent = pEnd;
@@ -221,7 +221,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 	{
 		PushFront(pCurrent, bPath);
 	}
-	
+
 	return bPath;
 }
 

@@ -14,13 +14,13 @@ local animation_set = {
 		AimMode        = AIM_Position, // The aiming animation is done by adjusting the animation position to fit the angle
 		AnimationAim   = "CrossbowAimArms",
 };
-	
+
 local firemode_primary = 
 {
 	name = 				WEAPON_Firemode_Primary, // string - menu caption
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Sniper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
@@ -49,7 +49,7 @@ local firemode_secondary =
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Sniper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
@@ -89,18 +89,18 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 {
 	projectile->HitScan();
 }
-	
+
 public func FireEffect(object user, int angle, proplist firemode)
 {
 	// muzzle flash
-	
+
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
 	EffectMuzzleFlash(user, x, y, angle, 20, false, true, -1, "MuzzleFlash2");
-		
+
 	// casing
-	
+
 	x = +Sin(angle, firemode.projectile_distance / 4);
 	y = -Cos(angle, firemode.projectile_distance / 4) + firemode.projectile_offset_y;
 

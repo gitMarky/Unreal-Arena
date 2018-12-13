@@ -8,9 +8,9 @@ public func Launch(int angle, proplist deviation)
 	RemoveOnHit();
 
 	if (user) SetController(user->GetController());
-	
+
 	var precision = 100;
-	
+
 	// get correct precision
 	if (deviation == nil)
 	{
@@ -24,7 +24,7 @@ public func Launch(int angle, proplist deviation)
 	{
 		deviation = ScaleDeviation(deviation, precision);
 	}
-	
+
 	// get angle and velocity
 	angle = GetLaunchAngle(angle, precision, deviation);
 	velocity_x = +Sin(angle, velocity, precision);
@@ -33,7 +33,7 @@ public func Launch(int angle, proplist deviation)
 	var self = this;
 
 	this->OnLaunch();
-	
+
 	if (self)
 	{
 		this->OnLaunched();

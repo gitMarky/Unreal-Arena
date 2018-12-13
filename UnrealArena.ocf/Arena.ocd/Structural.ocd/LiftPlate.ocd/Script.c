@@ -43,7 +43,7 @@ private func SetMoveDirection(int dir)
 	// no change?
 	if (dir == COMD_Up && (GetYDir() < 0)) return;
 	if (dir == COMD_Down && (GetYDir() > 0)) return;
-	
+
 	// already reached top/bottom?
 	if (GetContact(-1, CNAT_Bottom) && dir == COMD_Down)
 		return;
@@ -51,10 +51,10 @@ private func SetMoveDirection(int dir)
 		return;
 	if (dir == COMD_Stop) 
 		return Halt();
-	
+
 	var speed = GetAutoSpeed();
 
-	
+
 	if (dir == COMD_Down)
 		SetYDir(speed);
 	else if (dir == COMD_Up)
@@ -69,7 +69,7 @@ private func SetMoveDirection(int dir)
 func FxCheckAutoMoveTimer(object target, proplist effect, int time)
 {
 	if (GetAction() != "Check") return FX_OK;
-	
+
 	// look for Clonks at shaft
 	var additional = 20;
 	var x = -additional;
@@ -90,8 +90,8 @@ func FxCheckAutoMoveTimer(object target, proplist effect, int time)
 				continue;
 		if ((clonk->GetY() > GetY()) && GetContact(-1, CNAT_Bottom)) 
 				continue;
-		
-		
+
+
 		// Priority rules: Cursor is better than no cursor, nearer is better than farer (Sort_Distance() & Sort_Reverse() do this)
 		// So unlike in CR's elevator, no distance check has to be done because later cycles are always nearer clonks
 		if (!best) 

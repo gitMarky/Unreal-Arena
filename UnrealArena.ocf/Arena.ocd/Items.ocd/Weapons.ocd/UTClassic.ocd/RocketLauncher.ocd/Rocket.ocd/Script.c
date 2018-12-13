@@ -9,10 +9,10 @@ public func Grenade()
 	{
 		FatalError("This function should be called only when the object is idle");
 	}
-	
+
 	SetGraphics("Grenade");
 	is_grenade = true;
-	
+
 	SetR(Random(360));
 	SetRDir(Random(30));
 
@@ -71,9 +71,9 @@ public func ExplosionEffect(int level, int x, int y, int smoothness)
 protected func Travelling()
 {
 	var self = this;
-	
+
 	_inherited(...);
-	
+
 	if (self)
 	{
 		if (!is_grenade)
@@ -115,7 +115,7 @@ private func HandleTrail()
 		var rand = RandomX(-5, 5);
 		var xdir = +Sin(GetR() + rand, 20);
 		var ydir = -Cos(GetR() + rand, 20);
-		
+
 		var size_thrust = RandomX(6, 8);
 		var size_smoke = RandomX(8, 12);
 

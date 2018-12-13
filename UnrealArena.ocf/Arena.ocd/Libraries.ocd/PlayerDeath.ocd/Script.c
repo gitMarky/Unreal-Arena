@@ -5,7 +5,7 @@ local lib_player_death;
 func Initialize()
 {
 	_inherited(...);
-	
+
 	lib_player_death = 
 	{
 		is_corpse = false,
@@ -74,10 +74,10 @@ func Death(int killed_by)
 
 	// This must be done first, before any goals do funny stuff with the clonk
 	_inherited(killed_by,...);
-		
+
 	// The broadcast could have revived the clonk.
 	if (GetAlive()) return;
-	
+
 	// Make him a corpse
 	OnDeathBecomeCorpse();
 
@@ -89,7 +89,7 @@ func Death(int killed_by)
 
 /**
  This is what happens when the player becomes a corpse.
- 
+
  @par projectile The object that caused death.
  @par damage_amount The amount of damage that caused death.
  @par damage_type The damage type that caused death.
@@ -110,7 +110,7 @@ func OnDeathBecomeCorpse(object projectile, int damage_amount, int damage_type)
 
 /**
  Determines the way the corpse will look.
- 
+
  @par projectile The object that caused death.
  @par damage_amount The amount of damage that caused death.
  @par damage_type The damage type that caused death.
@@ -120,7 +120,7 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 	if (projectile)
 	{
 		// Get all basic info from the projectile first
-	
+
 		GetCorpseData().hit_x = projectile->GetX() - GetX();
 		GetCorpseData().hit_y = projectile->GetY() - GetY();
 		GetCorpseData().hit_xdir = projectile->GetXDir();
@@ -129,7 +129,7 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 		GetCorpseData().damage_type = damage_type ?? DMG_Suicide;
 
 		// Determine advanced info
-		
+
 		GetCorpseData().corpse_headshot = IsHeadshot(projectile, damage_type);
 
 		if (damage_type & DMG_Explosion)
@@ -146,21 +146,21 @@ func OnDeathDetermineCorpseData(object projectile, int damage_amount, int damage
 				GetCorpseData().corpse_lost_arm_l = !Random(12);
 				GetCorpseData().corpse_lost_arm_r = !Random(12);
 			}
-			
+
 			GetCorpseData().corpse_blasted = true;
 		}
-		
+
 		GetCorpseData().death_physics = Calc_ProjectileCollision(this, projectile, BoundBy(projectile->~CorpsePhysicsElasticityConstant(), 0, 1000));
-		
+
 	}
-	
+
 	if (GetContact(-1) & CNAT_Bottom)
 	{
 		GetCorpseData().on_ground = true;
 	}
-	
+
 	GetCorpseData().animation_speed = 1000 - 3 * Distance(GetCorpseData().hit_xdir, GetCorpseData().hit_ydir);
-	
+
 	return GetCorpseData();
 }
 
@@ -195,7 +195,7 @@ func DeathAnnounceExtended(int player, int killed_by_player)
 
 /**
  Ejects the currently selected weapon, removes the rest of the inventory.
- 
+
  @par projectile The projectile that hit the user.
  */
 func OnDeathThrowWeapon(object projectile)
@@ -215,12 +215,12 @@ func OnDeathThrowWeapon(object projectile)
 		}
 		xdir /= 2;
 		ydir /= 2;
-		
+
 		weapon->SetSpeed(xdir, ydir);
 		weapon->SetRDir(rdir);
 		weapon->SetCategory(C4D_Vehicle); // the weapon should not hurt objects
 	}
-	
+
 	var contents = FindObjects(Find_Container(this));
 	for (var item in contents) 
 		item->RemoveObject();
@@ -242,7 +242,7 @@ func OnDeathExitVehicle()
 
 /**
  Handles the way sounds are played when the clonk dies.
- 
+
  @par corpse_data Contains information on how the corpse looks, which is important for certain effects.
  */
 func OnDeathSound()
@@ -272,7 +272,7 @@ func OnDeathGoreEffects()
 
 	EffectCastBloodStream(MOD_MoreGore() * 2, 40 + Random(GetCorpseData().damage_amount));
 	EffectCastGore(MOD_MoreGore() / 3, 60 + Random(GetCorpseData().damage_amount));
-	
+
 	if (GetCorpseData().corpse_headshot)
 	{
 		for (var amount = MOD_MoreGore(); amount > 0; amount -= 2)
@@ -291,10 +291,10 @@ func OnDeathHandleCorpse()
 	// Use some safety here, so that the player does not become a corpse multiple times
 	if (IsCorpse()) return;
 	GetCorpseData().is_corpse = true;
-	
+
 	// This has no effect inside a building or vehicle
 	if (Contained()) return;
-	
+
 	// Handle the different death types; this will differentiate between headshots and so on later
 	if (GetCorpseData().corpse_headshot)
 	{
@@ -316,22 +316,22 @@ func OnDeathHandleCorpseLegacy()
 {
 	if (IsCorpse()) return;
 	GetCorpseData().is_corpse = true;
-	
+
 	if (Contained()) return;
-	
+
 	var cl_legs = nil;
 
-	
+
 	// Flammen-Effekte auf die Leiche uebertragen
 	var flame, flames = FindObjects(Find_ID(Effect_BlazingFlame), Find_Action("Hover"), Find_ActionTarget(this));
 	for (flame in flames) 
 	{
 		flame->~SetMaster(cl_legs);
 	}
-	
+
 	/* Teile anpassen */
 	var deathcam_obj = cl_legs;
-	
+
 	//------------------------------------------
 	// follow the corpse
 
@@ -404,7 +404,7 @@ func HandleCorpseDefault()
 	// Create the corpse
 	var corpse = CreateCorpse();
 	HandleCorpsePhysics([corpse]);
-	
+
 	// Copy the whole skin to the corpse
 	for (var slot = 0; slot <= PLAYER_SKIN_SLOT_HEAD; ++slot)
 	{
@@ -421,7 +421,7 @@ func HandleCorpseHeadshot()
 	// Create the corpse
 	var corpse = CreateCorpse();
 	var head = CreateCorpse();
-	
+
 	// Copy the physics data
 	HandleCorpsePhysics([corpse, head]);
 
@@ -430,19 +430,19 @@ func HandleCorpseHeadshot()
 	{
 		corpse->AddAppearance(slot, this->RemoveAppearance(slot));
 	}
-	
+
 	// Copy the skin data for the head
 	head->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_HEAD));
-	
+
 	// Start the animation
 	corpse->StartSplatter(GetCorpseData().animation_speed, GetCorpseData().on_ground);
 	head->StartSplatter(GetCorpseData().animation_speed, false);
 	head->VertexSetupHead();
-	
+
 	// Additional physics
 	var divisor = 1 + MOD_FastBullets();
 	var rdir = (GetCorpseData().hit_xdir + GetCorpseData().hit_ydir) / (10 * divisor);
-	
+
 	head->AddSpeed(0, -Random(20) * 100, 1000);
 	head->SetRDir(rdir);
 }
@@ -470,7 +470,7 @@ func HandleCorpseBlasted()
 		armr->VertexSetupArmR();
 		PushBack(parts, armr);
 	}
-	
+
 	// Copy the physics data
 	HandleCorpsePhysics(parts);
 
@@ -479,10 +479,10 @@ func HandleCorpseBlasted()
 	{
 		if (slot == PLAYER_SKIN_SLOT_ARML && GetCorpseData().corpse_lost_arm_l) continue;
 		if (slot == PLAYER_SKIN_SLOT_ARMR && GetCorpseData().corpse_lost_arm_r) continue;
-	
+
 		body->AddAppearance(slot, this->RemoveAppearance(slot));
 	}
-	
+
 	legs->AddAppearance(0, this->RemoveAppearance(PLAYER_SKIN_SLOT_LEGS));
 
 	// Start the animation
@@ -517,7 +517,7 @@ func HandleCorpseBlasted()
 	if (GetCorpseData().corpse_blasted_legs)
 	{
 		// TODO deathcam_obj = cl_body;
-		
+
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));
 		EffectGoreChunk(RandomX(-3, +3), RandomX(-3, +3), xdir_corpse, ydir_corpse - Random(ydir_variance));

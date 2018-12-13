@@ -34,7 +34,7 @@ public func FxCountdownRoundTimer(object target, proplist effect, int time)
 			CustomMessage("", nil, player);
 		}
 	}
-	
+
 	// remove?
 	if (effect.counter <= 0)
 	{

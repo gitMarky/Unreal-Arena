@@ -19,20 +19,20 @@ func Launch(string type)
 {
 	if (MOD_NoBlood())
 		return RemoveObject();
-	
+
 	blood_type = type;
 	SetGraphics(type);
-	
+
 	SetAction("Flying");
 	SetDir(Random(5));
-	
+
 	ScheduleCall(this, this.Splatter, 1, 1);
 }
 
 func Splatter()
 {
 	if (MOD_NoBlood()) return RemoveObject();
-	
+
 	if (GetActTime() > 200)
 	{
 		if (!IsDisintegrating()) Disintegrate(20, 50, -10);

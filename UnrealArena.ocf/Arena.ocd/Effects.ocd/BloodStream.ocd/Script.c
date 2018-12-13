@@ -27,7 +27,7 @@ public func Launch(string type)
 public func Splatter()
 {
 	if (MOD_NoBlood()) return RemoveObject();
-	
+
 	EffectBloodSpray(1, 0, 0, 0);
 	//CreateParticle("Blood",0,0,0,0,10+Random(30),RGBaRandom(BloodFXColor(blood_type)[0], BloodFXColor(blood_type)[1] ));
 

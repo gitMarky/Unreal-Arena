@@ -1,6 +1,6 @@
 /**
 	Projectile logic for bots
-	
+
  */
 
 
@@ -16,7 +16,7 @@ public func Agent_FindProjectiles(object agent)
 {
 	var found = _inherited(agent);
 	var projectiles = agent->FindObjects(Find_Now(agent->Agent_Properties()->GetProjectileFindArea()), Find_Or(Find_Func("IsDangerous4AI"), Find_Func("IsProjectile")), Find_NoContainer(), Sort_Distance());
-	
+
 	if (found && GetLength(found) > 0) PushBack(projectiles, found);
 	return 	projectiles;
 }
@@ -49,7 +49,7 @@ public func Agent_AvoidProjectile(object agent, object projectile)
 		agent->SetComDir(COMD_Right);
 	else
 		agent->SetComDir(COMD_Left);
-	
+
 	return agent->GetAI()->GetAgent()->~Agent_Jump(agent);
 }
 

@@ -46,7 +46,7 @@ global func EffectBloodSpray(int amount, int radius, int x, int y)
 	if (MOD_NoBlood()) return;
 
 	AssertObjectContext("EffectBloodSpray");
-	
+
 	var ydir = -3;
 
 	var particles = Particles_UA_Blood(EffectBloodColor(this->~CrewGetBlood()));
@@ -83,7 +83,7 @@ global func EffectCastGore(int amount, int radius, int x, int y)
 	if (MOD_NoBlood()) return;
 
 	AssertObjectContext("EffectCastGore");
-	
+
 	var chunks = CastObjects(Effect_GoreChunk, amount, radius, x, y);
 	for (var chunk in chunks)
 	{

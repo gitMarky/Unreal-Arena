@@ -39,7 +39,7 @@ private func Construction()
 	gui_status_bars = [];
 	gui_status_bar_menu = AssembleStatusBarMenu();
 	gui_status_bar_id = GuiOpen(gui_status_bar_menu);
-	
+
 	return _inherited(...);
 }
 
@@ -118,7 +118,7 @@ public func OnCrewHealthChange(object clonk, int change, int cause, int caused_b
 private func UpdateStatusBarDisplay()
 {
 	var cursor = GetCursor(GetOwner());
-	
+
 	if (!cursor)
 	{
 		HideStatusBar(gui_status_bar_menu.ElementAmmoBar);
@@ -132,7 +132,7 @@ private func UpdateStatusBarDisplay()
 		ShowStatusBar(gui_status_bar_menu.ElementArmorBar);
 		ShowStatusBar(gui_status_bar_menu.ElementShieldBar);
 		ShowStatusBar(gui_status_bar_menu.ElementHealthBar);
-		
+
 		UpdateStatusBarValues(cursor);
 	}
 }
@@ -185,7 +185,7 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 			Height = tab_height,
 		},
 	};
-	
+
 	var tab_position = GuiCalculateGridElementPosition(tab_layout, slot_nr, 0);
 
 	var info_tab = {
@@ -212,7 +212,7 @@ private func AssembleStatusBar(int slot_nr, string icon_name)
 		Element010 = AssembleStatusBarDigit(1),
 		Element100 = AssembleStatusBarDigit(2),
 	};
-	
+
 	AddProperties(info_tab, tab_position);
 
 	return info_tab;
@@ -223,9 +223,9 @@ func AssembleStatusBarDigit(int dimension)
 	var width = 150;
 	var height = 520;
 	var diff_x = 130;
-	
+
 	var max_digits = 3;
-	
+
 	var digit_layout = {
 		Grid = {
 			Prototype = GUI_BoxLayout,
@@ -239,9 +239,9 @@ func AssembleStatusBarDigit(int dimension)
 			Height = height,
 		},
 	};
-	
+
 	var digit_position = GuiCalculateGridElementPosition(digit_layout, 0, max_digits - dimension - 1);
-	
+
 	var digit = {
 		Target = this,
 		Style = GUI_NoCrop,
@@ -255,7 +255,7 @@ func AssembleStatusBarDigit(int dimension)
 			GraphicsName = "Number0",
 		},
 	};
-	
+
 	AddProperties(digit, digit_position);
 	return digit;
 }

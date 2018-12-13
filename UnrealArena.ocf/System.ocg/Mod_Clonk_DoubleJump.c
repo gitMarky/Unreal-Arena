@@ -21,7 +21,7 @@ public func ControlJump()
 public func ObjectControlMovement(int plr, int ctrl, int strength, bool release, bool repeat)
 {
 	if (!this) return false;
-	
+
 	// movement is only possible when not contained
 	if (Contained()) return false;
 
@@ -29,7 +29,7 @@ public func ObjectControlMovement(int plr, int ctrl, int strength, bool release,
 	if(!release)
 		if(strength != nil && strength < CON_Gamepad_Deadzone)
 			return true;
-	
+
 	// Some specific movement controls
 	if (!release && ctrl == CON_Jump)
 	{

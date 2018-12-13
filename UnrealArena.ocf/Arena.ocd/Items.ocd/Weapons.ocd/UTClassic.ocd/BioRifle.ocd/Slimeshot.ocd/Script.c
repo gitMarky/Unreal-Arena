@@ -24,11 +24,11 @@ public func Charge(int percent)
 private func OnLaunch()
 {
 	SetAction("TravelBallistic");
-	
+
 	if (damage == 0) damage = RandomX(5, 10);
-	
+
 	if (glob_charge) damage = glob_charge * damage / 10;
-	
+
 	//var size = 40 + 4 * damage / 5;
 	//size *= 5;
 	//var size = 200 + 4 * damage;
@@ -77,9 +77,9 @@ private func IsSticking()
 private func Sticking()
 {
 	var self = this;
-	
+
 	DoHitCheckCall();
-	
+
 	if (self && GetActTime() > SLIMEGLOB_Sticking_Time)
 	{
 		RemoveGlob();
@@ -132,7 +132,7 @@ private func RemoveGlob()
 	{
 		SplashGlob();
 	}
-	
+
 	CreateImpactEffect(glob_size / 50, 0, 0, "Magic", Particles_SlimeGlob());
 
 	Remove();
@@ -159,10 +159,10 @@ private func CastBlob(int dmg)
 	for (var i = 0; i < 10; i++)
 	{
 		if (!GBackSolid(Sin(angle, distance), -Cos(angle, distance))) break;
-		
+
 		angle = Random(360);
 	}
-	
+
 	// launch it
 	var projectile = CreateObject(GetID(), 0, 0, user->GetController());
 
@@ -208,7 +208,7 @@ local ActMap = {
 		NextAction = "TravelBallistic",
 		StartCall = "Travelling",
 	},
-	
+
 	Stick = {
 		Prototype = Action,
 		Name = "Stick",

@@ -84,7 +84,7 @@ func AssembleInventoryButton(int max_slots, int slot_number, proplist slot_info)
 			ID = 2000 + slot_info.ID
 		}
 	};
-	
+
 	return AddProperties(content, pos);
 }
 
@@ -237,11 +237,11 @@ private func UpdateInventory()
 					number_symbol = Icon_Number;
 				else extra_text = Format("%dx", contents->GetStackCount());
 			}
-			
+
 			// Close a possible lingering custom overlay for that slot.
 			var custom_overlay_id = 2000 + slot_info.ID;
 			GuiClose(inventory_gui_id, custom_overlay_id, nil);
-			
+
 			// Compose the update!
 			var update =
 			{
@@ -265,7 +265,7 @@ private func UpdateInventory()
 					Text = ""
 				}
 			};
-			
+
 			if (item)
 			{
 				if (stack_count > 1 && !item->~IsInfiniteStackCount())
@@ -278,7 +278,7 @@ private func UpdateInventory()
 			{
 				slot_info.last_count = nil;
 			}
-			
+
 			if (custom_overlay)
 			{
 				update.overlay = custom_overlay;
@@ -289,7 +289,7 @@ private func UpdateInventory()
 			{
 				slot_info.had_custom_overlay = false;
 			}
-			
+
 			GuiUpdate(update, inventory_gui_id, slot_info.ID, this);
 
 			var tag = "Std";

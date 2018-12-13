@@ -49,7 +49,7 @@ private func GetWeaponSet(proplist info)
 	SetProperty(GAMECONFIG_Property_Keys, info.key, set);
 	SetProperty(GAMECONFIG_Property_Name, info.name, set);
 	SetProperty(GAMECONFIG_Property_Icon, info.icon, set);
-	
+
 	// empty item proplists
 	var items = {};
 	var weapon_chainsaw = {};
@@ -116,7 +116,7 @@ private func GetWeaponSet(proplist info)
     SetProperty(GAMECONFIG_Proplist_Def, info.item_cloak, item_cloak);
     SetProperty(GAMECONFIG_Proplist_Def, info.item_damage, item_damage);
     SetProperty(GAMECONFIG_Proplist_Def, info.item_boots, item_boots);
-	
+
 	// fill item proplist
     SetProperty(SPAWN_Weapon_Chainsaw, weapon_chainsaw, items);
     SetProperty(SPAWN_Weapon_Enforcer, weapon_enforcer, items);
@@ -153,7 +153,7 @@ private func GetWeaponSet(proplist info)
     SetProperty(SPAWN_Item_JumpBoots, item_boots, items);
 
 	SetProperty(GAMECONFIG_Property_Items, items, set);
-	
+
 	return set;
 }
 

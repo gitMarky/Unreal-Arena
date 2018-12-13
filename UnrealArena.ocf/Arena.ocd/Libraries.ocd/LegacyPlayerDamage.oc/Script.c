@@ -44,7 +44,7 @@ func LastDamageWeapon(id idWeap, bool bOverride)
 {
 	if (idWeap || bOverride)
 		LastDmgWeapon = idWeap;
-	
+
 	return LastDmgWeapon;
 }
 

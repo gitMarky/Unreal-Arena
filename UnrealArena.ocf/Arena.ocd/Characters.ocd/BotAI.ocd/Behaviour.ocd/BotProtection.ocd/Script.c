@@ -31,14 +31,14 @@ public func Execute(proplist controller, object bot)
 			// Won't hit within the next 20 frames.
 			continue;
 		}
-		
+
 		var l = dx * vx + dy * vy;
 		var relative_distance = 100;
 		if (l < 0)
 		{
 			relative_distance = Sqrt(d2 - l * l / v2);
 		}
-		
+
 		if (logic->Agent_ProjectileCanHit(bot, projectile, relative_distance)
 		 && logic->Agent_AvoidProjectile(bot, projectile))
 		{

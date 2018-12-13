@@ -1,12 +1,12 @@
 /**
  Handles interaction between projectiles and physical objects.
- 
+
  This is based on a physics calculcation, but it makes a lot of assumptions and probably is not entirely correct.
- 
+
  @title Projectile physics
  @author Marky
  */
- 
+
 global func Calc_ProjectileCollision(object body1, object body2, int elasticity)
 {
 	if (elasticity < 0)
@@ -17,11 +17,11 @@ global func Calc_ProjectileCollision(object body1, object body2, int elasticity)
 	{
 		FatalError("The function needs two objects as arguments");
 	}
-	
+
 	var precision = 1000;
-	
+
 	// initial data
-	
+
 	var m_b1 = body1->GetMass();
 	var m_b2 = body2->GetMass();
 
@@ -35,23 +35,23 @@ global func Calc_ProjectileCollision(object body1, object body2, int elasticity)
 
 	var v_x = m_b1 * v_x_b1 + m_b2 * v_x_b2 - elasticity * m_b2 * (v_x_b1 - v_x_b2) / precision;
 	var v_y = m_b1 * v_y_b1 + m_b2 * v_y_b2 - elasticity * m_b2 * (v_y_b1 - v_y_b2) / precision;
-	
+
 	var mass = m_b1 + m_b2;
 
 	v_x /= mass; v_y /= mass;
 
 	// resulting angular velocity
-	
+
 	var angle = Angle(0, 0, v_x_b2, v_y_b2, precision) - body1->GetR() * precision; // angle rotated as if it were a global angle
 	var tangential_component = Sin(angle, Distance(0, 0, v_x, v_y), precision); 
-	
+
 	// radius of rotation: distance from bottom of body1 to center of body2
 	var bottom = body1->GetDefHeight() + body1->GetDefOffset(1);
 	bottom *= precision;
-	
+
 	var bottom_x = body1->GetX(precision) - Sin(body1->GetR(), bottom);
 	var bottom_y = body1->GetY(precision) + Cos(body1->GetR(), bottom);
-	
+
 	var length = Distance(bottom_x, bottom_y, body2->GetX(precision), body2->GetY(precision));
 
 	//DebugLog("Angular velocity: bottom = %d, length = %d, angle = %d, tangent = %d", bottom, length / precision, angle, tangential_component);
@@ -66,7 +66,7 @@ global func Calc_ProjectileCollision(object body1, object body2, int elasticity)
 
 global func Test_Calc_ProjectileCollision()
 {
-	
+
 	// test data: proplist with inputs body1, proplist with inputs body2, elasticity, expected results
 	var data = [[{Mass = 1, XDir = 0, YDir = 0}, {Mass = 1, XDir = 10, YDir = 0}, 0, {XDir = 500, YDir = 0}],
 	            [{Mass = 1, XDir = 0, YDir = 0}, {Mass = 1, XDir = 10, YDir = 0}, 1000, {XDir = 1000, YDir = 0}],
@@ -98,7 +98,7 @@ global func Test_Calc_ProjectileCollision()
 		dummy2->SetR(test[0].R);
 
 		var result = Calc_ProjectileCollision(dummy1, dummy2, test[2]);
-		
+
 		if (test[3].RDir != nil)
 		{
 			DebugLog("Result: XDir %d/%d, YDir %d/%d, RDir %d/%d", result.XDir, test[3].XDir, result.YDir, test[3].YDir, result.RDir, test[3].RDir);

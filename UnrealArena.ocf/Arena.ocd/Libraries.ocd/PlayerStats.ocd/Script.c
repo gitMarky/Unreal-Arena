@@ -69,7 +69,7 @@ func DoEnergy(int change, bool exact, int damage_type, int caused_by)
 		if (exact)
 		{
 			extra *= HEALTH_PRECISION;
-			
+
 			// round up
 			var remainder = amount % HEALTH_PRECISION;
 			if (remainder > 0)

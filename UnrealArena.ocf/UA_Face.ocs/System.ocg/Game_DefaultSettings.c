@@ -3,7 +3,7 @@
  @author Marky
  @version 0.1
  */
- 
+
  #appendto Environment_ConfigurationUA
 
 protected func GetDefaultRules()

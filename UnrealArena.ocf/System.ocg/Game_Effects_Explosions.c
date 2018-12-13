@@ -40,7 +40,7 @@ smoothness (in percent) determines how round the effect will look like
 global func ExplosionEffectBlast(int level, int x, int y, int smoothness)
 {
 	var iRadius = level;
-	
+
 	if (!this) return;
 
 	x = AbsX(x);
@@ -84,7 +84,7 @@ global func ExplosionEffectBlast(int level, int x, int y, int smoothness)
 		var speed = RandomX(shockr / 8, shockr / 2);
 
 		var particle = Particles_FxExplosion_Blast(0, -1);
-		
+
 		particle.R = PV_Linear(GetRGBaValue(col_amb1, RGBA_RED), GetRGBaValue(col_amb2, RGBA_RED));
 		particle.G = PV_Linear(GetRGBaValue(col_amb1, RGBA_GREEN), GetRGBaValue(col_amb2, RGBA_GREEN));
 		particle.B = PV_Linear(GetRGBaValue(col_amb1, RGBA_BLUE), GetRGBaValue(col_amb2, RGBA_BLUE));

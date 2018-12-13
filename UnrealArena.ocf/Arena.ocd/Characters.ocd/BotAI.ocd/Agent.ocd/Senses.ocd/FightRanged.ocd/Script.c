@@ -4,7 +4,7 @@
 	 * Bow
 	 * Blunderbuss
 	 * Grenade launcher
-	
+
 	@author Sven2, Maikel
 */
 
@@ -125,7 +125,7 @@ public func Agent_GetProjectileSpeed(object agent, object weapon)
 {
 	var firemode = weapon->~GetFiremode();
 	var speed = firemode.projectile_speed;
-	
+
 	if (GetType(speed) == C4V_Array)
 	{
 		return (speed[0] + speed[1]) / 2;

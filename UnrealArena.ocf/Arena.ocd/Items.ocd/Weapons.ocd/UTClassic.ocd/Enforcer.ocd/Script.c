@@ -14,7 +14,7 @@ local firemode_primary	=
 	name = 				WEAPON_Firemode_Primary,
 	icon = 				nil,
 	condition = 		nil,
-	
+
 	ammo_id = 			Ammo_Pistol,
 	ammo_usage =		1,
 	ammo_rate =			1,
@@ -34,7 +34,7 @@ local firemode_primary	=
 	projectile_distance = 10,
 	projectile_offset_y = -6,
 	projectile_spread = {angle = 7, precision = 4},
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 
@@ -43,7 +43,7 @@ local firemode_secondary =
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil,
 	condition = 		nil,
-	
+
 	ammo_id = 			Ammo_Pistol,
 	ammo_usage =		1,
 	ammo_rate =			1,
@@ -62,9 +62,9 @@ local firemode_secondary =
 	projectile_range = 600,
 	projectile_distance = 10,
 	projectile_offset_y = -6,
-	
+
 	projectile_spread = {angle = 4, precision = 1},
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 
@@ -81,15 +81,15 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 public func FireEffect(object user, int angle, proplist firemode)
 {
 	// muzzle flash
-	
+
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
-	 
-	
+
+
 	EffectMuzzleFlash(user, x, y, angle, 30, false, true);
-		
+
 	// casing
-	
+
 	x = +Sin(angle, firemode.projectile_distance / 2);
 	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
 

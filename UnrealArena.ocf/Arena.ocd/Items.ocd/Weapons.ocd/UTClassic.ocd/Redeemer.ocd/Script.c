@@ -19,7 +19,7 @@ local firemode_primary =
 	name = 				WEAPON_Firemode_Primary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Redeemer,
 	ammo_usage =		1, // int - this many units of ammo
 	ammo_rate =			1, // int - per this many shots fired
@@ -43,7 +43,7 @@ local firemode_primary =
 	projectile_spread = nil, // default inaccuracy of a single projectile
 
 	burst = 0, // number of projectiles fired in a burst
-	
+
 	sound = "Weapon::Classic::rocket-fire-reg",
 };
 
@@ -52,7 +52,7 @@ local firemode_secondary =
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil,
 	condition = 		nil,
-	
+
 	ammo_id = 			Ammo_Redeemer,
 	ammo_usage =		1,
 	ammo_rate =			1,
@@ -76,9 +76,9 @@ local firemode_secondary =
 	projectile_spread = [7, 2],
 
 	spread = [0, 1],
-	
+
 	burst = 0,
-	
+
 	sound = "Weapon::Classic::rocket-fire-alt",
 };
 

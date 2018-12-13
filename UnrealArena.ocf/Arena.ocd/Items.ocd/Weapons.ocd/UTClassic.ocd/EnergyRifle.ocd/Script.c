@@ -45,13 +45,13 @@ local firemode_primary	=
 
 	sound = "Weapon::Classic::shock-fire-reg",
 };
-	
+
 local firemode_secondary = 
 {
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil,
 	condition = 		nil,
-	
+
 	ammo_id = 			Ammo_Energy,
 	ammo_usage =		1,
 	ammo_rate =			1,
@@ -79,7 +79,7 @@ local firemode_secondary =
 public func Initialize()
 {
 	_inherited(...);
-	
+
 	if (IsInstaGibConfigured())
 	{
 		SetMeshMaterial("weapon_ut99_instagib", 0);

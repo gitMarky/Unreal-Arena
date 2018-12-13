@@ -122,13 +122,13 @@ public func Create(bool reconnect)
 	if (target_right) target_right->SetTeam(team)->SetGlowColor(color)->SetTargetSingle(this)->Create();
 	if (target_up)    target_up   ->SetTeam(team)->SetGlowColor(color)->SetTargetSingle(this)->Create();
 	if (target_down)  target_down ->SetTeam(team)->SetGlowColor(color)->SetTargetSingle(this)->Create();
-	
+
 	var fx = CreateEffect(FxGlow, 110, 1);
 	fx.R = color.R;
 	fx.G = color.G;
 	fx.B = color.B;
 	fx.Alpha = color.Alpha;
-	
+
 	SetLightColor(RGB(color.R ?? 0, color.G ?? 255, color.B ?? 0));
 	SetLightRange(100, 70);
 }
@@ -186,7 +186,7 @@ local FxTeleportControl = new Effect
 		}
 		return true;
 	},
-	
+
 	Timer = func ()
 	{
 		if (this.kill || !this.teleport)

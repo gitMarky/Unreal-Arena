@@ -12,7 +12,7 @@ private func Recruitment()
 		this.ActMap = {Prototype = this.Prototype.ActMap};
 	this.ActMap["Hangle"] = nil;
 	this.ActMap["Scale"] = nil;
-	
+
 	// Add AI
 	if (GetPlayerType(GetOwner()) == C4PT_Script)
 	{

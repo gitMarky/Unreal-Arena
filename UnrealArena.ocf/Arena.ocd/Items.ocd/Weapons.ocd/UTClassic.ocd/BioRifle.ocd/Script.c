@@ -20,7 +20,7 @@ local firemode_primary	=
 	name = 				WEAPON_Firemode_Primary,
 	icon = 				nil,
 	condition = 		nil,
-	
+
 	ammo_id = 			Ammo_Bio,
 	ammo_usage =		1,
 	ammo_rate =			1,
@@ -41,7 +41,7 @@ local firemode_primary	=
 	projectile_distance = 10,
 	projectile_offset_y = -4,
 	projectile_spread = {angle = 3, precision = 2},
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 
@@ -71,7 +71,7 @@ local firemode_secondary =
 	projectile_distance = 10,
 	projectile_offset_y = -4,
 	projectile_spread = {angle = 3, precision = 2},
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 

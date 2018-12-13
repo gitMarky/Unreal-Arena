@@ -224,7 +224,7 @@ func MacroComMoveTo()
 	// Kein Pfad konnte gefunden werden?
 	if (!aPath)
 		return MacroComSuccessFailed(0, Macro_NoPath);
-	
+
 	// ist der Endpunkt ein Transportpunkt? (ein Wegpunkt mit nur einem Ausgang
 	// und dieser Ausgang zeigt nicht zum Eingang)
 	if (end->GetPathCount() == 1)
@@ -514,49 +514,49 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 	// naive Wegfindung. Wir gehen davon aus, dass wenn der WP links von einem ist,
 	// nach links gegangen werden muss und gehen einfach Schritt fuer Schritt in diese
 	// Richtung.
-	
+
 	// maximale Iterationen fuer Wegfindung (abhaengig von Anzahl Wegpunkte)
 	var iterationLimit = ObjectCount(WAYP);
-	
+
 	var ex = pEnd->GetX();
 	var ey = pEnd->GetY();
-	
+
 	var pCurrent = pStart;
-	
+
 	var aWaypoints = CreateArray();
-	
+
 	var jetp = 0;
 	var ammoload = JTPK->GetFMData(FM_AmmoLoad);
-	
+
 	for (var j = 0; j < iterationLimit; ++j)
 	{
-		
+
 		aWaypoints[j] = pCurrent;
-		
+
 		// fertig!
 		if (pCurrent == pEnd)
 			return aWaypoints;
-		
+
 		// ansonsten...
 		var cx = pCurrent->GetX();
 		var cy = pCurrent->GetY();
 		var cangle = Angle(cx, cy, ex, ey);
-		
+
 		var pNext = 0;
 		var pathcount = pCurrent->GetPathCount();
 		var aBest = CreateArray();
 		var good = 0;
 		var neutral = 0;
 		var bad = 0;
-		
+
 		// alle Nachbarknoten...
 		for (var i = 0; i < pathcount; ++i)
 		{
 			pNext = (pCurrent->GetPathTarget(i));
-			
+
 			if (!Check4Jetpack(pCurrent, i, fJetpack, jetp, ammoload))
 				continue;
-			
+
 			// Fuer die richtige Richtung zaehlt nicht der Winkel des naechsten Knotens, sondern
 			// wenn pNext nur einen Nachfolger hat, zaehlt die Richtung in die der Nachfolger geht
 			// (was rekursiv fortsetzbar ist)
@@ -573,7 +573,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				if (check == 2)
 					jetpgedacht += ammoload;
 			}
-			
+
 			// Endknoten? Super, fertig!
 			if (pNext == pEnd)
 			{
@@ -581,12 +581,12 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				good = 1;
 				break;
 			}
-			
+
 			// ansonsten
 			var nx = pNext->GetX();
 			var ny = pNext->GetY();
 			var nangle = Angle(cx, cy, nx, ny);
-			
+
 			// diffangle: Nimmt Werte von 0 (genau richtig) bis 180 (genau falsch) an
 			var diffangle = Abs(Normalize(nangle - cangle, -180));
 			// Schummeln: der WP von dem man grad gekommen ist, wird als "bad" eingestuft
@@ -653,7 +653,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				}
 			}
 		}
-		
+
 		// zuf�llig aus m�glichen Pfaden ausw�hlen
 		var chosenone = -1;
 		if (good)
@@ -675,11 +675,11 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 		}
 		// ansonsten ok
 		pNext = (pCurrent->GetPathTarget(chosenone));
-		
+
 		// gesch�tzter Benzinverbrauch bei Jetpack hochz�hlen
 		if (pCurrent->GetPathJetpack(chosenone))
 			jetp += ammoload;
-		
+
 		DebugLog
 		(
 			"Next %s waypoint (%d), angle %d",
@@ -691,7 +691,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				Normalize(Angle(pCurrent->GetX(), pCurrent->GetY(), pNext->GetX(), pNext->GetY()) - cangle, -180)
 			)
 		);
-		
+
 		// Fertig
 		if (pNext == pEnd)
 		{
@@ -702,7 +702,7 @@ func FindPath(object pStart, object pEnd, bool fJetpack)
 				GetLength(aWaypoints)
 			);
 		}
-		
+
 		// kommt bei naechster Iteration ins Array
 		pCurrent = pNext;
 	}
@@ -797,7 +797,7 @@ func MoveAlongPath(object pCurrentWp, object pNextWp, int iNextStep)
 			iEff.var0 = COMD_Left;
 		Jump();
 		ScheduleCall(this, "JumpStart", 1, 1, true);
-		
+
 		SetCommand("MoveTo", pNextWp);
 		return AddSpecialCommands(pCurrentWp, path);
 	}
@@ -841,14 +841,14 @@ func ClimbLadder()
 	var targetx = GetCommand(2);
 	var targety = GetCommand(3);
 
-	
+
 	if (targety < GetY())
 		SetComDir(COMD_Up);
 	if (targety > GetY())
 		SetComDir(COMD_Down);
-	
+
 	// 2do: Wir m�ssen irgendwie feststellen, ob die Leiter aus ist. :(
-	
+
 
 	// Wegpunkt oben? fr�her abspringen.
 	if (Inside(GetY() - targety, 5, 15) && Abs(GetX() - targetx) < 30)
@@ -867,12 +867,12 @@ func ClimbLadder()
 				SetComDir(comd);
 		}
 	}
-	
+
 	// Sind wir ungef�hr da?
 	if (Inside(GetY(), targety - 5, targety + 5) && PathFree(GetX(), GetY(), targetx, targety))
 	{
 		// Wir versuchen mal, abzuspringen (das klappt sp�testens beim 2. Mal(theoretisch))
-		
+
 
 		//wenn Ziel weiter oben: immer nach oben abspringen
 		if (GetY() > targety)
@@ -881,7 +881,7 @@ func ClimbLadder()
 			SetComDir(COMD_Down);
 		else if (Abs(GetX() - targetx) > 80)
 			SetComDir(COMD_Stop);
-		
+
 		var comd = GetComDir();
 		if (targetx < GetX())
 		{
@@ -972,7 +972,7 @@ func LiftControl(object dummy, int pCurrentWp, int pNextWp)
 	}
 	// Warten
 	AddCommand("Call", this, pCurrentWp, pNextWp, nil, 0, "LiftControl");
-	
+
 	AddCommand("Wait", nil, 0, 0, nil, 0, 15);
 	return 1;
 }
@@ -1123,7 +1123,7 @@ func FxAggroFire(object pTarget, proplist no)
 	var target = no.var1;
 	var level = no.var0;
 	var pathfree = true;
-	
+
 	// Fahrzeugsteuerung
 	if (Contained())
 	{
@@ -1139,7 +1139,7 @@ func FxAggroFire(object pTarget, proplist no)
 		else
 			return SetAction("Walk");
 	}
-	
+
 	// Zu weit von der Wachposition entfernt?
 	if (level == 3)
 	{
@@ -1156,7 +1156,7 @@ func FxAggroFire(object pTarget, proplist no)
 			return;
 		}
 	}
-	
+
 	var maxdist = dist;
 	if (!PathFree(GetX(), GetY(), target->GetX(), target->GetY()))
 	{
@@ -1166,7 +1166,7 @@ func FxAggroFire(object pTarget, proplist no)
 			maxdist = dist / 2;
 		pathfree = false;
 	}
-	
+
 	// Ziel irgendwie weg?
 	// (Pathfree wurde schon gecheckt)
 	if (!this->~CheckTarget(target, this, maxdist, 0, 0, true))
@@ -1200,7 +1200,7 @@ func FxAggroFire(object pTarget, proplist no)
 			return;
 		}
 	// Stufe 1 - nur in die grobe Richtung ballern, lieber nicht anhalten oder sowas
-	
+
 	// Schaue ich in die richtige Richtung?
 	if (GetX() < target->GetX())
 	{
@@ -1212,7 +1212,7 @@ func FxAggroFire(object pTarget, proplist no)
 		if (GetDir() != DIR_Left)
 			SetDir(DIR_Left);
 	}
-	
+
 	// Zielen, muss auch mal sein
 	if ((!GetCommand() && !GetMacroCommand()) || level != 1 || this->~IsAiming())
 	{
@@ -1226,13 +1226,13 @@ func FxAggroFire(object pTarget, proplist no)
 					this->~StartSquatAiming();
 				if (this->~IsAiming())
 				{
-					
+
 					var tx = target->GetX();
 					var ty = target->GetY();
-					
+
 					if (Contents()->GetBotData(BOT_Ballistic))
 						ty -= 15;
-					
+
 					this->~DoMouseAiming(tx, ty);
 				}
 			}
@@ -1248,11 +1248,11 @@ func FxAggroFire(object pTarget, proplist no)
 			))
 			this->~StopAiming();
 	}
-	
+
 	// Gut. Feuern wir bereits?
 	if (Contents()->IsRecharging() || Contents()->IsShooting())
 		return;
-	
+
 	// Feuer!
 	if (maxdist != 300 && pathfree)
 		this->~Control2Contents("ControlThrow");
@@ -1295,7 +1295,7 @@ func GetPrefDmgType(object pTarget)
 	}
 	if (pTarget->~OnDmg(DMG_Bio) < min)
 		type = DMG_Bio;
-	
+
 	return type;
 }
 

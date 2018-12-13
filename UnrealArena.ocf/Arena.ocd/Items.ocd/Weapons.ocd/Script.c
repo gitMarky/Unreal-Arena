@@ -52,7 +52,7 @@ func IsShooterWeapon(){return true;}
 func IsWeaponReadyToUse(object user)
 {
 	var other_weapons = FindObjects(Find_Container(user), Find_Exclude(this), Find_Func("IsShooterWeapon"));
-	
+
 	var can_use = _inherited(user, ...);
 
 	for (var weapon in other_weapons)
@@ -96,6 +96,6 @@ public func RejectEntrance(object into)
 
 		return true;
 	}	
-	
+
 	return false;
 }

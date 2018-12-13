@@ -33,13 +33,13 @@ func SetSkin(int new_skin)
 {
 	// Remember skin
 	skin = new_skin;
-	
+
 	// determine skin data
 	if (skin == 0 || skin == 1)	skin_name = "soldier"; //"commander";
 	if (skin == 2 || skin == 3)	skin_name = "soldier";
 	if (skin == 0 || skin == 2)	skin_gender = "m";
 	if (skin == 1 || skin == 3)	skin_gender = "f";
-	
+
 	RemoveBackpack(); // remove the backpack
 
 	// Go back to original action afterwards and hope
@@ -48,7 +48,7 @@ func SetSkin(int new_skin)
 	SetAction("Jump");
 	SetAction(prev_action);
 	SetOwner(GetOwner()); // somehow the color did not get updated after setting the color
-	
+
 	var skins = GetSkinTextures();
 
 	// TODO: use the actual skin data instead of predefined strings
@@ -116,7 +116,7 @@ func StartDead()
 		OverlayDeathAnimation(slot);
 		dead = true;
 	}
-	
+
 	if (!dead)
 	{
 		OverlayDeathAnimation(CLONK_ANIM_SLOT_Death);

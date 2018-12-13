@@ -19,7 +19,7 @@ local firemode_primary =
 	name = 				WEAPON_Firemode_Primary, // string - menu caption
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Ripper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
@@ -50,7 +50,7 @@ local firemode_secondary =
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Ripper,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired

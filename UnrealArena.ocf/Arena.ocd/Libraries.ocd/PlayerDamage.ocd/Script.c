@@ -13,7 +13,7 @@ func ModifyWeaponDamageShooter(int damage, int damage_type, int engine_damage_ty
 
 	// Do not handle armor anymore if everything was caught by the shield
 	if (!damage) return damage;
-	
+
 	// Subtract damage from armor now;
 	// Armor absorbs only half of the damage though!
 	var absorbed_by_armor = Min(this->~GetUTArmor(), damage);
@@ -33,7 +33,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 {
 	var is_headshot = this->~IsHeadshot(projectile, damage_type);
 	var remaining_health;
-	
+
 	if (is_headshot)
 	{
 		remaining_health = 0;
@@ -43,12 +43,12 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	{
 		remaining_health = GetEnergy() - damage_amount;
 	}
-	
+
 	var hit_x = projectile->GetX() - GetX();
 	var hit_y = projectile->GetY() - GetY();
-	
+
 	DebugLog("Damaged for %d at %d/%d", damage_amount, hit_x, hit_y);
-		
+
 	DoGoreEffects(projectile, damage_amount, is_headshot);	
 
 	// blow the clonk away if he is alive and it was an explosion
@@ -67,7 +67,7 @@ func OnWeaponDamageShooter(object projectile, int damage_amount, int damage_type
 	{
 		// Become a corpse
 		this->~OnDeathBecomeCorpse(projectile, damage_amount, damage_type);
-		
+
 		// Kill him for sure
 		DoEnergy(-100000, false, FX_Call_DmgScript, projectile->GetController());
 	}
@@ -103,12 +103,12 @@ func DoGoreEffects(object projectile, int damage_amount, bool is_headshot)
 		if (MOD_MoreGore() > 10)	CastGore(damage_amount);
 		if (MOD_MoreGore() > 18)	CastGore(damage_amount);
 	}
-	
+
 	// blood effects
 	var divisor = 3 * (1 + MOD_FastBullets());
 	EffectBloodSpray(damage_amount, 10, hit_x, hit_y);
 	EffectBloodStream(hit_x, hit_y, projectile->GetXDir() / divisor, projectile->GetYDir() / divisor);
-	
+
 	if (is_headshot)
 	{
 		for (var amount = MOD_MoreGore(); amount > 0; amount -= 2)
@@ -116,7 +116,7 @@ func DoGoreEffects(object projectile, int damage_amount, bool is_headshot)
 			CastGoreHeadshot();
 		}
 	}
-	
+
 }
 
 func CastGore(int damage_amount)

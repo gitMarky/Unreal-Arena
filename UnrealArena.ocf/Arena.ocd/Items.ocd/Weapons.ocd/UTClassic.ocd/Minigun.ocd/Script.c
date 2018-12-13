@@ -14,7 +14,7 @@ local firemode_primary =
 	name = 				WEAPON_Firemode_Primary, // string - menu caption
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Pistol,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
@@ -36,16 +36,16 @@ local firemode_primary =
 	projectile_offset_y = -2, // -4
 	projectile_number = 1,
 	projectile_spread = {angle = 5, precision = 2}, // 2 - default inaccuracy of a single projectile
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
-	
+
 local firemode_secondary = 
 {
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Pistol,
 	ammo_usage =		1,	// this many units of ammo
 	ammo_rate =			1, // per this many shots fired
@@ -67,7 +67,7 @@ local firemode_secondary =
 	projectile_offset_y = -2, // -4
 	projectile_number = 1,
 	projectile_spread = {angle = 15, precision = 2}, // 6 - default inaccuracy of a single projectile
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 
@@ -102,7 +102,7 @@ public func OnFireProjectile(object user, object projectile, proplist firemode)
 
 public func OnStartCooldown(object user, proplist firemode)
 {
-	
+
 	Sound("Weapon::Classic::m1-fire-reg", nil, nil, nil, -1);
 	Sound("Weapon::Classic::m1-fire-alt", nil, nil, nil, -1);
 	Sound("Weapon::Classic::m1-cooldown");
@@ -110,16 +110,16 @@ public func OnStartCooldown(object user, proplist firemode)
 
 public func FireEffect(object user, int angle, proplist firemode)
 {
-	
+
 	// muzzle flash
-	
+
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
 
 	EffectMuzzleFlash(user, x, y, angle, RandomX(15, 18) * 3, false, true, -1, "MuzzleFlash2");
-		
+
 	// casing
-	
+
 	x = +Sin(angle, firemode.projectile_distance / 2);
 	y = -Cos(angle, firemode.projectile_distance / 2) + firemode.projectile_offset_y;
 

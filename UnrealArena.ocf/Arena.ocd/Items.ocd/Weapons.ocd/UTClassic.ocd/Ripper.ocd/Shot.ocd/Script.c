@@ -69,13 +69,13 @@ private func Reflect()
 {
 	Sound("Weapon::Classic::ripper-hit");
 	CreateImpactEffect(5);
-	
+
 	if(reflections)
 	{
 		var distance = 3;
 		if (GBackSolid(-distance, 0) || GBackSolid(+distance, 0)) velocity_x = -velocity_x;
 		if (GBackSolid(0, -distance) || GBackSolid(0, +distance)) velocity_y = -velocity_y + RandomX(-160, 150);
-		
+
 		ControlSpeed();
 		//if (GetAction() != "TravelBallistic") SetAction("TravelBallistic");
 

@@ -94,7 +94,7 @@ public func Reset()
 		// Object call: Reset on owned player
 		Destruction();
 		Construction();
-		
+
 		if(GetCursor(GetOwner()))
 			OnCrewSelection(GetCursor(GetOwner()));
 	}

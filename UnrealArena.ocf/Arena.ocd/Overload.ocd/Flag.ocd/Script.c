@@ -1,6 +1,6 @@
 /**
  Modified flag for CTF.
- 
+
  @author Marky (modified script)
  @credits Maikel
  @version 0.1
@@ -12,7 +12,7 @@
 protected func FxFlagCarriedStart(object target, proplist effect, int temp)
 {
 	if (temp) return;
-	
+
 	effect.x=target->GetX();
 	effect.y=target->GetY();
 	var trans = Trans_Mul(Trans_Translate(-17000, 0, 0), Trans_Rotate(90, 1, 0, 0));
@@ -38,7 +38,7 @@ protected func FxFlagCarriedTimer(object target, proplist effect)
 		BeamFlag(false);
 		return FX_Execute_Kill;
 	}
-	
+
 	return FX_OK;
 }
 

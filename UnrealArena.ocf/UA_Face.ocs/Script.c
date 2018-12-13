@@ -27,7 +27,7 @@ protected func Initialize()
 	CreateJumpPads();
 	CreateTeleports();
 	CreateWaypoints();
-	
+
 	_inherited(...);
 }
 
@@ -44,7 +44,7 @@ protected func OnPlayerRelaunch(int plr)
 private func CreateJumpPads()
 {
 	// Jump pads
-	
+
 	var blue = RGB(100, 100, 200);
 	var red = RGB(200, 100, 100);
 	var grey = RGB(150, 150, 150);
@@ -84,20 +84,20 @@ private func CreateTeleports()
 	teleport_blue_ex1 = CreateObject(Arena_WarpEntrance, 323, 212, NO_OWNER);
 	teleport_blue_ex2 = CreateObject(Arena_WarpEntrance, 392, 368, NO_OWNER);
 	teleport_blue_ex3 = CreateObject(Arena_WarpEntrance, 417, 485, NO_OWNER);
-	
+
 	teleport_blue_ent->SetTeam(TEAM_BLUE)->SetGlowColor(RGB(0, 0, 232))
 	                 ->SetTargetLeft(teleport_blue_ex3)
 	                 ->SetTargetRight(teleport_blue_ex2)
 	                 ->SetTargetUp(teleport_blue_ex1)
 	                 ->Create();
-	        
+
 	var w = LandscapeWidth();
 
 	teleport_red_ent = CreateObject(Arena_WarpEntrance, w-307, 581, NO_OWNER);
 	teleport_red_ex1 = CreateObject(Arena_WarpEntrance, w-323, 212, NO_OWNER);
 	teleport_red_ex2 = CreateObject(Arena_WarpEntrance, w-392, 368, NO_OWNER);
 	teleport_red_ex3 = CreateObject(Arena_WarpEntrance, w-417, 485, NO_OWNER);
-	
+
 	teleport_red_ent->SetTeam(TEAM_RED)->SetGlowColor(RGB(244, 0, 0))
 	                ->SetTargetLeft(teleport_red_ex2)
 	                ->SetTargetRight(teleport_red_ex3)
@@ -111,7 +111,7 @@ protected func CreateSpawnPoints()
 	var timer_weapons = 10 * 36;
 	var timer_items = 10 * 36;
 
-	
+
 	// spawn point templates
 	var weapon_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_weapons)->SpawnItem(SPAWN_Weapon_ASMD)->SetDescription("$WeaponBaseFront$");
 	var ammo_asmd = CreateSpawnPoint(0, 0)->SetRespawnTimer(timer_items)->SpawnItem(SPAWN_Ammo_ASMD)->SetDescription("$AmmoBaseFront$");
@@ -144,7 +144,7 @@ protected func CreateSpawnPoints()
 	CopySpawnPoint(weapon_asmd, 411, 581);
 	CopySpawnPoint(ammo_asmd, 411-20, 581);
 	CopySpawnPoint(ammo_asmd, 411+20, 581);
-	
+
 	CopySpawnPoint(weapon_asmd, 411, 581, true);
 	CopySpawnPoint(ammo_asmd, 411-20, 581, true);
 	CopySpawnPoint(ammo_asmd, 411+20, 581, true);
@@ -157,7 +157,7 @@ protected func CreateSpawnPoints()
 	CopySpawnPoint(weapon_linkgun, 284, 581, true);
 	CopySpawnPoint(ammo_linkgun, 284+20, 581, true);
 	CopySpawnPoint(ammo_linkgun, 284-20, 581, true);
-	
+
 	// Rocket Launcher
 	CopySpawnPoint(weapon_rocket, 272, 490);
 	CopySpawnPoint(ammo_rocket, 272-20, 490);
@@ -166,7 +166,7 @@ protected func CreateSpawnPoints()
 	CopySpawnPoint(weapon_rocket, 272, 490, true);
 	CopySpawnPoint(ammo_rocket, 272-20, 490, true);
 	CopySpawnPoint(ammo_rocket, 272+20, 490, true);
-	
+
 	// Sniper
 	CopySpawnPoint(weapon_sniper, 400, 369);
 	CopySpawnPoint(ammo_sniper, 400-20, 369);
@@ -193,7 +193,7 @@ protected func CreateSpawnPoints()
 	CopySpawnPoint(weapon_ripper, 550, 665, true);
 	CopySpawnPoint(ammo_ripper, 550-20, 665, true);
 	CopySpawnPoint(ammo_ripper, 550+20, 665, true);
-	
+
 	// Redeemer
 	CopySpawnPoint(weapon_redeemer, 635, 415);
 	CopySpawnPoint(weapon_redeemer, 635, 415, true);
@@ -227,10 +227,10 @@ protected func CreateSpawnPoints()
 
 	// Keg'o'Health - large health
 	CopySpawnPoint(keg_o_health, 952, 460);
-	
+
 	//-----------------------------------------
 	// remove the templates again
-	
+
 	weapon_asmd->RemoveObject();
 //	ammo_asmd->RemoveObject();
 
@@ -417,8 +417,8 @@ public func CreateWaypoints()
 	wp_red_teleporter_base->AddPath(wp_red_teleporter_level)->SetCost(1)->SetMoveTo(Scenario.OnMoveTo_Teleport).teleport = {from = teleport_red_ent, to = teleport_red_ex3};
 	wp_red_teleporter_base->AddPath(wp_red_ground_back);
 	wp_red_teleporter_base->AddPath(wp_red_ground_entrance);
-	
-	
+
+
 
 	wp_red_ground_back->AddPath(wp_red_teleporter_base);
 	wp_red_ground_entrance->AddPath(wp_red_teleporter_base);
@@ -434,7 +434,7 @@ public func CreateWaypoints()
 	wpt22->AddPath(wp_red_ground_front);
 	wp_red_sniper->AddPath(wpt24);
 
-	
+
 
 	wp_red_sniper->AddPath(wp_red_ground_front);
 	wpt24->AddPath(wp_red_teleporter_sniper);

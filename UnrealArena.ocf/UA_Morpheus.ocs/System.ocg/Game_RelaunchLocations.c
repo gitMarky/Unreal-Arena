@@ -3,7 +3,7 @@
  @author Marky
  @version 0.1
  */
- 
+
 #appendto Environment_ScenarioScript
 
 protected func RelaunchLocations()

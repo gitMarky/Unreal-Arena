@@ -1,6 +1,6 @@
 /**
 	Spawn point knowledge for bots.
-	
+
 	Bots know all spawn points on the map without seeing them,
 	just like a player who is familiar with the map.
  */

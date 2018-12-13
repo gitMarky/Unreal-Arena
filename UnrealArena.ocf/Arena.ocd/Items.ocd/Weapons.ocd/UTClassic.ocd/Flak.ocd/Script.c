@@ -20,7 +20,7 @@ local firemode_primary =
 	name = 				WEAPON_Firemode_Primary,
 	icon = 				nil, // id - menu icon
 	condition = 		nil, // string - callback for a condition
-	
+
 	ammo_id = 			Ammo_Flak,
 	ammo_usage =		1, // int - this many units of ammo
 	ammo_rate =			1, // int - per this many shots fired
@@ -44,9 +44,9 @@ local firemode_primary =
 	projectile_spread = {angle = 2, precision = 1}, // default inaccuracy of a single projectile
 
 	burst = 0, // number of projectiles fired in a burst
-	
+
 	sound = "Weapon::Classic::flak-fire-reg",
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 
@@ -55,7 +55,7 @@ local firemode_secondary =
 	name = 				WEAPON_Firemode_Secondary,
 	icon = 				nil,
 	condition = 		nil,
-	
+
 	ammo_id = 			Ammo_Flak,
 	ammo_usage =		1,
 	ammo_rate =			1,
@@ -79,9 +79,9 @@ local firemode_secondary =
 	projectile_spread = {angle = 5, precision = 2},
 
 	burst = 0,
-	
+
 	sound = "Weapon::Classic::flak-fire-alt",
-	
+
 	ai_fire_ballistic = true,	// custom property for the bot
 };
 
@@ -94,11 +94,11 @@ public func FireSound(object user, proplist firemode)
 public func FireEffect(object user, int angle, proplist firemode)
 {
 	// muzzle flash
-	
+
 	var x = +Sin(angle, firemode.projectile_distance);
 	var y = -Cos(angle, firemode.projectile_distance) + firemode.projectile_offset_y;
-	 
-	
+
+
 	EffectMuzzleFlash(user, x, y, angle, RandomX(10, 20) * 3, false, true);		
 }
 

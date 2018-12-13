@@ -2,7 +2,7 @@
 
 /*
  Callback from the goal, when it is created.
- 
+
  @par goal The goal object.
  */
 private func OnGoalCreation(object goal)

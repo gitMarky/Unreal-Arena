@@ -17,7 +17,7 @@ protected func Hit()
 private func Reflect()
 {
 	var self = this;
-	
+
 	if(reflections)
 	{
 		if (!GetXDir()) SetXDir(RandomX(-10, 10));
@@ -26,14 +26,14 @@ private func Reflect()
 		SetXDir(-GetXDir()/2);
 		SetYDir(-GetYDir()/2);
 		reflections--;
-		
+
 		if (reflections <= 0) RemoveOnHit();
 	}
-	
+
 	if(self)
 	{	
 		OnHitLandscape();
-		
+
 		if (ShouldRemoveOnHit()) RemoveObject();
 	}
 }
@@ -46,14 +46,14 @@ protected func ContactBottom()
 protected func Travelling()
 {
 	var self = this;
-	
+
 	_inherited(...);
-	
+
 	if (self && GetActTime() < 10)
 	{
 		var x = +Sin(GetR(), -2);
 		var y = -Cos(GetR(), -2);
-	
+
 		CreateParticle("Fire", PV_Random(x - 2, x + 2), PV_Random(y -2, y + 2), GetXDir()/2, GetYDir()/2 -1, PV_Random(5, 15), Particles_Glimmer());
 	}
 }

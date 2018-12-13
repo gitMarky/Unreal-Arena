@@ -14,6 +14,6 @@ protected func Death(int killed_by)
 
 	// prevent doing stuff with non-existing objects
 	if (!self) return;
-	
+
 	Schedule(this, "Disintegrate(20, 50, -10)", 100);	
 }

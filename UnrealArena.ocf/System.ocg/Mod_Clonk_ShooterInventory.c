@@ -38,7 +38,7 @@ public func SetInventorySize()
 public func Collection2(object item)
 {
 	_inherited(item, ...);
-	
+
 	if (item)
 	{
 		// Collect ammo from initially collected weapon

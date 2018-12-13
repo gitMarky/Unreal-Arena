@@ -19,16 +19,16 @@ public func Execute(proplist controller, object bot)
 	var friendly_carrier = GetFriendlyFlagCarrier(owner);
 	var flagbase = GetOwnFlagBase(owner);
 	var enemy_flag = GetEnemyFlag(owner);
-	
+
 	var team_has_players = GetTeamPlayerCount(GetPlayerTeam(owner)) > 1;
-	
+
 	// Prevent tasks while in a spawn point
 	if (bot->GetProcedure() != DFA_WALK)
 	{
 		return TASK_EXECUTION_IN_PROGRESS;
 	}
 
-	
+
 	// Flag carrier returns home
 	if (bot == friendly_carrier)
 	{
@@ -77,7 +77,7 @@ public func Execute(proplist controller, object bot)
 				return TASK_EXECUTION_IN_PROGRESS;
 			}
 		}
-		
+
 		// Otherwise we do the normal routine
 		if (!intercept)
 		{
@@ -102,7 +102,7 @@ public func Execute(proplist controller, object bot)
 					return TASK_EXECUTION_IN_PROGRESS;
 				}
 			}
-			
+
 			if (role == ROLE_Assault || role == ROLE_Support)
 			{
 				bot->Message("Assaulting");
@@ -143,7 +143,7 @@ private func Guard(proplist controller, object bot)
 	{
 		var defense_points = FindObjects(Find_Func("IsWaypoint"), Find_Func("IsDefensePoint", GetPlayerTeam(bot->GetOwner())));
 		var destination = defense_points[Random(GetLength(defense_points))];
-		
+
 		if (destination)
 		{
 			Task_MoveAlongPath->AddTo(bot, TASK_PRIORITY_NORMAL)->SetStart(bot)->SetDestination(destination)->SetDescription("Move to defense point");

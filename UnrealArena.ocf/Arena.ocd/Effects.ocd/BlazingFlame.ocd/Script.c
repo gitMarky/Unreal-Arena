@@ -95,7 +95,7 @@ private func Fall()
 private func DoFlameParticle()
 {
 	var size = Max(1, GetCon() * 7 / 100);
-	
+
 	var redness = PV_Random(100, 255);
 
 	CreateParticle("Thrust", PV_Random(-size/2, size/2),

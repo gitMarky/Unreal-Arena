@@ -1,12 +1,12 @@
 /**
 	Aggro Target
-	
+
 	Bots can have a target that they want to fight.
  */
- 
+
 static const AGGRO_TARGET_MAX_DISTANCE = 400;
- 
- 
+
+
 public func Agent_Initialize(object agent)
 {
 	_inherited(agent);
@@ -40,7 +40,7 @@ public func Agent_IsAggroTarget(object agent, object target)
 public func Agent_FindAggroTarget(object agent, int distance)
 {
 	var targets = agent->FindObjects(Find_OCF(OCF_Alive), Find_NoContainer(), Find_Distance(distance ?? AGGRO_TARGET_MAX_DISTANCE), Find_Exclude(agent), Sort_Distance());
-	
+
 	for (var target in targets)
 	{
 		if (Agent_IsAggroTarget(agent, target))
@@ -60,9 +60,9 @@ public func Agent_IsInterceptor(object interceptor, object aggressor, object pre
 	{
 		var angle_to_aggressor = Angle(interceptor->GetX(), interceptor->GetY(), aggressor->GetX(), aggressor->GetY());
 		var angle_to_precious = Angle(interceptor->GetX(), interceptor->GetY(), precious->GetX(), precious->GetY());
-		
+
 		var angle = Abs(Normalize(angle_to_aggressor - angle_to_precious, 0));
-		
+
 		return angle > 90;
 	}
 }

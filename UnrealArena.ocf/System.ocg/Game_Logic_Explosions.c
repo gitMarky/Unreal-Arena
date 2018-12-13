@@ -34,11 +34,11 @@ global func BlastObjects(int x, int y, int level, object container, int cause_pl
 	if (cause_plr == nil)
 		if (this)
 			cause_plr = GetController();
-	
+
 	// damage: if not specified this is the same as the explosion radius
 	if (damage_level == nil)
 		damage_level = level;
-	
+
 	// In a container?
 	if (container)
 	{

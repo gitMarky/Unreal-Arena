@@ -78,7 +78,7 @@ protected func OnRoundEnd()
 protected func PreconfigureBots()
 {
 	var missing_players = Max(0, GetDefaultPlayerAmount() - GetPlayerCount());
-	
+
 	if (missing_players > 0) AddBots(missing_players);
 }
 
@@ -90,7 +90,7 @@ protected func GetDefaultPlayerAmount()
 func ContainCrew(object crew)
 {
 	var container = _inherited(crew, ...);
-	
+
 	if (container)
 	{
 		container->SetPosition(LandscapeWidth() / 2, LandscapeHeight() / 2);

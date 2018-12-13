@@ -85,7 +85,7 @@ global func SmokeUA(int x, int y, int con, int move_style, int lifetime, color, 
 			particle.G = PV_Random(g1, g2, 100);
 			particle.B = PV_Random(b1, b2, 100);
 			particle.Alpha = PV_Random(a1, a2, 100);
-	
+
 			if (color[3])
 			{
 				particle.R = PV_KeyFrames(0, 0, particle.R, 300, particle.R, 600, particle.R, 1000, particle.R);

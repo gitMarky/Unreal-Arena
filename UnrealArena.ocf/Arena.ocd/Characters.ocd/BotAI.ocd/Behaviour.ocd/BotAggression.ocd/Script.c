@@ -16,7 +16,7 @@ public func Execute(proplist controller, object bot)
 	if (logic->Agent_HasWeapon(bot)) 
 	{
 		var target = bot->Agent_Properties()->GetAggroTarget();
-		
+
 		// Check if target is still valid
 		if (target && !logic->Agent_IsAggroTarget(bot, target))
 		{
@@ -55,11 +55,11 @@ public func ExecuteOld(proplist controller, object bot)
 		return TASK_EXECUTION_IN_PROGRESS;
 
 	var target = GetEnemy();
-	
+
 	// Forget target?
 	if (target && !PathFree(bot->GetX(), bot->GetY(), target->GetX(), target->GetY()))
 		target = nil;
-	
+
 	// We still have a target, shoot at it
 	if (target)
 	{
@@ -77,15 +77,15 @@ public func ExecuteOld(proplist controller, object bot)
 		if (bot->Contents())
 			bot->Contents()->~StopAutoFire();
 	}
-	
+
 	var weaprange = 400;
 
 // TODO
 //	if (Contents())
 //		weaprange = Contents()->~GetBotData(BOT_Range);
-	
+
 	target = bot->UTBotAIFindEnemy(Max(400, weaprange));
-	
+
 	if (target)
 	{
 		SetEnemy(target);	
@@ -126,7 +126,7 @@ func SetAggroLevel(int level, int distance, int x, int y, string text)
 		*/
 		this.TaskAggroLevel = level;
 		this.TaskAggroDistance = distance ?? 500;
-		
+
 		if (level == 3)
 		{
 			this.TaskAggroX = x ?? GetX();
@@ -157,12 +157,12 @@ private func ExecuteAttack(object bot, object target)
 	var dist = this.TaskAggroDistance;
 	var level = this.TaskAggroLevel;
 	var enemy = GetEnemy();
-	
+
 	// TODO
 	var weaprange = 400; // was 0 before
 	//if (Contents())
 	//	weaprange = Contents()->~GetBotData(BOT_Range);
-	
+
 
 	// TODO: Vehicle control
 //	if (Contained())
@@ -172,7 +172,7 @@ private func ExecuteAttack(object bot, object target)
 //		else
 //			return AddCommand("Exit", nil, 0, 0, nil, 0, 0, 0, C4CMD_SilentSub);
 //	}
-	
+
 	// Target vanished?
 	/*if (!this->~CheckTarget(target, this, Max(dist, weaprange), 0, 0, true))
 	{
@@ -185,7 +185,7 @@ private func ExecuteAttack(object bot, object target)
 	{
 		return;
 	}
-	
+
 	// No guns?
 	if (!bot->Contents())
 	{
@@ -206,19 +206,19 @@ private func ExecuteAttack(object bot, object target)
 		// Cannot do anything
 		return;
 	}
-	
-	
+
+
 	// Level 1 - Shoot at the target
 
 	var weapon = bot->Contents();
-	
+
 	// The bot does not do this every time it could
 	var efficiency = weapon->~GetBotData(BOT_Rating);
 	if (DelayBotBySkill(efficiency))
 		return;
-	
+
 	bot->UTBotAIAdjustDir(target);
-	
+
 	// Level 2 - Follow him!
 	/* TODO
 	if (level >= Aggro_Follow)
@@ -263,11 +263,11 @@ private func ExecuteAttack(object bot, object target)
 func SelectWeapon(object bot, object target, int aggro_level, bool fire_modes)
 {
 	var arsenal, distance, selection, prio;
-	
+
 	distance = ObjectDistance(bot, target);
-	
+
 	arsenal = FindObjects(Find_Container(bot), Find_Func("IsShooterWeapon"));
-	
+
 	for (var weapon in arsenal)
 	{
 		/* TODO: selection logic
@@ -275,7 +275,7 @@ func SelectWeapon(object bot, object target, int aggro_level, bool fire_modes)
 			if ((prio < (weapon->~GetBotData(BOT_Priority, 1))) && (distance >= (weapon->~GetBotData(BOT_Priority, 1))))
 			{
 				prio = weapon->~GetBotData(BOT_Priority, 1);
-				
+
 				selection = weapon;
 			}
 		*/ // take latest weapon

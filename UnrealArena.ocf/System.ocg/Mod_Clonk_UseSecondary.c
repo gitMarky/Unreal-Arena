@@ -16,7 +16,7 @@ private func GetUseCallString(string action)
 	if (this.control.alt) estr = "Alt";
 	// Action
 	if (!action) action = "";
-	
+
 	return Format("~%sUse%s%s", control, estr, action);
 }
 

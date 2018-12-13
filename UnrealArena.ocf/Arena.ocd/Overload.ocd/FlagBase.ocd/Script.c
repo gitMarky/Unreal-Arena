@@ -1,7 +1,7 @@
 /*--
 		Flag Base
 		Author: Maikel
-		
+
 		A base for the CTF goal, flags can be stolen here, and players must bring flags of opposing teams here.
 --*/
 
