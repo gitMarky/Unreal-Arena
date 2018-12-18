@@ -78,8 +78,8 @@ local firemode_secondary =
 
 local weapon_properties = 
 {
-		gfx_distance = 16,
-		gfx_offset_y = -2,
+		// UPDATE - Outdated with library update gfx_distance = 16,
+		// UPDATE - Outdated with library update gfx_offset_y = -2,
 };
 
 public func FireSound(object user, proplist firemode)
